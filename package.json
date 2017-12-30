@@ -9,6 +9,8 @@
   ],
   "repository": "https://github.com/wipcamp/wip-itim.git",
   "scripts": {
+    "test": ".\\node_modules\\.bin\\jest",
+    "coverage": ".\\node_modules\\.bin\\jest --coverage -u",
     "dev": "next",
     "build": "next build",
     "start": "next start"
