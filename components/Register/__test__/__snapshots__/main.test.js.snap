@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MainRegister /> MainRegister should be renders 1`] = `
+<div>
+  register component
+</div>
+`;
