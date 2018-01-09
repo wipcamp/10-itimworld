@@ -3,12 +3,12 @@ import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import { actions as registerActions } from '../../store/reducers/register'
 
-const MainRegister = props => {
+export const MainRegister = props => {
   const { register } = props
   return (
     <div>
       register component
-      <h1>{register.firstName}</h1>
+      <h1>{`${register.firstName}`}</h1>
       <Input
         label={`firstname`}
         field={`firstName`}

@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MainRegister /> MainRegister should be renders 1`] = `
+<div>
+  register component
+  <h1>
+    
+  </h1>
+  <div>
+    <label
+      htmlFor="input-firstName"
+    >
+      firstname
+      :
+    </label>
+    <input
+      className="form-control"
+      id="input-firstName"
+      onChange={[Function]}
+      placeholder="Input your name"
+      required={true}
+      type="text"
+      value=""
+    />
+  </div>
+</div>
+`;
