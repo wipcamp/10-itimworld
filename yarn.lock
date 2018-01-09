@@ -5426,6 +5426,10 @@ redent@^1.0.0:
     indent-string "^2.1.0"
     strip-indent "^1.0.1"
 
+redux-define@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/redux-define/-/redux-define-1.1.1.tgz#98f97bfa45219a1d646a76b8512f421a96c289bf"
+
 redux-devtools-extension@^2.13.2:
   version "2.13.2"
   resolved "https://registry.yarnpkg.com/redux-devtools-extension/-/redux-devtools-extension-2.13.2.tgz#e0f9a8e8dfca7c17be92c7124958a3b94eb2911d"
