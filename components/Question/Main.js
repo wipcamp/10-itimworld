@@ -2,6 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import { actions as questionActions } from '../../store/reducers/question'
+import Editor from './Editor'
+import { Field, reduxForm } from 'redux-form'
+
 
 export const MainQuestion = props => {
   const { question } = props
@@ -11,6 +14,7 @@ export const MainQuestion = props => {
       {question.questions.map((question)=>(
         <button key={question.id}>{question.data}</button>
       ))}
+      <Editor/>
     </div>
   )
 }
@@ -21,5 +25,8 @@ export default compose(
       question: state.question
     }),
     { ...questionActions }
-  )
+  ),
+  reduxForm({
+    form: 'question'
+  })
 )(MainQuestion)

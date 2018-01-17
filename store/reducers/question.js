@@ -1,8 +1,8 @@
 import actionCreator from '../../utils/actionCreator'
 
 // Actions
-// const registerAction = actionCreator('register')
-// const SET_FIELD = registerAction('SET_FIELD')
+const questionAction = actionCreator('answer')
+const SET_FIELD = questionAction('SET_FIELD')
 
 const initialState = {
   questions: [
@@ -26,12 +26,12 @@ const initialState = {
 // Reducer
 export default (state = initialState, action) => {
   switch (action.type) {
-    // case SET_FIELD: {
-    //   return {
-    //     ...state,
-    //     [action.field]: action.value
-    //   }
-    // }
+    case SET_FIELD: {
+      return {
+        ...state,
+        [action.field]: action.value
+      }
+    }
 
     default:
       return state

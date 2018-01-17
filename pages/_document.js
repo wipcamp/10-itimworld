@@ -17,6 +17,7 @@ export default class MyDocument extends Document {
         <Head>
           <title>Itim | WIP Camp #10</title>
           <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+          <link rel="stylesheet" href="/static/css/quill.snow.css" />
           {this.props.styleTags}
         </Head>
         <body>
