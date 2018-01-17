@@ -18,6 +18,7 @@ export default class MyDocument extends Document {
           <title>Itim | WIP Camp #10</title>
           <link rel="stylesheet" href="/static/css/bulma.css" />
           <link rel="stylesheet" href="/static/css/animate.css" />
+          <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
           {this.props.styleTags}
         </Head>
         <body>
