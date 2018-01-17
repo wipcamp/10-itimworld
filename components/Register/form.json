@@ -1,0 +1,17 @@
+{
+  "header": "สมัครค่าย",
+  "fields": [
+    {
+      "name": "firstName",
+      "label": "ชื่อจริง (ภาษาไทย)",
+      "component": "input",
+      "type": "text"
+    },
+    {
+      "name": "lastName",
+      "label": "นามสกุลจริง (ภาษาไทย)",
+      "component": "input",
+      "type": "text"
+    }
+  ]
+}
