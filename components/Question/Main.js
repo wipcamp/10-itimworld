@@ -3,18 +3,16 @@ import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import { actions as questionActions } from '../../store/reducers/question'
 import Editor from './Editor'
-import { Field, reduxForm } from 'redux-form'
-
 
 export const MainQuestion = props => {
-  const { question } = props
+  const { question: { questions: allQuestion } } = props
   return (
     <div>
       <h1>Questions</h1>
-      {question.questions.map((question)=>(
+      { allQuestion.map((question) => (
         <button key={question.id}>{question.data}</button>
       ))}
-      <Editor/>
+      <Editor {...props} />
     </div>
   )
 }
@@ -25,8 +23,5 @@ export default compose(
       question: state.question
     }),
     { ...questionActions }
-  ),
-  reduxForm({
-    form: 'question'
-  })
+  )
 )(MainQuestion)

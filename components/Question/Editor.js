@@ -1,51 +1,50 @@
-import React from 'react';
-import { Field } from 'redux-form';
-// import ReactQuill from 'react-quill';
+import React from 'react'
+import { connect } from 'react-redux'
+import { compose } from 'recompose'
 
-export default class Editor extends React.Component {
-  state = { 
-    val: ''
-   }
+import { actions as questionActions } from '../../store/reducers/question'
 
-  componentWillMount() {
+export class Editor extends React.Component {
+  state = {
+    value: ''
+  }
+
+  componentWillMount () {
     if (typeof window !== 'undefined') {
       this.ReactQuill = require('react-quill')
-      this.reactQuillRef = null
     }
   }
 
-  handle(e, input) {
-    setTimeout(() => {
-      input.onChange(e)
-    }, 0)
+  handle (value) {
+    this.setState({value})
   }
 
-  forceFocus() {
-    this.reactQuillRef.focus()
-  }
-
-  render() {
-    
+  render () {
     const ReactQuill = this.ReactQuill
-    const renderQuill = ({name, input, value}) => {
-      if (typeof window !== 'undefined' && ReactQuill)
-        return (
-          <div>
-            <ReactQuill
-              {...input}
-              ref={(el) => { this.reactQuillRef = el }}
-              onChange={e => this.handle(e, input)
-              }
-              onBlur={() => this.forceFocus()}
-              theme="snow"
-              value={input.value}
-            />
-          </div>
-        )
-      return <div />
+    const { questions, answers, setAnswer } = this.props
+    if (typeof window !== 'undefined' && ReactQuill) {
+      return (
+        <div>
+          {console.log(this.props)}
+          { questions[0].data }
+          <ReactQuill
+            onChange={(val) => setAnswer(1, val)}
+            theme='snow'
+            value={answers[0].data}
+          />
+        </div>
+      )
     }
-    return (
-      <Field name="answer" component={renderQuill} />
-    )
+    return <textarea />
   }
 }
+
+export default compose(
+  connect(
+    state => ({
+      questions: state.question.questions,
+      answers: state.question.answers
+    }),
+    { setAnswer: questionActions.setAnswer }
+  )
+)(Editor)
