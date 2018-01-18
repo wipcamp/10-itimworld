@@ -13,6 +13,16 @@ export class Editor extends React.Component {
     if (typeof window !== 'undefined') {
       this.ReactQuill = require('react-quill')
     }
+    this.modules = {
+      toolbar : [
+        [{ 'header': [1, 2,3,4,5, false] }],
+        ['bold', 'italic', 'underline','strike', 'blockquote'],
+        [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+        ['link', 'image'],
+        [{ 'color': [] }, { 'background': [] }],
+        ['clean']
+      ]
+    }
   }
 
   handle (value) {
@@ -22,6 +32,7 @@ export class Editor extends React.Component {
   render () {
     const ReactQuill = this.ReactQuill
     const { questions, answers, setAnswer } = this.props
+    this.formats = ['italic', 'underline'] // default formats
     if (typeof window !== 'undefined' && ReactQuill) {
       return (
         <div>
@@ -31,6 +42,7 @@ export class Editor extends React.Component {
             onChange={(val) => setAnswer(1, val)}
             theme='snow'
             value={answers[0].data}
+            modules={this.modules}
           />
         </div>
       )
