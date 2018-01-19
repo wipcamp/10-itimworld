@@ -40,18 +40,28 @@ const BackgroundContainer = styled.div`
   height: auto;
 `
 
+const inputStyle = {
+  backgroundColor: '#D6D6D6',
+  color: '#fff'
+}
+
 const Input = styled.input`
 
-  background-color: #D6D6D6;
+  background-color: ${inputStyle.backgroundColor};
   border-radius: 20px;
   padding: 4px 15px;
   outline: 0;
   border: 0;
-  color: #fff;
+  color: ${inputStyle.color};
 
   &:foucus {
     background-color: #D6D6D6 !important;
   }
+`
+
+const TextArea = styled.textarea`
+  background-color: ${inputStyle.backgroundColor};
+  color: ${inputStyle.color};
 `
 
 const RegisterSection = styled.div`
@@ -153,10 +163,13 @@ export const MainRegister = props => {
               ขั้นตอนการลงทะเบียน
               </div>
             </div>
-            <div className='col-12 col-sm-8 mx-auto text-center'>
+            <div className='col-12 col-sm-10 mx-auto text-center'>
               <RegisterSection>
                 <SubHeader>ลงทะเบียน</SubHeader>
                 <div className='row px-4 pb-5 pt-3'>
+                  <div className='col-12 text-dark'>
+                    <h2>ข้อมูลส่วนตัว</h2>
+                  </div>
                   {
                     ['ชื่อ(ภาษาไทย)',
                       'นามสกุล(ภาษาไทย)',
@@ -196,7 +209,8 @@ export const MainRegister = props => {
                     <Label>เลขที่บัตรประชาชน</Label>
                     <Input className='form-control' />
                   </div>
-                  <div className='form-check col-12 text-left form-group'>
+                  <div className='col-sm-4 d-none d-sm-inline-block'/>
+                  <div className='form-check col-12 col-sm-4 text-left form-group'>
                     <Label>เพศ</Label>
                     <div>
                       <div className='form-check form-check-inline ml-sm-4 mb-0' >
@@ -208,8 +222,154 @@ export const MainRegister = props => {
                         <label className='form-check-label pl-0' htmlFor='inlineRadio1' style={{marginTop: '-13px'}}>หญิง</label>
                       </div>
                     </div>
-
                   </div>
+                  <div className='col-12 col-sm-4 text-left form-group'>
+                    <Label>กรุ๊ปเลือด</Label>
+                    <Select className='form-control d-inline-block ml-1'>
+                      <option>+</option>
+                      <option>-</option>
+                    </Select>
+                  </div>
+                  <div className='col-12 col-sm-4 text-left form-group'>
+                    <Label>ศาสนา</Label>
+                    <Select className='form-control d-inline-block ml-1'>
+                      <option>+</option>
+                      <option>-</option>
+                    </Select>
+                  </div>
+                  {/* <div className='col-sm-4 d-none d-sm-inline-block' /> */}
+                  <div className='col-12 col-sm-6 text-left form-group'>
+                    <Label>โรงเรียน</Label>
+                    <Select className='form-control d-inline-block ml-1'>
+                      <option>ไก่</option>
+                      <option>-</option>
+                    </Select>
+                  </div>
+                  <div className='col-12 col-sm-3 text-left form-group'>
+                    <Label>ระดับชั้น</Label>
+                    <Select className='form-control d-inline-block ml-1'>
+                      <option>ม.4</option>
+                      <option>ม.5</option>
+                    </Select>
+                  </div>
+                  <div className='col-12 col-sm-3 text-left form-group'>
+                    <Label>เกรด</Label>
+                    <Input className='form-control' />
+                  </div>
+                  <div className='col-12 col-sm-3 text-left form-group'>
+                    <Label>สายการเรียน</Label>
+                    <Select className='form-control d-inline-block ml-1'>
+                      <option>วิทย์ - คณิต</option>
+                      <option>ม.5</option>
+                    </Select>
+                  </div>
+                  <div className='col-12 text-dark form-group'>
+                    <hr />
+                    <h2>ติดต่อ</h2>
+                  </div>
+                  {/* <div className='col-12 text-left form-group'>
+                    <Label>ที่อยู่</Label>
+                    <TextArea className='form-control'/>
+                  </div> */}
+                  <div className='col-12 col-sm-4 text-left form-group'>
+                    <Label>เขต/อำเภอ</Label>
+                    <Select className='form-control d-inline-block ml-1'>
+                      <option>เขต</option>
+                      <option>อะไรวะ</option>
+                    </Select>
+                  </div>
+                  <div className='col-12 col-sm-4 text-left form-group'>
+                    <Label>จังหวัด</Label>
+                    <Select className='form-control d-inline-block ml-1'>
+                      <option>จังหวัด</option>
+                      <option>อะไรวะ</option>
+                    </Select>
+                  </div>
+                  <div className='col-12 col-sm-4 text-left form-group'>
+                    <Label>รหัสไปรษณีย์</Label>
+                    <Input className='form-control' />
+                  </div>
+                  <div className='col-12 col-sm-5 text-left form-group'>
+                    <Label>เบอร์โทรศัพท์</Label>
+                    <Input className='form-control' />
+                  </div>
+                  <div className='col-12 text-dark'>
+                    <hr />
+                    <h2>ฉุกเฉิน</h2>
+                  </div>
+                  <div className='col-12 col-sm-5 text-left form-group'>
+                    <Label>อาหารที่แพ้</Label>
+                    <Input className='form-control' />
+                  </div>
+                  <div className='col-12 col-sm-5 text-left form-group'>
+                    <Label>โรคประจำตัว</Label>
+                    <Input className='form-control' />
+                  </div>
+                  <div className='col-12 col-sm-5 text-left form-group'>
+                    <Label>ยาที่แพ้</Label>
+                    <Input className='form-control' />
+                  </div>
+                  <div className='col-12 col-sm-5 text-left form-group'>
+                    <Label>ยาประจำตัว</Label>
+                    <Input className='form-control' />
+                  </div>
+                  <div className='col-12'/>
+                  <div className='col-12 col-sm-5 text-left form-group'>
+                    <Label>เบอร์โทรศัพท์ผู้ปกครอง</Label>
+                    <Input className='form-control' />
+                  </div>
+                  <div className='col-12 col-sm-5 text-left form-group'>
+                    <Label>เบอร์โทรศัพท์ผู้ปกครอง</Label>
+                    <input type='radio' /> พ่อ 
+                    <input type='radio' /> แม่
+                  </div>
+
+                  <div className='col-12 text-dark'>
+                    <hr />
+                    <h2>ทักษะคอมพิวเตอร์</h2>
+                  </div>
+                  <div className='col-12 text-left form-group'>
+                    <Label>น้องๆ เคยมีทักษะคอมพิวเตอร์มาก่อนหรือเปล่า</Label>
+                    <TextArea className='form-control' />
+                  </div>
+                  <div className='col-12 text-left form-group'>
+                    <Label>ค่ายที่เคยเข้า</Label>
+                    <TextArea className='form-control' />
+                  </div>
+                  <div className='col-12 text-left form-group'>
+                    <Label>น้องๆ เคยมีทักษะคอมพิวเตอร์มาก่อนหรือเปล่า</Label>
+                    <TextArea className='form-control' />
+                  </div>
+                  <div className='col-12 text-left form-group'>
+                    <Label>รู้จักค่ายนี้จากไหน</Label>
+                    <div className='form-check col-12 col-sm-4 text-left form-group'>
+                      <div>
+                        <div className='form-check form-check-inline ml-sm-4 mb-0' >
+                          <Input className='form-check-input' type='radio' name='inlineRadioOptions' id='inlineRadio1' value='option1' />
+                          <label className='form-check-label pl-0' htmlFor='inlineRadio1' style={{marginTop: '-13px', verticalAlign: 'middle'}}>facebook</label>
+                        </div>
+                        <div className='form-check form-check-inline ml-sm-4' >
+                          <Input className='form-check-input' type='radio' name='inlineRadioOptions' id='inlineRadio1' value='option1' />
+                          <label className='form-check-label pl-0' htmlFor='inlineRadio1' style={{marginTop: '-13px'}}>line</label>
+                        </div>
+                        <div className='form-check form-check-inline ml-sm-4' >
+                          <Input className='form-check-input' type='radio' name='inlineRadioOptions' id='inlineRadio1' value='option1' />
+                          <label className='form-check-label pl-0' htmlFor='inlineRadio1' style={{marginTop: '-13px'}}>อื่นๆ</label>
+                          <div class="form-group">
+                            <Input className="form-control"  placeholder="อื่นๆ" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className='col-12 text-left form-group'>
+                    <Label>มีอะไรอยากจะบอกไหม </Label>
+                    <TextArea className='form-control' />
+                  </div>
+
+
+
+                  
                   <div className='col-12 text-right'>
                     <Button className='btn btn-primary'>ถัดไป</Button>
 
