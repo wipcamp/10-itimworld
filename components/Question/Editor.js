@@ -15,10 +15,11 @@ export class Editor extends React.Component {
     }
     this.modules = {
       toolbar : [
-        [{ 'header': [1, 2,3,4,5, false] }],
-        ['bold', 'italic', 'underline','strike', 'blockquote'],
+        [{ 'size': ['small', false, 'large', 'huge'] }],
+        ['bold', 'italic', 'underline','strike'],
+        ['blockquote','code-block'],
         [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-        ['link', 'image'],
+        [{ 'align': [] }],
         [{ 'color': [] }, { 'background': [] }],
         ['clean']
       ]
@@ -35,16 +36,12 @@ export class Editor extends React.Component {
     this.formats = ['italic', 'underline'] // default formats
     if (typeof window !== 'undefined' && ReactQuill) {
       return (
-        <div>
-          {console.log(this.props)}
-          { questions[0].data }
-          <ReactQuill
-            onChange={(val) => setAnswer(1, val)}
-            theme='snow'
-            value={answers[0].data}
-            modules={this.modules}
-          />
-        </div>
+        <ReactQuill
+          onChange={(val) => setAnswer(1, val)}
+          theme='snow'
+          value={answers[0].data}
+          modules={this.modules}
+        />          
       )
     }
     return <textarea />
