@@ -26,10 +26,6 @@ export class Editor extends React.Component {
     }
   }
 
-  handle (value) {
-    this.setState({value})
-  }
-
   render () {
     const ReactQuill = this.ReactQuill
     const { questions, answers, setAnswer } = this.props
