@@ -1,17 +1,197 @@
 {
   "header": "สมัครค่าย",
-  "fields": [
-    {
-      "name": "firstName",
+  "fields": {
+    "firstName": {
+      "name": "first_name",
       "label": "ชื่อจริง (ภาษาไทย)",
       "component": "input",
       "type": "text"
     },
-    {
-      "name": "lastName",
+    "lastName": {
+      "name": "last_name",
       "label": "นามสกุลจริง (ภาษาไทย)",
       "component": "input",
       "type": "text"
+    },
+    "firstName_en": {
+      "name": "first_name_en",
+      "label": "ชื่อจริง (ภาษาอังกฤษ)",
+      "component": "input",
+      "type": "text"
+    },
+    "lastName_en": {
+      "name": "last_name_en",
+      "label": "นามสกุลจริง (ภาษาอังกฤษ)",
+      "component": "input",
+      "type": "text"
+    },
+    "nickname": {
+      "name": "nickname",
+      "label": "ชื่อเล่น (ภาษาไทย)",
+      "component": "input",
+      "type": "text"
+    },
+    
+    "date_dob": {
+      "name": "date_dob",
+      "label": "วัน/เดือน/ปี เกิด",
+      "component": "select",
+      "type": ""
+    },
+    "month_dob": {
+      "name": "month_dob",
+      "label": "วัน/เดือน/ปี เกิด",
+      "component": "select",
+      "type": ""
+    },
+    "year_dob": {
+      "name": "year_dob",
+      "label": "วัน/เดือน/ปี เกิด",
+      "component": "select",
+      "type": ""
+    },
+    "citizen_id": {
+      "name": "citizen_id",
+      "label": "เลขที่บัตรประชาชน",
+      "component": "input",
+      "type": "number"
+    },
+    "gender": {
+      "name": "gender",
+      "label": "เพศ",
+      "component": "input",
+      "type": "radio",
+      "values": ["ชาย", "หญฺิง"]
+    },
+    "blood": {
+      "name": "blood_group",
+      "label": "กรุ๊ปเลือด",
+      "component": "select",
+      "type": ""
+    },
+    
+    "religion": {
+      "name": "religion",
+      "label": "ศาสนา",
+      "component": "select",
+      "type": ""
+    },
+    "school": {
+      "name": "edu_name",
+      "label": "โรงเรียน",
+      "component": "datalist",
+      "type": ""
+    },
+    "grade": {
+      "name": "edu_lv",
+      "label": "ระดับชั้น",
+      "component": "select",
+      "type": ""
+    },
+    "gpax": {
+      "name": "edu_gpax",
+      "label": "เกรด",
+      "compoent": "select",
+      "type": "number"
+    },
+    "major": {
+      "name": "edu_major",
+      "label": "สายการเรียน",
+      "component": "select",
+      "type": ""
+    },
+    "district": {
+      "name": "addr_dist",
+      "label": "เขต/อำเภอ",
+      "component": "select",
+      "type": ""
+    },
+    "province": {
+      "name": "addr_prov",
+      "label": "จังหวัด",
+      "component": "select",
+      "type": ""
+    },
+    "telno": {
+      "name": "telno_personal",
+      "label": "เบอร์โทรศัพท์",
+      "component": "input",
+      "type": "tel"
+    },
+    "allergic_foods": {
+      "name": "allergic_foods",
+      "label": "อาหารที่แพ้",
+      "component": "input",
+      "type": "text"
+    },
+    "congenital_drugs": {
+      "name": "congenital_drugs",
+      "label": "ยาที่แพ้",
+      "component": "input",
+      "type": "text"
+    },
+    "congenital_diseases": {
+      "name": "congenital_diseases",
+      "label": "โรคประจำตัว",
+      "component": "input",
+      "type": "text"
+    },
+    "telno_parent": {
+      "name": "telno_parent",
+      "label": "เบอร์โทรศัพท์ผู้ปกครอง",
+      "component": "input",
+      "type": "tel"
+    },
+    
+    "emergency_fname": {
+      "name": "parent_first_name",
+      "label": "ชื่อจริงของผู้ปกครอง",
+      "component": "input",
+      "type": "text"
+    },
+    "emergency_lname": {
+      "name": "parent_last_name",
+      "label": "นามสกุลของผู้ปกครอง",
+      "component": "input",
+      "type": "text"
+    },
+    
+    "parent_relation": {
+      "name": "parent_relation",
+      "label": "เกี่ยวข้องเป็น",
+      "component": "",
+      "type": ""
+    },
+    "skill_computer": {
+      "name": "skill_computer",
+      "label": "น้องๆ เคยมีทักษะคอมพิวเตอร์มาก่อนหรือเปล่า",
+      "component": "textarea",
+      "type": ""
+    },
+    "past_camp": {
+      "name": "past_camp",
+      "label": "ค่ายที่เคยเข้า",
+      "component": "textarea",
+      "type": ""
+    },
+    "activities": {
+      "name": "activities",
+      "label": "กิจกรรมต่าง ๆ",
+      "component": "textarea",
+      "type": ""
+    },
+    "known_camp_via": {
+      "name": "known_via",
+      "label": "รู้จักค่ายนี้จากไหน",
+      "component": "input",
+      "type": "radio",
+      "values": ["facebook", "line", "อื่น ๆ"]
+    },
+    "tell_something": {
+      "name": "",
+      "label": "มีอะไรอยากจะบอกไหม",
+      "component": "textarea",
+      "type": ""
     }
-  ]
+  }
 }
