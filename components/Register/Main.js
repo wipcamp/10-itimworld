@@ -2,7 +2,24 @@ import React from 'react'
 import { compose } from 'recompose'
 import { Field, reduxForm } from 'redux-form'
 import styled from 'styled-components'
-import { header, fields } from './form.json'
+import {
+  header,
+  information_fields,
+  dob_fields,
+  citizen_field,
+  gender_field,
+  blood_field,
+  religion_field,
+  school_field,
+  schoolGrade_field,
+  gpax_field,
+  major_field,
+  addr_fields,
+  telno_field,
+  emergency_fields,
+  parent_fields,
+  textarea_fields
+} from './form.json'
 import {actions as registerActions} from '../../store/reducers/register'
 import dataDropdown from './data-dropdown.json'
 
@@ -35,43 +52,61 @@ const templateSelect = ({
   type,
   meta: { touched, error, warning },
   className,
+  middleClass,
   dropdown,
-  width = '100%'
+  width = '100%',
+  values,
+  separator
 }) => (
-  <Select {...input} type={type} className={className} width={width}>
-    <option disabled>โปรดเลือก</option>
-    {
-      dropdown.map((v, i) => (
-        <option key={i} value={v}>{v}</option>
-      ))
-    }
-  </Select>
+  <div className={middleClass}>
+    <Select {...input} type={type} className={className} width={width} separator={separator}>
+      <option value='' >โปรดเลือก</option>
+      {
+        dropdown.map((v, i) => (
+          <option key={i} value={values[i]}>{v}</option>
+        ))
+      }
+    </Select>
+  </div>
+)
+
+const templateTextArea = ({
+  input,
+  meta: { touched, error, warning },
+  className
+}) => (
+  <TextArea {...input} className={className} />
 )
 
 const templateDataList = ({
   input,
   meta: { touched, error, warning },
   className,
-  dropdown
+  dropdown,
+  list
 }) => (
-  <datalist {...input} className={className}>
-    {
-      dropdown.map((v, i) => (
-        <option key={i} value={v} />
-      ))
-    }
-  </datalist>
+  <div>
+    <Input list={list} className={className} {...input} />
+    <datalist id={list} >
+      {
+        dropdown.map((v, i) => (
+          <option key={i} value={v} />
+        ))
+      }
+    </datalist>
+  </div>
 )
 
 const templateRadio = ({
   input,
   type,
   meta: { touched, error, warning },
-  className,
-  value
-}) => (
-  <Input {...input} type={type} className={className} value={value} />
-)
+  className
+}) => {
+  return (
+    <Input {...input} type={type} className={className} />
+  )
+}
 
 const StyledHeader = styled.div`
   background-image: url('https://wip.camp/assets/img/logo/wipcamp9-full-transparent.svg');
@@ -83,31 +118,37 @@ const StyledHeader = styled.div`
 `
 
 const SubHeader = styled.h3`
-  background: #032E51;
+  background: #336699;
   color: #fff;
   padding: 10px 0;
   margin: 0;
+  border-radius: 10px 10px 0 0;
 `
 
 const BackgroundContainer = styled.div`
-  background: #045DA5;
+  background: #252525;
   min-height: 100vh;
   height: auto;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 `
 
 const inputStyle = {
   backgroundColor: '#D6D6D6',
-  color: '#fff'
+  color: '#fff',
+  minHeight: '38px'
 }
 
 const Input = styled.input`
 
   background-color: ${inputStyle.backgroundColor};
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 4px 15px;
   outline: 0;
   border: 0;
   color: ${inputStyle.color};
+  min-height: ${inputStyle.minHeight};
 
   &:foucus {
     background-color: #D6D6D6 !important;
@@ -120,10 +161,10 @@ const TextArea = styled.textarea`
 `
 
 const RegisterSection = styled.form`
-  color: blue;
+  color: #0E3559;
   background: #fff;
   margin-bottom: 5em;
-  border-radius: 0 0 10px 10px;
+  border-radius: 10px;
   /* box-shadow: 0px 5px 10px 2px rgba(0,0,0,0.5); */
 `
 
@@ -135,7 +176,7 @@ const Label = styled.label`
 const Select = styled.select`
   width: ${props => props.width};
   background-color: #D6D6D6;
-  border-radius: 20px;
+  border-radius: 10px;
     color: white;
 
   & select {
@@ -143,14 +184,26 @@ const Select = styled.select`
     background-color: #fff;
     height: 100px;
   }
+  &:after {
+    content: "/";
+    color: pink;
+  }
+  &:last-child:after {
+    content: "";
+  }
+
+  ${props => props.separator && `
+  `}
 `
 
-const Button = styled.button`
-  border-radius: 10px;
-`
+const SubmitButton = styled.button`
+  background-color: #336699;
+  color: #fff;
+  font-weight: bold;
 
-const Radio = styled.input`
-
+  &:hover {
+    cursor: ${props => props.disabled ? 'no-drop' : 'pointer'} ;
+  }
 `
 
 export const MainRegister = props => {
@@ -175,253 +228,203 @@ export const MainRegister = props => {
                   <div className='col-12 text-dark'>
                     <h2>ข้อมูลส่วนตัว</h2>
                   </div>
-                  {/* field */}
-                  <div className='col-12 col-sm-6 text-left form-group'>
-                    <Label>{fields.firstName.label}</Label>
-                    <Field name={fields.firstName.name} component={templateInput} type={fields.firstName.type} className='form-control' />
-                  </div>
-                  <div className='col-12 col-sm-6 text-left form-group'>
-                    <Label>{fields.lastName.label}</Label>
-                    <Field name={fields.lastName.name} component={templateInput} type={fields.lastName.type} className='form-control' />
-                  </div>
-                  <div className='col-12 col-sm-6 text-left form-group'>
-                    <Label>{fields.firstName_en.label}</Label>
-                    <Field name={fields.firstName_en.name} component={templateInput} type={fields.firstName_en.type} className='form-control' />
-                  </div>
-                  <div className='col-12 col-sm-6 text-left form-group'>
-                    <Label>{fields.lastName_en.label}</Label>
-                    <Field name={fields.lastName_en.name} component={templateInput} type={fields.lastName_en.type} className='form-control' />
-                  </div>
-                  <div className='col-12 col-sm-6 text-left form-group'>
-                    <Label>{fields.nickname.label}</Label>
-                    <Field name={fields.nickname.name} component={templateInput} type={fields.nickname.type} className='form-control' />
-                  </div>
-                  {/* field */}
+                  {
+                    information_fields.map((e, i) => (
+                      <div key={i} className={e.outerClass}>
+                        <Label>{e.label}</Label>
+                        <Field
+                          name={e.name}
+                          component={templateInput}
+                          type={e.type}
+                          className={e.innerClass}
+                        />
+                      </div>
+                    ))
+                  }
 
-                  <div className='col-12 col-sm-6 text-left form-group'>
-                    <Label>{fields.date_dob.name}</Label>
-                    <div>
-
-                      <Field
-                        name={fields.date_dob.name}
-                        component={templateSelect}
-                        className='form-control d-inline-block'
-                        dropdown={new Array(31).fill(0).map((v, i) => i + 1)}
-                        width='65px'
-                      />
-                      <Field
-                        name={fields.month_dob.name}
-                        component={templateSelect}
-                        className='form-control d-inline-block ml-1'
-                        width='110px'
-                        dropdown={dataDropdown.months}
-                      />
-                      <Field
-                        name={fields.year_dob.name}
-                        component={templateSelect}
-                        className='form-control d-inline-block ml-1'
-                        width='85px'
-                        dropdown={[1998, 1999, 2000, 2001]}
-                      />
+                  {
+                    <div className={dob_fields.outerClass}>
+                      <Label>{dob_fields.label}</Label>
+                      <div>
+                        {
+                          dob_fields.data.map((e, i) => (
+                            <Field
+                              name={e.name}
+                              component={templateSelect}
+                              className={e.innerClass + ' col'}
+                              middleClass={dob_fields.middleClass}
+                              dropdown={e.dropdown}
+                              values={e.values}
+                              separator={1}
+                            />
+                          ))
+                        }
+                      </div>
                     </div>
-                  </div>
-                  <div className='col-12 col-sm-8 text-left form-group'>
-                    <Label>เลขที่บัตรประชาชน</Label>
+                  }
+
+                  <div className={citizen_field.outerClass}>
+                    <Label>{citizen_field.label}</Label>
                     <Field
-                      name={fields.citizen_id.name}
+                      name={citizen_field.name}
                       component={templateInput}
-                      type={fields.citizen_id.type}
-                      className='form-control'
+                      className={citizen_field.innerClass}
                     />
                   </div>
-                  <div className='col-sm-4 d-none d-sm-inline-block' />
-                  <div className='form-check col-12 col-sm-4 text-left form-group'>
-                    <Label>{fields.gender.label}</Label>
+                  <div className={`d-sm-inline-block d-none col-4`} />
+                  <div className={gender_field.outerClass}>
+                    <Label>{gender_field.label}</Label>
                     <div>
-                      <div className='form-check form-check-inline ml-sm-4 mb-0' >
-                        <Field
-                          name={fields.gender.name}
-                          component={templateRadio}
-                          type={fields.gender.type}
-                          value={fields.gender.values[0]}
-                        />{` `}
-                        <label className=' pl-0' htmlFor='inlineRadio1' >{fields.gender.values[0]}</label>
-                      </div>
-                      <div className='form-check form-check-inline ml-sm-4' >
-                        <Field
-                          name={fields.gender.name}
-                          component={templateRadio}
-                          type={fields.gender.type}
-                          value={fields.gender.values[1]}
-                        />{` `}
-                        <label className=' pl-0' htmlFor='inlineRadio1' >{fields.gender.values[1]}</label>
-                      </div>
+                      {
+                        gender_field.data.map((e, i) => (
+                          <div key={i} className={e.innerClass}>
+                            <Field
+                              name={gender_field.name}
+                              component={'input'}
+                              value={`${i + 1}`}
+                              type={'radio'}
+                            />
+                            <label className=' pl-0' htmlFor='gender-input' >{e.label}</label>
+                          </div>
+                        ))
+                      }
                     </div>
                   </div>
-                  <div className='col-12 col-sm-2 text-left form-group'>
-                    <Label>{fields.blood.label}</Label>
+                  <div className={telno_field.outerClass}>
+                    <Label>{telno_field.label}</Label>
+                    <Field
+                      name={telno_field.name}
+                      component={templateInput}
+                      type={telno_field.type}
+                      className={telno_field.innerClass}
+                    />
+                  </div>
+                  {
+                    addr_fields.map((e, i) => (
+                      <div key={i} className={e.outerClass}>
+                        <Label>{e.label}</Label>
+                        <Field
+                          name={e.name}
+                          component={templateSelect}
+                          dropdown={e.dropdown}
+                          values={e.dropdown}
+                          className={e.innerClass}
+                        />
+                      </div>
+                    ))
+                  }
+                  <div className={blood_field.outerClass}>
+                    <Label>{blood_field.label}</Label>
+                    <Field
+                      name={blood_field.name}
+                      component={templateSelect}
+                      className={blood_field.innerClass}
+                      dropdown={blood_field.dropdown}
+                      values={blood_field.dropdown}
+                    />
+                  </div>
+                  <div className={religion_field.outerClass}>
+                    <Label>{religion_field.label}</Label>
+                    <Field
+                      name={religion_field.name}
+                      component={templateSelect}
+                      className={religion_field.innerClass}
+                      dropdown={religion_field.dropdown}
+                      values={religion_field.dropdown}
+                    />
+                  </div>
 
+                  <div className={school_field.outerClass}>
+                    <Label>{school_field.label}</Label>
                     <Field
-                      name={fields.blood.name}
-                      component={templateSelect}
-                      className='form-control d-block ml-1'
-                      dropdown={dataDropdown.blood}
-                    />
-                  </div>
-                  <div className='col-12 col-sm-4 text-left form-group'>
-                    <Label>{fields.religion.label}</Label>
-                    <Field
-                      name={fields.religion.name}
-                      component={templateSelect}
-                      className='form-control d-block ml-1'
-                      dropdown={dataDropdown.religion}
-                    />
-                  </div>
-                  <div className='col-12 col-sm-6 text-left form-group'>
-                    <Label>{fields.school.label}</Label>
-                    <Field
-                      className='form-control d-inline-block ml-1'
-                      name={fields.school.name}
+                      className={school_field.innerClass}
+                      name={school_field.name}
                       component={templateDataList}
                       dropdown={['โรงเรียนของเราน่าอยู่', 'โรงเรียนของเราน่าอยู่ 2']}
+                      list={school_field.list}
                     />
-                    <Select className='form-control d-inline-block ml-1'>
-                      <option>ไก่</option>
-                      <option>-</option>
-                    </Select>
                   </div>
-                  <div className='col-12 col-sm-3 text-left form-group'>
-                    <Label>{fields.grade.label}</Label>
+
+                  <div className={schoolGrade_field.outerClass}>
+                    <Label>{schoolGrade_field.label}</Label>
                     <Field
-                      name={fields.grade.name}
+                      name={schoolGrade_field.name}
                       component={templateSelect}
-                      dropdown={dataDropdown.academicYear}
-                      className='form-control d-inline-block ml-1'
+                      className={school_field.innerClass}
+                      dropdown={schoolGrade_field.dropdown}
+                      values={schoolGrade_field.dropdown}
                     />
                   </div>
-                  <div className='col-12 col-sm-3 text-left form-group'>
-                    <Label>{fields.gpax.label}</Label>
+                  <div className={gpax_field.outerClass}>
+                    <Label>{gpax_field.label}</Label>
                     <Field
-                      name={fields.gpax.name}
+                      name={gpax_field.name}
                       component={templateInput}
-                      type={fields.gpax.type}
-                      className='form-control'
+                      type={gpax_field.type}
+                      className={gpax_field.innerClass}
                     />
                   </div>
-                  <div className='col-12 col-sm-3 text-left form-group'>
-                    <Label>{fields.major.label}</Label>
+                  <div className={major_field.outerClass}>
+                    <Label>{major_field.label}</Label>
                     <Field
-                      name={fields.major.name}
+                      name={major_field.name}
                       component={templateSelect}
+                      className={major_field.innerClass}
                       dropdown={dataDropdown.major}
-                      className='form-control d-inline-block ml-1'
+                      values={dataDropdown.major}
                     />
                   </div>
-                  <div className='col-12 text-dark form-group'>
-                    <hr />
-                    <h2>ติดต่อ</h2>
-                  </div>
-                  <div className='col-12 col-sm-4 text-left form-group'>
-                    <Label>{fields.district.label}</Label>
-                    <Field
-                      name={fields.district.name}
-                      component={templateSelect}
-                      dropdown={dataDropdown.district}
-                      className='form-control d-inline-block ml-1'
-                    />
-                  </div>
-                  <div className='col-12 col-sm-4 text-left form-group'>
-                    <Label>จังหวัด</Label>
-                    <Select className='form-control d-inline-block ml-1'>
-                      <option>จังหวัด</option>
-                      <option>อะไรวะ</option>
-                    </Select>
-                  </div>
-                  <div className='col-12 col-sm-4 text-left form-group'>
-                    <Label>รหัสไปรษณีย์</Label>
-                    <Input className='form-control' />
-                  </div>
-                  <div className='col-12 col-sm-5 text-left form-group'>
-                    <Label>เบอร์โทรศัพท์</Label>
-                    <Input className='form-control' />
-                  </div>
-                  <div className='col-12 text-dark'>
-                    <hr />
-                    <h2>ฉุกเฉิน</h2>
-                  </div>
-                  <div className='col-12 col-sm-5 text-left form-group'>
-                    <Label>อาหารที่แพ้</Label>
-                    <Input className='form-control' />
-                  </div>
-                  <div className='col-12 col-sm-5 text-left form-group'>
-                    <Label>โรคประจำตัว</Label>
-                    <Input className='form-control' />
-                  </div>
-                  <div className='col-12 col-sm-5 text-left form-group'>
-                    <Label>ยาที่แพ้</Label>
-                    <Input className='form-control' />
-                  </div>
-                  <div className='col-12 col-sm-5 text-left form-group'>
-                    <Label>ยาประจำตัว</Label>
-                    <Input className='form-control' />
-                  </div>
+                  {
+                    parent_fields.map((e, i) => (
+                      <div key={i} className={e.outerClass}>
+                        <Label>{e.label}</Label>
+                        <Field
+                          name={e.name}
+                          component={templateInput}
+                          className={e.innerClass}
+                        />
+                      </div>
+                    ))
+                  }
+                  {
+                    emergency_fields.map((e, i) => (
+                      <div key={i} className={e.outerClass}>
+                        <Label>{e.label}</Label>
+                        <Field
+                          name={e.name}
+                          component={templateInput}
+                          className={e.innerClass}
+                        />
+                      </div>
+                    ))
+                  }
                   <div className='col-12' />
-                  <div className='col-12 col-sm-5 text-left form-group'>
-                    <Label>เบอร์โทรศัพท์ผู้ปกครอง</Label>
-                    <Input className='form-control' />
-                  </div>
-                  <div className='col-12 col-sm-5 text-left form-group'>
-                    <Label>เบอร์โทรศัพท์ผู้ปกครอง</Label>
-                    <input type='radio' /> พ่อ
-                    <input type='radio' /> แม่
-                  </div>
 
                   <div className='col-12 text-dark'>
                     <hr />
                     <h2>ทักษะคอมพิวเตอร์</h2>
                   </div>
-                  <div className='col-12 text-left form-group'>
-                    <Label>น้องๆ เคยมีทักษะคอมพิวเตอร์มาก่อนหรือเปล่า</Label>
-                    <TextArea className='form-control' />
-                  </div>
-                  <div className='col-12 text-left form-group'>
-                    <Label>ค่ายที่เคยเข้า</Label>
-                    <TextArea className='form-control' />
-                  </div>
-                  <div className='col-12 text-left form-group'>
-                    <Label>น้องๆ เคยมีทักษะคอมพิวเตอร์มาก่อนหรือเปล่า</Label>
-                    <TextArea className='form-control' />
-                  </div>
-                  <div className='col-12 text-left form-group'>
-                    <Label>รู้จักค่ายนี้จากไหน</Label>
-                    <div className='form-check col-12 col-sm-4 text-left form-group'>
-                      <div>
-                        <div className='form-check form-check-inline ml-sm-4 mb-0' >
-                          <Input className='form-check-input' type='radio' name='inlineRadioOptions' id='inlineRadio1' value='option1' />
-                          <label className='form-check-label pl-0' htmlFor='inlineRadio1' style={{marginTop: '-13px', verticalAlign: 'middle'}}>facebook</label>
-                        </div>
-                        <div className='form-check form-check-inline ml-sm-4' >
-                          <Input className='form-check-input' type='radio' name='inlineRadioOptions' id='inlineRadio1' value='option1' />
-                          <label className='form-check-label pl-0' htmlFor='inlineRadio1' style={{marginTop: '-13px'}}>line</label>
-                        </div>
-                        <div className='form-check form-check-inline ml-sm-4' >
-                          <Input className='form-check-input' type='radio' name='inlineRadioOptions' id='inlineRadio1' value='option1' />
-                          <label className='form-check-label pl-0' htmlFor='inlineRadio1' style={{marginTop: '-13px'}}>อื่นๆ</label>
-                          <div className='form-group'>
-                            <Input className='form-control' placeholder='อื่นๆ' />
-                          </div>
-                        </div>
+                  {
+                    textarea_fields.map((e, i) => (
+                      <div key={i} className={e.outerClass}>
+                        <label>{e.label}</label>
+                        <Field
+                          name={e.name}
+                          component={templateTextArea}
+                          className={e.innerClass}
+                        />
                       </div>
-                    </div>
-                  </div>
-                  <div className='col-12 text-left form-group'>
-                    <Label>มีอะไรอยากจะบอกไหม </Label>
-                    <TextArea className='form-control' />
-                  </div>
-                  <div className='col-12 text-right'>
-                    <button className={'btn btn-primary'} type='submit' disabled={pristine || submitting}>
-                      ถัดไป
-                    </button>
+                    ))
+                  }
+                  <div className='col-12'>
+                    <SubmitButton
+                      className={'btn btn-lg'}
+                      type='submit'
+                      disabled={pristine || submitting}
+                      title={'ถัดไป'}
+                    >
+                    ถัดไป
+                    </SubmitButton>
                   </div>
                 </div>
               </RegisterSection>
@@ -435,6 +438,9 @@ export const MainRegister = props => {
 
 export default compose(
   reduxForm({
-    form: 'register'
+    form: 'register',
+    initialValues: {
+      user_id: 1
+    }
   })
 )(MainRegister)
