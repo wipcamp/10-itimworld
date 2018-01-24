@@ -1,10 +1,13 @@
-import { defineAction } from 'redux-define'
+const applicationName = 'wip-itim'
+const separator = '/'
+const promiseState = ['_PENDING', '_FULFILLED', '_REJECTED']
 
-const appsCreator = defineAction('wip-itim')
-
-export const promiseStates = ['PENDING', 'RESOLVED', 'REJECTED']
-export default namespace => (action, isContainPromiseStates) => (
-  isContainPromiseStates
-    ? appsCreator.defineAction(namespace).defineAction(action, promiseStates)
-    : appsCreator.defineAction(namespace).defineAction(action).toString()
-)
+export default nameSpace => (action, containPromise) => {
+  let actionType = applicationName + separator + nameSpace + separator + action
+  return containPromise ? {
+    ACTION: actionType,
+    PENDING: actionType + promiseState[0],
+    FULFILLED: actionType + promiseState[1],
+    REJECTED: actionType + promiseState[2]
+  } : actionType
+}
