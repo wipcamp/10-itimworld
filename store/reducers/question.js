@@ -1,9 +1,12 @@
 import actionCreator from '../../utils/actionCreator'
+import api from '../../utils/api'
 
 // Actions
 const questionAction = actionCreator('answer')
 const SET_QUESTION = questionAction('SET_QUESTION')
 const SET_ANSWER = questionAction('SET_ANSWER')
+const SET_CURRENT_QUESTION = questionAction('SET_CURRENT_QUESTION')
+const SAVE_ANSWER = questionAction('SAVE_ANSWER')
 
 const initialState = {
   questions: [],
@@ -11,6 +14,7 @@ const initialState = {
     questionid: '',
     data: ''
   },
+  currentQuestion:''
 }
 
 // Reducer
@@ -24,16 +28,29 @@ export default (state = initialState, action) => {
     }
 
     case SET_ANSWER: {
-      // find answer
-      const answerFromState = state.answers.find(data => data.questionid === action.qid)
-      answerFromState.data = action.answer
       return {
-        ...state
+        ...state,
         answers: {
           questionid: action.qid,
           data: action.answer
         }
       }
+    }
+
+    case SET_CURRENT_QUESTION: {
+      return {
+        ...state,
+        currentQuestion: action.questionData
+      }
+    }
+
+    case SAVE_ANSWER: {
+      console.log('posted')
+      api.post(`/answers`,{
+        question_id: action.qid,
+        user_id: action.uid,
+        data: action.answerData, 
+      })
     }
 
     default:
@@ -51,5 +68,13 @@ export const actions = {
     type: SET_ANSWER,
     qid,
     answer
+  }),
+  setCurrentQuestion: (questionData) => ({
+    type: SET_CURRENT_QUESTION,
+    questionData
+  }),
+  saveAnswer: (qid,uid,answerData) => ({
+    type: SAVE_ANSWER,
+    qid,uid,answerData
   })
 }
