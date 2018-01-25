@@ -25,18 +25,9 @@ const initialState = {
   /*
   another way to assign answer object that easy to find
   answers: {
-    question1: {
-      data
-    },
-    question2: {
-      data
-    }
-  }
-
-  how to find
-  answers['question1'].data = 'new value'
-
-  */
+    questionid: '',
+    data: ''
+  },
 }
 
 // Reducer
@@ -55,6 +46,10 @@ export default (state = initialState, action) => {
       answerFromState.data = action.answer
       return {
         ...state
+        answers: {
+          questionid: action.qid,
+          data: action.answer
+        }
       }
     }
 
