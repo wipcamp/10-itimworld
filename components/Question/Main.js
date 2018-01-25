@@ -1,18 +1,21 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { compose } from 'recompose'
+import { compose, lifecycle } from 'recompose'
 import { actions as questionActions } from '../../store/reducers/question'
 import Editor from './Editor'
+import axios from 'axios'
+import {Link} from '../../routes'
 
 export const MainQuestion = props => {
-  const { question: { questions: allQuestion } } = props
+  const { question: { questions: allQuestion }, setQuestion } = props
   return (
     <div>
       <h1>Questions</h1>
       { allQuestion.map((question) => (
-        <button key={question.id}>{question.data}</button>
+        <Link route={`/question/answer/${question.id}`} prefetch  key={question.id}>
+          <button>{question.id + ': ' + question.data}</button>
+        </Link>
       ))}
-      <Editor {...props} />
     </div>
   )
 }
@@ -23,5 +26,14 @@ export default compose(
       question: state.question
     }),
     { ...questionActions }
-  )
+  ),
+  lifecycle({
+    componentWillMount() {
+      let {setQuestion} = this.props
+      axios.get('http://localhost:8000/api/v1/questions')
+      .then(function(response) {
+        setQuestion(response.data)
+      })
+    }
+  })
 )(MainQuestion)

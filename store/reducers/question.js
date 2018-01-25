@@ -2,28 +2,11 @@ import actionCreator from '../../utils/actionCreator'
 
 // Actions
 const questionAction = actionCreator('answer')
-const SET_FIELD = questionAction('SET_FIELD')
+const SET_QUESTION = questionAction('SET_QUESTION')
 const SET_ANSWER = questionAction('SET_ANSWER')
 
 const initialState = {
-  questions: [
-    {
-      id: 1,
-      data: 'Question 1'
-    },
-    {
-      id: 2,
-      data: 'Question 2'
-    }
-  ],
-  answers: [
-    {
-      questionid: 1,
-      data: ''
-    }
-  ]
-  /*
-  another way to assign answer object that easy to find
+  questions: [],
   answers: {
     questionid: '',
     data: ''
@@ -33,10 +16,10 @@ const initialState = {
 // Reducer
 export default (state = initialState, action) => {
   switch (action.type) {
-    case SET_FIELD: {
+    case SET_QUESTION: {
       return {
         ...state,
-        [action.field]: action.value
+        questions:action.questions
       }
     }
 
@@ -60,10 +43,9 @@ export default (state = initialState, action) => {
 
 // Action Creators
 export const actions = {
-  setField: (field, value) => ({
-    type: SET_FIELD,
-    field,
-    value
+  setQuestion: (questions) => ({
+    type: SET_QUESTION,
+    questions,
   }),
   setAnswer: (qid, answer) => ({
     type: SET_ANSWER,
