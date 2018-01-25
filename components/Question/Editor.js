@@ -28,14 +28,13 @@ export class Editor extends React.Component {
 
   render () {
     const ReactQuill = this.ReactQuill
-    const { questions, answers, setAnswer } = this.props
-    this.formats = ['italic', 'underline'] // default formats
+    const { answers, setAnswer, questionNumber } = this.props
     if (typeof window !== 'undefined' && ReactQuill) {
       return (
         <ReactQuill
           onChange={(val) => setAnswer(1, val)}
           theme='snow'
-          value={answers[0].data}
+          value={answers.data}
           modules={this.modules}
         />          
       )
@@ -47,7 +46,6 @@ export class Editor extends React.Component {
 export default compose(
   connect(
     state => ({
-      questions: state.question.questions,
       answers: state.question.answers
     }),
     { setAnswer: questionActions.setAnswer }
