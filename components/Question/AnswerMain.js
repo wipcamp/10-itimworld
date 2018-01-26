@@ -27,6 +27,15 @@ const saveAnswer = (questionid,data,props) => {
   saveAnswer(questionid,1,data)
 }
 
+const getQuestionData = (props) => {
+  console.log('getQuestionData')
+  let {url:{query:id},setCurrentQuestion} = props
+      api.get(`/questions/${id.id}`)
+      .then((response)=> {
+        setCurrentQuestion(response.data[0])
+      })
+}
+
 export default compose(
   connect(
     state => ({
@@ -36,11 +45,7 @@ export default compose(
   ),
   lifecycle({
     componentWillMount() {
-      let {url:{query:id},setCurrentQuestion} = this.props
-      axios.get(`http://localhost:8000/api/v1/questions/${id.id}`)
-      .then(function(response) {
-        setCurrentQuestion(response.data[0])
-      })
+      getQuestionData(this.props)
     }
   })
 )(MainAnswer)

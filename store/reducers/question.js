@@ -1,5 +1,4 @@
 import actionCreator from '../../utils/actionCreator'
-import api from '../../utils/api'
 
 // Actions
 const questionAction = actionCreator('answer')

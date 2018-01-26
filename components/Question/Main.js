@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { compose, lifecycle } from 'recompose'
 import { actions as questionActions } from '../../store/reducers/question'
 import Editor from './Editor'
-import axios from 'axios'
+import api from '../../utils/api'
 import {Link} from '../../routes'
 
 export const MainQuestion = props => {
@@ -20,6 +20,15 @@ export const MainQuestion = props => {
   )
 }
 
+const getQuestions = (props) => {
+  console.log('getQuestions')
+  let {setQuestion} = props
+  api.get('/questions')
+  .then((response)=>{
+    setQuestion(response.data)
+  })
+}
+
 export default compose(
   connect(
     state => ({
@@ -29,11 +38,7 @@ export default compose(
   ),
   lifecycle({
     componentWillMount() {
-      let {setQuestion} = this.props
-      axios.get('http://localhost:8000/api/v1/questions')
-      .then(function(response) {
-        setQuestion(response.data)
-      })
+      getQuestions(this.props)
     }
   })
 )(MainQuestion)
