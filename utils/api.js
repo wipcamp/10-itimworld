@@ -4,14 +4,16 @@ const createInstance = () => (
   axios.create({
     baseURL: 'http://localhost:8000/api/v1',
     headers: {
-      'x-access-token': ''
+      // 'x-access-token': ''
+      // 'Accept': 'application/json',
+      // 'Content-Type': 'application/json'
     }
   })
 )
 
 const handleResponse = res => res.data ? Promise.resolve(res) : Promise.reject(res)
 
-const catchError = err => Promise.reject(err)
+const catchError = err => Promise.reject(err.message)
 
 export default {
   get: path => (

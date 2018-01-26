@@ -280,22 +280,6 @@
   ],
   "parent_fields": [
     {
-      "name": "parent_first_name",
-      "label": "ขื่อผู้ปกครอง",
-      "outerClass": "col-6 col-sm-6 text-left form-group",
-      "innerClass": "form-control",
-      "type": "text",
-      "placeholder": ""
-    },
-    {
-      "name": "parent_last_name",
-      "label": "นามสกุลผู้ปกครอง",
-      "outerClass": "col-6 col-sm-6 text-left form-group",
-      "innerClass": "form-control",
-      "type": "text",
-      "placeholder": ""
-    },
-    {
       "name": "telno_parent",
       "label": "โทรศัพท์ของผู้ปกครอง",
       "outerClass": "col-6 col-sm-6 text-left form-group",

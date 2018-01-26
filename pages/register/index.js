@@ -1,8 +1,8 @@
 import React from 'react'
-import RegisterPage from '../components/Register/Main'
+import RegisterPage from '../../components/Register/Main'
 import { compose } from 'recompose'
 
-import withRedux from '../store/wrapper'
+import withRedux from '../../store/wrapper'
 
 const Register = props => (
   <RegisterPage {...props} />
