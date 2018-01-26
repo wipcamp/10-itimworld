@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: wip-itim-development
+  labels:
+    app: wip-itim
+    organize: wipcamp10
+    tier: frontend
+    env: development
+spec:
+  replicas: 2
+  selector:
+    app: wip-itim
+    organize: wipcamp10
+    tier: frontend
+    env: development
+  template:
+    metadata:
+      labels:
+        app: wip-itim
+        organize: wipcamp10
+        tier: frontend
+        env: development
+    spec:
+      containers:
+      - name: wip-itim
+        image: registry.wip.camp/wip-itim
+        ports:
+        - containerPort: 3000
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: wip-itim-development
+  labels:
+    app: wip-itim
+    organize: wipcamp10
+    tier: frontend
+    env: development
+spec:
+  type: LoadBalancer
+  selector:
+    app: wip-itim
+    organize: wipcamp10
+    tier: frontend
+    env: development
+  ports:
+  - port: 80
+    targetPort: 3000
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: wip-itim-development
+  labels:
+    app: wip-itim
+    organize: wipcamp10
+    tier: frontend
+    env: development
+spec:
+  rules:
+  - host: itim.freezer.wip.camp
+    http:
+      paths:
+      - backend:
+          serviceName: wip-itim-development
+          servicePort: 80
