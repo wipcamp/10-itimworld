@@ -1,6 +1,7 @@
 import React from 'react'
 import { compose } from 'recompose'
 import { Field, reduxForm } from 'redux-form'
+import withRedux from '../../store/wrapper'
 import { connect } from 'react-redux'
 import styled, { injectGlobal } from 'styled-components'
 import {
@@ -212,15 +213,27 @@ const RadioContainer = styled.div`
 
   & > input[type=radio] {
     position: absolute;
-    visibility: hidden;
+    /* visibility: hidden; */
+    /* top:7px;
+    left: 7px;
+    outline: none; */
+    z-index: -1;
 
     &:checked ~ div.check::before {
       background: ${inputStyle.color};
     }
+
+    &:focus ~ div.check {
+      border-color: #80bdff;
+      background: #fff;
+      box-shadow: 0 0 0 0.1rem rgba(0,123,255,.25);
+    }
   }
 
   & > div.check {
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     border: 1px solid ${inputStyle.borderColor};
     border-radius: 100%;
@@ -234,13 +247,10 @@ const RadioContainer = styled.div`
 
     &::before {
       display: block;
-      position: absolute;
       content: '';
       border-radius: 100%;
       height: 12px;
       width: 12px;
-      top: 3px;
-      left: 3px;
       margin: auto;
       transition: background 0.25s linear;
     }
@@ -306,7 +316,6 @@ const SubmitButton = styled.button`
 
 export const MainRegister = props => {
   const { handleSubmit, pristine, submitting, saveRegister } = props
-  console.log('node', process.env)
   return (
     <div>
       <BackgroundContainer>
@@ -359,6 +368,7 @@ export const MainRegister = props => {
                           ))
                         }
                       </div>
+                      <Error>ทดสอบ</Error>
                     </div>
                   }
 
@@ -370,6 +380,7 @@ export const MainRegister = props => {
                       className={citizen_field.innerClass}
                       placeholder={citizen_field.placeholder}
                     />
+                    <Error>ทดสอบ</Error>
                   </div>
                   <div className={`d-sm-inline-block d-none col-4`} />
                   <div className={gender_field.outerClass}>
@@ -392,6 +403,7 @@ export const MainRegister = props => {
                         ))
                       }
                     </div>
+                    <Error>ทดสอบ</Error>
                   </div>
                   <div className={telno_field.outerClass}>
                     <Label>{telno_field.label}</Label>
@@ -402,6 +414,7 @@ export const MainRegister = props => {
                       className={telno_field.innerClass}
                       placeholder={telno_field.placeholder}
                     />
+                    <Error>ทดสอบ</Error>
                   </div>
                   {
                     addr_fields.map((e, i) => (
@@ -414,6 +427,7 @@ export const MainRegister = props => {
                           values={e.dropdown}
                           className={e.innerClass}
                         />
+                        <Error>ทดสอบ</Error>
                       </div>
                     ))
                   }
@@ -426,6 +440,7 @@ export const MainRegister = props => {
                       dropdown={blood_field.dropdown}
                       values={blood_field.dropdown}
                     />
+                    <Error>ทดสอบ</Error>
                   </div>
                   <div className={religion_field.outerClass}>
                     <Label>{religion_field.label}</Label>
@@ -436,6 +451,7 @@ export const MainRegister = props => {
                       dropdown={religion_field.dropdown}
                       values={religion_field.values}
                     />
+                    <Error>ทดสอบ</Error>
                   </div>
 
                   <div className={school_field.outerClass}>
@@ -447,6 +463,7 @@ export const MainRegister = props => {
                       dropdown={['โรงเรียนของเราน่าอยู่', 'โรงเรียนของเราน่าอยู่ 2']}
                       list={school_field.list}
                     />
+                    <Error>ทดสอบ</Error>
                   </div>
 
                   <div className={schoolGrade_field.outerClass}>
@@ -458,6 +475,7 @@ export const MainRegister = props => {
                       dropdown={schoolGrade_field.dropdown}
                       values={schoolGrade_field.dropdown}
                     />
+                    <Error>ทดสอบ</Error>
                   </div>
                   <div className={gpax_field.outerClass}>
                     <Label>{gpax_field.label}</Label>
@@ -468,6 +486,7 @@ export const MainRegister = props => {
                       className={gpax_field.innerClass}
                       placeholder={gpax_field.placeholder}
                     />
+                    <Error>ทดสอบ</Error>
                   </div>
                   <div className={major_field.outerClass}>
                     <Label>{major_field.label}</Label>
@@ -478,6 +497,7 @@ export const MainRegister = props => {
                       dropdown={dataDropdown.major}
                       values={dataDropdown.major}
                     />
+                    <Error>ทดสอบ</Error>
                   </div>
                   {
                     parent_fields.map((e, i) => (
@@ -489,6 +509,7 @@ export const MainRegister = props => {
                           className={e.innerClass}
                           placeholder={e.placeholder}
                         />
+                        <Error>ทดสอบ</Error>
                       </div>
                     ))
                   }
@@ -502,6 +523,7 @@ export const MainRegister = props => {
                           className={e.innerClass}
                           placeholder={e.placeholder}
                         />
+                        <Error>ทดสอบ</Error>
                       </div>
                     ))
                   }
@@ -552,7 +574,7 @@ export default compose(
   reduxForm({
     form: 'register',
     initialValues: {
-      user_id: 1
+      user_id: 10
     }
   })
 )(MainRegister)
