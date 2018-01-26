@@ -6,6 +6,7 @@ const SET_QUESTION = questionAction('SET_QUESTION')
 const SET_ANSWER = questionAction('SET_ANSWER')
 const SET_CURRENT_QUESTION = questionAction('SET_CURRENT_QUESTION')
 const SAVE_ANSWER = questionAction('SAVE_ANSWER')
+const SET_CURRENT_ANSWER_ID = questionAction('SET_CURRENT_ANSWER_ID')
 
 const initialState = {
   questions: [],
@@ -13,7 +14,8 @@ const initialState = {
     questionid: '',
     data: ''
   },
-  currentQuestion:''
+  currentQuestion:'',
+  currentAnswerId:''
 }
 
 // Reducer
@@ -36,13 +38,20 @@ export default (state = initialState, action) => {
       }
     }
 
+    case SET_CURRENT_ANSWER_ID: {
+      return {
+        ...state,
+        currentAnswerId: {
+          id: action.answerId
+        }
+      }
+    }
+
     case SET_CURRENT_QUESTION: {
       return {
         ...state,
         currentQuestion: action.questionData
       }
-    }
-
     }
 
     default:
@@ -65,5 +74,8 @@ export const actions = {
     type: SET_CURRENT_QUESTION,
     questionData
   }),
+  setCurrentAnswerId: (answerId) => ({
+    type: SET_CURRENT_ANSWER_ID,
+    answerId
   })
 }

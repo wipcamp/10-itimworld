@@ -32,7 +32,7 @@ export class Editor extends React.Component {
     if (typeof window !== 'undefined' && ReactQuill) {
       return (
         <ReactQuill
-          onChange={(val) => setAnswer(1, val)}
+          onChange={(val) => setAnswer(questionNumber, val)}
           theme='snow'
           value={answers.data}
           modules={this.modules}

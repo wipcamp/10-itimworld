@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import { compose, lifecycle } from 'recompose'
 import { actions as questionActions } from '../../store/reducers/question'
 import Editor from './Editor'
-import axios from 'axios'
 import api from '../../utils/api'
 
+const USER_ID = 1
 
 export const MainAnswer = props => {
   const {setQuestion,question:{answers,currentQuestion}} = props
@@ -21,13 +21,24 @@ export const MainAnswer = props => {
   )
 }
 
-const saveAnswer = (questionid,data) => {
+const saveAnswer = (questionid,data,props) => {
   console.log('saving')
-  api.post(`/answers`,{
-    question_id: questionid,
-    user_id: 2,
-    data: data,
-  })
+  let {question:{currentAnswerId}} = props
+  if(currentAnswerId.id=='') {
+    console.log('posting')
+    api.post(`/answers`,{
+      question_id: questionid,
+      user_id: USER_ID,
+      data: data,
+    })
+  }else {
+    console.log('updating')
+    api.put(`/answers`,{
+      question_id: questionid,
+      user_id: USER_ID,
+      data: data,
+    })
+  }
 }
 
 const getQuestionData = (props) => {
@@ -37,6 +48,23 @@ const getQuestionData = (props) => {
       .then((response)=> {
         setCurrentQuestion(response.data[0])
       })
+}
+
+const getAnswerData = (props) => {
+  let {url:{query:id},setCurrentAnswerId,setAnswer} = props
+  api.get(`/users/${USER_ID}/answers/${id.id}`)
+  .then((response) => {
+    if(response.data.data[0]!==undefined) {
+      setCurrentAnswerId(response.data.data[0].id)
+      setAnswer(response.data.data[0].questionid,response.data.data[0].data)
+    }
+  })
+}
+
+const clearAnswerData = (props) => {
+  let {url:{query:id},setCurrentAnswerId,setAnswer} = props
+  setAnswer(id.id,'')
+  setCurrentAnswerId('')
 }
 
 export default compose(
@@ -49,6 +77,10 @@ export default compose(
   lifecycle({
     componentWillMount() {
       getQuestionData(this.props)
+      getAnswerData(this.props)
+    },
+    componentWillUnmount() {
+      clearAnswerData(this.props)
     }
   })
 )(MainAnswer)
