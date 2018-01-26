@@ -17,7 +17,7 @@ pipeline {
     stage('build') {
       when {
         expression {
-          branch = sh(returnStdout: true, script: 'echo $GIT_BRANCH')
+          branch = sh(returnStdout: true, script: 'echo $GIT_BRANCH').trim()
           return branch == 'develop' || branch == 'master'
         }
       }
@@ -30,7 +30,7 @@ pipeline {
     stage('push') {
       when {
         expression {
-          branch = sh(returnStdout: true, script: 'echo $GIT_BRANCH')
+          branch = sh(returnStdout: true, script: 'echo $GIT_BRANCH').trim()
           return branch == 'develop' || branch == 'master'
         }
       }
@@ -42,7 +42,7 @@ pipeline {
     stage('clean') {
       when {
         expression {
-          branch = sh(returnStdout: true, script: 'echo $GIT_BRANCH')
+          branch = sh(returnStdout: true, script: 'echo $GIT_BRANCH').trim()
           return branch == 'develop' || branch == 'master'
         }
       }
