@@ -43,13 +43,6 @@ export default (state = initialState, action) => {
       }
     }
 
-    case SAVE_ANSWER: {
-      console.log('posted')
-      api.post(`/answers`,{
-        question_id: action.qid,
-        user_id: action.uid,
-        data: action.answerData, 
-      })
     }
 
     default:
@@ -72,8 +65,5 @@ export const actions = {
     type: SET_CURRENT_QUESTION,
     questionData
   }),
-  saveAnswer: (qid,uid,answerData) => ({
-    type: SAVE_ANSWER,
-    qid,uid,answerData
   })
 }

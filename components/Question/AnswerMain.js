@@ -21,10 +21,13 @@ export const MainAnswer = props => {
   )
 }
 
-const saveAnswer = (questionid,data,props) => {
+const saveAnswer = (questionid,data) => {
   console.log('saving')
-  const {saveAnswer} = props
-  saveAnswer(questionid,1,data)
+  api.post(`/answers`,{
+    question_id: questionid,
+    user_id: 2,
+    data: data,
+  })
 }
 
 const getQuestionData = (props) => {
