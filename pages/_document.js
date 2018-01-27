@@ -16,6 +16,7 @@ export default class MyDocument extends Document {
       <html>
         <Head>
           <title>Itim | WIP Camp #10</title>
+          <link rel="stylesheet" href="/static/css/globalstyle.css" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
           {this.props.styleTags}
@@ -23,6 +24,7 @@ export default class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          <script defer src='/static/js/fontawesome-all.min.js' />
         </body>
       </html>
     )
