@@ -282,7 +282,8 @@ const SingleSelect = ({
   outerClass,
   innerClass,
   dropdown,
-  values
+  values,
+  province
 }) => (
   <div className={outerClass}>
     <Label htmlFor={`${name}-input`} >{label}</Label>
@@ -292,6 +293,7 @@ const SingleSelect = ({
       dropdown={dropdown}
       values={values}
       innerClass={innerClass}
+      disabled={name === 'addr_dist' && !province}
     />
   </div>
 )
@@ -303,11 +305,12 @@ const Select = ({
   outerClass,
   dropdown,
   width = '100%',
-  values
+  values,
+  disabled
 }) => (
   <div className={outerClass}>
-    <StyledSelect {...input} className={innerClass} width={width}>
-      <option value='' >โปรดเลือก</option>
+    <StyledSelect {...input} className={innerClass} disabled={disabled} width={width}>
+      <option value='' >{disabled ? '-' : 'โปรดเลือก'}</option>
       {
         dropdown.map((v, i) => (
           <option key={i} value={values[i]}>{v}</option>
@@ -382,8 +385,6 @@ const FieldInput = (props) => {
 
     case 'multiple-select':
       if (props.data[0].name === 'dob_dd') {
-        // props.data[0].dropdown = props.sp
-        // props.data[0].values = props.sp
         return <MultipleSelect {...props} />
       }
       return <MultipleSelect {...props} />
@@ -395,11 +396,13 @@ const FieldInput = (props) => {
       if (props.name === 'addr_prov') {
         props = {
           ...props,
+          name: 'addr_prov',
           dropdown: province,
           values: province
         }
+        console.log('props of province ', props)
       }
-      return <Field {...props} component={SingleSelect} />
+      return <SingleSelect {...props} />
 
     case 'datalist':
       return <Field {...props} component={DataList} />
