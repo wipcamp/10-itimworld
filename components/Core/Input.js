@@ -9,7 +9,8 @@ const inputStyle = {
   backgroundColor: '#f5f8fa',
   color: '#768694',
   minHeight: '38px',
-  borderColor: '#ced4da'
+  borderColor: '#ced4da',
+  transition: 'all .3s ease-in-out'
 }
 
 const StyledInput = styled.input`
@@ -20,6 +21,7 @@ const StyledInput = styled.input`
   outline: 0;
   color: ${inputStyle.color};
   min-height: ${inputStyle.minHeight};
+  transition: ${inputStyle.transition};
 
   &:foucus {
     background-color: #D6D6D6 !important;
@@ -31,19 +33,7 @@ const StyledSelect = styled.select`
   background-color: ${inputStyle.backgroundColor};
   border-radius: 10px;
   color: ${inputStyle.color};
-
-  & select {
-    appearance: none;
-    background-color: #fff;
-    height: 100px;
-  }
-  &:after {
-    content: "/";
-    color: pink;
-  }
-  &:last-child:after {
-    content: "";
-  }
+  transition: ${inputStyle.transition};
 `
 
 const RadioContainer = styled.div`
@@ -58,15 +48,11 @@ const RadioContainer = styled.div`
     height: 30px;
     z-index: 9;
     cursor: pointer;
-    transition: all 0.25s linear;
+    transition: ${inputStyle.transition};
   }
 
   & > input[type=radio] {
     position: absolute;
-    /* visibility: hidden; */
-    /* top:7px;
-    left: 7px;
-     */
     outline: none;
     left: 10px;
     top: 5px;
@@ -118,6 +104,7 @@ const RadioContainer = styled.div`
 const StyledTextArea = styled.textarea`
   background-color: ${inputStyle.backgroundColor};
   color: ${inputStyle.color};
+  transition: ${inputStyle.transition};
 `
 
 const Error = styled.small`
