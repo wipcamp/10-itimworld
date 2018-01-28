@@ -6,12 +6,14 @@ import { convertToInt, convertToFloat, dataIsNotNull } from '../../utils/helper'
 const registerAction = actionCreator('register')
 const SET_FIELD = 'SET_FIELD'
 const SAVE_PROFILE = registerAction('SAVE_PROFILE', true)
+const CHANGE_FILE = registerAction('CHANGE_FILE')
 
 const initialState = {
   saving: false,
   error: null,
   data: null,
-  message: ''
+  message: '',
+  file: null
 }
 
 // Reducer
@@ -44,6 +46,13 @@ export default (state = initialState, action) => {
         ...state,
         saving: false,
         error: action.message
+      }
+    }
+
+    case CHANGE_FILE: {
+      return {
+        ...state,
+        file: action.payload
       }
     }
 
@@ -124,5 +133,9 @@ export const actions = {
         payload: 'some field are not assigned or incorrect value'
       }
     }
-  }
+  },
+  changeFileUpload: (event) => ({
+    type: CHANGE_FILE,
+    payload: event.target.files[0]
+  })
 }
