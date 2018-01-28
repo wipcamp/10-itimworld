@@ -213,7 +213,7 @@
       "htmlFor": "blood_group",
       "label": "กรุ๊ปเลือด",
       "component": "radio",
-      "outerClass": "form-check col-12 col-md-8 text-left form-group",
+      "outerClass": "form-check col-12 col-md-9 text-left form-group",
       "data": [
         {
           "innerClass": "form-check form-check-inline col-6 mr-0 col-md-2 text-left form-group",
@@ -251,7 +251,7 @@
       "name": "religion_id",
       "label": "ศาสนา",
       "component": "select",
-      "outerClass": "col-12 col-sm-4 text-left form-group",
+      "outerClass": "col-12 col-sm-3 text-left form-group",
       "innerClass": "form-control d-block",
       "placeholder": "",
       "values": [1,2,3,4,5,6],
