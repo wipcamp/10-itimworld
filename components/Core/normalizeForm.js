@@ -32,3 +32,13 @@ export const normalizeCitizenId = value => {
   }
   return `${onlyNums.slice(0, 1)}-${onlyNums.slice(1, 5)}-${onlyNums.slice(5, 10)}-${onlyNums.slice(10, 12)}-${onlyNums.slice(12, 13)}`
 }
+
+export const normalizeGpax = (value, previousValue, _) => {
+  if (!value) {
+    return value
+  }
+  const maximum = 4
+  const minimum = 0
+  const numberValue = parseFloat(value)
+  return numberValue <= maximum && numberValue >= minimum ? value : previousValue
+}
