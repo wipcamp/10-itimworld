@@ -112,6 +112,10 @@ export const actions = {
     data.religion_id = convertToInt(data.religion_id)
     data.edu_gpax = convertToFloat(data.edu_gpax)
 
+    if (values.blood_group === 'other') {
+      data.blood_group = values.other_blood_group
+    }
+
     console.log('data -> ', data)
     console.log('values ', values)
     if (dataIsNotNull(data)) {
