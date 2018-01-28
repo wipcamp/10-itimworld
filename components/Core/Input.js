@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import {Field} from 'redux-form'
 import { actions } from '../../store/reducers/register'
 import { normalizeCitizenId, normalizePhone, normalizeGpax } from './normalizeForm'
+import { province } from '../Register/data-dropdown.json'
 
 const inputStyle = {
   backgroundColor: '#f5f8fa',
@@ -391,6 +392,13 @@ const FieldInput = (props) => {
       return <Radio {...props} />
 
     case 'select':
+      if (props.name === 'addr_prov') {
+        props = {
+          ...props,
+          dropdown: province,
+          values: province
+        }
+      }
       return <Field {...props} component={SingleSelect} />
 
     case 'datalist':
