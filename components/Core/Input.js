@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import {Field} from 'redux-form'
+import { Field, formValues } from 'redux-form'
 import { actions } from '../../store/reducers/register'
 import { normalizeCitizenId, normalizePhone, normalizeGpax } from './normalizeForm'
 import { province } from '../Register/data-dropdown.json'
@@ -420,4 +420,7 @@ const FieldInput = (props) => {
   }
 }
 
-export default FieldInput
+export default formValues({
+  addrProv: 'addr_prov',
+  bloodGroup: 'blood_group'
+})(FieldInput)
