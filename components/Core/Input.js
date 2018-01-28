@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import {Field} from 'redux-form'
 import { actions } from '../../store/reducers/register'
-import { normalizeCitizenId, normalizePhone } from './normalizeForm'
+import { normalizeCitizenId, normalizePhone, normalizeGpax } from './normalizeForm'
 
 const inputStyle = {
   backgroundColor: '#f5f8fa',
@@ -374,6 +374,8 @@ const FieldInput = (props) => {
         return <Field {...props} component={Input} normalize={normalizePhone} />
       } else if (props.name === 'citizen_id') {
         return <Field {...props} component={Input} normalize={normalizeCitizenId} />
+      } else if (props.name === 'edu_gpax') {
+        return <Field {...props} component={Input} normalize={normalizeGpax} />
       }
       return <Field {...props} component={Input} />
 
