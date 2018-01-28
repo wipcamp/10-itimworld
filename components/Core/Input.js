@@ -421,6 +421,6 @@ const FieldInput = (props) => {
 }
 
 export default formValues({
-  addrProv: 'addr_prov',
-  bloodGroup: 'blood_group'
+  province: 'addr_prov',
+  blood: 'blood_group'
 })(FieldInput)
