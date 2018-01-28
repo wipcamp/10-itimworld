@@ -1,3 +1,5 @@
+/* global FormData */
+
 import actionCreator from '../../utils/actionCreator'
 import api from '../../utils/api'
 import { convertToInt, convertToFloat, dataIsNotNull } from '../../utils/helper'
@@ -7,6 +9,7 @@ const registerAction = actionCreator('register')
 const SET_FIELD = 'SET_FIELD'
 const SAVE_PROFILE = registerAction('SAVE_PROFILE', true)
 const CHANGE_FILE = registerAction('CHANGE_FILE')
+const UPLOAD_FILE = registerAction('CHANGE_FILE', true)
 
 const initialState = {
   saving: false,
@@ -53,6 +56,27 @@ export default (state = initialState, action) => {
       return {
         ...state,
         file: action.payload
+      }
+    }
+
+    case UPLOAD_FILE.PENDING: {
+      return {
+        ...state
+      }
+    }
+
+    case UPLOAD_FILE.FULFILLED: {
+      return {
+        ...state,
+        message: 'upload susccess',
+        data: action.payload
+      }
+    }
+
+    case UPLOAD_FILE.REJECTED: {
+      return {
+        ...state,
+        message: action.payload
       }
     }
 
@@ -137,5 +161,27 @@ export const actions = {
   changeFileUpload: (event) => ({
     type: CHANGE_FILE,
     payload: event.target.files[0]
-  })
+  }),
+  uploadFile: () => (dispatch, getState) => {
+    // get file from store
+    const { file } = getState().register
+
+    if (file) {
+      const formData = new FormData()
+      formData.append('file', file)
+      const headers = {
+        'Content-Type': 'multipart/form-data'
+      }
+
+      dispatch({
+        type: UPLOAD_FILE.ACTION,
+        payload: api.post('/uploads', formData, headers)
+      })
+    } else {
+      dispatch({
+        type: UPLOAD_FILE.REJECTED,
+        payload: 'no file found!'
+      })
+    }
+  }
 }
