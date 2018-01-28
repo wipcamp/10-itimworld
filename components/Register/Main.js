@@ -1,6 +1,6 @@
 import React from 'react'
 import { compose } from 'recompose'
-import { reduxForm } from 'redux-form'
+import { reduxForm, formValues } from 'redux-form'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import {actions as registerActions} from '../../store/reducers/register'
@@ -43,14 +43,15 @@ const SubmitButton = styled.button`
 `
 
 const FormRegister = props => {
-  const { handleSubmit, pristine, submitting, saveRegister } = props
+  const { handleSubmit, pristine, submitting, saveRegister, bloodGroup } = props
+  console.log(props)
   return (
     <RegisterSection onSubmit={handleSubmit(saveRegister)}>
       <SubHeader>ลงทะเบียน</SubHeader>
       <div className='row px-3 pb-5 pt-3'>
         {
           fields.map((field, index) => (
-            <FieldInput key={index} {...field} />
+            <FieldInput key={index} {...field} blood={bloodGroup} />
           ))
         }
         <div className='col-12'>
@@ -102,5 +103,6 @@ export default compose(
     initialValues: {
       user_id: 10
     }
-  })
+  }),
+  formValues({bloodGroup: 'blood_group'})
 )(MainRegister)
