@@ -107,6 +107,11 @@ const RadioContainer = styled.div`
       transition: background 0.25s linear;
     }
   }
+
+  & > .inline-input {
+    display: inline-block;
+    width: 60%;
+  }
 `
 
 const StyledTextArea = styled.textarea`
@@ -140,6 +145,20 @@ const Input = ({
     <Label htmlFor={`${input.name}-input`}>{label}</Label>
     <StyledInput {...input} type={type} placeholder={placeholder} className={innerClass} />
     {touched && error && <Error>{error}</Error>}
+  </div>
+)
+
+const InputNoLabel = ({
+  input,
+  type,
+  meta: { touch, error },
+  outerClass,
+  innerClass,
+  placeholder,
+  disabled
+}) => (
+  <div className={outerClass}>
+    <StyledInput {...input} type={type} placeholder={placeholder} disabled={disabled} className={innerClass} />
   </div>
 )
 
@@ -200,28 +219,56 @@ const Radio = ({
   innerClass,
   data,
   name,
-  htmlFor
+  htmlFor,
+  blood
 }) => (
   <div className={outerClass}>
     <Label htmlFor={`${htmlFor}-input`}>{label}</Label>
     <div>
       {
-        data.map((option, index) => (
-          <RadioContainer
-            key={index}
-            className={option.innerClass}
-          >
-            <Field
-              type={'radio'}
-              name={name}
-              component={`input`}
-              value={option.value}
-              id={`${option.htmlFor}-option`}
-            />
-            <Label htmlFor={`${option.htmlFor}-option`}>{option.label}</Label>
-            <div htmlFor={`${option.htmlFor}-option`} className='check' />
-          </RadioContainer>
-        ))
+        data.map((option, index) => {
+          return option.value === 'other' ? (
+            <RadioContainer
+              key={index}
+              className={option.innerClass}
+            >
+              <Field
+                type={'radio'}
+                name={name}
+                component={`input`}
+                value={option.value}
+                id={`${option.htmlFor}-option`}
+              />
+              <Label htmlFor={`${option.htmlFor}-option`}>{option.label}</Label>
+              <div htmlFor={`${option.htmlFor}-option`} className='check' />
+              <Field
+                name={`other_blood_group`}
+                type={`text`}
+                innerClass={`form-control`}
+                outerClass={`inline-input`}
+                component={InputNoLabel}
+                disabled={blood !== 'other'}
+                placeholder={blood === 'other' && 'ระบุ'}
+              />
+            </RadioContainer>
+          ) : (
+            <RadioContainer
+              key={index}
+              className={option.innerClass}
+            >
+              <Field
+                type={'radio'}
+                name={name}
+                component={`input`}
+                value={option.value}
+                id={`${option.htmlFor}-option`}
+              />
+              <Label htmlFor={`${option.htmlFor}-option`}>{option.label}</Label>
+              <div htmlFor={`${option.htmlFor}-option`} className='check' />
+            </RadioContainer>
+          )
+        }
+        )
       }
     </div>
     {/* {touched && error && <Error>{error}</Error>} */}
