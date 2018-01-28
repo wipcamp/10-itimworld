@@ -210,24 +210,41 @@
     },
     {
       "name": "blood_group",
+      "htmlFor": "blood_group",
       "label": "กรุ๊ปเลือด",
-      "component": "select",
-      "outerClass": "col-12 col-sm-2 text-left form-group",
-      "innerClass": "form-control d-block",
-      "placeholder": "",
-      "dropdown": [
-        "A",
-        "B",
-        "O",
-        "AB",
-        "อื่น ๆ"
-      ],
-      "values": [
-        "A",
-        "B",
-        "O",
-        "AB",
-        "อื่น ๆ"
+      "component": "radio",
+      "outerClass": "form-check col-12 col-md-8 text-left form-group",
+      "data": [
+        {
+          "innerClass": "form-check form-check-inline col-6 mr-0 col-md-2 text-left form-group",
+          "value": "A",
+          "label": "A",
+          "htmlFor": "blood-a"
+        },
+        {
+          "innerClass": "form-check col-6 col-md-2 form-check-inline mr-0",
+          "value": "B",
+          "label": "B",
+          "htmlFor": "blood-b"
+        },
+        {
+          "innerClass": "form-check form-check-inline col-6 mr-0 col-md-2 text-left form-group",
+          "value": "AB",
+          "label": "AB",
+          "htmlFor": "blood-ab"
+        },
+        {
+          "innerClass": "form-check col-6 col-md-2 form-check-inline mr-0",
+          "value": "O",
+          "label": "O",
+          "htmlFor": "blood-o"
+        },
+        {
+          "innerClass": "form-check form-check-inline col-6 mr-0 col-md-4 text-left form-group",
+          "value": "other",
+          "label": "อื่น ๆ",
+          "htmlFor": "blood-other"
+        }
       ]
     },
     {
