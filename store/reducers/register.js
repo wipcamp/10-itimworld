@@ -102,11 +102,6 @@ export const actions = {
         values.dob_mm &&
         values.dob_yyyy) {
       data.birth_at = `${values.dob_yyyy}-${values.dob_mm}-${values.dob_dd}`
-    } else {
-      console.log('d > ', values.dob_dd)
-      console.log('m > ', values.dob_mm)
-      console.log('y > ', values.dob_yyyy)
-      data.birth_at = '2017-1-1'
     }
     data.gender_id = convertToInt(data.gender_id)
     data.religion_id = convertToInt(data.religion_id)
