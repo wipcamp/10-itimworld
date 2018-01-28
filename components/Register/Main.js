@@ -43,15 +43,19 @@ const SubmitButton = styled.button`
 `
 
 const FormRegister = props => {
-  const { handleSubmit, pristine, submitting, saveRegister, bloodGroup } = props
-  console.log(props)
+  const { handleSubmit, pristine, submitting, saveRegister, bloodGroup, addrProv } = props
+  console.log('show vat > ', props)
+  const reduxFormValues = {
+    blood: bloodGroup,
+    province: addrProv
+  }
   return (
     <RegisterSection onSubmit={handleSubmit(saveRegister)}>
       <SubHeader>ลงทะเบียน</SubHeader>
       <div className='row px-3 pb-5 pt-3'>
         {
           fields.map((field, index) => (
-            <FieldInput key={index} {...field} blood={bloodGroup} />
+            <FieldInput key={index} {...field} {...reduxFormValues} />
           ))
         }
         <div className='col-12'>
@@ -104,5 +108,8 @@ export default compose(
       user_id: 10
     }
   }),
-  formValues({bloodGroup: 'blood_group'})
+  formValues({
+    addrProv: 'addr_prov',
+    bloodGroup: 'blood_group'
+  })
 )(MainRegister)
