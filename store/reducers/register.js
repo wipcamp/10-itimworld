@@ -91,6 +91,8 @@ const prepareData = (form, fields) => {
   return data
 }
 
+const getOnlyNum = (value) => value.replace(/[^\d]/g, '')
+
 // Action Creators
 export const actions = {
   setField: (field, value) => ({
@@ -144,6 +146,9 @@ export const actions = {
       data.blood_group = values.other_blood_group
     }
 
+    data.telno_personal = getOnlyNum(data.telno_personal)
+    data.telno_parent = getOnlyNum(data.telno_parent)
+    data.citizen_id = getOnlyNum(data.citizen_id)
     console.log('data -> ', data)
     console.log('values ', values)
     if (dataIsNotNull(data)) {
