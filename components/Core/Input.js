@@ -293,11 +293,12 @@ const Select = ({
   dropdown,
   width = '100%',
   values,
-  disabled
+  disabled,
+  placeholder
 }) => (
   <div className={outerClass}>
     <StyledSelect {...input} className={innerClass} disabled={disabled} width={width}>
-      <option value='' >{disabled ? '-' : 'โปรดเลือก'}</option>
+      <option value='' >{disabled ? '-' : `${placeholder || 'โปรดเลือก'}`}</option>
       {
         dropdown.map((v, i) => (
           <option key={i} value={values[i]}>{v}</option>
