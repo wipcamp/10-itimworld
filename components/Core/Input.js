@@ -97,7 +97,7 @@ const RadioContainer = styled.div`
 
   & > .inline-input {
     display: inline-block;
-    width: 60%;
+    width: calc(100% - 68px);
   }
 `
 
