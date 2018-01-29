@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const createInstance = () => (
   axios.create({
-    baseURL: 'http://localhost:8000/api/v1',
+    baseURL: process.env.API,
     headers: {
       // 'x-access-token': ''
       // 'Accept': 'application/json',
