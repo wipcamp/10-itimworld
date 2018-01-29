@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-const createInstance = () => (
-  axios.create({
+const createInstance = () => {
+  return axios.create({
     baseURL: process.env.API,
     headers: {
       // 'x-access-token': ''
@@ -9,7 +9,7 @@ const createInstance = () => (
       // 'Content-Type': 'application/json'
     }
   })
-)
+}
 
 const handleResponse = res => res.data ? Promise.resolve(res) : Promise.reject(res)
 
