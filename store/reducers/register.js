@@ -1,3 +1,5 @@
+/* global FormData */
+
 import actionCreator from '../../utils/actionCreator'
 import api from '../../utils/api'
 import { convertToInt, convertToFloat, dataIsNotNull } from '../../utils/helper'
@@ -6,12 +8,15 @@ import { convertToInt, convertToFloat, dataIsNotNull } from '../../utils/helper'
 const registerAction = actionCreator('register')
 const SET_FIELD = 'SET_FIELD'
 const SAVE_PROFILE = registerAction('SAVE_PROFILE', true)
+const CHANGE_FILE = registerAction('CHANGE_FILE')
+const UPLOAD_FILE = registerAction('CHANGE_FILE', true)
 
 const initialState = {
   saving: false,
   error: null,
   data: null,
-  message: ''
+  message: '',
+  file: null
 }
 
 // Reducer
@@ -47,6 +52,34 @@ export default (state = initialState, action) => {
       }
     }
 
+    case CHANGE_FILE: {
+      return {
+        ...state,
+        file: action.payload
+      }
+    }
+
+    case UPLOAD_FILE.PENDING: {
+      return {
+        ...state
+      }
+    }
+
+    case UPLOAD_FILE.FULFILLED: {
+      return {
+        ...state,
+        message: 'upload susccess',
+        data: action.payload
+      }
+    }
+
+    case UPLOAD_FILE.REJECTED: {
+      return {
+        ...state,
+        message: action.payload
+      }
+    }
+
     default:
       return state
   }
@@ -57,6 +90,8 @@ const prepareData = (form, fields) => {
   fields.map(field => { data[field] = form[field] })
   return data
 }
+
+const getOnlyNum = (value) => value.replace(/[^\d]/g, '')
 
 // Action Creators
 export const actions = {
@@ -102,16 +137,18 @@ export const actions = {
         values.dob_mm &&
         values.dob_yyyy) {
       data.birth_at = `${values.dob_yyyy}-${values.dob_mm}-${values.dob_dd}`
-    } else {
-      console.log('d > ', values.dob_dd)
-      console.log('m > ', values.dob_mm)
-      console.log('y > ', values.dob_yyyy)
-      data.birth_at = '2017-1-1'
     }
     data.gender_id = convertToInt(data.gender_id)
     data.religion_id = convertToInt(data.religion_id)
     data.edu_gpax = convertToFloat(data.edu_gpax)
 
+    if (values.blood_group === 'other') {
+      data.blood_group = values.other_blood_group
+    }
+
+    data.telno_personal = getOnlyNum(data.telno_personal)
+    data.telno_parent = getOnlyNum(data.telno_parent)
+    data.citizen_id = getOnlyNum(data.citizen_id)
     console.log('data -> ', data)
     console.log('values ', values)
     if (dataIsNotNull(data)) {
@@ -124,6 +161,32 @@ export const actions = {
         type: SAVE_PROFILE.REJECTED,
         payload: 'some field are not assigned or incorrect value'
       }
+    }
+  },
+  changeFileUpload: (event) => ({
+    type: CHANGE_FILE,
+    payload: event.target.files[0]
+  }),
+  uploadFile: () => (dispatch, getState) => {
+    // get file from store
+    const { file } = getState().register
+
+    if (file) {
+      const formData = new FormData()
+      formData.append('file', file)
+      const headers = {
+        'Content-Type': 'multipart/form-data'
+      }
+
+      dispatch({
+        type: UPLOAD_FILE.ACTION,
+        payload: api.post('/uploads', formData, headers)
+      })
+    } else {
+      dispatch({
+        type: UPLOAD_FILE.REJECTED,
+        payload: 'no file found!'
+      })
     }
   }
 }
