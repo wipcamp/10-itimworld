@@ -211,33 +211,33 @@
       "outerClass": "form-check col-12 col-md-9 text-left form-group",
       "data": [
         {
-          "innerClass": "form-check form-check-inline col-6 mr-0 col-md-2 text-left form-group",
+          "innerClass": "form-check form-check-inline col-4 mr-0 col-md-2 text-left form-group",
           "value": "A",
           "label": "A",
           "htmlFor": "blood-a"
         },
         {
-          "innerClass": "form-check col-6 col-md-2 form-check-inline mr-0",
+          "innerClass": "form-check col-4 col-md-2 form-check-inline mr-0",
           "value": "B",
           "label": "B",
           "htmlFor": "blood-b"
         },
         {
-          "innerClass": "form-check form-check-inline col-6 mr-0 col-md-2 text-left form-group",
+          "innerClass": "form-check form-check-inline col-4 mr-0 col-md-2 text-left form-group",
           "value": "AB",
           "label": "AB",
           "htmlFor": "blood-ab"
         },
         {
-          "innerClass": "form-check col-6 col-md-2 form-check-inline mr-0",
+          "innerClass": "form-check col-4 col-md-2 form-check-inline mr-0",
           "value": "O",
           "label": "O",
           "htmlFor": "blood-o"
         },
         {
-          "innerClass": "form-check form-check-inline col-6 mr-0 col-md-4 text-left form-group",
+          "innerClass": "form-check form-check-inline col-8 mr-0 col-md-4 text-left form-group pr-0",
           "value": "other",
-          "label": "อื่น ๆ",
+          "label": "อื่นๆ",
           "htmlFor": "blood-other"
         }
       ]
