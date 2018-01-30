@@ -5,7 +5,7 @@ import { actions as questionActions } from '../../store/reducers/question'
 import Editor from './Editor'
 import api from '../../utils/api'
 
-const USER_ID = 1
+const USER_ID = 2
 
 export const MainAnswer = props => {
   const {setQuestion,question:{answers,currentQuestion}} = props
@@ -24,7 +24,7 @@ export const MainAnswer = props => {
 const saveAnswer = (questionid,data,props) => {
   console.log('saving')
   let {question:{currentAnswerId}} = props
-  if(currentAnswerId.id=='') {
+  if(!currentAnswerId.id) {
     console.log('posting')
     api.post(`/answers`,{
       question_id: questionid,

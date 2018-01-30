@@ -12,7 +12,7 @@ export const MainQuestion = props => {
     <div>
       <h1>Questions</h1>
       { allQuestion.map((question) => (
-        <Link route={`/question/answer/${question.id}`} prefetch  key={question.id}>
+        <Link route={`/question/answer/${question.id}`} prefetch key={question.id}>
           <button>{question.id + ': ' + question.data}</button>
         </Link>
       ))}
