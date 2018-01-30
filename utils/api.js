@@ -1,15 +1,15 @@
 import axios from 'axios'
 
-const createInstance = () => (
-  axios.create({
-    baseURL: 'http://api.freezer.wip.camp/api/v1',
+const createInstance = () => {
+  return axios.create({
+    baseURL: process.env.API,
     headers: {
       // 'x-access-token': ''
       // 'Accept': 'application/json',
       // 'Content-Type': 'application/json'
     }
   })
-)
+}
 
 const handleResponse = res => res.data ? Promise.resolve(res) : Promise.reject(res)
 
