@@ -51,6 +51,17 @@ pipeline {
         sh 'sudo docker image rm registry.wip.camp/wip-itim'
       }
     }
+    stage('deploy-development') {
+      when {
+        expression {
+          branch = sh(returnStdout: true, script: 'echo $GIT_BRANCH').trim()
+          return branch == 'develop' || branch == 'master'
+        }
+      }
+      steps {
+        sh 'sudo kubectl rolling-update wip-itim -n development --image registry.wip.camp/wip-itim:$GIT_BRANCH-$BUILD_NUMBER'
+      }
+    }
   }
   post {
     success {
