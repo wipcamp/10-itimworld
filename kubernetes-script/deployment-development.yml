@@ -1,51 +1,68 @@
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-env
+  namespace: development
+data:
+  .env: |
+    API=https://api.freezer.wip.camp/api/v1
+
+
+---
+
+apiVersion: v1
 kind: ReplicationController
 metadata:
-  name: wip-itim-development
+  name: wip-itim
+  namespace: development
   labels:
     app: wip-itim
     organize: wipcamp10
     tier: frontend
-    env: development
 spec:
   replicas: 2
   selector:
     app: wip-itim
     organize: wipcamp10
     tier: frontend
-    env: development
   template:
     metadata:
       labels:
         app: wip-itim
         organize: wipcamp10
         tier: frontend
-        env: development
     spec:
       containers:
       - name: wip-itim
         image: registry.wip.camp/wip-itim
         ports:
         - containerPort: 3000
+        volumeMounts:
+        - name: app-env-file
+          mountPath: /node-app/.env
+          subPath: .env
+      volumes:
+      - name: app-env-file
+        configMap:
+          name: app-env
 
 ---
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: wip-itim-development
+  name: wip-itim
+  namespace: development
   labels:
     app: wip-itim
     organize: wipcamp10
     tier: frontend
-    env: development
 spec:
   type: LoadBalancer
   selector:
     app: wip-itim
     organize: wipcamp10
     tier: frontend
-    env: development
   ports:
   - port: 80
     targetPort: 3000
@@ -55,17 +72,17 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: wip-itim-development
+  name: wip-itim
+  namespace: development
   labels:
     app: wip-itim
     organize: wipcamp10
     tier: frontend
-    env: development
 spec:
   rules:
   - host: itim.freezer.wip.camp
     http:
       paths:
       - backend:
-          serviceName: wip-itim-development
+          serviceName: wip-itim
           servicePort: 80
