@@ -9,6 +9,21 @@ import Router from 'next/router'
 
 const USER_ID = 2
 
+const Container = styled.div`
+  background: url('/static/img/bg-d2.png') center top;
+  height: auto;
+  min-height:100vh;
+  background-size: cover;
+  background-attachment: fixed;
+  color: #032E51;
+`
+
+const SubmitButton = styled.button`
+  background-color: #336699;
+  color: #fff;
+  font-weight: bold;
+`
+
 const BackButton = styled.button`
   background-color: rgba(0,0,0,0);
   border: 1px solid #336699;
@@ -19,18 +34,39 @@ const BackButton = styled.button`
     cursor: ${props => props.disabled ? 'no-drop' : 'pointer'} ;
   }
 `
+
+const SubmitSection = styled.div`
+  padding-top: 25px;
+`
+
+const QuestionSection = styled.div`
+  padding-top: 25px;
+  padding-bottom: 25px;
+`
+
 export const MainAnswer = props => {
   const {setQuestion,question:{answers,currentQuestion}} = props
   const questionid = props.url.query.id
   
   return (
-    <div>
-      <h1>Questions</h1>
-      {currentQuestion.data}
-      <Editor questionNumber={questionid} />
-      <button onClick={()=>saveAnswer(questionid,answers.data,props)}>บันทึก</button>
-    </div>
+    <Container>
+      <div className='container'>
+        <QuestionSection className='h3'>
+          {`คำถามที่ ${questionid} : `}{currentQuestion.data}
+        </QuestionSection>
+        <Editor questionNumber={questionid} />
+        <SubmitSection>
+          <div className='row'>
+            <div className='col-6'>
               <BackButton className='btn btn-large float-left' onClick={()=>back()}>กลับ</BackButton>
+            </div>
+            <div className='col-6'>
+              <SubmitButton className='btn btn-large float-right' onClick={()=>saveAnswer(questionid,answers.data,props)}>บันทึก</SubmitButton>
+            </div>
+          </div>
+        </SubmitSection>
+      </div>
+    </Container>
   )
 }
 
