@@ -4,9 +4,21 @@ import { compose, lifecycle } from 'recompose'
 import { actions as questionActions } from '../../store/reducers/question'
 import Editor from './Editor'
 import api from '../../utils/api'
+import styled from 'styled-components'
+import Router from 'next/router'
 
 const USER_ID = 2
 
+const BackButton = styled.button`
+  background-color: rgba(0,0,0,0);
+  border: 1px solid #336699;
+  color: #336699;
+  font-weight: bold;
+
+  &:hover {
+    cursor: ${props => props.disabled ? 'no-drop' : 'pointer'} ;
+  }
+`
 export const MainAnswer = props => {
   const {setQuestion,question:{answers,currentQuestion}} = props
   const questionid = props.url.query.id
@@ -18,6 +30,7 @@ export const MainAnswer = props => {
       <Editor questionNumber={questionid} />
       <button onClick={()=>saveAnswer(questionid,answers.data,props)}>บันทึก</button>
     </div>
+              <BackButton className='btn btn-large float-left' onClick={()=>back()}>กลับ</BackButton>
   )
 }
 
@@ -39,6 +52,10 @@ const saveAnswer = (questionid,data,props) => {
       data: data,
     })
   }
+}
+
+const back = () => {
+  Router.push('/question')
 }
 
 const getQuestionData = (props) => {
