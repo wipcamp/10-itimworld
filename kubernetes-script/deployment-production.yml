@@ -20,7 +20,7 @@ metadata:
     organize: wipcamp10
     tier: frontend
 spec:
-  replicas: 2
+  replicas: 4
   selector:
     app: wip-itim
     organize: wipcamp10
@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
       - name: wip-itim
-        image: registry.wip.camp/wip-itim
+        image: registry.wip.camp/wip-itim:master
         ports:
         - containerPort: 3000
         volumeMounts:

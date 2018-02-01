@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
       - name: wip-itim
-        image: registry.wip.camp/wip-itim
+        image: registry.wip.camp/wip-itim:develop
         ports:
         - containerPort: 3000
         volumeMounts:
