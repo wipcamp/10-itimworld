@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import Newheader from './header'
+import Header from './header'
 
 const BackgroundContainer = styled.div`
   background: #B8D0EC;
@@ -43,14 +43,13 @@ const CardUpload = styled.div`
     }
 
     @media(min-width: 992px) {
-      margin-top: 100px;
-      margin: 100px ${props => props.margin};
+      margin: 40px ${props => props.margin};
     }
   }
 `
 
 const Card = ({ img, name, margin, content, outerClass }) => (
-  <div className={outerClass}>
+  <div className={`${outerClass} mx-auto`}>
     <CardUpload img={img} margin={margin}>
       <input type='file' id={`${name}-file-input`} />
       <label
@@ -72,7 +71,7 @@ const cardData = [
   {
     name: '2',
     outerClass: 'col-12 col-md-4 px-md-0',
-    margin: 'auto 0' ,
+    margin: 'auto 0',
     img: '/static/img/upload-card-2.png',
     content: 'อัพโหลดใบ ปพ.1'
   },
@@ -85,31 +84,62 @@ const cardData = [
   }
 ]
 
+const Progress = styled.div`
+
+`
+
+const ProgressContainer = styled.div`
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+
+  @media screen and (min-width: 0px) {
+    bottom: 0px;
+    position: fixed;
+    & ${Progress} {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      margin: 0;
+      width: 100%;
+    }
+  }
+`
+
 const MainUpload = props => (
   <div>
     <BackgroundContainer>
-      <Newheader img={`https://pbs.twimg.com/profile_images/829362291237801985/mvlVSd7J.jpg`} />
-      <UploadList {...props} />
+      <Header img={`https://pbs.twimg.com/profile_images/829362291237801985/mvlVSd7J.jpg`} />
+      <div className='container'>
+        <div className='row justify-content-center'>
+          <div className='col-12 mt-3 mt-md-5 col-md-8'>
+            <div className='alert alert-warning' role='alert'>
+              Warning and alert here!
+            </div>
+          </div>
+        </div>
+        <div className='row text-center mb-5'>
+          {
+            cardData.map((data, index) => (
+              <Card
+                key={index}
+                name={data.name}
+                margin={data.margin}
+                img={data.img}
+                outerclass={data.outerClass}
+                content={data.content}
+              />
+            ))
+          }
+        </div>
+      </div>
+      <ProgressContainer>
+        <div className='col-md-7 col-12 px-0'>
+          <Progress className='alert alert-light' role='alert'>
+            Progress here
+          </Progress>
+        </div>
+      </ProgressContainer>
     </BackgroundContainer>
-  </div>
-)
-
-const UploadList = () => (
-  <div className='container'>
-    <div className='row text-center'>
-      {
-        cardData.map((data, index) => (
-          <Card
-            key={index}
-            name={data.name}
-            margin={data.margin}
-            img={data.img}
-            outerClass={data.outerClass}
-            content={data.content}
-          />
-        ))
-      }
-    </div>
   </div>
 )
 
