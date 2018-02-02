@@ -36,6 +36,33 @@ const StyledSelect = styled.select`
   transition: ${inputStyle.transition};
 `
 
+const CheckRadio = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  border: 1px solid ${inputStyle.borderColor};
+  border-radius: 100%;
+  height: 20px;
+  width: 20px;
+  top: 4px;
+  left: 5px;
+  z-index: 5;
+  transition: border .25s linear;
+  background: ${inputStyle.backgroundColor};
+
+  &::before {
+    display: block;
+    content: '';
+    border-radius: 100%;
+    height: 12px;
+    width: 12px;
+    margin: auto;
+    transition: background 0.25s linear;
+  }
+
+`
+
 const RadioContainer = styled.div`
   position: relative;
 
@@ -58,46 +85,25 @@ const RadioContainer = styled.div`
     top: 5px;
     z-index: -1;
 
-    &:checked ~ div.check::before {
+    &:checked ~ ${CheckRadio}::before {
       background: ${inputStyle.color};
     }
 
-    &:focus ~ div.check {
+    &:focus ~ ${CheckRadio} {
       border-color: #80bdff;
       background: #fff;
       box-shadow: 0 0 0 0.1rem rgba(0,123,255,.25);
     }
   }
 
-  & > div.check {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    border: 1px solid ${inputStyle.borderColor};
-    border-radius: 100%;
-    height: 20px;
-    width: 20px;
-    top: 4px;
-    left: 5px;
-    z-index: 5;
-    transition: border .25s linear;
-    background: ${inputStyle.backgroundColor};
-
-    &::before {
-      display: block;
-      content: '';
-      border-radius: 100%;
-      height: 12px;
-      width: 12px;
-      margin: auto;
-      transition: background 0.25s linear;
-    }
-  }
-
   & > .inline-input {
+    vertical-align: baseline;
     display: inline-block;
-    width: calc(100% - 68px);
+    /* width: calc(100% - 68px); */
+    /* width: 50%; */
+    width: calc(100% - 85px);
+    margin-left: 15px;
+    position: relative;
   }
 `
 
@@ -109,9 +115,21 @@ const StyledTextArea = styled.textarea`
 
 const Error = styled.small`
   min-height: 18px;
+  display: inline-block;
   color: #ea0c0c;
   padding: 0 10px;
-  display: block;
+
+  ${props => props.top && `
+    /* for blood_group */
+    position: relative;
+    top: ${props.top};
+  `}
+
+  ${props => props.position && `
+    /* position for other_blood_group */
+    position: ${props.position}
+  `}
+  
 `
 
 const Label = styled.label`
@@ -132,14 +150,14 @@ const Input = ({
   <div className={outerClass}>
     <Label htmlFor={`${input.name}-input`}>{label}</Label>
     <StyledInput {...input} type={type} placeholder={placeholder} className={innerClass} />
-    {touched && error && <Error>{error}</Error>}
+    <Error>{touched && error}</Error>
   </div>
 )
 
 const InputNoLabel = ({
   input,
   type,
-  meta: { touch, error },
+  meta: { touched, error },
   outerClass,
   innerClass,
   placeholder,
@@ -147,6 +165,7 @@ const InputNoLabel = ({
 }) => (
   <div className={outerClass}>
     <StyledInput {...input} type={type} placeholder={placeholder} disabled={disabled} className={innerClass} />
+    <Error position={`absolute`} className='text-left'>{touched && error}</Error>
   </div>
 )
 
@@ -155,7 +174,6 @@ const MultipleSelect = ({
   innerClass,
   label,
   outerClass,
-  middleClass,
   placeholder,
   data,
   htmlFor,
@@ -163,40 +181,45 @@ const MultipleSelect = ({
 }) => (
   <div className={outerClass}>
     <Label htmlFor={`${htmlFor}-multiple`}>{label}</Label>
-    <div>
-      {
-        data.map((field, index) => {
-          console.log('field > ', field.name)
-          switch (field.name) {
-            case 'dob_mm':
-              return (
-                <Field
-                  key={index}
-                  name={field.name}
-                  component={Select}
-                  innerClass={field.innerClass + ' col'}
-                  outerClass={middleClass}
-                  dropdown={field.dropdown}
-                  values={field.values}
-                  onChange={(_, newValue) => actions.setField('selectedMoth', newValue)}
-                />
-              )
-            default:
-              return (
-                <Field
-                  key={index}
-                  name={field.name}
-                  component={Select}
-                  innerClass={field.innerClass + ' col'}
-                  outerClass={middleClass}
-                  dropdown={field.dropdown}
-                  values={field.values}
-                />
-              )
-          }
-        })
-      }
+    <div className='col-12 px-0'>
+      <div className='row'>
+        {
+          data.map((field, index) => {
+            console.log('field > ', field.name)
+            switch (field.name) {
+              case 'dob_mm':
+                return (
+                  <Field
+                    key={index}
+                    name={field.name}
+                    component={Select}
+                    innerClass={field.innerClass + ' col'}
+                    outerClass={field.middleClass}
+                    dropdown={field.dropdown}
+                    values={field.values}
+                    placeholder={placeholder}
+                    onChange={(_, newValue) => actions.setField('selectedMoth', newValue)}
+                  />
+                )
+              default:
+                return (
+                  <Field
+                    key={index}
+                    name={field.name}
+                    component={Select}
+                    innerClass={field.innerClass + ' col'}
+                    outerClass={field.middleClass}
+                    dropdown={field.dropdown}
+                    placeholder={placeholder}
+                    values={field.values}
+                  />
+                )
+            }
+          })
+        }
+      </div>
     </div>
+
   </div>
 )
 
@@ -228,7 +251,7 @@ const Radio = ({
                 id={`${option.htmlFor}-option`}
               />
               <Label htmlFor={`${option.htmlFor}-option`}>{option.label}</Label>
-              <div htmlFor={`${option.htmlFor}-option`} className='check' />
+              <CheckRadio htmlFor={`${option.htmlFor}-option`} />
               <Field
                 name={`other_blood_group`}
                 type={`text`}
@@ -236,7 +259,7 @@ const Radio = ({
                 outerClass={`inline-input`}
                 component={InputNoLabel}
                 disabled={blood !== 'other'}
-                placeholder={blood === 'other' && 'ระบุ'}
+                placeholder={blood === 'other' ? 'ระบุ' : undefined}
               />
             </RadioContainer>
           ) : (
@@ -252,16 +275,21 @@ const Radio = ({
                 id={`${option.htmlFor}-option`}
               />
               <Label htmlFor={`${option.htmlFor}-option`}>{option.label}</Label>
-              <div htmlFor={`${option.htmlFor}-option`} className='check' />
+              <CheckRadio htmlFor={`${option.htmlFor}-option`} />
             </RadioContainer>
           )
         }
         )
       }
     </div>
-    {/* {touched && error && <Error>{error}</Error>} */}
+    <Field name='blood_group' component={renderError} top='-4px' />
   </div>
 )
+
+const renderError = ({
+  meta: {touched, error},
+  top
+}) => <Error top={top} >{ touched && error }</Error>
 
 const SingleSelect = ({
   label,
@@ -305,7 +333,7 @@ const Select = ({
         ))
       }
     </StyledSelect>
-    {touched && error && <Error>{error}</Error>}
+    <Error>{touched && error}</Error>
   </div>
 )
 
@@ -319,8 +347,8 @@ const TextArea = ({
 }) => (
   <div className={outerClass}>
     <Label htmlFor={`${name}-textarea-input`}>{label}</Label>
-    <StyledTextArea {...input} className={innerClass} />
-    {touched && error && <Error>{error}</Error>}
+    <StyledTextArea {...input} rows='4' className={innerClass} />
+    <Error>{touched && error}</Error>
   </div>
 )
 
@@ -345,7 +373,7 @@ const DataList = ({
           ))
         }
       </datalist>
-      {touched && error && <Error>{error}</Error>}
+      <Error>{touched && error}</Error>
     </div>
   </div>
 )
