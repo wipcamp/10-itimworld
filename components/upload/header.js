@@ -65,9 +65,9 @@ const Circle = styled.div`
   `}
 
   ${props => props.guide && `
-    animation: ${pulse} 2s infinite;
+    animation: ${pulse} 2s 2;
     @media screen and (min-width: 576px) {
-      animation: ${pulse2} 2s infinite;
+      animation: ${pulse2} 2s 2;
     }
   `}
 `
