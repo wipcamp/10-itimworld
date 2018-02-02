@@ -84,13 +84,6 @@ export default (state = initialState, action) => {
       }
     }
 
-    case 'FOO': {
-      return {
-        ...state,
-        eiei: action.payload
-      }
-    }
-
     case 'EIEI': {
       return {
         ...state,
@@ -167,7 +160,7 @@ export const actions = {
     data.telno_personal = getOnlyNum(data.telno_personal)
     data.telno_parent = getOnlyNum(data.telno_parent)
     data.citizen_id = getOnlyNum(data.citizen_id)
-    
+
     if (dataIsNotNull(data)) {
       return {
         type: SAVE_PROFILE.ACTION,
