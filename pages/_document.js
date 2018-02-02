@@ -41,6 +41,22 @@ injectGlobal`
       background: #768694;
     } 
   }
+  .metro {
+    font-size: 1.5em;
+    cursor: pointer;
+    background-color: #24409b;
+    border-color: #24409b;
+    max-width: 320px;
+    padding: 0.5em 1.6em;
+    @media (min-width: 1024px) {
+      max-width: 500px;
+      padding: 0.6em 4.5em;
+    }
+  }
+  .metro:hover {
+    background-color: #1c2e6d;
+    border-color: #1c2e6d;
+  }
 `
 export default class MyDocument extends Document {
   static getInitialProps({ renderPage }) {
