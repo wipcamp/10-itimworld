@@ -67,7 +67,7 @@ const Circle = styled.div`
   ${props => props.guide && `
     animation: ${pulse} 2s 2;
     @media screen and (min-width: 576px) {
-      animation: ${pulse2} 2s 2;
+      animation-name: ${pulse2};
     }
   `}
 `
@@ -119,10 +119,10 @@ const HeaderContainer = props => {
           <div className='offset-3 col-6 offset-md-4 col-md-4'>
             <ImgLogo src='/static/img/logo.svg' alt='wipcamp-logo' />
           </div>
-          <Column className='col-3 col-md-4 text-right'
-            innerRef={setNode}
-          >
-            <div className='btn-group'>
+          <Column className='col-3 col-md-4 text-right'>
+            <div className='btn-group'
+              ref={setNode}
+            >
               <Circle
                 img={img}
                 guide={guide}
