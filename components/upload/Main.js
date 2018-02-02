@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import { compose, withStateHandlers } from 'recompose'
+import Link from 'next/link'
 
 import Header from './header'
 
@@ -22,6 +24,7 @@ const CardUpload = styled.div`
   font-family: 'pridi-regularr';
   font-size: 28px;
   color: #B8D0EC;
+  user-select: none;
 
   & > input[type=file] {
     position: absolute;
@@ -29,7 +32,7 @@ const CardUpload = styled.div`
     width: 10px;
     
     &:focus + label {
-      text-shadow: 0 0 10px rgba(81,255,255,1);
+      text-shadow: 0 0 5px #000;
       
     }
   }
@@ -48,8 +51,9 @@ const CardUpload = styled.div`
     border-radius: 15px;
     transition: all .5s;
     &:hover {
-      box-shadow: 0px 0px 25px 1px #fff;
-      transform: scale(1.1);
+      transform: scale(1.005);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      
     }
     @media only screen and (min-width: 768px) and (max-width: 991px) {
       width: 210px;
@@ -57,20 +61,39 @@ const CardUpload = styled.div`
     }
 
     @media(min-width: 992px) {
-      margin: 40px ${props => props.margin};
+      margin: 10px ${props => props.margin};
     }
   }
 `
 
-const Card = ({ img, name, margin, content, outerClass }) => (
+const CustomRow = styled.div`
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  padding-bottom: 40px;
+`
+
+const Card = ({ img, name, margin, content, outerClass, link }) => (
   <div className={`${outerClass} mx-auto`}>
-    <CardUpload img={img} margin={margin}>
-      <input type='file' id={`${name}-file-input`} />
-      <label
-        htmlFor={`${name}-file-input`}
-        dangerouslySetInnerHTML={{ __html: content }}
-      />
-    </CardUpload>
+    {
+      link ? (
+        <Link href='/'>
+          <CardUpload img={img} margin={margin}>
+            <label
+              dangerouslySetInnerHTML={{ __html: content }}
+            />
+          </CardUpload>
+        </Link>
+      ) : (
+        <CardUpload img={img} margin={margin}>
+          <input type='file' id={`${name}-file-input`} />
+          <label
+            htmlFor={`${name}-file-input`}
+            dangerouslySetInnerHTML={{ __html: content }}
+          />
+        </CardUpload>
+      )
+    }
   </div>
 )
 
@@ -80,7 +103,8 @@ const cardData = [
     outerClass: 'col-12 col-md-4 pr-md-0',
     margin: '0 0 auto',
     img: '/static/img/upload-card-1.png',
-    content: 'ตอบคำถาม'
+    content: 'ตอบคำถาม',
+    link: true
   },
   {
     name: '2',
@@ -106,32 +130,60 @@ const ProgressContainer = styled.div`
   width: 100vw;
   display: flex;
   justify-content: center;
+  bottom: 0px;
+  position: fixed;
+  & ${Progress} {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    margin: 0;
+    width: 100%;
+  }
+`
 
-  @media screen and (min-width: 0px) {
-    bottom: 0px;
-    position: fixed;
-    & ${Progress} {
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-      margin: 0;
-      width: 100%;
-    }
+const Alert = styled.div`
+  position: absolute;
+  top: 0;
+  width: 100%;
+  transition: transform 0.7s linear;
+  
+  ${props => props.show ? `
+    transform: translateY(0);  
+  ` : `
+    transform: translateY(-100px);
+  `}
+
+  @media (min-width: 576px) {
+    max-width: 540px;
+    margin: 0 -15px;
+  }
+
+  @media (min-width: 768px) {
+    max-width: 720px;
+  }
+
+  @media (min-width: 992px){
+    max-width: 960px; 
+  }
+
+  @media (min-width: 1200px){
+    max-width: 1140px; 
   }
 `
 
 const MainUpload = props => (
   <div>
     <BackgroundContainer>
+      <button onClick={props.toggleNofi}>{props.showNofi ? 'hide ' : 'show '}nofication</button>
       <Header img={`https://pbs.twimg.com/profile_images/829362291237801985/mvlVSd7J.jpg`} />
       <div className='container'>
-        <div className='row justify-content-center'>
-          <div className='col-12 mt-3 mt-md-5 col-md-8'>
+        <Alert className={`row justify-content-center `} show={props.showNofi}>
+          <div className='col-12 col-md-7'>
             <div className='alert alert-warning' role='alert'>
-              Warning and alert here!
+              Warning and alert here! {props.showNofi ? 'true' : 'false'}
             </div>
           </div>
-        </div>
-        <div className='row text-center mb-5'>
+        </Alert>
+        <CustomRow className='row text-center'>
           {
             cardData.map((data, index) => (
               <Card
@@ -139,12 +191,13 @@ const MainUpload = props => (
                 name={data.name}
                 margin={data.margin}
                 img={data.img}
-                outerclass={data.outerClass}
+                outerClass={data.outerClass}
                 content={data.content}
+                link={data.link}
               />
             ))
           }
-        </div>
+        </CustomRow>
       </div>
       <ProgressContainer>
         <div className='col-md-7 col-12 px-0'>
@@ -157,4 +210,15 @@ const MainUpload = props => (
   </div>
 )
 
-export default MainUpload
+export default compose(
+  withStateHandlers(
+    ({ initialValue = false }) => ({
+      showNofi: initialValue
+    }),
+    {
+      toggleNofi: ({ showNofi }) => () => ({
+        showNofi: !showNofi
+      })
+    }
+  )
+)(MainUpload)
