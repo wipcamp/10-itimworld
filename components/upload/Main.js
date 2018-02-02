@@ -7,8 +7,15 @@ const BackgroundContainer = styled.div`
   background: #B8D0EC;
   min-height: 100vh;
   height: auto;
-  background-image: url('/static/img/bg-d2.png');
+  background-image: url('/static/img/bg2-01.png');
   background-size: cover;
+  background-attachment: fixed;
+
+
+  @media screen and (min-width: 576px) {
+    background-image: url('/static/img/bg-d2.png');
+    background-position-x: 50%;
+  }
 `
 
 const CardUpload = styled.div`
