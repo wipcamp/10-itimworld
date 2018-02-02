@@ -185,7 +185,6 @@ const MultipleSelect = ({
       <div className='row'>
         {
           data.map((field, index) => {
-            console.log('field > ', field.name)
             switch (field.name) {
               case 'dob_mm':
                 return (
@@ -416,7 +415,6 @@ const FieldInput = (props) => {
           dropdown: province,
           values: province
         }
-        console.log('props of province ', props)
       }
       return <SingleSelect {...props} />
 

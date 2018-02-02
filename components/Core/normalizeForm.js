@@ -4,7 +4,6 @@ export const normalizePhone = value => {
   }
 
   const onlyNums = value.replace(/[^\d]/g, '')
-  console.log(`only num > `, onlyNums)
   if (onlyNums.length <= 3) {
     return onlyNums
   }

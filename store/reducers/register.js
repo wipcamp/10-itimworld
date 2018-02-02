@@ -167,9 +167,7 @@ export const actions = {
     data.telno_personal = getOnlyNum(data.telno_personal)
     data.telno_parent = getOnlyNum(data.telno_parent)
     data.citizen_id = getOnlyNum(data.citizen_id)
-    console.log('data -> ', data)
-    console.log('values ', values)
-    console.log('action', SAVE_PROFILE)
+    
     if (dataIsNotNull(data)) {
       return {
         type: SAVE_PROFILE.ACTION,

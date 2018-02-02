@@ -134,9 +134,6 @@ const SubmitButton = styled.button`
 
 const FormRegister = props => {
   const { handleSubmit, pristine, submitting, saveRegister, registerData: { registerStep } } = props
-
-  console.log('show vat > ', props)
-  console.log('registerStep', registerStep)
   return (
     <RegisterSection onSubmit={handleSubmit(saveRegister)}>
       <SubHeader>ลงทะเบียน</SubHeader>
@@ -230,13 +227,11 @@ export default compose(
   lifecycle({
     /* eslint-disable */
     componentWillReceiveProps(nextProps) {
-      console.log('eiei')
       if (nextProps.registerData.registerStep === 2) {
         setTimeout(
           window.scroll({top: 0, behavior: 'smooth'}),
           100
         )
-        
       }
     }
     /* eslint-enable */
