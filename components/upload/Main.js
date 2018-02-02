@@ -160,7 +160,7 @@ const MainUpload = props => (
       <div className='container'>
         <Alert className={`row justify-content-center `} show={props.showNofi}>
           <div className='col-12 col-md-7'>
-            <div className='alert alert-warning' role='alert'>
+            <div className='alert alert-danger' role='alert'>
               Warning and alert here! {props.showNofi ? 'true' : 'false'}
             </div>
           </div>
