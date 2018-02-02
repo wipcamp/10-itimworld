@@ -77,7 +77,7 @@ const Card = ({ img, name, margin, content, outerClass, link }) => (
   <div className={`${outerClass} mx-auto`}>
     {
       link ? (
-        <Link href='/'>
+        <Link prefetch href='/'>
           <CardUpload img={img} margin={margin}>
             <label
               dangerouslySetInnerHTML={{ __html: content }}
@@ -121,24 +121,6 @@ const cardData = [
     content: 'อัพโหลดใบเอกสาร<br />ขออนุญาตผู้ปกครอง'
   }
 ]
-
-const Progress = styled.div`
-
-`
-
-const ProgressContainer = styled.div`
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  bottom: 0px;
-  position: fixed;
-  & ${Progress} {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    margin: 0;
-    width: 100%;
-  }
-`
 
 const Alert = styled.div`
   position: absolute;
@@ -199,13 +181,6 @@ const MainUpload = props => (
           }
         </CustomRow>
       </div>
-      <ProgressContainer>
-        <div className='col-md-7 col-12 px-0'>
-          <Progress className='alert alert-light' role='alert'>
-            Progress here
-          </Progress>
-        </div>
-      </ProgressContainer>
     </BackgroundContainer>
   </div>
 )
