@@ -36,7 +36,12 @@ const CardUpload = styled.div`
     align-items: center;
     background-size: cover;
     background-image: url(${props => props.img});
-
+    border-radius: 15px;
+    transition: all .5s;
+    &:hover {
+      box-shadow: 0px 0px 25px 1px #fff;
+      transform: scale(1.1);
+    }
     @media only screen and (min-width: 768px) and (max-width: 991px) {
       width: 210px;
       height: 168px;
