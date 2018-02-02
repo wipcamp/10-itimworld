@@ -189,17 +189,11 @@
     {
       "name": "addr_dist",
       "label": "เขต/อำเภอ",
-      "component": "select",
+      "component": "input",
+      "type": "text",
       "outerClass": "col-12 col-sm-6 col-md-3 text-left form-group",
-      "middleClass": "",
       "innerClass": "form-control",
-      "placeholder": "",
-      "dropdown": [
-        "เขตบางขุนเทียน"
-      ],
-      "values": [
-        "เขตบางขุนเทียน"
-      ]
+      "placeholder": ""
     },
     {
       "name": "blood_group",
