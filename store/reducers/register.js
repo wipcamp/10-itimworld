@@ -16,7 +16,10 @@ const initialState = {
   error: null,
   data: null,
   message: '',
-  file: null
+  file: null,
+  eiei: '',
+
+  registerStep: 1
 }
 
 // Reducer
@@ -40,7 +43,8 @@ export default (state = initialState, action) => {
     case SAVE_PROFILE.FULFILLED: {
       return {
         ...state,
-        saving: false
+        saving: false,
+        registerStep: 2
       }
     }
 
@@ -48,7 +52,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         saving: false,
-        error: action.message
+        message: action.payload
       }
     }
 
@@ -77,6 +81,20 @@ export default (state = initialState, action) => {
       return {
         ...state,
         message: action.payload
+      }
+    }
+
+    case 'FOO': {
+      return {
+        ...state,
+        eiei: action.payload
+      }
+    }
+
+    case 'EIEI': {
+      return {
+        ...state,
+        registerStep: action.payload
       }
     }
 
@@ -124,10 +142,10 @@ export const actions = {
       'edu_lv',
       'edu_major',
       'edu_gpax',
-      'known_via',
-      'activities',
-      'skill_computer',
-      'past_camp',
+      // 'known_via',
+      // 'activities',
+      // 'skill_computer',
+      // 'past_camp',
       'parent_relation',
       'telno_parent'
     ]
@@ -151,6 +169,7 @@ export const actions = {
     data.citizen_id = getOnlyNum(data.citizen_id)
     console.log('data -> ', data)
     console.log('values ', values)
+    console.log('action', SAVE_PROFILE)
     if (dataIsNotNull(data)) {
       return {
         type: SAVE_PROFILE.ACTION,
@@ -188,5 +207,9 @@ export const actions = {
         payload: 'no file found!'
       })
     }
-  }
+  },
+  setRegisterStep: (payload) => ({
+    type: 'EIEI',
+    payload
+  })
 }

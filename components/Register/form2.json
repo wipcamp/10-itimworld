@@ -1,0 +1,36 @@
+{
+  "fields": [
+    {
+      "name": "skill_computer",
+      "label": "น้องๆ เคยมีทักษะคอมพิวเตอร์มาก่อนหรือเปล่า",
+      "component": "textarea",
+      "outerClass": "col-12 text-left form-group",
+      "innerClass": "form-control",
+      "placeholder": ""
+    },
+    {
+      "name": "past_camp",
+      "label": "ค่ายที่เคยเข้า",
+      "component": "textarea",
+      "outerClass": "col-12 text-left form-group",
+      "innerClass": "form-control",
+      "placeholder": ""
+    },
+    {
+      "name": "activities",
+      "label": "กิจกรรมต่าง ๆ",
+      "component": "textarea",
+      "outerClass": "col-12 text-left form-group",
+      "innerClass": "form-control",
+      "placeholder": ""
+    },
+    {
+      "name": "known_via",
+      "label": "รู้จักค่ายนี้จากไหน",
+      "component": "textarea",
+      "outerClass": "col-12 text-left form-group",
+      "innerClass": "form-control",
+      "placeholder": ""
+    }
+  ]
+}

@@ -16,30 +16,17 @@ const Header = styled.div`
   
 `
 
-const bounce1 = keyframes`
-  0%, 20%, 50%, 80%, 100% {
-    bottom: ${style.guidePosition}px;
-  }
-  40% {
-    bottom: ${style.guidePosition + 10}px;
-    opacity: 0;
-  }
-  60% {
-    bottom: ${style.guidePosition + 5}px;
-  }
-`
+const boxShadowColor = '255,255,255'
 
-const bounce2 = keyframes`
-  0%, 20%, 50%, 80%, 100% {
-    bottom: ${style.guidePosition - 5}px;
+const pulse = keyframes`
+  0% {
+    box-shadow: 0 0 0 0 rgba(${boxShadowColor}, 0.9);
   }
-  40% {
-    bottom: ${style.guidePosition + 5}px;
-    opacity: 0;
-    
+  70% {
+    box-shadow: 0 0 0 1.5rem rgba(${boxShadowColor}, 0);
   }
-  60% {
-    bottom: ${style.guidePosition}px;
+  100% {
+    box-shadow: 0 0 0 0 rgba(${boxShadowColor}, 0);
   }
 `
 
@@ -65,33 +52,8 @@ const Circle = styled.div`
     }
   `}
 
-  &::before, &::after {
-    content: '';
-    border: solid black;
-    border-width: 0 1.5px 1.5px 0;
-    display: inline-flex;
-    padding: 4px;
-    position: absolute;
-    justify-content: center;
-    transform: rotate(45deg);
-    transition: opacity 1s ease-in-out;
-    bottom: -15px;
-    opacity: 1;
-  }
-
-  ${props => props.guide ? `
-    &::before {
-      animation: ${bounce1} 1s infinite;
-    }
-
-    &::after {
-      animation: ${bounce2} 1s infinite;
-    }
-
-  ` : `
-    &::before, &::after {
-      display: none;
-    }
+  ${props => props.guide && `
+    animation: ${pulse} 2s infinite;
   `}
 `
 
@@ -139,8 +101,8 @@ const HeaderContainer = props => {
     <Header>
       <div className='container'>
         <div className='row'>
-          <div className='offset-3 col-6 offset-md-5 col-md-2'>
-            <ImgLogo src='/static/img/logo-white.svg' alt='wipcamp-logo' />
+          <div className='offset-3 col-6 offset-md-4 col-md-4'>
+            <ImgLogo src='/static/img/logo.svg' alt='wipcamp-logo' />
           </div>
           <Column className='col-3 col-md-4 text-right'
             innerRef={setNode}
@@ -165,7 +127,6 @@ const HeaderContainer = props => {
 }
 
 export default compose(
-  // withState('dropdownVisible', 'setDropdownVisible', false),
   withState('guide', 'setGuide', true),
   withState('node', 'setNode', null),
   withStateHandlers(
