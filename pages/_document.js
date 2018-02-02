@@ -41,6 +41,14 @@ injectGlobal`
       background: #768694;
     } 
   }
+
+  .form-group {
+    margin-bottom: 0.25rem;
+  }
+
+  .form-check {
+    margin-bottom: 0;
+  }
 `
 export default class MyDocument extends Document {
   static getInitialProps({ renderPage }) {
