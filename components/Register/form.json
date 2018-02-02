@@ -6,7 +6,7 @@
       "label": "ชื่อจริง (ภาษาไทย)",
       "component": "input",
       "type": "text",
-      "outerClass": "col-12 col-md-5 text-left form-group",
+      "outerClass": "col-12 col-sm-6 text-left form-group",
       "innerClass": "form-control",
       "placeholder": ""
     },
@@ -15,7 +15,7 @@
       "label": "นามสกุลจริง (ภาษาไทย)",
       "component": "input",
       "type": "text",
-      "outerClass": "col-12 offset-md-1 col-sm-5 text-left form-group",
+      "outerClass": "col-12 col-sm-6 text-left form-group",
       "innerClass": "form-control",
       "placeholder": ""
     },
@@ -24,7 +24,7 @@
       "label": "ชื่อจริง (ภาษาอังกฤษ)",
       "component": "input",
       "type": "text",
-      "outerClass": "col-12 col-sm-5 text-left form-group",
+      "outerClass": "col-12 col-sm-6 text-left form-group",
       "innerClass": "form-control",
       "placeholder": ""
     },
@@ -33,7 +33,7 @@
       "label": "นามสกุลจริง (ภาษาอังกฤษ)",
       "component": "input",
       "type": "text",
-      "outerClass": "col-12 offset-md-1 col-sm-5 text-left form-group",
+      "outerClass": "col-12 col-sm-6 text-left form-group",
       "innerClass": "form-control",
       "placeholder": ""
     },
@@ -42,22 +42,22 @@
       "label": "ชื่อเล่น",
       "component": "input",
       "type": "text",
-      "outerClass": "col-4 col-sm-5 text-left form-group",
+      "outerClass": "col-6 col-sm-4 text-left form-group",
       "innerClass": "form-control",
       "placeholder": ""
     },
     {
       "label": "วัน/เดือน/ปี เกิด",
       "htmlFor": "dateOfBirth",
-      "outerClass": "col-8 offset-md-1 col-sm-5 text-left form-group",
-      "middleClass": "d-inline-block col-4 pl-0",
+      "outerClass": "col-12 pl-md-1 col-sm-8 text-left form-group",
       "component": "multiple-select",
       "data": [
         {
           "name": "dob_dd",
+          "middleClass": "d-inline-block col-4 pr-2",
           "innerClass": " form-control d-inline-block",
           "width": "65px",
-          "placeholder": "",
+          "placeholder": "วัน",
           "dropdown": [
             "1",
             "2",
@@ -97,6 +97,7 @@
         },
         {
           "name": "dob_mm",
+          "middleClass": "d-inline-block col-4 px-2",
           "innerClass": "form-control d-inline-block",
           "width": "110px",
           "placeholder": "",
@@ -120,6 +121,7 @@
         },
         {
           "name": "dob_yyyy",
+          "middleClass": "d-inline-block col-4 pl-2",
           "innerClass": "form-control d-inline-block",
           "width": "85px",
           "dropdown": [
@@ -135,29 +137,25 @@
       "name": "citizen_id",
       "label": "เลขบัตรประชาชน",
       "component": "input",
-      "outerClass": "col-12 col-md-8 text-left form-group",
+      "outerClass": "col-12 col-sm-6 col-md-6 text-left form-group",
       "innerClass": "form-control",
       "placeholder": ""
-    },
-    {
-      "class": "col-12",
-      "component": "newline"
     },
     {
       "name": "gender_id",
       "htmlFor": "gender",
       "label": "เพศ",
       "component": "radio",
-      "outerClass": "form-check col-12 col-md-4 text-left form-group",
+      "outerClass": "form-check col-12 col-sm-6 col-md-6 text-left form-group",
       "data": [
         {
-          "innerClass": "form-check form-check-inline col-6 mr-0 col-sm-4 text-left form-group",
+          "innerClass": "form-check form-check-inline col-5 mr-0 ml-sm-1 col-sm-5 col-sm-4 text-left form-group",
           "value": "1",
           "label": "ชาย",
           "htmlFor": "gender-male"
         },
         {
-          "innerClass": "form-check col-6 form-check-inline mr-0",
+          "innerClass": "form-check col-5 form-check-inline mr-0",
           "value": "2",
           "label": "หญิง",
           "htmlFor": "gender-female"
@@ -168,7 +166,7 @@
       "name": "telno_personal",
       "label": "เบอร์โทรศัพท์",
       "component": "input",
-      "outerClass": "col-12 offset-md-1 col-sm-4 text-left form-group",
+      "outerClass": "col-12 col-sm-4 col-md-4 text-left form-group",
       "innerClass": "form-control",
       "type": "tel",
       "placeholder": ""
@@ -177,7 +175,7 @@
       "name": "addr_prov",
       "label": "จังหวัด",
       "component": "select",
-      "outerClass": "col-12 col-md-4 text-left form-group",
+      "outerClass": "col-12 col-sm-6 offset-md-2 col-md-3 text-left form-group",
       "middleClass": "",
       "innerClass": "form-control",
       "placeholder": "",
@@ -192,7 +190,7 @@
       "name": "addr_dist",
       "label": "เขต/อำเภอ",
       "component": "select",
-      "outerClass": "col-12 offset-md-1 col-sm-4 text-left form-group",
+      "outerClass": "col-12 col-sm-6 col-md-3 text-left form-group",
       "middleClass": "",
       "innerClass": "form-control",
       "placeholder": "",
@@ -260,10 +258,14 @@
       ]
     },
     {
+      "component": "hr",
+      "class": "col-12"
+    },
+    {
       "label": "ชื่อโรงเรียน",
       "name": "edu_name",
       "component": "datalist",
-      "outerClass": "col-12 col-sm-6 text-left form-group",
+      "outerClass": "col-12 col-sm-6 col-md-5 text-left form-group",
       "innerClass": "form-control d-inline-block ml-1",
       "list": "school",
       "placeholder": "",
@@ -275,7 +277,7 @@
       "name": "edu_lv",
       "label": "ลำดับชั้น",
       "component": "select",
-      "outerClass": "col-8 col-sm-3 text-left form-group",
+      "outerClass": "col-8 col-sm-3 col-md-2 text-left form-group",
       "innerClass": "form-control d-inline-block",
       "placeholder": "",
       "dropdown": [
@@ -291,7 +293,7 @@
       "name": "edu_gpax",
       "label": "เกรด",
       "component": "input",
-      "outerClass": "col-4 col-sm-3 text-left form-group",
+      "outerClass": "col-4 col-sm-3 col-md-2 col-md-2 text-left form-group",
       "innerClass": "form-control",
       "type": "number",
       "placeholder": ""
@@ -301,7 +303,7 @@
       "label": "สายการเรียน",
       "component": "select",
       "outerClass": "col-12 col-sm-3 text-left form-group",
-      "innerClass": "form-control d-inline-block ml-1",
+      "innerClass": "form-control d-inline-block",
       "placeholder": "",
       "dropdown": [
         "วิทย์-คณิต",
@@ -316,7 +318,7 @@
       "name": "telno_parent",
       "label": "โทรศัพท์ของผู้ปกครอง",
       "component": "input",
-      "outerClass": "col-6 col-sm-6 text-left form-group",
+      "outerClass": "col-12 col-sm-6 text-left form-group",
       "innerClass": "form-control",
       "type": "tel",
       "placeholder": ""
@@ -325,7 +327,7 @@
       "name": "parent_relation",
       "label": "เกี่ยวข้องเป็น",
       "component": "input",
-      "outerClass": "col-6 col-sm-6 text-left form-group",
+      "outerClass": "col-12 col-sm-6 text-left form-group",
       "innerClass": "form-control",
       "type": "text",
       "placeholder": ""
@@ -334,7 +336,7 @@
       "name": "allergic_foods",
       "label": "อาหารที่แพ้",
       "component": "input",
-      "outerClass": "col-12 col-sm-5 text-left form-group",
+      "outerClass": "col-12 col-sm-5 col-md-4 text-left form-group",
       "innerClass": "form-control",
       "placeholder": ""
     },
@@ -342,7 +344,7 @@
       "name": "congenital_diseases",
       "label": "โรคประจำตัว",
       "component": "input",
-      "outerClass": "col-12 col-sm-5 text-left form-group",
+      "outerClass": "col-12 col-sm-5 col-md-4 text-left form-group",
       "innerClass": "form-control",
       "placeholder": ""
     },
@@ -350,43 +352,7 @@
       "name": "congenital_drugs",
       "label": "ยาประจำตัว",
       "component": "input",
-      "outerClass": "col-12 col-sm-5 text-left form-group",
-      "innerClass": "form-control",
-      "placeholder": ""
-    },
-    {
-      "component": "hr",
-      "class": "col-12"
-    },
-    {
-      "name": "skill_computer",
-      "label": "น้องๆ เคยมีทักษะคอมพิวเตอร์มาก่อนหรือเปล่า",
-      "component": "textarea",
-      "outerClass": "col-12 text-left form-group",
-      "innerClass": "form-control",
-      "placeholder": ""
-    },
-    {
-      "name": "past_camp",
-      "label": "ค่ายที่เคยเข้า",
-      "component": "textarea",
-      "outerClass": "col-12 text-left form-group",
-      "innerClass": "form-control",
-      "placeholder": ""
-    },
-    {
-      "name": "activities",
-      "label": "กิจกรรมต่าง ๆ",
-      "component": "textarea",
-      "outerClass": "col-12 text-left form-group",
-      "innerClass": "form-control",
-      "placeholder": ""
-    },
-    {
-      "name": "known_via",
-      "label": "รู้จักค่ายนี้จากไหน",
-      "component": "textarea",
-      "outerClass": "col-12 text-left form-group",
+      "outerClass": "col-12 col-sm-5 col-md-4 text-left form-group",
       "innerClass": "form-control",
       "placeholder": ""
     }
