@@ -23,6 +23,18 @@ const pulse = keyframes`
     box-shadow: 0 0 0 0 rgba(${boxShadowColor}, 0.9);
   }
   70% {
+    box-shadow: 0 0 0 0.7rem rgba(${boxShadowColor}, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(${boxShadowColor}, 0);
+  }
+`
+
+const pulse2 = keyframes`
+  0% {
+    box-shadow: 0 0 0 0 rgba(${boxShadowColor}, 0.9);
+  }
+  70% {
     box-shadow: 0 0 0 1.5rem rgba(${boxShadowColor}, 0);
   }
   100% {
@@ -54,6 +66,9 @@ const Circle = styled.div`
 
   ${props => props.guide && `
     animation: ${pulse} 2s infinite;
+    @media screen and (min-width: 576px) {
+      animation: ${pulse2} 2s infinite;
+    }
   `}
 `
 
