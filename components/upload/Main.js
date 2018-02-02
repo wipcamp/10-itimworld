@@ -7,6 +7,8 @@ const BackgroundContainer = styled.div`
   background: #B8D0EC;
   min-height: 100vh;
   height: auto;
+  background-image: url('/static/img/bg-d2.png');
+  background-size: cover;
 `
 
 const CardUpload = styled.div`
