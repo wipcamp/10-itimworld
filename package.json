@@ -25,6 +25,7 @@
     "next-routes": "^1.1.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-facebook-login": "^3.7.2",
     "react-quill": "^1.2.3",
     "react-redux": "^5.0.6",
     "recompose": "^0.26.0",
