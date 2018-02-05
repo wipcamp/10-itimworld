@@ -6,6 +6,7 @@ import Editor from './Editor'
 import api from '../../utils/api'
 import styled from 'styled-components'
 import Router from 'next/router'
+import Header from './../upload/header'
 
 const USER_ID = 2
 
@@ -22,6 +23,9 @@ const SubmitButton = styled.button`
   background-color: #336699;
   color: #fff;
   font-weight: bold;
+  &:hover {
+    cursor: ${props => props.disabled ? 'no-drop' : 'pointer'}
+  }
 `
 
 const BackButton = styled.button`
@@ -50,6 +54,7 @@ export const MainAnswer = props => {
   
   return (
     <Container>
+      <Header/>
       <div className='container'>
         <QuestionSection className='h3'>
           {`คำถามที่ ${questionid} : `}{currentQuestion.data}
