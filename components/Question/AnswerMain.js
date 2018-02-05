@@ -23,6 +23,9 @@ const SubmitButton = styled.button`
   background-color: #336699;
   color: #fff;
   font-weight: bold;
+  &:hover {
+    cursor: ${props => props.disabled ? 'no-drop' : 'pointer'}
+  }
 `
 
 const BackButton = styled.button`
