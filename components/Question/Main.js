@@ -6,6 +6,7 @@ import Editor from './Editor'
 import api from '../../utils/api'
 import {Link} from '../../routes'
 import styled from 'styled-components'
+import Header from './../upload/header'
 
 const Container = styled.div`
   background: url('/static/img/bg-d2.png') center top;
@@ -44,6 +45,7 @@ export const MainQuestion = props => {
   let i = -1
   return (
     <Container>
+      <Header/>
       <div className='container pt-5'>
         <div className='row'>
 

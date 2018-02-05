@@ -6,6 +6,7 @@ import Editor from './Editor'
 import api from '../../utils/api'
 import styled from 'styled-components'
 import Router from 'next/router'
+import Header from './../upload/header'
 
 const USER_ID = 2
 
@@ -50,6 +51,7 @@ export const MainAnswer = props => {
   
   return (
     <Container>
+      <Header/>
       <div className='container'>
         <QuestionSection className='h3'>
           {`คำถามที่ ${questionid} : `}{currentQuestion.data}
