@@ -50,7 +50,7 @@ export const MainQuestion = props => {
         <div className='row'>
 
         { allQuestion.map((question) => {
-          if(i==count.length){
+          if(i==count.length-1){
             i=-1
           }
           questionNo++
