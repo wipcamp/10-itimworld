@@ -24,6 +24,7 @@ pipeline {
       steps {
         sh 'sudo docker build . -t wip-itim'
         sh 'sudo docker tag wip-itim registry.wip.camp/wip-itim:$GIT_BRANCH-$BUILD_NUMBER'
+        sh 'sudo docker tag wip-itim registry.wip.camp/wip-itim:$GIT_BRANCH'
         sh 'sudo docker tag wip-itim registry.wip.camp/wip-itim'
       }
     }
@@ -36,6 +37,7 @@ pipeline {
       }
       steps {
         sh 'sudo docker push registry.wip.camp/wip-itim:$GIT_BRANCH-$BUILD_NUMBER'
+        sh 'sudo docker push registry.wip.camp/wip-itim:$GIT_BRANCH'
         sh 'sudo docker push registry.wip.camp/wip-itim'
       }
     }
@@ -48,6 +50,7 @@ pipeline {
       }
       steps {
         sh 'sudo docker image rm registry.wip.camp/wip-itim:$GIT_BRANCH-$BUILD_NUMBER'
+        sh 'sudo docker image rm registry.wip.camp/wip-itim:$GIT_BRANCH'
         sh 'sudo docker image rm registry.wip.camp/wip-itim'
       }
     }
