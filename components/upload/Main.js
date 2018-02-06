@@ -1,6 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { compose, withStateHandlers } from 'recompose'
+import { connect } from 'react-redux'
 import Link from 'next/link'
 
 import Header from './header'
@@ -20,11 +21,21 @@ const BackgroundContainer = styled.div`
   }
 `
 
+const loadingIcon = keyframes`
+from {
+  transform: rotate(0deg);
+}
+to {
+  transform: rotate(360deg);
+}
+`
+
 const CardUpload = styled.div`
   font-family: 'pridi-regularr';
   font-size: 28px;
   color: #B8D0EC;
   user-select: none;
+  position: relative;
 
   & > input[type=file] {
     position: absolute;
@@ -36,6 +47,60 @@ const CardUpload = styled.div`
       
     }
   }
+
+  & .loading {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    ${props => props.saving && `
+      display: flex;
+      cursor: progress;
+    `}
+
+    & .waitanim {
+      width: 80px;
+      height: 80px;
+      opacity: 1;
+      border-top: 8px solid #fff;
+      /* #232323;  */
+      border-bottom: 8px solid #fff;
+      /* #232323; */
+      border-right: 8px solid rgba(255,255,255,0); 
+      border-left: 8px solid rgba(255,255,255,0); 
+      border-radius: 50%;
+      animation: ${loadingIcon} 1s linear infinite;
+    }
+
+    & .waiting {
+      /* opacity: .3; */
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 15px;
+      height: 100%;
+      width: 100%;
+      z-index: 10;
+      width: 290px;
+
+      @media only screen and (min-width: 768px) and (max-width: 991px) {
+        width: 210px;
+      }
+
+      @media(min-width: 992px) {
+        margin: 0 ${props => props.margin};
+      }
+    }
+
+  }
+
+
 
   & > label {
     margin: 20px auto;
@@ -50,6 +115,18 @@ const CardUpload = styled.div`
     background-image: url(${props => props.img});
     border-radius: 15px;
     transition: all .5s;
+
+    ${props => props.link && `
+      flex-direction: column;
+    `}
+
+    ${props => props.uploaded && `
+      color: #76ff03;
+    `}
+    ${props => props.error && `
+      color: #E57373;
+    `}
+
     &:hover {
       transform: scale(1.005);
       box-shadow: 0 8px 30px rgba(0,0,0,0.5);
@@ -63,6 +140,10 @@ const CardUpload = styled.div`
     @media(min-width: 992px) {
       margin: 10px ${props => props.margin};
     }
+
+    & > span {
+      display: block;
+    }
   }
 `
 
@@ -73,29 +154,54 @@ const CustomRow = styled.div`
   padding-bottom: 40px;
 `
 
-const Card = ({ img, name, margin, content, outerClass, link }) => (
-  <div className={`${outerClass} mx-auto`}>
-    {
-      link ? (
-        <Link prefetch href='/'>
-          <CardUpload img={img} margin={margin}>
+const showNumOfAsnwered = (data) => {
+  switch (data) {
+    case 0:
+      return `<span style='color: red'>0 / 6</span>`
+    case 6:
+      return `<span style='color: green'>6 / 6</span>`
+    default:
+      return `<span style='color: orange'>${data} / 6</span>`
+  }
+}
+
+const Card = props => {
+  const { outerClass, content, link, name, dashboard: { files } } = props
+  return (
+    <div className={`${outerClass} mx-auto`}>
+      {
+        link ? (
+          <Link prefetch href='/'>
+            <CardUpload
+              {...props}
+            >
+              <label
+                dangerouslySetInnerHTML={{ __html: `${content} ${showNumOfAsnwered(3)}` }}
+              />
+            </CardUpload>
+          </Link>
+        ) : (
+          <CardUpload
+            {...props}
+            {...files[name]}
+            title={files[name].saving ? '' : props.title}
+          >
+            <input type='file' id={`${name}-file-input`} />
             <label
+              htmlFor={`${name}-file-input`}
               dangerouslySetInnerHTML={{ __html: content }}
             />
+            <div className='loading'>
+              <div className={`waiting `} >
+                <div className='waitanim' />
+              </div>
+            </div>
           </CardUpload>
-        </Link>
-      ) : (
-        <CardUpload img={img} margin={margin}>
-          <input type='file' id={`${name}-file-input`} />
-          <label
-            htmlFor={`${name}-file-input`}
-            dangerouslySetInnerHTML={{ __html: content }}
-          />
-        </CardUpload>
-      )
-    }
-  </div>
-)
+        )
+      }
+    </div>
+  )
+}
 
 const cardData = [
   {
@@ -103,22 +209,28 @@ const cardData = [
     outerClass: 'col-12 col-md-4 pr-md-0',
     margin: '0 0 auto',
     img: '/static/img/upload-card-1.png',
-    content: 'ตอบคำถาม',
-    link: true
+    content: 'ตอบคำถาม <br/>',
+    link: true,
+    title: 'ไปหน้าตอบคำถาม'
   },
   {
-    name: '2',
+    name: 'transcript',
     outerClass: 'col-12 col-md-4 px-md-0',
     margin: 'auto 0',
     img: '/static/img/upload-card-2.png',
-    content: 'อัพโหลดใบ ปพ.1'
+    content: 'อัพโหลดใบ ปพ.1',
+    isError: true,
+    title: 'คลิก เพื่ออัพโหลดเอกสาร'
   },
   {
-    name: '3',
+    name: 'allowByParent',
     outerClass: 'col-12 col-md-4 pl-md-0',
     margin: 'auto 0 0',
     img: '/static/img/upload-card-1.png',
-    content: 'อัพโหลดใบเอกสาร<br />ขออนุญาตผู้ปกครอง'
+    content: 'อัพโหลดใบเอกสาร<br />ขออนุญาตผู้ปกครอง',
+    isUpload: true,
+    title: 'คลิก เพื่ออัพโหลดเอกสาร'
+
   }
 ]
 
@@ -128,6 +240,11 @@ const Alert = styled.div`
   width: 100%;
   transition: transform 0.7s linear;
   
+  & button {
+    outline: none;
+    cursor: pointer;
+  }
+
   ${props => props.show ? `
     transform: translateY(0);  
   ` : `
@@ -156,12 +273,20 @@ const MainUpload = props => (
   <div>
     <BackgroundContainer>
       <button onClick={props.toggleNofi}>{props.showNofi ? 'hide ' : 'show '}nofication</button>
-      <Header img={`https://pbs.twimg.com/profile_images/829362291237801985/mvlVSd7J.jpg`} />
+      <Header img={`https://cdn-images-1.medium.com/max/870/1*QVdC5tpOzBrJtc6M28F7XQ.jpeg`} />
       <div className='container'>
         <Alert className={`row justify-content-center `} show={props.showNofi}>
           <div className='col-12 col-md-7'>
             <div className='alert alert-danger' role='alert'>
-              Warning and alert here! {props.showNofi ? 'true' : 'false'}
+              <i className='fas fa-exclamation-triangle' />{' '}
+                Warning and alert here! {props.showNofi ? 'true' : 'false'}
+              <button
+                type='button'
+                className='close'
+                onClick={props.closeNofi}
+              >
+                <span>&times;</span>
+              </button>
             </div>
           </div>
         </Alert>
@@ -170,12 +295,9 @@ const MainUpload = props => (
             cardData.map((data, index) => (
               <Card
                 key={index}
-                name={data.name}
-                margin={data.margin}
-                img={data.img}
-                outerClass={data.outerClass}
-                content={data.content}
-                link={data.link}
+                {...props}
+                {...data}
+
               />
             ))
           }
@@ -186,6 +308,11 @@ const MainUpload = props => (
 )
 
 export default compose(
+  connect(
+    state => ({
+      dashboard: state.dashboard
+    })
+  ),
   withStateHandlers(
     ({ initialValue = false }) => ({
       showNofi: initialValue
@@ -193,6 +320,9 @@ export default compose(
     {
       toggleNofi: ({ showNofi }) => () => ({
         showNofi: !showNofi
+      }),
+      closeNofi: () => () => ({
+        showNofi: false
       })
     }
   )
