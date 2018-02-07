@@ -2,8 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { Field, formValues } from 'redux-form'
 import { actions } from '../../store/reducers/register'
+import moment from 'moment'
 import { normalizeCitizenId, normalizePhone, normalizeGpax } from './normalizeForm'
 import { province } from '../Register/data-dropdown.json'
+import Datetime from 'react-datetime'
 
 const inputStyle = {
   backgroundColor: '#f5f8fa',
@@ -377,6 +379,25 @@ const DataList = ({
   </div>
 )
 
+const DateInput = ({
+  input,
+  meta: { touched, error, warning },
+  label,
+  outerClass
+}) => (
+  <div className={outerClass} >
+    <Label>{label}</Label>
+    <Datetime
+      {...input}
+      timeFormat={false}
+      renderInput={props => <StyledInput {...props} />}
+      viewMode={'years'}
+    />
+    <Error>{touched && error}</Error>
+  </div>
+
+)
+
 export {
   Input,
   MultipleSelect,
@@ -423,6 +444,11 @@ const FieldInput = (props) => {
 
     case 'textarea':
       return <Field {...props} component={TextArea} />
+
+    case 'date':
+      return <div className='col-12'>
+        <Field {...props} component={DateInput} />
+      </div>
 
     case 'hr':
       return <div className={props.class}><hr /></div>
