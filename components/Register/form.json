@@ -2,6 +2,12 @@
   "header": "test",
   "fields": [
     {
+      "component": "date",
+      "name": "dob",
+      "label": "วัน/เดือน/ปี เกิด",
+      "outerClass": "col-6 text-left form-group"
+    },
+    {
       "name": "first_name",
       "label": "ชื่อจริง (ภาษาไทย)",
       "component": "input",
