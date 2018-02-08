@@ -450,11 +450,12 @@ const FieldInput = (props) => {
       return <Field {...props} component={TextArea} />
 
     case 'date':
-      return <Field {...props} outerClass={`col-12`} component={DateInput} normalize={normalizeDate} />
+      return <Field {...props} component={DateInput} normalize={normalizeDate} />
 
     case 'header':
       return <div className='col-12 text-left'>
         <h1>{props.label}</h1>
+        <hr />
       </div>
 
     case 'hr':
