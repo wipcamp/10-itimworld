@@ -14,11 +14,8 @@ const UPLOAD_FILE = registerAction('CHANGE_FILE', true)
 const initialState = {
   saving: false,
   error: null,
-  data: null,
   message: '',
-  file: null,
-  eiei: '',
-
+  user_id: null,
   registerStep: 1
 }
 
@@ -84,13 +81,6 @@ export default (state = initialState, action) => {
       }
     }
 
-    case 'FOO': {
-      return {
-        ...state,
-        eiei: action.payload
-      }
-    }
-
     case 'EIEI': {
       return {
         ...state,
@@ -151,11 +141,6 @@ export const actions = {
     ]
 
     const data = prepareData(values, field)
-    if (values.dob_dd &&
-        values.dob_mm &&
-        values.dob_yyyy) {
-      data.birth_at = `${values.dob_yyyy}-${values.dob_mm}-${values.dob_dd}`
-    }
     data.gender_id = convertToInt(data.gender_id)
     data.religion_id = convertToInt(data.religion_id)
     data.edu_gpax = convertToFloat(data.edu_gpax)
@@ -163,13 +148,12 @@ export const actions = {
     if (values.blood_group === 'other') {
       data.blood_group = values.other_blood_group
     }
-
+    if (values.dob) {
+      data.birth_at = values.dob.format('YYYY-MM-DD')
+    }
     data.telno_personal = getOnlyNum(data.telno_personal)
     data.telno_parent = getOnlyNum(data.telno_parent)
     data.citizen_id = getOnlyNum(data.citizen_id)
-    console.log('data -> ', data)
-    console.log('values ', values)
-    console.log('action', SAVE_PROFILE)
     if (dataIsNotNull(data)) {
       return {
         type: SAVE_PROFILE.ACTION,
