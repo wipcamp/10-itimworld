@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Field, formValues } from 'redux-form'
 import { actions } from '../../store/reducers/register'
 import moment from 'moment'
-import { normalizeCitizenId, normalizePhone, normalizeGpax } from './normalizeForm'
+import { normalizeCitizenId, normalizePhone, normalizeGpax, normalizeDate, normalizeThai, normalizeEng } from './normalizeForm'
 import { province } from '../Register/data-dropdown.json'
 import Datetime from 'react-datetime'
 
@@ -416,6 +416,10 @@ const FieldInput = (props) => {
         return <Field {...props} component={Input} normalize={normalizeCitizenId} />
       } else if (props.name === 'edu_gpax') {
         return <Field {...props} component={Input} normalize={normalizeGpax} />
+      } else if (['first_name', 'last_name'].includes(props.name)) {
+        return <Field {...props} component={Input} normalize={normalizeThai} />
+      } else if (props.name.includes('_en')) {
+        return <Field {...props} component={Input} normalize={normalizeEng} />
       }
       return <Field {...props} component={Input} />
 
@@ -446,8 +450,11 @@ const FieldInput = (props) => {
       return <Field {...props} component={TextArea} />
 
     case 'date':
-      return <div className='col-12'>
-        <Field {...props} component={DateInput} />
+      return <Field {...props} outerClass={`col-12`} component={DateInput} normalize={normalizeDate} />
+
+    case 'header':
+      return <div className='col-12 text-left'>
+        <h1>{props.label}</h1>
       </div>
 
     case 'hr':
