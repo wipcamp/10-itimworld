@@ -36,11 +36,8 @@ const auth = async (res, setToken) => {
 }
 
 const postData = async res => {
-  console.log(res)
-  // return res
-  let { data } = await axios.post('/users', { ...res })
+  let { data } = await axios.post('/users', { ...res }, null)
   if (data) {
-    // Router.push('/register')
     return data
   }
   return null
