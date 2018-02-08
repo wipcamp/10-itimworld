@@ -41,6 +41,21 @@ injectGlobal`
       background: #768694;
     } 
   }
+  .metro {
+    font-size: 1.5em;
+    cursor: pointer;
+    background-color: #24409b;
+    border-color: #24409b;
+    max-width: 320px;
+    padding: 0.5em 1.6em;
+    @media (min-width: 1024px) {
+      max-width: 500px;
+      padding: 0.6em 4.5em;
+    }
+  }
+  .metro:hover {
+    background-color: #1c2e6d;
+    border-color: #1c2e6d;
 
   .form-group {
     margin-bottom: 0.25rem;
@@ -48,6 +63,7 @@ injectGlobal`
 
   .form-check {
     margin-bottom: 0;
+
   }
 `
 export default class MyDocument extends Document {
@@ -65,11 +81,10 @@ export default class MyDocument extends Document {
       <html>
         <Head>
           <title>Itim | WIP Camp #10</title>
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
           <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
           <link rel="stylesheet" href="/static/css/quill.snow.custom.css" />
           <link rel="stylesheet" href="/static/css/react-date.css"/>
-          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
           {this.props.styleTags}
         </Head>
         <body>
