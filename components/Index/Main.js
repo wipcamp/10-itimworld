@@ -8,7 +8,7 @@ import FacebookLogin from 'react-facebook-login'
 
 import axios from '../../utils/api'
 
-const appId = `1418974444820427`
+import { appId, fields, scope } from './facebook.json'
 
 const Container = styled.div`
   position: relative;
