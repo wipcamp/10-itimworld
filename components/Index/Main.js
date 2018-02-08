@@ -59,9 +59,9 @@ const IndexCompose = ({setToken}) => {
         <FacebookLogin
           appId={appId}
           autoLoad
-          fields='name,picture'
-          scope='public_profile'
           onClick={handleClick}
+          fields={fields}
+          scope={scope}
           callback={(res) => responser(res, setToken)}
           textButton={`Login with Facebook`}
           cssClass='btn btn-primary'
