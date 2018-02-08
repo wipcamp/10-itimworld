@@ -44,6 +44,8 @@ const validate = values => {
   fields.map(e => {
     if (!values[e]) {
       errors[e] = required
+    } else if (typeof values[e] === 'string' && !values[e].trim()) {
+      errors[e] = 'โปรดอย่าเว้นช่องว่าง'
     }
   })
 
