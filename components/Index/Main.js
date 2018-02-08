@@ -3,7 +3,7 @@ import Router from 'next/router'
 import { connect } from 'react-redux'
 import { actions as tokenActions } from '../../store/reducers/token'
 import styled from 'styled-components'
-import {compose, lifecycle} from 'recompose'
+import {compose} from 'recompose'
 import FacebookLogin from 'react-facebook-login'
 
 import axios from '../../utils/api'
@@ -79,15 +79,5 @@ export default compose(
       token: state.token
     }),
     { ...tokenActions }
-  ),
-  lifecycle({
-    async componentDidMount () {
-      let {setToken} = this.props
-      let token = await getToken()
-      setToken(token)
-      // if (this.props.token) {
-      //   Router.push('/register')
-      // }
-    }
-  })
+  )
 )(IndexCompose)
