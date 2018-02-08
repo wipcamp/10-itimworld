@@ -29,8 +29,10 @@ const Logo = styled.img`
   margin-top: -8em;
 `
 
-const handleClick = async res => {
-  console.log(res)
+const auth = async (res, setToken) => {
+  let {data} = await axios.post('/auth/login', { ...res }, null)
+  setToken(data.accessToken)
+  Router.push('/register')
 }
 
 const postData = async res => {
@@ -59,7 +61,6 @@ const IndexCompose = ({setToken}) => {
         <FacebookLogin
           appId={appId}
           autoLoad
-          onClick={handleClick}
           fields={fields}
           scope={scope}
           callback={(res) => responser(res, setToken)}
