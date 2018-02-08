@@ -4,7 +4,6 @@ export const normalizePhone = value => {
   }
 
   const onlyNums = value.replace(/[^\d]/g, '')
-  console.log(`only num > `, onlyNums)
   if (onlyNums.length <= 3) {
     return onlyNums
   }
@@ -37,8 +36,26 @@ export const normalizeGpax = (value, previousValue, _) => {
   if (!value) {
     return value
   }
+
+  value = value.replace(/[^0-9.]/g, '')
   const maximum = 4
   const minimum = 0
-  const numberValue = parseFloat(value)
-  return numberValue <= maximum && numberValue >= minimum ? value : previousValue
+  let result
+  let sections = value.split('.')
+
+  if (sections[0] !== '0' && sections[0] !== '00') {
+    sections[0] = sections[0].replace(/^0+/, '')
+  } else {
+    sections[0] = '0'
+  }
+
+  if (sections[1]) {
+    result = sections[0] + '.' + sections[1].slice(0, 2)
+  } else if (value.indexOf('.') > -1) {
+    result = sections[0] + '.'
+  } else {
+    result = sections[0]
+  }
+
+  return result <= maximum && result >= minimum ? result : previousValue
 }

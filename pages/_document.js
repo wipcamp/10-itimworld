@@ -56,6 +56,14 @@ injectGlobal`
   .metro:hover {
     background-color: #1c2e6d;
     border-color: #1c2e6d;
+
+  .form-group {
+    margin-bottom: 0.25rem;
+  }
+
+  .form-check {
+    margin-bottom: 0;
+
   }
 `
 export default class MyDocument extends Document {
@@ -76,6 +84,7 @@ export default class MyDocument extends Document {
           <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
           <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
           <link rel="stylesheet" href="/static/css/quill.snow.custom.css" />
+          <link rel="stylesheet" href="/static/css/react-date.css"/>
           {this.props.styleTags}
         </Head>
         <body>

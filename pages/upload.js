@@ -1,5 +1,6 @@
 import React from 'react'
 import MainUpload from '../components/upload/Main'
+import withRedux from '../store/wrapper'
 
 const UploadPage = props => (
   <div>
@@ -7,4 +8,4 @@ const UploadPage = props => (
   </div>
 )
 
-export default UploadPage
+export default withRedux()(UploadPage)
