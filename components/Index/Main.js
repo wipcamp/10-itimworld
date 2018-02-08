@@ -53,8 +53,6 @@ const responser = async (res, setToken) => {
   auth(res, setToken)
 }
 
-const getToken = () => (window ? window.localStorage.getItem('token') : null)
-
 const IndexCompose = ({setToken}) => {
   return <Container className='container-fluid'>
     <div className='row'>
