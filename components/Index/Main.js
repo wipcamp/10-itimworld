@@ -85,6 +85,9 @@ export default compose(
       let {setToken} = this.props
       let token = await getToken()
       setToken(token)
+      // if (this.props.token) {
+      //   Router.push('/register')
+      // }
     }
   })
 )(IndexCompose)
