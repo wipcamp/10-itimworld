@@ -76,9 +76,9 @@ const IndexCompose = ({setToken}) => {
 export default compose(
   connect(
     state => ({
-      profile: state.profile
+      token: state.token
     }),
-    { ...profileActions }
+    { ...tokenActions }
   ),
   lifecycle({
     async componentDidMount () {
