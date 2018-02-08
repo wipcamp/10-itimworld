@@ -1,7 +1,7 @@
 import React from 'react'
 import Router from 'next/router'
 import { connect } from 'react-redux'
-import { actions as profileActions } from '../../store/reducers/profile'
+import { actions as tokenActions } from '../../store/reducers/token'
 import styled from 'styled-components'
 import {compose, lifecycle} from 'recompose'
 import FacebookLogin from 'react-facebook-login'
