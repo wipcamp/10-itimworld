@@ -75,3 +75,10 @@ export const normalizeThai = (value) => {
   }
   return value.replace(/[^ก-๙ ]/g, '')
 }
+
+export const normalizeEng = (value) => {
+  if (!value) {
+    return value
+  }
+  return value.replace(/[^a-zA-Z"' ]/g, '')
+}
