@@ -68,3 +68,10 @@ export const normalizeDate = (value) => {
   }
   return ''
 }
+
+export const normalizeThai = (value) => {
+  if (!value) {
+    return value
+  }
+  return value.replace(/[^ก-๙ ]/g, '')
+}
