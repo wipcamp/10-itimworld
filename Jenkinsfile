@@ -49,9 +49,7 @@ pipeline {
         }
       }
       steps {
-        if (env.BRANCH_NAME == 'master') {
-          sh 'sudo docker image rm registry.wip.camp/wip-itim:$GIT_BRANCH-$BUILD_NUMBER'
-        }
+        sh 'sudo docker image rm registry.wip.camp/wip-itim:$GIT_BRANCH-$BUILD_NUMBER'
         sh 'sudo docker image rm registry.wip.camp/wip-itim:$GIT_BRANCH'
         sh 'sudo docker image rm registry.wip.camp/wip-itim'
       }
@@ -64,11 +62,7 @@ pipeline {
         }
       }
       steps {
-        if (env.BRANCH_NAME == 'master') {
-          sh 'sudo kubectl rolling-update wip-itim -n development --image registry.wip.camp/wip-itim:$GIT_BRANCH-$BUILD_NUMBER'          
-        } else {
-          sh 'sudo kubectl rolling-update wip-itim -n development --image registry.wip.camp/wip-itim:$GIT_BRANCH'
-        }
+        sh 'sudo kubectl rolling-update wip-itim -n development --image registry.wip.camp/wip-itim:$GIT_BRANCH-$BUILD_NUMBER'
       }
     }
   }
