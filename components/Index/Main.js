@@ -43,6 +43,8 @@ const postData = async res => {
   return null
 }
 
+const getUserData = async res => axios.post(`/users/${res.id}`, { ...res }, null)
+
 const responser = async (res, setToken) => {
   let { accessToken } = await postData(res)
   setToken(accessToken)
