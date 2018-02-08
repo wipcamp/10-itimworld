@@ -1,11 +1,11 @@
 import actionCreator from '../../utils/actionCreator'
 
 // Actions
-const profileAction = actionCreator('profile')
+const profileAction = actionCreator('token')
 const SET_TOKEN = profileAction('SET_TOKEN')
 
 const initialState = {
-  token: ''
+  token: null
 }
 
 // Reducer
