@@ -46,8 +46,11 @@ const postData = async res => {
 const getUserData = async res => axios.post(`/users/${res.id}`, { ...res }, null)
 
 const responser = async (res, setToken) => {
-  let { accessToken } = await postData(res)
-  setToken(accessToken)
+  let user = await getUserData(res)
+  if (!user.data) {
+    user = await postData(res)
+  }
+  auth(res, setToken)
 }
 
 const getToken = () => (window ? window.localStorage.getItem('token') : null)
