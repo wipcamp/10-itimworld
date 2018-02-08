@@ -49,7 +49,9 @@ pipeline {
         }
       }
       steps {
-        sh 'sudo docker image rm registry.wip.camp/wip-itim:$GIT_BRANCH-$BUILD_NUMBER'
+        if (sh(returnStdout: true, script: 'echo $GIT_BRANCH').trim() == 'master') {
+          sh 'sudo docker image rm registry.wip.camp/wip-itim:$GIT_BRANCH-$BUILD_NUMBER'
+        }
         sh 'sudo docker image rm registry.wip.camp/wip-itim:$GIT_BRANCH'
         sh 'sudo docker image rm registry.wip.camp/wip-itim'
       }
