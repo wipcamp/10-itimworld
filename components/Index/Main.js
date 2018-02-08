@@ -31,6 +31,7 @@ const Logo = styled.img`
 
 const auth = async (res, setToken) => {
   let {data} = await axios.post('/auth/login', { ...res }, null)
+  document.cookie = `token=${data.accessToken}; expires=${60 * 60 * 24 * 5};`
   setToken(data.accessToken)
   Router.push('/register')
 }
