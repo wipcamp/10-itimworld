@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: app-env
-  namespace: development
+  namespace: staging
 data:
   .env: |
     API=https://api.freezer.wip.camp/api/v1
@@ -14,7 +14,7 @@ apiVersion: v1
 kind: ReplicationController
 metadata:
   name: wip-itim
-  namespace: development
+  namespace: staging
   labels:
     app: wip-itim
     organize: wipcamp10
@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
       - name: wip-itim
-        image: registry.wip.camp/wip-itim:develop
+        image: registry.wip.camp/wip-itim:master
         ports:
         - containerPort: 3000
         volumeMounts:
@@ -52,7 +52,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: wip-itim
-  namespace: development
+  namespace: staging
   labels:
     app: wip-itim
     organize: wipcamp10
@@ -73,14 +73,14 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: wip-itim
-  namespace: development
+  namespace: staging
   labels:
     app: wip-itim
     organize: wipcamp10
     tier: frontend
 spec:
   rules:
-  - host: itim.freezer.wip.camp
+  - host: itim.kati.wip.camp
     http:
       paths:
       - backend:
