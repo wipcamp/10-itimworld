@@ -73,10 +73,9 @@ export default class MyDocument extends Document {
       <html>
         <Head>
           <title>Itim | WIP Camp #10</title>
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
           <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
           <link rel="stylesheet" href="/static/css/quill.snow.custom.css" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
           {this.props.styleTags}
         </Head>
         <body>
