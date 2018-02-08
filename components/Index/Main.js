@@ -48,7 +48,7 @@ const getUserData = res => axios.post(`/users/${res.id}`, { ...res }, null)
 
 const responser = async (res, setToken) => {
   let user = await getUserData(res)
-  if (!user.data) {
+  if (!user.data.data) {
     user = await postData(res)
   }
   auth(res, setToken)
