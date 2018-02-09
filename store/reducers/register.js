@@ -10,11 +10,13 @@ const SET_FIELD = 'SET_FIELD'
 const SAVE_PROFILE = registerAction('SAVE_PROFILE', true)
 const CHANGE_FILE = registerAction('CHANGE_FILE')
 const UPLOAD_FILE = registerAction('CHANGE_FILE', true)
+const HIDE_DIALOG = registerAction('HIDE_DIALOG')
+const SHOW_DIALOG = registerAction('SHOW_DIALOG')
 
 const initialState = {
-  saving: false,
-  error: null,
+  error: false,
   message: '',
+  showDialog: false,
   user_id: null,
   registerStep: 1
 }
@@ -26,6 +28,22 @@ export default (state = initialState, action) => {
       return {
         ...state,
         [action.field]: action.value
+      }
+    }
+
+    case SHOW_DIALOG: {
+      return {
+        ...state,
+        message: action.message,
+        error: true,
+        showDialog: true
+      }
+    }
+
+    case HIDE_DIALOG: {
+      return {
+        ...state,
+        showDialog: false
       }
     }
 
@@ -155,6 +173,7 @@ export const actions = {
     data.telno_personal = getOnlyNum(data.telno_personal)
     data.telno_parent = getOnlyNum(data.telno_parent)
     data.citizen_id = getOnlyNum(data.citizen_id)
+    console.log(data)
     if (dataIsNotNull(data)) {
       return {
         type: SAVE_PROFILE.ACTION,
@@ -167,6 +186,13 @@ export const actions = {
       }
     }
   },
+  onSubmitError: () => ({
+    type: SHOW_DIALOG,
+    message: 'กรุณากรอกฟิลด์ให้ครบ'
+  }),
+  hideDialog: () => ({
+    type: HIDE_DIALOG
+  }),
   setRegisterStep: (payload) => ({
     type: 'EIEI',
     payload
