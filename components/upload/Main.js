@@ -313,7 +313,7 @@ const cardData = [
     title: 'คลิก เพื่ออัพโหลดเอกสาร'
   },
   {
-    name: 'allowByParent',
+    name: 'parental_authorization',
     outerClass: 'col-12 col-md-4 pl-md-0',
     margin: 'auto 0 0',
     img: '/static/img/upload-card-1.png',
