@@ -2,10 +2,8 @@
   "header": "test",
   "fields": [
     {
-      "component": "date",
-      "name": "dob",
-      "label": "วัน/เดือน/ปี เกิด",
-      "outerClass": "col-6 text-left form-group"
+      "component": "header",
+      "label": "ข้อมูลส่วนตัว"
     },
     {
       "name": "first_name",
@@ -53,91 +51,10 @@
       "placeholder": ""
     },
     {
+      "component": "date",
+      "name": "birth_at",
       "label": "วัน/เดือน/ปี เกิด",
-      "htmlFor": "dateOfBirth",
-      "outerClass": "col-12 pl-md-1 col-sm-8 text-left form-group",
-      "component": "multiple-select",
-      "data": [
-        {
-          "name": "dob_dd",
-          "middleClass": "d-inline-block col-4 pr-2",
-          "innerClass": " form-control d-inline-block",
-          "width": "65px",
-          "placeholder": "วัน",
-          "dropdown": [
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20",
-            "21",
-            "22",
-            "23",
-            "24",
-            "25",
-            "26",
-            "27",
-            "28",
-            "29",
-            "30",
-            "31"
-          ],
-          "values": [
-            1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31
-          ]
-        },
-        {
-          "name": "dob_mm",
-          "middleClass": "d-inline-block col-4 px-2",
-          "innerClass": "form-control d-inline-block",
-          "width": "110px",
-          "placeholder": "",
-          "dropdown": [
-            "มกราคม",
-            "กุมภาพันธ์",
-            "มีนาคม",
-            "เมษายน",
-            "พฤษภาคม",
-            "มิถุนายน",
-            "กรกฎาคม",
-            "สิงหาคม",
-            "กันยายน",
-            "ตุลาคม",
-            "พฤศจิกายน",
-            "ธันวาคม"
-          ],
-          "values": [
-            1,2,3,4,5,6,7,8,9,10,11,12
-          ]
-        },
-        {
-          "name": "dob_yyyy",
-          "middleClass": "d-inline-block col-4 pl-2",
-          "innerClass": "form-control d-inline-block",
-          "width": "85px",
-          "dropdown": [
-            "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004"
-          ],
-          "values": [
-            "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004"
-          ]
-        }
-      ]
+      "outerClass": "col-6 col-md-6 offset-md-2 text-left form-group"
     },
     {
       "name": "citizen_id",
@@ -258,8 +175,8 @@
       ]
     },
     {
-      "component": "hr",
-      "class": "col-12"
+      "component": "header",
+      "label": "ข้อมูลทางการศึกษา"
     },
     {
       "label": "ชื่อโรงเรียน",

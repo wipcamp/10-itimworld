@@ -1,10 +1,13 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
-import { compose, withStateHandlers } from 'recompose'
+import { compose } from 'recompose'
 import { connect } from 'react-redux'
+import Dropzone from 'react-dropzone'
+import { actions as DashboardActions } from '../../store/reducers/dashboard'
 import Link from 'next/link'
 
-import Header from './header'
+import Header from '../Core/Header/Main'
+import Alert from '../Core/Alert'
 
 const BackgroundContainer = styled.div`
   background: #B8D0EC;
@@ -30,6 +33,15 @@ to {
 }
 `
 
+const bounceUp = keyframes`
+  0%, 100% {
+    top: 0;
+  }
+  60% {
+    top: -10px;
+  }
+`
+
 const CardUpload = styled.div`
   font-family: 'pridi-regularr';
   font-size: 28px;
@@ -37,7 +49,7 @@ const CardUpload = styled.div`
   user-select: none;
   position: relative;
 
-  & > input[type=file] {
+  & input[type=file] {
     position: absolute;
     z-index: -1;
     width: 10px;
@@ -67,9 +79,7 @@ const CardUpload = styled.div`
       height: 80px;
       opacity: 1;
       border-top: 8px solid #fff;
-      /* #232323;  */
       border-bottom: 8px solid #fff;
-      /* #232323; */
       border-right: 8px solid rgba(255,255,255,0); 
       border-left: 8px solid rgba(255,255,255,0); 
       border-radius: 50%;
@@ -77,7 +87,6 @@ const CardUpload = styled.div`
     }
 
     & .waiting {
-      /* opacity: .3; */
       top: 0;
       display: flex;
       align-items: center;
@@ -100,7 +109,47 @@ const CardUpload = styled.div`
 
   }
 
+  & .dropzone {
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    width: 290px;
+    height: 230px;
+    cursor: pointer;
 
+    background-size: cover;
+    background-image: url(${props => props.img});
+    border-radius: 15px;
+    transition: all .5s;
+
+    ${props => !props.filePath && `
+      filter: grayscale(50%) !important;
+    `}
+
+    & label {
+      cursor: pointer;
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+
+    &:hover {
+      transform: scale(1.005);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 991px) {
+      width: 210px;
+      height: 168px;
+    }
+
+    @media(min-width: 992px) {
+      margin: 10px ${props => props.margin};
+    }
+  }
 
   & > label {
     margin: 20px auto;
@@ -109,6 +158,7 @@ const CardUpload = styled.div`
     width: 290px;
     height: 230px;
     cursor: pointer;
+    /* filter: blur(2px) !important; */
 
     align-items: center;
     background-size: cover;
@@ -147,6 +197,29 @@ const CardUpload = styled.div`
   }
 `
 
+const AbsoluteContainer = styled.div`
+  width: 100%;
+  z-index: 1;
+  border-radius: 15px;
+`
+
+const DropActive = styled.div`
+  border-radius: 15px;
+  background: pink;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  border: 3px solid skyblue;
+  align-items: center;
+  flex-direction: column;
+`
+
+const DropActiveIcon = styled.div`
+  position: relative;
+  animation: ${bounceUp} 1s infinite;
+`
+
 const CustomRow = styled.div`
   min-height: 70vh;
   display: flex;
@@ -166,12 +239,12 @@ const showNumOfAsnwered = (data) => {
 }
 
 const Card = props => {
-  const { outerClass, content, link, name, dashboard: { files } } = props
+  const { outerClass, content, link, name, dashboard: { files }, setDragActive, onDropFile } = props
   return (
     <div className={`${outerClass} mx-auto`}>
       {
         link ? (
-          <Link prefetch href='/'>
+          <Link prefetch href='/question'>
             <CardUpload
               {...props}
             >
@@ -184,13 +257,34 @@ const Card = props => {
           <CardUpload
             {...props}
             {...files[name]}
-            title={files[name].saving ? '' : props.title}
           >
-            <input type='file' id={`${name}-file-input`} />
-            <label
-              htmlFor={`${name}-file-input`}
-              dangerouslySetInnerHTML={{ __html: content }}
-            />
+            <Dropzone
+              className='dropzone'
+              style={{position: 'relative'}}
+              accept={'image/png, image/jpeg, application/pdf'}
+              onDragEnter={() => setDragActive({field: name, dropActive: true})}
+              onDragLeave={() => setDragActive({field: name, dropActive: false})}
+              onDrop={(files) => onDropFile(name, files)}
+            >
+              <label
+                title={files[name].saving ? '' : props.title}
+                htmlFor={`${name}-file-input`}
+                dangerouslySetInnerHTML={{ __html: content }}
+              />
+              <AbsoluteContainer>
+                {
+                  files[name].dropzoneActive && (
+                    <DropActive>
+                      <DropActiveIcon>
+                        <i className='fas fa-cloud-upload-alt text-white fa-2x' />
+                      </DropActiveIcon>
+                      <small>วางเพื่ออัพโหลดไฟล์ทันที ทันใด</small>
+                    </DropActive>
+                  )
+                }
+              </AbsoluteContainer>
+            </Dropzone>
+
             <div className='loading'>
               <div className={`waiting `} >
                 <div className='waitanim' />
@@ -214,7 +308,7 @@ const cardData = [
     title: 'ไปหน้าตอบคำถาม'
   },
   {
-    name: 'transcript',
+    name: 'transcription_record',
     outerClass: 'col-12 col-md-4 px-md-0',
     margin: 'auto 0',
     img: '/static/img/upload-card-2.png',
@@ -223,107 +317,46 @@ const cardData = [
     title: 'คลิก เพื่ออัพโหลดเอกสาร'
   },
   {
-    name: 'allowByParent',
+    name: 'parental_authorization',
     outerClass: 'col-12 col-md-4 pl-md-0',
     margin: 'auto 0 0',
     img: '/static/img/upload-card-1.png',
     content: 'อัพโหลดใบเอกสาร<br />ขออนุญาตผู้ปกครอง',
     isUpload: true,
     title: 'คลิก เพื่ออัพโหลดเอกสาร'
-
   }
 ]
 
-const Alert = styled.div`
-  position: absolute;
-  top: 0;
-  width: 100%;
-  transition: transform 0.7s linear;
-  
-  & button {
-    outline: none;
-    cursor: pointer;
-  }
+const MainUpload = props => {
+  return (
+    <div>
+      <BackgroundContainer>
+        <Header img={`https://cdn-images-1.medium.com/max/870/1*QVdC5tpOzBrJtc6M28F7XQ.jpeg`} />
+        <div className='container'>
+          <Alert {...props} {...props.dashboard} />
+          <CustomRow className='row text-center'>
+            {
+              cardData.map((data, index) => (
+                <Card
+                  key={index}
+                  {...props}
+                  {...data}
 
-  ${props => props.show ? `
-    transform: translateY(0);  
-  ` : `
-    transform: translateY(-100px);
-  `}
-
-  @media (min-width: 576px) {
-    max-width: 540px;
-    margin: 0 -15px;
-  }
-
-  @media (min-width: 768px) {
-    max-width: 720px;
-  }
-
-  @media (min-width: 992px){
-    max-width: 960px; 
-  }
-
-  @media (min-width: 1200px){
-    max-width: 1140px; 
-  }
-`
-
-const MainUpload = props => (
-  <div>
-    <BackgroundContainer>
-      <button onClick={props.toggleNofi}>{props.showNofi ? 'hide ' : 'show '}nofication</button>
-      <Header img={`https://cdn-images-1.medium.com/max/870/1*QVdC5tpOzBrJtc6M28F7XQ.jpeg`} />
-      <div className='container'>
-        <Alert className={`row justify-content-center `} show={props.showNofi}>
-          <div className='col-12 col-md-7'>
-            <div className='alert alert-danger' role='alert'>
-              <i className='fas fa-exclamation-triangle' />{' '}
-                Warning and alert here! {props.showNofi ? 'true' : 'false'}
-              <button
-                type='button'
-                className='close'
-                onClick={props.closeNofi}
-              >
-                <span>&times;</span>
-              </button>
-            </div>
-          </div>
-        </Alert>
-        <CustomRow className='row text-center'>
-          {
-            cardData.map((data, index) => (
-              <Card
-                key={index}
-                {...props}
-                {...data}
-
-              />
-            ))
-          }
-        </CustomRow>
-      </div>
-    </BackgroundContainer>
-  </div>
-)
+                />
+              ))
+            }
+          </CustomRow>
+        </div>
+      </BackgroundContainer>
+    </div>
+  )
+}
 
 export default compose(
   connect(
     state => ({
       dashboard: state.dashboard
-    })
-  ),
-  withStateHandlers(
-    ({ initialValue = false }) => ({
-      showNofi: initialValue
     }),
-    {
-      toggleNofi: ({ showNofi }) => () => ({
-        showNofi: !showNofi
-      }),
-      closeNofi: () => () => ({
-        showNofi: false
-      })
-    }
+    { ...DashboardActions }
   )
 )(MainUpload)
