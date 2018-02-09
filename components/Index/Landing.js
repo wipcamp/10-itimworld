@@ -50,7 +50,7 @@ const RockDown = Image.extend`
 const Character = Image.extend`
   width: 30%;
   z-index: 0;
-  bottom: 1em;
+  bottom: .5em;
   @media (min-width: 800px) {
     width: 15em;
   }
