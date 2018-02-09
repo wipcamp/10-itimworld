@@ -1,5 +1,5 @@
 import React from 'react'
-import MainUpload from '../components/dashboard/Main'
+import MainUpload from '../components/Dashboard/Main'
 import withRedux from '../store/wrapper'
 
 const UploadPage = props => (
