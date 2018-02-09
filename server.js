@@ -27,7 +27,7 @@ app.prepare()
       return res.sendFile(path.join(__dirname, req.url))
     })
 
-    server.listen(port, (err) => {
+    server.use(handle).listen(port, (err) => {
       if (err) throw err
       console.log(`> Ready on http://localhost:${port}`)
     })
