@@ -121,6 +121,10 @@ const CardUpload = styled.div`
     border-radius: 15px;
     transition: all .5s;
 
+    ${props => !props.filePath && `
+      filter: grayscale(50%) !important;
+    `}
+
     & label {
       cursor: pointer;
       position: absolute;
@@ -271,8 +275,7 @@ const Card = props => {
                   files[name].dropzoneActive && (
                     <DropActive>
                       <DropActiveIcon>
-                        <i className='fas fa-cloud text-white fa-2x' />
-                        <i className='fas fa-arrow-up text-dark' style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}} />
+                        <i className='fas fa-cloud-upload-alt text-white fa-2x' />
                       </DropActiveIcon>
                       <small>วางเพื่ออัพโหลดไฟล์ทันที ทันใด</small>
                     </DropActive>
@@ -304,7 +307,7 @@ const cardData = [
     title: 'ไปหน้าตอบคำถาม'
   },
   {
-    name: 'transcript',
+    name: 'transcription_record',
     outerClass: 'col-12 col-md-4 px-md-0',
     margin: 'auto 0',
     img: '/static/img/upload-card-2.png',
@@ -358,43 +361,50 @@ const Alert = styled.div`
   }
 `
 
-const MainUpload = props => (
-  <div>
-    <BackgroundContainer>
-      <button onClick={props.toggleNofi}>{props.showNofi ? 'hide ' : 'show '}nofication</button>
-      <Header img={`https://cdn-images-1.medium.com/max/870/1*QVdC5tpOzBrJtc6M28F7XQ.jpeg`} />
-      <div className='container'>
-        <Alert className={`row justify-content-center `} show={props.showNofi}>
-          <div className='col-12 col-md-7'>
-            <div className='alert alert-danger' role='alert'>
-              <i className='fas fa-exclamation-triangle' />{' '}
-                Warning and alert here! {props.showNofi ? 'true' : 'false'}
-              <button
-                type='button'
-                className='close'
-                onClick={props.closeNofi}
-              >
-                <span>&times;</span>
-              </button>
+const MainUpload = props => {
+  const { error, showDialog, message } = props.dashboard
+  if (showDialog) {
+    setTimeout(() => {
+      props.hideDialog()
+    }, 4000)
+  }
+  return (
+    <div>
+      <BackgroundContainer>
+        <Header img={`https://cdn-images-1.medium.com/max/870/1*QVdC5tpOzBrJtc6M28F7XQ.jpeg`} />
+        <div className='container'>
+          <Alert className={`row justify-content-center `} show={showDialog}>
+            <div className='col-12 col-md-7'>
+              <div className={`alert alert-${error ? 'danger' : 'success'}`} role='alert'>
+                <i className={`fas fa-${error ? 'exclamation-triangle' : 'check-circle'} fa-lg`} />
+                {` ${message}`}
+                <button
+                  type='button'
+                  className='close'
+                  onClick={props.hideDialog}
+                >
+                  <span>&times;</span>
+                </button>
+              </div>
             </div>
-          </div>
-        </Alert>
-        <CustomRow className='row text-center'>
-          {
-            cardData.map((data, index) => (
-              <Card
-                key={index}
-                {...props}
-                {...data}
+          </Alert>
+          <CustomRow className='row text-center'>
+            {
+              cardData.map((data, index) => (
+                <Card
+                  key={index}
+                  {...props}
+                  {...data}
 
-              />
-            ))
-          }
-        </CustomRow>
-      </div>
-    </BackgroundContainer>
-  </div>
-)
+                />
+              ))
+            }
+          </CustomRow>
+        </div>
+      </BackgroundContainer>
+    </div>
+  )
+}
 
 export default compose(
   connect(
@@ -402,18 +412,5 @@ export default compose(
       dashboard: state.dashboard
     }),
     { ...DashboardActions }
-  ),
-  withStateHandlers(
-    ({ initialValue = false }) => ({
-      showNofi: initialValue
-    }),
-    {
-      toggleNofi: ({ showNofi }) => () => ({
-        showNofi: !showNofi
-      }),
-      closeNofi: () => () => ({
-        showNofi: false
-      })
-    }
   )
 )(MainUpload)
