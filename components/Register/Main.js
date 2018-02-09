@@ -76,9 +76,18 @@ const SubmitButton = styled.button`
 `
 
 const FormRegister = props => {
-  const { handleSubmit, pristine, submitting, saveRegister, registerData: { registerStep } } = props
+  const { handleSubmit, pristine, submitting, saveRegisterStep1, saveRegisterStep2, registerData: { registerStep } } = props
   return (
-    <RegisterSection onSubmit={handleSubmit(saveRegister)}>
+    <RegisterSection onSubmit={
+      handleSubmit((values) => {
+        switch (registerStep) {
+          case 1: saveRegisterStep1(values)
+            break
+          case 2: saveRegisterStep2(values)
+            break
+        }
+      })
+    }>
       <SubHeader>ลงทะเบียน</SubHeader>
       {
         (registerStep === 1 ? (
