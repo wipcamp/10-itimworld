@@ -1,5 +1,5 @@
-const nextRoutes = require('next-routes')
-const routes = (module.exports = nextRoutes())
+const routes = module.exports = require('next-routes')()
 
+routes.add('index', '/')
 routes.add('register', '/register')
 routes.add('question/answer', '/question/answer/:id')
