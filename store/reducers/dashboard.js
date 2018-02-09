@@ -169,7 +169,7 @@ export const actions = {
       transcription_record: UPLOAD_TRANSCRIPT,
       parental_authorization: UPLOAD_PARENTAL_AUTHORIZATION
     }
-    if (files.length === 0) {
+    if (files.length === 1) {
       const formData = new FormData()
       formData.append('file', files[0])
       formData.append('fileType', field)
