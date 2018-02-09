@@ -283,7 +283,7 @@ const Radio = ({
         )
       }
     </div>
-    <Field name='blood_group' component={renderError} top='-4px' />
+    <Field name={name} component={renderError} top='-4px' />
   </div>
 )
 
