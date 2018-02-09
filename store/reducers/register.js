@@ -1,5 +1,3 @@
-/* global FormData */
-
 import actionCreator from '../../utils/actionCreator'
 import api from '../../utils/api'
 import { convertToInt, convertToFloat, dataIsNotNull } from '../../utils/helper'
@@ -19,7 +17,7 @@ const initialState = {
   message: '',
   showDialog: false,
   user_id: null,
-  registerStep: 1
+  registerStep: 2
 }
 
 // Reducer
@@ -58,22 +56,17 @@ export default (state = initialState, action) => {
       }
     }
 
-    case SAVE_PROFILE_STEP_ONE.FULFILLED: {
+    case SAVE_PROFILE_STEP_ONE.FULFILLED:
+    case SAVE_PROFILE_STEP_TWO.FULFILLED:
+    {
       return {
         ...state,
         saving: false,
-        registerStep: 2
+        registerStep: state.registerStep + 1
       }
     }
 
-    case SAVE_PROFILE_STEP_TWO.FULFILLED: {
-      return {
-        ...state,
-        saving: false
-      }
-    }
-
-    case SAVE_PROFILE_STEP_ONE.REJECTED: 
+    case SAVE_PROFILE_STEP_ONE.REJECTED:
     case SAVE_PROFILE_STEP_TWO.REJECTED:
     {
       return {

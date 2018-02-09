@@ -3,6 +3,7 @@ import { compose, lifecycle } from 'recompose'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
+import Router from 'next/router'
 
 import {actions as registerActions} from '../../store/reducers/register'
 import Alert from '../Core/Alert'
@@ -76,6 +77,10 @@ export default compose(
           window.scroll({top: 0, behavior: 'smooth'}),
           100
         )
+      }
+
+      if (this.props.registerData.registerStep === 2 && nextProps.registerData.registerStep === 3) {
+        Router.push('/dashboard')
       }
     }
   })
