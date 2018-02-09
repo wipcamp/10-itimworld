@@ -256,6 +256,7 @@ const Card = props => {
             <Dropzone
               className='dropzone'
               style={{position: 'relative'}}
+              accept={'image/png, image/jpeg, application/pdf'}
               onDragEnter={() => setDragActive({field: name, dropActive: true})}
               onDragLeave={() => setDragActive({field: name, dropActive: false})}
               onDrop={(files) => onDropFile(name, files)}
@@ -273,7 +274,7 @@ const Card = props => {
                         <i className='fas fa-cloud text-white fa-2x' />
                         <i className='fas fa-arrow-up text-dark' style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}} />
                       </DropActiveIcon>
-                      วางเพื่ออัพโหลดทันที
+                      <small>วางเพื่ออัพโหลดไฟล์ทันที ทันใด</small>
                     </DropActive>
                   )
                 }
