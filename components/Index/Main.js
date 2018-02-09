@@ -29,31 +29,6 @@ const Logo = styled.img`
   margin-top: -8em;
 `
 
-const auth = async (res, setToken) => {
-  let {data} = await axios.post('/auth/login', { ...res }, null)
-  document.cookie = `token=${data.accessToken}; expires=${60 * 60 * 24 * 5};`
-  setToken(data.accessToken)
-  Router.push('/register')
-}
-
-const postData = async res => {
-  let { data } = await axios.post('/users', { ...res }, null)
-  if (data) {
-    return data
-  }
-  return null
-}
-
-const getUserData = res => axios.post(`/users/${res.id}`, { ...res }, null)
-
-const responser = async (res, setToken) => {
-  let user = await getUserData(res)
-  if (!user.data.data) {
-    user = await postData(res)
-  }
-  auth(res, setToken)
-}
-
 const IndexCompose = ({setToken}) => {
   return <Container className='container-fluid'>
     <div className='row'>
