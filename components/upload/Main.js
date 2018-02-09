@@ -243,7 +243,7 @@ const Card = props => {
     <div className={`${outerClass} mx-auto`}>
       {
         link ? (
-          <Link prefetch href='/'>
+          <Link prefetch href='/question'>
             <CardUpload
               {...props}
             >
