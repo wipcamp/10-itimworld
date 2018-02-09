@@ -8,7 +8,7 @@ export const validate = values => {
     'first_name_en',
     'last_name_en',
     'nickname',
-    'dob',
+    'birth_at',
     'gender_id',
     'telno_personal',
     'addr_prov',
