@@ -62,7 +62,8 @@ export default (state = initialState, action) => {
             saving: true,
             dropzoneActive: false
           }
-        }
+        },
+        showDialog: false
       }
     }
 
@@ -76,11 +77,13 @@ export default (state = initialState, action) => {
             saving: true,
             dropzoneActive: false
           }
-        }
+        },
+        showDialog: false
       }
     }
 
     case UPLOAD_TRANSCRIPT.FULFILLED: {
+      console.log(action.payload)
       return {
         ...state,
         files: {
@@ -121,7 +124,8 @@ export default (state = initialState, action) => {
           ...state.files,
           transcription_record: {
             ...state.files.transcription_record,
-            saving: false
+            saving: false,
+            dropzoneActive: false
           }
         },
         error: true,
@@ -137,7 +141,8 @@ export default (state = initialState, action) => {
           ...state.files,
           parental_authorization: {
             ...state.files.parental_authorization,
-            saving: false
+            saving: false,
+            dropzoneActive: false
           }
         },
         error: true,
@@ -159,14 +164,14 @@ export const actions = {
     value: dropActive,
     attr: 'dropzoneActive'
   }),
-  onDropFile: (field, file) => {
+  onDropFile: (field, files) => {
     const action = {
       transcription_record: UPLOAD_TRANSCRIPT,
       parental_authorization: UPLOAD_PARENTAL_AUTHORIZATION
     }
-    if (file) {
+    if (files.length === 0) {
       const formData = new FormData()
-      formData.append('file', file[0])
+      formData.append('file', files[0])
       formData.append('fileType', field)
       formData.append('userId', 10000)
       const headers = {
@@ -177,10 +182,15 @@ export const actions = {
         type: action[field].ACTION,
         payload: api.post('/uploads', formData, headers)
       }
+    } else if (files.length > 1) {
+      return {
+        type: action[field].REJECTED,
+        payload: 'จำนวนไฟล์เกินที่กำหนด'
+      }
     } else {
       return {
         type: action[field].REJECTED,
-        payload: 'no file found!'
+        payload: 'นามสกุลไฟล์ไม่ถูกต้อง'
       }
     }
   },
