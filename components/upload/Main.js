@@ -2,6 +2,8 @@ import React from 'react'
 import styled, { keyframes } from 'styled-components'
 import { compose, withStateHandlers } from 'recompose'
 import { connect } from 'react-redux'
+import Dropzone from 'react-dropzone'
+import { actions as DashboardActions } from '../../store/reducers/dashboard'
 import Link from 'next/link'
 
 import Header from './header'
@@ -30,6 +32,15 @@ to {
 }
 `
 
+const bounceUp = keyframes`
+  0%, 100% {
+    top: 0;
+  }
+  60% {
+    top: -10px;
+  }
+`
+
 const CardUpload = styled.div`
   font-family: 'pridi-regularr';
   font-size: 28px;
@@ -37,7 +48,7 @@ const CardUpload = styled.div`
   user-select: none;
   position: relative;
 
-  & > input[type=file] {
+  & input[type=file] {
     position: absolute;
     z-index: -1;
     width: 10px;
@@ -67,9 +78,7 @@ const CardUpload = styled.div`
       height: 80px;
       opacity: 1;
       border-top: 8px solid #fff;
-      /* #232323;  */
       border-bottom: 8px solid #fff;
-      /* #232323; */
       border-right: 8px solid rgba(255,255,255,0); 
       border-left: 8px solid rgba(255,255,255,0); 
       border-radius: 50%;
@@ -77,7 +86,6 @@ const CardUpload = styled.div`
     }
 
     & .waiting {
-      /* opacity: .3; */
       top: 0;
       display: flex;
       align-items: center;
@@ -100,7 +108,43 @@ const CardUpload = styled.div`
 
   }
 
+  & .dropzone {
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    width: 290px;
+    height: 230px;
+    cursor: pointer;
 
+    background-size: cover;
+    background-image: url(${props => props.img});
+    border-radius: 15px;
+    transition: all .5s;
+
+    & label {
+      cursor: pointer;
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+
+    &:hover {
+      transform: scale(1.005);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 991px) {
+      width: 210px;
+      height: 168px;
+    }
+
+    @media(min-width: 992px) {
+      margin: 10px ${props => props.margin};
+    }
+  }
 
   & > label {
     margin: 20px auto;
@@ -109,6 +153,7 @@ const CardUpload = styled.div`
     width: 290px;
     height: 230px;
     cursor: pointer;
+    /* filter: blur(2px) !important; */
 
     align-items: center;
     background-size: cover;
@@ -147,6 +192,29 @@ const CardUpload = styled.div`
   }
 `
 
+const AbsoluteContainer = styled.div`
+  width: 100%;
+  z-index: 1;
+  border-radius: 15px;
+`
+
+const DropActive = styled.div`
+  border-radius: 15px;
+  background: pink;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  border: 3px solid skyblue;
+  align-items: center;
+  flex-direction: column;
+`
+
+const DropActiveIcon = styled.div`
+  position: relative;
+  animation: ${bounceUp} 1s infinite;
+`
+
 const CustomRow = styled.div`
   min-height: 70vh;
   display: flex;
@@ -166,7 +234,8 @@ const showNumOfAsnwered = (data) => {
 }
 
 const Card = props => {
-  const { outerClass, content, link, name, dashboard: { files } } = props
+  const { outerClass, content, link, name, dashboard: { files }, setDragActive, onDropFile } = props
+  console.log(props)
   return (
     <div className={`${outerClass} mx-auto`}>
       {
@@ -184,13 +253,34 @@ const Card = props => {
           <CardUpload
             {...props}
             {...files[name]}
-            title={files[name].saving ? '' : props.title}
           >
-            <input type='file' id={`${name}-file-input`} />
-            <label
-              htmlFor={`${name}-file-input`}
-              dangerouslySetInnerHTML={{ __html: content }}
-            />
+            <Dropzone
+              className='dropzone'
+              style={{position: 'relative'}}
+              onDragEnter={() => setDragActive({field: name, dropActive: true})}
+              onDragLeave={() => setDragActive({field: name, dropActive: false})}
+              onDrop={(files) => onDropFile(name, files)}
+            >
+              <label
+                title={files[name].saving ? '' : props.title}
+                htmlFor={`${name}-file-input`}
+                dangerouslySetInnerHTML={{ __html: content }}
+              />
+              <AbsoluteContainer>
+                {
+                  files[name].dropzoneActive && (
+                    <DropActive>
+                      <DropActiveIcon>
+                        <i className='fas fa-cloud text-white fa-2x' />
+                        <i className='fas fa-arrow-up text-dark' style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}} />
+                      </DropActiveIcon>
+                      วางเพื่ออัพโหลดทันที
+                    </DropActive>
+                  )
+                }
+              </AbsoluteContainer>
+            </Dropzone>
+
             <div className='loading'>
               <div className={`waiting `} >
                 <div className='waitanim' />
@@ -230,7 +320,6 @@ const cardData = [
     content: 'อัพโหลดใบเอกสาร<br />ขออนุญาตผู้ปกครอง',
     isUpload: true,
     title: 'คลิก เพื่ออัพโหลดเอกสาร'
-
   }
 ]
 
@@ -311,7 +400,8 @@ export default compose(
   connect(
     state => ({
       dashboard: state.dashboard
-    })
+    }),
+    { ...DashboardActions }
   ),
   withStateHandlers(
     ({ initialValue = false }) => ({
