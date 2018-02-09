@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import styled, { keyframes } from 'styled-components'
 import {actions as registerActions} from '../../store/reducers/register'
 import Router from 'next/router'
+import Alert from '../Core/Alert'
 
 import { validate } from '../Core/validationForm'
 import { fields as fieldsRegister1 } from './form.json'
@@ -36,10 +37,6 @@ const BackgroundContainer = styled.div`
     background-position: 50% 100%;
     
   }
-  /* --breakpoint-sm: 576px;
-    --breakpoint-md: 768px;
-    --breakpoint-lg: 992px;
-    --breakpoint-xl: 1200px; */
 `
 
 const slideFromRight = keyframes`
@@ -64,7 +61,6 @@ const RegisterSection = styled.form`
   background: #fff;
   margin-bottom: 5em;
   border-radius: 10px;
-  /* transform: translateX(-15px); */
 
   animation: ${slideFromRight} 1.5s ease-in-out;
 `
@@ -135,22 +131,26 @@ const FormRegister = props => {
   )
 }
 
-export const MainRegister = props => (
-  <div>
-    <BackgroundContainer>
-      <div className='container'>
-        <div className='row '>
-          <div className='col-12 mt-4 col-md-6 mx-auto text-center justify-content-center'>
-            <img src='/static/img/logo.svg' className='img-fluid' alt='wipcamp-logo' />
-          </div>
-          <div className='col-12 col-sm-10 mx-auto text-center' >
-            <FormRegister {...props} />
+export const MainRegister = props => {
+  const { registerData } = props
+  return (
+    <div>
+      <BackgroundContainer>
+        <div className='container'>
+          <Alert {...props} {...registerData} />
+          <div className='row '>
+            <div className='col-12 mt-4 col-md-6 mx-auto text-center justify-content-center'>
+              <img src='/static/img/logo.svg' className='img-fluid' alt='wipcamp-logo' />
+            </div>
+            <div className='col-12 col-sm-10 mx-auto text-center' >
+              <FormRegister {...props} />
+            </div>
           </div>
         </div>
-      </div>
-    </BackgroundContainer>
-  </div>
-)
+      </BackgroundContainer>
+    </div>
+  )
+}
 
 export default compose(
   connect(
@@ -163,8 +163,9 @@ export default compose(
     form: 'register',
     validate,
     initialValues: {
-      user_id: 10
-    }
+      user_id: 10009
+    },
+    onSubmitFail: (_, __, ___, props) => props.onSubmitError()
   }),
   withHandlers({
     setRegister: props => (num) => {
@@ -172,8 +173,7 @@ export default compose(
     }
   }),
   lifecycle({
-    /* eslint-disable */
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps (nextProps) {
       if (nextProps.registerData.registerStep === 2) {
         setTimeout(
           window.scroll({top: 0, behavior: 'smooth'}),
@@ -181,6 +181,5 @@ export default compose(
         )
       }
     }
-    /* eslint-enable */
   })
 )(MainRegister)
