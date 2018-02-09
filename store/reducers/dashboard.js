@@ -5,27 +5,27 @@ import api from '../../utils/api'
 // Actions
 const dashboardAction = actionCreator('dropdown')
 const SET_FIELD_FILE = dashboardAction('SET_FIELD')
-const UPLOAD_FILE = dashboardAction('UPLOAD_FILE', true)
+const HIDE_DIALOG = dashboardAction('HIDE_DIALOG')
 const UPLOAD_TRANSCRIPT = dashboardAction('UPLOAD_TRANSCRIPT', true)
 const UPLOAD_PARENTAL_AUTHORIZATION = dashboardAction('UPLOAD_PARENTAL_AUTHORIZATION', true)
 
 const initialState = {
   files: {
-    transcript: {
-      error: false,
+    transcription_record: {
       filePath: '',
       uploaded: true,
       saving: false,
       dropzoneActive: false
     },
     parental_authorization: {
-      error: false,
       filePath: '',
       uploaded: false,
       saving: false,
       dropzoneActive: false
     }
   },
+  error: false,
+  showDialog: false,
   message: ''
 }
 
@@ -45,51 +45,10 @@ export default (state = initialState, action) => {
       }
     }
 
-    case UPLOAD_FILE.PENDING: {
-      console.log('pending ==========')
-      console.log(action)
+    case HIDE_DIALOG: {
       return {
         ...state,
-        files: {
-          ...state.files,
-          [action.field]: {
-            ...state.files[action.field],
-            saving: true,
-            dropzoneActive: false
-          }
-        }
-      }
-    }
-
-    case UPLOAD_FILE.FULFILLED: {
-      return {
-        ...state,
-        files: {
-          ...state.files,
-          [action.field]: {
-            ...state.files[action.field],
-            saving: false,
-            file: action.file
-          }
-        }
-      }
-    }
-
-    case UPLOAD_FILE.REJECTED: {
-      return {
-        ...state,
-        files: {
-          ...state.files,
-          transcript: {
-            ...state.files[action.field],
-            saving: false
-          },
-          parental_authorization: {
-            ...state.files[action.field],
-            saving: false
-          }
-        },
-        message: action.payload
+        showDialog: false
       }
     }
 
@@ -98,8 +57,8 @@ export default (state = initialState, action) => {
         ...state,
         files: {
           ...state.files,
-          transcript: {
-            ...state.files.transcript,
+          transcription_record: {
+            ...state.files.transcription_record,
             saving: true,
             dropzoneActive: false
           }
@@ -126,12 +85,15 @@ export default (state = initialState, action) => {
         ...state,
         files: {
           ...state.files,
-          transcript: {
-            ...state.files.transcript,
+          transcription_record: {
+            ...state.files.transcription_record,
             saving: false,
             filePath: action.payload.data.data.path
           }
-        }
+        },
+        error: false,
+        showDialog: true,
+        message: `อัพโหลด ปพ.1 เรียบร้อย`
       }
     }
 
@@ -145,7 +107,10 @@ export default (state = initialState, action) => {
             saving: false,
             filePath: action.payload.data.data.path
           }
-        }
+        },
+        error: false,
+        showDialog: true,
+        message: `อัพโหลด เอกสารขออนุญาตผู้ปกครองเรียบร้อย`
       }
     }
 
@@ -154,11 +119,13 @@ export default (state = initialState, action) => {
         ...state,
         files: {
           ...state.files,
-          transcript: {
-            ...state.files.transcript,
+          transcription_record: {
+            ...state.files.transcription_record,
             saving: false
           }
         },
+        error: true,
+        showDialog: true,
         message: action.payload
       }
     }
@@ -173,6 +140,8 @@ export default (state = initialState, action) => {
             saving: false
           }
         },
+        error: true,
+        showDialog: true,
         message: action.payload
       }
     }
@@ -192,7 +161,7 @@ export const actions = {
   }),
   onDropFile: (field, file) => {
     const action = {
-      transcript: UPLOAD_TRANSCRIPT,
+      transcription_record: UPLOAD_TRANSCRIPT,
       parental_authorization: UPLOAD_PARENTAL_AUTHORIZATION
     }
     if (file) {
@@ -213,6 +182,11 @@ export const actions = {
         type: action[field].REJECTED,
         payload: 'no file found!'
       }
+    }
+  },
+  hideDialog: () => {
+    return {
+      type: HIDE_DIALOG
     }
   }
 }
