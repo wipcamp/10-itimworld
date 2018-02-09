@@ -367,7 +367,7 @@ const MainUpload = props => {
   if (showDialog) {
     setTimeout(() => {
       props.hideDialog()
-    }, 4000)
+    }, 3000)
   }
   return (
     <div>
@@ -377,7 +377,10 @@ const MainUpload = props => {
           <Alert className={`row justify-content-center `} show={showDialog}>
             <div className='col-12 col-md-7'>
               <div className={`alert alert-${error ? 'danger' : 'success'}`} role='alert'>
-                <i className={`fas fa-${error ? 'exclamation-triangle' : 'check-circle'} fa-lg`} />
+                { error
+                  ? (<i className={`fas fa-${error ? 'exclamation-triangle' : 'check-circle'} fa-lg`} />)
+                  : (<i className={`fas fa- fa-lg`} />)
+                }
                 {` ${message}`}
                 <button
                   type='button'
