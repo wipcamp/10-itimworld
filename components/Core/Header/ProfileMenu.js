@@ -29,14 +29,14 @@ const pulse2 = keyframes`
 
 const Circle = styled.div`
   background: #fff;
-  width: 50px;
-  height: 50px;
+  width: 42px;
+  height: 42px;
   padding: 10px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #6AA6DD;
+  color: #564238;
   cursor: pointer;
   position: relative;
   font-size: 25px;
