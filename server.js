@@ -20,11 +20,11 @@ app.prepare()
     const server = express()
 
     server.get('/robot.txt', (req, res) => {
-      return res.sendFile(res, './static/robot.txt')
+      return res.sendFile(path.join(__dirname, './static', 'robot.txt'))
     })
 
-    server.get('*', (req, res) => {
-      return handle(req, res)
+    server.get('/static/img/favicon/*', (req, res) => {
+      return res.sendFile(path.join(__dirname, req.url))
     })
 
     server.listen(port, (err) => {
