@@ -1,4 +1,3 @@
-const express = require('express')
 require('dotenv').config()
 
 const next = require('next')
@@ -14,6 +13,7 @@ const handle = routes.getRequestHandler(app, ({req, res, route, query}) => {
   // app.render(req, res, route.page, query)
 })
 
+const express = require('express')
 
 app.prepare()
   .then(() => {
