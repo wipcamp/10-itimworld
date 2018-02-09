@@ -28,7 +28,6 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_FIELD: {
-      console.log(action)
       return {
         ...state,
         files: {

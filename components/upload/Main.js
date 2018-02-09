@@ -235,7 +235,6 @@ const showNumOfAsnwered = (data) => {
 
 const Card = props => {
   const { outerClass, content, link, name, dashboard: { files }, setDragActive, onDropFile } = props
-  console.log(props)
   return (
     <div className={`${outerClass} mx-auto`}>
       {
