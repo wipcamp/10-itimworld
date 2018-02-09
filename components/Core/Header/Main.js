@@ -1,6 +1,6 @@
 import React from 'react'
-import styled, {keyframes} from 'styled-components'
-import ProfileMenu from './profileMenu'
+import styled from 'styled-components'
+import ProfileMenu from './ProfileMenu'
 import { withState, withHandlers, compose, lifecycle, withStateHandlers } from 'recompose'
 
 const Header = styled.div`

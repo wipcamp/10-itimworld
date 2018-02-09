@@ -1,12 +1,12 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
-import { compose, withStateHandlers } from 'recompose'
+import { compose } from 'recompose'
 import { connect } from 'react-redux'
 import Dropzone from 'react-dropzone'
 import { actions as DashboardActions } from '../../store/reducers/dashboard'
 import Link from 'next/link'
 
-import Header from './header'
+import Header from '../Core/Header/Main'
 
 const BackgroundContainer = styled.div`
   background: #B8D0EC;
