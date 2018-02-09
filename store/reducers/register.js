@@ -7,7 +7,8 @@ import { convertToInt, convertToFloat, dataIsNotNull } from '../../utils/helper'
 // Actions
 const registerAction = actionCreator('register')
 const SET_FIELD = 'SET_FIELD'
-const SAVE_PROFILE = registerAction('SAVE_PROFILE', true)
+const SAVE_PROFILE_STEP_ONE = registerAction('SAVE_PROFILE_STEP_ONE', true)
+const SAVE_PROFILE_STEP_TWO = registerAction('SAVE_PROFILE_STEP_TWO', true)
 const CHANGE_FILE = registerAction('CHANGE_FILE')
 const UPLOAD_FILE = registerAction('CHANGE_FILE', true)
 const HIDE_DIALOG = registerAction('HIDE_DIALOG')
@@ -47,7 +48,9 @@ export default (state = initialState, action) => {
       }
     }
 
-    case SAVE_PROFILE.PENDING: {
+    case SAVE_PROFILE_STEP_ONE.PENDING:
+    case SAVE_PROFILE_STEP_TWO.PENDING:
+    {
       return {
         ...state,
         saving: true,
@@ -55,7 +58,7 @@ export default (state = initialState, action) => {
       }
     }
 
-    case SAVE_PROFILE.FULFILLED: {
+    case SAVE_PROFILE_STEP_ONE.FULFILLED: {
       return {
         ...state,
         saving: false,
@@ -63,7 +66,16 @@ export default (state = initialState, action) => {
       }
     }
 
-    case SAVE_PROFILE.REJECTED: {
+    case SAVE_PROFILE_STEP_TWO.FULFILLED: {
+      return {
+        ...state,
+        saving: false
+      }
+    }
+
+    case SAVE_PROFILE_STEP_ONE.REJECTED: 
+    case SAVE_PROFILE_STEP_TWO.REJECTED:
+    {
       return {
         ...state,
         saving: false,
@@ -126,7 +138,7 @@ export const actions = {
     field,
     value
   }),
-  saveRegister: (values) => {
+  saveRegisterStep1: (values) => {
     const field = [
       'user_id',
       'first_name',
@@ -151,10 +163,6 @@ export const actions = {
       'edu_major',
       'edu_gpax',
       'birth_at',
-      // 'known_via',
-      // 'activities',
-      // 'skill_computer',
-      // 'past_camp',
       'parent_relation',
       'telno_parent'
     ]
@@ -176,12 +184,35 @@ export const actions = {
     console.log(data)
     if (dataIsNotNull(data)) {
       return {
-        type: SAVE_PROFILE.ACTION,
+        type: SAVE_PROFILE_STEP_ONE.ACTION,
         payload: api.post('/profiles', data)
       }
     } else {
       return {
-        type: SAVE_PROFILE.REJECTED,
+        type: SAVE_PROFILE_STEP_ONE.REJECTED,
+        payload: 'some field are not assigned or incorrect value'
+      }
+    }
+  },
+  saveRegisterStep2: (values) => {
+    const field = [
+      'user_id',
+      'known_via',
+      'activities',
+      'skill_computer',
+      'past_camp'
+    ]
+
+    const data = prepareData(values, field)
+
+    if (dataIsNotNull(data)) {
+      return {
+        type: SAVE_PROFILE_STEP_TWO.ACTION,
+        payload: api.put('/profiles', data)
+      }
+    } else {
+      return {
+        type: SAVE_PROFILE_STEP_TWO.REJECTED,
         payload: 'some field are not assigned or incorrect value'
       }
     }
