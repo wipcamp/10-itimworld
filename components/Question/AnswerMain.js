@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import Router from 'next/router'
 import Header from './../upload/header'
 
-const USER_ID = 2
+const USER_ID = 10001
 
 const Container = styled.div`
   background: url('/static/img/bg-d2.png') center top;
