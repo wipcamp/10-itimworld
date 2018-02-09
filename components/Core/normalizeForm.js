@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 export const normalizePhone = value => {
   if (!value) {
     return value
@@ -58,4 +60,25 @@ export const normalizeGpax = (value, previousValue, _) => {
   }
 
   return result <= maximum && result >= minimum ? result : previousValue
+}
+
+export const normalizeDate = (value) => {
+  if (!value || moment.isMoment(value) || moment.isDate(value)) {
+    return value
+  }
+  return ''
+}
+
+export const normalizeThai = (value) => {
+  if (!value) {
+    return value
+  }
+  return value.replace(/[^ก-๙ ]/g, '')
+}
+
+export const normalizeEng = (value) => {
+  if (!value) {
+    return value
+  }
+  return value.replace(/[^a-zA-Z"' ]/g, '')
 }

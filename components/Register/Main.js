@@ -19,9 +19,7 @@ const validate = values => {
     'first_name_en',
     'last_name_en',
     'nickname',
-    'dob_dd',
-    'dob_mm',
-    'dob_yyyy',
+    'dob',
     'gender_id',
     'telno_personal',
     'addr_prov',
@@ -46,6 +44,10 @@ const validate = values => {
   fields.map(e => {
     if (!values[e]) {
       errors[e] = required
+    } else if (typeof values[e] === 'string' && !values[e].trim()) {
+      errors[e] = 'โปรดอย่าเว้นช่องว่าง'
+    } else if (e.includes('telno') && values[e].length !== 10) {
+      errors[e] = 'โปรดกรอกเบอร์โทรศัพท์ให้ครบถ้วน'
     }
   })
 
