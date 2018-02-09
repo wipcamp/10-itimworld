@@ -7,6 +7,7 @@ import { actions as DashboardActions } from '../../store/reducers/dashboard'
 import Link from 'next/link'
 
 import Header from '../Core/Header/Main'
+import Alert from '../Core/Alert'
 
 const BackgroundContainer = styled.div`
   background: #B8D0EC;
@@ -326,72 +327,13 @@ const cardData = [
   }
 ]
 
-const Alert = styled.div`
-  position: fixed;
-  top: 0;
-  z-index: 100;
-  width: 100%;
-  transition: transform 0.7s linear;
-  
-  & button {
-    outline: none;
-    cursor: pointer;
-  }
-
-  ${props => props.show ? `
-    transform: translateY(0);  
-  ` : `
-    transform: translateY(-100px);
-  `}
-
-  @media (min-width: 576px) {
-    max-width: 540px;
-    margin: 0 -15px;
-  }
-
-  @media (min-width: 768px) {
-    max-width: 720px;
-  }
-
-  @media (min-width: 992px){
-    max-width: 960px; 
-  }
-
-  @media (min-width: 1200px){
-    max-width: 1140px; 
-  }
-`
-
 const MainUpload = props => {
-  const { error, showDialog, message } = props.dashboard
-  if (showDialog) {
-    setTimeout(() => {
-      props.hideDialog()
-    }, 3000)
-  }
   return (
     <div>
       <BackgroundContainer>
         <Header img={`https://cdn-images-1.medium.com/max/870/1*QVdC5tpOzBrJtc6M28F7XQ.jpeg`} />
         <div className='container'>
-          <Alert className={`row justify-content-center `} show={showDialog}>
-            <div className='col-12 col-md-7'>
-              <div className={`alert alert-${error ? 'danger' : 'success'}`} role='alert'>
-                { error
-                  ? (<i className={`fas fa-${error ? 'exclamation-triangle' : 'check-circle'} fa-lg`} />)
-                  : (<i className={`fas fa- fa-lg`} />)
-                }
-                {` ${message}`}
-                <button
-                  type='button'
-                  className='close'
-                  onClick={props.hideDialog}
-                >
-                  <span>&times;</span>
-                </button>
-              </div>
-            </div>
-          </Alert>
+          <Alert {...props} {...props.dashboard} />
           <CustomRow className='row text-center'>
             {
               cardData.map((data, index) => (
