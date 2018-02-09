@@ -327,8 +327,9 @@ const cardData = [
 ]
 
 const Alert = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
+  z-index: 100;
   width: 100%;
   transition: transform 0.7s linear;
   
