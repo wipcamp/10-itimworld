@@ -8,15 +8,17 @@ const initialState = {
   files: {
     transcript: {
       error: false,
-      file: null,
+      file: [],
       uploaded: true,
-      saving: false
+      saving: false,
+      dropzoneActive: false
     },
     allowByParent: {
       error: false,
-      file: null,
+      file: [],
       uploaded: false,
-      saving: false
+      saving: false,
+      dropzoneActive: false
     }
   },
   message: ''
@@ -26,9 +28,16 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_FIELD: {
+      console.log(action)
       return {
         ...state,
-        [action.field]: action.value
+        files: {
+          ...state.files,
+          [action.field]: {
+            ...state.files[action.field],
+            [action.attr]: action.value
+          }
+        }
       }
     }
 
@@ -39,9 +48,16 @@ export default (state = initialState, action) => {
 
 // Action Creators
 export const actions = {
-  setField: (field, value) => ({
+  setDragActive: ({field, dropActive}) => ({
     type: SET_FIELD,
     field,
-    value
+    value: dropActive,
+    attr: 'dropzoneActive'
+  }),
+  onDropFile: (field, files) => ({
+    type: SET_FIELD,
+    field,
+    value: files,
+    attr: 'files'
   })
 }
