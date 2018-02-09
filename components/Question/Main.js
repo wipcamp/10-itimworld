@@ -56,8 +56,8 @@ export const MainQuestion = props => {
           questionNo++
           i++
           return (
-            <div className='col-sm-6 pt-3'>
-              <Link route={`/question/answer/${question.id}`} prefetch key={question.id}>
+            <div className='col-sm-6 pt-3' key={questionNo}>
+              <Link route={`/question/answer/${question.id}`} prefetch>
                 <Question count={count[i]}>คำถามที่ {questionNo}</Question>
               </Link>
             </div>
