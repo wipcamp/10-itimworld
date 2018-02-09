@@ -132,6 +132,7 @@ export const actions = {
       'edu_lv',
       'edu_major',
       'edu_gpax',
+      'birth_at',
       // 'known_via',
       // 'activities',
       // 'skill_computer',
@@ -148,8 +149,8 @@ export const actions = {
     if (values.blood_group === 'other') {
       data.blood_group = values.other_blood_group
     }
-    if (values.dob) {
-      data.birth_at = values.dob.format('YYYY-MM-DD')
+    if (data.birth_at) {
+      data.birth_at = data.birth_at.format('YYYY-MM-DD')
     }
     data.telno_personal = getOnlyNum(data.telno_personal)
     data.telno_parent = getOnlyNum(data.telno_parent)
@@ -164,32 +165,6 @@ export const actions = {
         type: SAVE_PROFILE.REJECTED,
         payload: 'some field are not assigned or incorrect value'
       }
-    }
-  },
-  changeFileUpload: (event) => ({
-    type: CHANGE_FILE,
-    payload: event.target.files[0]
-  }),
-  uploadFile: () => (dispatch, getState) => {
-    // get file from store
-    const { file } = getState().register
-
-    if (file) {
-      const formData = new FormData()
-      formData.append('file', file)
-      const headers = {
-        'Content-Type': 'multipart/form-data'
-      }
-
-      dispatch({
-        type: UPLOAD_FILE.ACTION,
-        payload: api.post('/uploads', formData, headers)
-      })
-    } else {
-      dispatch({
-        type: UPLOAD_FILE.REJECTED,
-        payload: 'no file found!'
-      })
     }
   },
   setRegisterStep: (payload) => ({
