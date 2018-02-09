@@ -53,10 +53,10 @@ export const actions = {
     value: dropActive,
     attr: 'dropzoneActive'
   }),
-  onDropFile: (field, files) => ({
+  onDropFile: (field, file) => ({
     type: SET_FIELD_FILE,
     field,
-    value: files,
-    attr: 'files'
+    value: file,
+    attr: 'file'
   })
 }
