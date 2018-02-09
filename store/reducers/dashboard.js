@@ -2,7 +2,7 @@ import actionCreator from '../../utils/actionCreator'
 
 // Actions
 const dropdownAction = actionCreator('dropdown')
-const SET_FIELD = dropdownAction('SET_FIELD')
+const SET_FIELD_FILE = dropdownAction('SET_FIELD')
 
 const initialState = {
   files: {
@@ -27,7 +27,7 @@ const initialState = {
 // Reducer
 export default (state = initialState, action) => {
   switch (action.type) {
-    case SET_FIELD: {
+    case SET_FIELD_FILE: {
       return {
         ...state,
         files: {
@@ -48,13 +48,13 @@ export default (state = initialState, action) => {
 // Action Creators
 export const actions = {
   setDragActive: ({field, dropActive}) => ({
-    type: SET_FIELD,
+    type: SET_FIELD_FILE,
     field,
     value: dropActive,
     attr: 'dropzoneActive'
   }),
   onDropFile: (field, files) => ({
-    type: SET_FIELD,
+    type: SET_FIELD_FILE,
     field,
     value: files,
     attr: 'files'
