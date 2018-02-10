@@ -4,7 +4,7 @@ import ProfileMenu from './ProfileMenu'
 import { withState, withHandlers, compose, lifecycle, withStateHandlers } from 'recompose'
 
 const Header = styled.div`
-  background: #6AA6DD;
+  background: #564238;
   padding: 5px 0;
   position: relative;
   display: flex;
@@ -13,9 +13,11 @@ const Header = styled.div`
 `
 
 const ImgLogo = styled.img`
+  height: 52px;
   cursor: default;
   user-select: none;
   user-drag: none;
+  align-self: center;
 `
 
 const Column = styled.div`
@@ -26,12 +28,12 @@ const Column = styled.div`
 
 const HeaderContainer = props => (
   <Header>
-    <div className='container'>
+    <div className='container-fluid'>
       <div className='row'>
-        <div className='offset-3 col-6 offset-md-4 col-md-4'>
+        <div className='col-8 offset-md-4 col-md-4 text-center'>
           <ImgLogo src='/static/img/logo.svg' alt='wipcamp-logo' />
         </div>
-        <Column className='col-3 col-md-4 text-right'>
+        <Column className='col-4 col-md-4 text-right'>
           <ProfileMenu {...props} />
         </Column>
       </div>
