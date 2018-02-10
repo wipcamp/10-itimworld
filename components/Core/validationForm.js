@@ -57,6 +57,10 @@ export const validate = values => {
     {
       field: ['citizen_id'],
       length: 13
+    },
+    {
+      field: ['skill_computer', 'past_camp', 'activities', 'known_via'],
+      length: 65535
     }
   ]
 
@@ -80,6 +84,9 @@ export const validate = values => {
     } else if (maximumLength[4].field.includes(e) &&
                 values[e].length > maximumLength[4].length) {
       errors[e] = `ป้อนได้ไม่เกิน ${maximumLength[4].length} ตัวอักษร`
+    } else if (maximumLength[5].field.includes(e) &&
+                values[e].length > maximumLength[5].length) {
+      errors[e] = `ป้อนได้ไม่เกิน ${maximumLength[5].length} ตัวอักษร`
     } else if (e.includes('telno') && values[e].replace(/[^\d]/g, '').length !== 10) {
       errors[e] = 'โปรดกรอกเบอร์โทรศัพท์ให้ครบ 10 ตัว'
     }
