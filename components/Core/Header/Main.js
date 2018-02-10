@@ -8,7 +8,7 @@ import api from '../../../utils/api'
 
 const Header = styled.div`
   background: rgba(109,75,65,0.5);
-  padding: 5px 0;
+  padding: 8px 0 7px;
   position: relative;
   display: flex;
   align-items: center;
@@ -16,29 +16,34 @@ const Header = styled.div`
 `
 
 const ImgLogo = styled.img`
-  height: 54px;
+  height: 40px;
   cursor: default;
   user-select: none;
   user-drag: none;
   align-self: center;
 `
 
-const Column = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+const Margin = styled.div`
+  margin-top: -42px;
+`
+
+const BackButton = styled.i`
+  cursor: pointer;
+  font-size: 2em;
+  color: #fff;
 `
 
 const HeaderContainer = props => (
   <Header>
     <div className='container-fluid'>
       <div className='row'>
-        <div className='col-8 offset-md-4 col-md-4 text-center'>
-          <ImgLogo src='/static/img/logo.svg' alt='wipcamp-logo' />
+        <div className='col-12 d-flex align-items-center justify-content-center'>
+          <ImgLogo className='mx-auto' src='/static/img/logo.svg' alt='wipcamp-logo' />  
         </div>
-        <Column className='col-4 col-md-4 text-right'>
+        <Margin className='col-12 d-flex align-items-center justify-content-center'>
+          <BackButton className='fas fa-chevron-circle-left mr-auto' />
           <ProfileMenu {...props} />
-        </Column>
+        </Margin>
       </div>
     </div>
   </Header>

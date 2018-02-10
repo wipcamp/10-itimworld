@@ -85,11 +85,15 @@ const Dropdown = styled.div`
 `
 
 const DisplayName = styled.div`
-  color: white;
+    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-right: 10px;
+    display: none;
+    @media (min-width: 800px) {
+      display: flex;
+    }
 `
 
 const ProfileMenu = props => {
@@ -98,7 +102,7 @@ const ProfileMenu = props => {
     <div className='btn-group'
       ref={setNode}
     >
-      <DisplayName>สวัสดี น้อง{name}</DisplayName>
+      <DisplayName>สวัสดี น้อง{name || 'ทหารเอก'}</DisplayName>
       <Circle
         {...props}
         onClick={toggleDD}>
