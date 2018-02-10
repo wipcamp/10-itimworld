@@ -24,6 +24,10 @@ const ImgLogo = styled.img`
   align-self: center;
 `
 
+const TempBox = styled.div`
+  height: 40px;
+`
+
 const Margin = styled.div`
   margin-top: -42px;
 `
@@ -44,15 +48,24 @@ const backStep = () => {
   Router.push(path)
 }
 
+const checkDashboard = () => (
+  window && window.location.pathname ? window.location.pathname : null
+)
+
 const HeaderContainer = props => (
   <Header>
     <div className='container-fluid'>
       <div className='row'>
         <div className='col-12 d-flex align-items-center justify-content-center'>
-          <ImgLogo className='mx-auto' src='/static/img/logo.svg' alt='wipcamp-logo' />  
+          <ImgLogo className='mx-auto' src='/static/img/logo.svg' alt='wipcamp-logo' />
         </div>
+
         <Margin className='col-12 d-flex align-items-center justify-content-center'>
-          <BackButton onClick={() => backStep()} className='fas fa-chevron-circle-left mr-auto' />
+          {
+            !(checkDashboard() === '/dashboard')
+              ? <BackButton onClick={() => backStep()} className='fas fa-chevron-circle-left mr-auto' />
+              : <TempBox className='mx-auto' />
+          }
           <ProfileMenu {...props} />
         </Margin>
       </div>
