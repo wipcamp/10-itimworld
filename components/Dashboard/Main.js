@@ -50,12 +50,18 @@ const CardUpload = styled.div`
   background-repeat: no-repeat;
   background-position: center top;
   
-  ${props => !props.filePath?`
+  ${props => !props.filePath ? `
     background-image: url(${props.img});
     `:`
-    background-image: url(${props.img.substring(0,`${props.img.length}`-4)}yes.png);
+    background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}yes.png);
     ;
     `}
+
+  ${props => props.answeredQuestion === 6 ? `
+    background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}yes.png);
+  ` : `
+    background-image: url(${props.img});
+  `}
   height: 290px;
   width: 248px;
   transition: all .5s;
@@ -68,7 +74,7 @@ const CardUpload = styled.div`
   }
 
   @media (max-width: 575.98px) {
-    ${props=>props.link?'':'margin-top: 20px;'}
+    ${props => props.link ? '':'margin-top: 20px;'}
     height: 236px;
     width: 201px;
   }
@@ -251,13 +257,14 @@ const Card = props => {
         link ? (
           <Link prefetch href='/question'>
             <CardUpload
+              answeredQuestion={answered}
               countAnswered={answered}
               {...props}
             >
               {/* <label
                 dangerouslySetInnerHTML={{ __html: `${content} ${showNumOfAsnwered(3)}` }}
               /> */}
-              
+
             </CardUpload>
           </Link>
         ) : (
@@ -300,7 +307,7 @@ const Card = props => {
           </CardUpload>
         )
       }
-      {name=='parental_authorization'?<Download show/>:<Download/>}
+      {name === 'parental_authorization' ? <Download show /> : <Download />}
     </div>
   )
 }
@@ -325,15 +332,11 @@ const DownloadLink = styled.a`
 `
 
 const Download = props => {
-  return(
-    props.show?
-    <DownloadLink href='/static/file/parent_authorization.pdf'>
-      ดาวน์โหลดเอกสาร
-    </DownloadLink>
-    :
-    <DownloadLink/>
+  return (
+    props.show
+      ? <DownloadLink href='/static/file/parent_authorization.pdf' target='_blank'>ดาวน์โหลดเอกสาร</DownloadLink>
+      : <DownloadLink />
   )
-  
 }
 
 const cardData = [
@@ -416,7 +419,7 @@ export default compose(
       const { user_id: userId } = this.props.initialValues
       let {token} = cookie({req: false})
       const { data } = await api.get(`/registrants/${userId}`, {Authorization: `Bearer ${token}`})
-      
+
       const { documents } = data[0]
       let parent = getFilePath(documents.filter(file => file.type_id === 2))
       let transcript = getFilePath(documents.filter(file => file.type_id === 3))
