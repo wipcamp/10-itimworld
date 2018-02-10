@@ -135,7 +135,6 @@ const Error = styled.small`
 `
 
 const Label = styled.label`
-  /* min-height: 50px; */
   padding-left: 10px;
   font-size: 20px;
 `
@@ -399,6 +398,7 @@ const DateInput = ({
     <Datetime
       {...input}
       timeFormat={false}
+      dateFormat={`DD/MM/YYYY`}
       renderInput={props => <StyledInput {...props} placeholder={placeholder} />}
       isValidDate={(cur) => cur.isBetween(range.start, range.end)}
       viewMode={'years'}
