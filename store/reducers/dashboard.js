@@ -171,6 +171,13 @@ export const actions = {
     }
     if (files.length === 1) {
       const formData = new FormData()
+      if (files[0].size > 2097152) {
+        return {
+          type: action[field].REJECTED,
+          payload: 'ขนาดไฟล์เกิน 2 MB กรุณาอัพโหลดใหม่'
+        }
+      }
+
       formData.append('file', files[0])
       formData.append('fileType', field)
       formData.append('userId', userId)
@@ -180,7 +187,6 @@ export const actions = {
         'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${token}`
       }
-
       return {
         type: action[field].ACTION,
         payload: api.post('/uploads', formData, headers)
