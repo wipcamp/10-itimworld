@@ -400,7 +400,7 @@ const DateInput = ({
       {...input}
       timeFormat={false}
       renderInput={props => <StyledInput {...props} placeholder={placeholder} />}
-      isValidDate={(cur) => cur.isBetween(range.start, range.ed)}
+      isValidDate={(cur) => cur.isBetween(range.start, range.end)}
       viewMode={'years'}
     />
     <Error>{touched && error}</Error>
