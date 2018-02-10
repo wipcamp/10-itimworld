@@ -1,6 +1,10 @@
 import React from 'react'
-import MainUpload from '../components/Dashboard/Main'
+
 import withRedux from '../store/wrapper'
+import serverRender from '../utils/serverRender'
+import clientRender from '../utils/clientRender'
+
+import MainUpload from '../components/Dashboard/Main'
 
 const UploadPage = props => (
   <div>
@@ -8,4 +12,7 @@ const UploadPage = props => (
   </div>
 )
 
-export default withRedux()(UploadPage)
+export default withRedux(
+  clientRender(`/`),
+  serverRender(`/`)
+)(UploadPage)
