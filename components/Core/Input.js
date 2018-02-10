@@ -299,7 +299,8 @@ const SingleSelect = ({
   innerClass,
   dropdown,
   values,
-  province
+  province,
+  placeholder
 }) => (
   <div className={outerClass}>
     <Label htmlFor={`${name}-input`} >{label}</Label>
@@ -309,6 +310,7 @@ const SingleSelect = ({
       dropdown={dropdown}
       values={values}
       innerClass={innerClass}
+      placeholder={placeholder}
       disabled={name === 'addr_dist' && !province}
     />
   </div>
@@ -344,11 +346,12 @@ const TextArea = ({
   innerClass,
   outerClass,
   label,
-  name
+  name,
+  placeholder
 }) => (
   <div className={outerClass}>
     <Label htmlFor={`${name}-textarea-input`}>{label}</Label>
-    <StyledTextArea {...input} rows='4' className={innerClass} />
+    <StyledTextArea {...input} rows='4' className={innerClass} placeholder={placeholder} />
     <Error>{touched && error}</Error>
   </div>
 )
@@ -379,18 +382,25 @@ const DataList = ({
   </div>
 )
 
+const range = {
+  start: moment('1998 GMT+7'),
+  end: moment('2004 GMT+7')
+}
+
 const DateInput = ({
   input,
   meta: { touched, error, warning },
   label,
-  outerClass
+  outerClass,
+  placeholder
 }) => (
   <div className={outerClass} >
     <Label>{label}</Label>
     <Datetime
       {...input}
       timeFormat={false}
-      renderInput={props => <StyledInput {...props} />}
+      renderInput={props => <StyledInput {...props} placeholder={placeholder} />}
+      isValidDate={(cur) => cur.isBetween(range.start, range.ed)}
       viewMode={'years'}
     />
     <Error>{touched && error}</Error>
