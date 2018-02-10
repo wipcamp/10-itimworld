@@ -44,6 +44,7 @@ const Circle = styled.div`
 
   ${props => props.img && `
     background-image: url(${props.img});
+    background-position: center;
     background-size: cover;
     & > svg, & > i {
       display: none;

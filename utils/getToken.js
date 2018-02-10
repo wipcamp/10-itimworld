@@ -12,10 +12,12 @@ export default () => Component => {
 
     async componentDidMount () {
       let { token } = cookie({req: false})
-      if(token==='null'){
-        window.location.replace('/')
+      if (token === 'null' || !token) {
+        this.props.url.push('/')
       }
-      let { data } = await api.post(`/auth/me`, null, {Authorization: `Bearer ${token}`})
+      let { data } =
+      await api.post(`/auth/me`, null, {Authorization: `Bearer ${token}`})
+          .catch(() => this.props.url.push('/'))
       this.setState({
         initialValues: { user_id: data.id },
         show: true

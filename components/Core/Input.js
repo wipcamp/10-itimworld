@@ -134,6 +134,14 @@ const Error = styled.small`
   
 `
 
+const RequiredStyled = styled.sup`
+  color: red;
+`
+
+const Required = () => (
+  <RequiredStyled>*</RequiredStyled>
+)
+
 const Label = styled.label`
   padding-left: 10px;
   font-size: 20px;
@@ -149,7 +157,7 @@ const Input = ({
   placeholder
 }) => (
   <div className={outerClass}>
-    <Label htmlFor={`${input.name}-input`}>{label}</Label>
+    <Label htmlFor={`${input.name}-input`}>{label}<Required /></Label>
     <StyledInput {...input} type={type} placeholder={placeholder} className={innerClass} />
     <Error>{touched && error}</Error>
   </div>
@@ -181,7 +189,7 @@ const MultipleSelect = ({
   onChange
 }) => (
   <div className={outerClass}>
-    <Label htmlFor={`${htmlFor}-multiple`}>{label}</Label>
+    <Label htmlFor={`${htmlFor}-multiple`}>{label}<Required /></Label>
     <div className='col-12 px-0'>
       <div className='row'>
         {
@@ -234,7 +242,7 @@ const Radio = ({
   blood
 }) => (
   <div className={outerClass}>
-    <Label htmlFor={`${htmlFor}-input`}>{label}</Label>
+    <Label htmlFor={`${htmlFor}-input`}>{label}<Required /></Label>
     <div>
       {
         data.map((option, index) => {
@@ -302,7 +310,7 @@ const SingleSelect = ({
   placeholder
 }) => (
   <div className={outerClass}>
-    <Label htmlFor={`${name}-input`} >{label}</Label>
+    <Label htmlFor={`${name}-input`} >{label}<Required /></Label>
     <Field
       name={name}
       component={Select}
@@ -349,7 +357,7 @@ const TextArea = ({
   placeholder
 }) => (
   <div className={outerClass}>
-    <Label htmlFor={`${name}-textarea-input`}>{label}</Label>
+    <Label htmlFor={`${name}-textarea-input`}>{label}<Required /></Label>
     <StyledTextArea {...input} rows='4' className={innerClass} placeholder={placeholder} />
     <Error>{touched && error}</Error>
   </div>
@@ -366,7 +374,7 @@ const DataList = ({
   name
 }) => (
   <div className={outerClass}>
-    <Label htmlFor={`${name}-input`}>{label}</Label>
+    <Label htmlFor={`${name}-input`}>{label}<Required /></Label>
     <div>
       <StyledInput list={list} className={innerClass} {...input} />
       <datalist id={list} >
@@ -386,6 +394,8 @@ const range = {
   end: moment('2004 GMT+7', 'YYYY')
 }
 
+const defaultValue = moment('01 Jan 2001 GMT+7', 'DD MMM YYYY')
+
 const DateInput = ({
   input,
   meta: { touched, error, warning },
@@ -394,9 +404,10 @@ const DateInput = ({
   placeholder
 }) => (
   <div className={outerClass} >
-    <Label>{label}</Label>
+    <Label>{label}<Required /></Label>
     <Datetime
       {...input}
+      defaultValue={defaultValue}
       timeFormat={false}
       dateFormat={`DD/MM/YYYY`}
       renderInput={props => <StyledInput {...props} placeholder={placeholder} />}
@@ -426,7 +437,7 @@ const FieldInput = (props) => {
         return <Field {...props} component={Input} normalize={normalizeCitizenId} />
       } else if (props.name === 'edu_gpax') {
         return <Field {...props} component={Input} normalize={normalizeGpax} />
-      } else if (['first_name', 'last_name', 'nickname'].includes(props.name)) {
+      } else if (['first_name', 'last_name', 'nickname', 'addr_dist'].includes(props.name)) {
         return <Field {...props} component={Input} normalize={normalizeThai} />
       } else if (props.name.includes('_en')) {
         return <Field {...props} component={Input} normalize={normalizeEng} />

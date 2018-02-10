@@ -54,7 +54,7 @@
       "component": "date",
       "name": "birth_at",
       "label": "วัน/เดือน/ปี เกิด",
-      "outerClass": "col-6 col-md-6 offset-md-2 text-left form-group",
+      "outerClass": "col-6 col-md-6 offset-sm-2 text-left form-group",
       "placeholder": ""
     },
     {
@@ -99,7 +99,7 @@
       "name": "addr_prov",
       "label": "จังหวัด",
       "component": "select",
-      "outerClass": "col-12 col-sm-6 offset-md-2 col-md-3 text-left form-group",
+      "outerClass": "col-12 col-sm-4 offset-md-2 col-md-3 text-left form-group",
       "middleClass": "",
       "innerClass": "form-control",
       "placeholder": "",
@@ -115,7 +115,7 @@
       "label": "เขต/อำเภอ",
       "component": "input",
       "type": "text",
-      "outerClass": "col-12 col-sm-6 col-md-3 text-left form-group",
+      "outerClass": "col-12 col-sm-4 col-md-3 text-left form-group",
       "innerClass": "form-control",
       "placeholder": ""
     },
@@ -162,7 +162,7 @@
       "name": "religion_id",
       "label": "ศาสนา",
       "component": "select",
-      "outerClass": "col-12 col-sm-3 text-left form-group",
+      "outerClass": "col-12 col-3 text-left form-group",
       "innerClass": "form-control d-block",
       "placeholder": "",
       "values": [1,2,3,4,5,6],
@@ -183,7 +183,7 @@
       "label": "ชื่อโรงเรียน",
       "name": "edu_name",
       "component": "input",
-      "outerClass": "col-12 col-sm-6 col-md-5 text-left form-group",
+      "outerClass": "col-12 col-sm-6 col-md-4 text-left form-group",
       "innerClass": "form-control d-inline-block ml-1",
       "list": "school",
       "placeholder": "",
@@ -195,7 +195,7 @@
       "name": "edu_lv",
       "label": "ระดับชั้น",
       "component": "select",
-      "outerClass": "col-8 col-sm-3 col-md-2 text-left form-group",
+      "outerClass": "col-8 col-sm-3 text-left form-group",
       "innerClass": "form-control d-inline-block",
       "placeholder": "",
       "dropdown": [
@@ -222,7 +222,7 @@
       "name": "edu_major",
       "label": "สายการเรียน",
       "component": "select",
-      "outerClass": "col-12 col-sm-3 text-left form-group",
+      "outerClass": "col-12 col-sm-4 col-md-3 text-left form-group",
       "innerClass": "form-control d-inline-block",
       "placeholder": "",
       "dropdown": [
