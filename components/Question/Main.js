@@ -9,7 +9,7 @@ import styled from 'styled-components'
 import Header from '../Core/Header/Main'
 
 const Container = styled.div`
-  background: url('/static/img/bg-d2.png') center top;
+  background: #29241B url('/static/img/bg.png') center top;
   height: auto;
   min-height:100vh;
   background-size: cover;
@@ -18,9 +18,10 @@ const Container = styled.div`
 `
 
 const Question = styled.div`
-  background: url('/static/img/${props => props.count===1?`question.png`:`question2.png`}') left top;
-  height: 100px;
-  width: 260px;
+  background: url('/static/img/${props => props.count===1?`frame.png`:`frame.png`}') left top;
+  // filter: grayscale(80%);
+  height: 108px;
+  width: 289px;
   background-repeat: no-repeat;
   background-size: contain;
   color: #FFF;
