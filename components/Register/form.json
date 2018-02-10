@@ -182,7 +182,7 @@
     {
       "label": "ชื่อโรงเรียน",
       "name": "edu_name",
-      "component": "datalist",
+      "component": "input",
       "outerClass": "col-12 col-sm-6 col-md-5 text-left form-group",
       "innerClass": "form-control d-inline-block ml-1",
       "list": "school",
