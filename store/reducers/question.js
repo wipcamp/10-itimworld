@@ -7,6 +7,8 @@ const SET_ANSWER = questionAction('SET_ANSWER')
 const SET_CURRENT_QUESTION = questionAction('SET_CURRENT_QUESTION')
 const SAVE_ANSWER = questionAction('SAVE_ANSWER')
 const SET_CURRENT_ANSWER_ID = questionAction('SET_CURRENT_ANSWER_ID')
+const HIDE_DIALOG = questionAction('HIDE_DIALOG')
+const POSTED_ANSWER = questionAction('POSTED_ANSWER')
 
 const initialState = {
   questions: [],
@@ -15,7 +17,10 @@ const initialState = {
     data: ''
   },
   currentQuestion:'',
-  currentAnswerId:''
+  currentAnswerId:'',
+  error: false,
+  show: false,
+  message: '',
 }
 
 // Reducer
@@ -54,9 +59,27 @@ export default (state = initialState, action) => {
       }
     }
 
+    case HIDE_DIALOG: {
+      return {
+        ...state,
+        show: false
+      }
+    }
+    
+    case POSTED_ANSWER: {
+      return {
+        ...state,
+        show: true,
+        error: action.data.error,
+        message: action.data.message
+      }
+    }
+
     default:
       return state
   }
+
+  
 }
 
 // Action Creators
@@ -77,5 +100,12 @@ export const actions = {
   setCurrentAnswerId: (answerId) => ({
     type: SET_CURRENT_ANSWER_ID,
     answerId
+  }),
+  postedAnswer: (data) => ({
+    type: POSTED_ANSWER,
+    data
+  }),
+  hideDialog: () => ({
+    type: HIDE_DIALOG,
   })
 }

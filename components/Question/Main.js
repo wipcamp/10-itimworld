@@ -4,6 +4,8 @@ import { compose, lifecycle } from 'recompose'
 import { actions as questionActions } from '../../store/reducers/question'
 import Editor from './Editor'
 import api from '../../utils/api'
+import getCookie from '../../utils/cookie'
+import getToken from '../../utils/getToken'
 import {Link} from '../../routes'
 import styled from 'styled-components'
 import Header from '../Core/Header/Main'
@@ -70,10 +72,11 @@ export const MainQuestion = props => {
   )
 }
 
-const getQuestions = (props) => {
+const getQuestions = async (props) => {
   console.log('getQuestions')
+  let { token } = await getCookie({req: false})
   let {setQuestion} = props
-  api.get('/questions')
+  api.get('/questions', {Authorization : `Bearer ${token}`})
   .then((response)=>{
     setQuestion(response.data)
   })
@@ -86,6 +89,7 @@ export default compose(
     }),
     { ...questionActions }
   ),
+  getToken(),
   lifecycle({
     componentWillMount() {
       getQuestions(this.props)
