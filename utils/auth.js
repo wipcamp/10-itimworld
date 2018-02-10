@@ -19,10 +19,11 @@ export const postData = async res => {
 
 export const getUserData = res => axios.post(`/users/${res.id}`, { ...res }, null)
 
-export const responser = async (res, setToken) => {
+export const responser = async (res, setToken, setLoad) => {
   let user = await getUserData(res)
   if (!user.data.data) {
     user = await postData(res)
   }
+  setLoad(false)
   auth(res, setToken)
 }
