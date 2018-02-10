@@ -175,7 +175,7 @@ export const actions = {
   },
   onSubmitError: () => ({
     type: SHOW_DIALOG,
-    message: 'กรุณากรอกฟิลด์ให้ครบ'
+    message: 'กรุณากรอกฟิลด์ให้ครบถ้วน และถูกต้องนะครับ'
   }),
   hideDialog: () => ({
     type: HIDE_DIALOG
