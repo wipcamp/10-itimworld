@@ -3,6 +3,9 @@ import styled from 'styled-components'
 import ProfileMenu from './ProfileMenu'
 import { withState, withHandlers, compose, lifecycle, withStateHandlers } from 'recompose'
 
+import cookie from '../../../utils/cookie'
+import api from '../../../utils/api'
+
 const Header = styled.div`
   background: rgba(109,75,65,0.5);
   padding: 5px 0;
@@ -42,6 +45,8 @@ const HeaderContainer = props => (
 )
 
 export default compose(
+  withState('name', 'setName', ''),
+  withState('img', 'setImg', null),
   withState('guide', 'setGuide', true),
   withState('node', 'setNode', null),
   withStateHandlers(
@@ -66,8 +71,17 @@ export default compose(
     }
   }),
   lifecycle({
-    componentDidMount () {
-      document.addEventListener('click', this.props.handleClickOutside)
+    async componentDidMount () {
+      const { props } = this
+      document.addEventListener('click', props.handleClickOutside)
+      let { token } = cookie({req: false})
+      let { data } = await api.post(`/auth/me`, null, {Authorization: `Bearer ${token}`})
+      if (data) {
+        props.setImg(`http://graph.facebook.com/${data.provider_acc}/picture?height=50000`)
+        let { data: registrant } = await api.get(`/registrants/${data.id}`, {Authorization: `Bearer ${token}`})
+        registrant = registrant[0]
+        props.setName(registrant.nickname)
+      }
     },
     componentWillUnmount () {
       document.removeEventListener('click', this.props.handleClickOutside)

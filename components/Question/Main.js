@@ -6,7 +6,7 @@ import Editor from './Editor'
 import api from '../../utils/api'
 import {Link} from '../../routes'
 import styled from 'styled-components'
-import Header from './../Core/Header/Main'
+import Header from '../Core/Header/Main'
 
 const Container = styled.div`
   background: #29241B url('/static/img/bg.png') center top;

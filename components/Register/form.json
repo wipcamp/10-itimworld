@@ -54,7 +54,8 @@
       "component": "date",
       "name": "birth_at",
       "label": "วัน/เดือน/ปี เกิด",
-      "outerClass": "col-6 col-md-6 offset-md-2 text-left form-group"
+      "outerClass": "col-6 col-md-6 offset-md-2 text-left form-group",
+      "placeholder": ""
     },
     {
       "name": "citizen_id",

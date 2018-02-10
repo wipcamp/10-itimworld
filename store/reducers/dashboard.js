@@ -1,6 +1,7 @@
 /* global FormData */
 import actionCreator from '../../utils/actionCreator'
 import api from '../../utils/api'
+import cookie from '../../utils/cookie'
 
 // Actions
 const dashboardAction = actionCreator('dropdown')
@@ -8,6 +9,7 @@ const SET_FIELD_FILE = dashboardAction('SET_FIELD')
 const HIDE_DIALOG = dashboardAction('HIDE_DIALOG')
 const UPLOAD_TRANSCRIPT = dashboardAction('UPLOAD_TRANSCRIPT', true)
 const UPLOAD_PARENTAL_AUTHORIZATION = dashboardAction('UPLOAD_PARENTAL_AUTHORIZATION', true)
+const SET_FILE_PATH = dashboardAction('SET_FILE_PATH')
 
 const initialState = {
   files: {
@@ -83,7 +85,6 @@ export default (state = initialState, action) => {
     }
 
     case UPLOAD_TRANSCRIPT.FULFILLED: {
-      console.log(action.payload)
       return {
         ...state,
         files: {
@@ -151,6 +152,23 @@ export default (state = initialState, action) => {
       }
     }
 
+    case SET_FILE_PATH: {
+      return {
+        ...state,
+        files: {
+          ...state.files,
+          parental_authorization: {
+            ...state.files.parental_authorization,
+            filePath: action.parent
+          },
+          transcription_record: {
+            ...state.files.transcription_record,
+            filePath: action.transcript
+          }
+        }
+      }
+    }
+
     default:
       return state
   }
@@ -164,20 +182,29 @@ export const actions = {
     value: dropActive,
     attr: 'dropzoneActive'
   }),
-  onDropFile: (field, files) => {
+  onDropFile: (field, files, userId) => {
     const action = {
       transcription_record: UPLOAD_TRANSCRIPT,
       parental_authorization: UPLOAD_PARENTAL_AUTHORIZATION
     }
     if (files.length === 1) {
       const formData = new FormData()
-      formData.append('file', files[0])
-      formData.append('fileType', field)
-      formData.append('userId', 10000)
-      const headers = {
-        'Content-Type': 'multipart/form-data'
+      if (files[0].size > 2097152) {
+        return {
+          type: action[field].REJECTED,
+          payload: 'ขนาดไฟล์เกิน 2 MB กรุณาอัพโหลดใหม่'
+        }
       }
 
+      formData.append('file', files[0])
+      formData.append('fileType', field)
+      formData.append('userId', userId)
+
+      let {token} = cookie({req: false})
+      const headers = {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`
+      }
       return {
         type: action[field].ACTION,
         payload: api.post('/uploads', formData, headers)
@@ -198,5 +225,10 @@ export const actions = {
     return {
       type: HIDE_DIALOG
     }
-  }
+  },
+  setFilePath: ({parent, transcript}) => ({
+    type: SET_FILE_PATH,
+    parent,
+    transcript
+  })
 }

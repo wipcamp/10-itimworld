@@ -1,35 +1,46 @@
-/* global FormData */
-
 import actionCreator from '../../utils/actionCreator'
 import api from '../../utils/api'
 import { convertToInt, convertToFloat, dataIsNotNull } from '../../utils/helper'
+import cookie from '../../utils/cookie'
 
 // Actions
 const registerAction = actionCreator('register')
-const SET_FIELD = 'SET_FIELD'
-const SAVE_PROFILE = registerAction('SAVE_PROFILE', true)
-const CHANGE_FILE = registerAction('CHANGE_FILE')
-const UPLOAD_FILE = registerAction('CHANGE_FILE', true)
+const SET_REGISTER_STEP = registerAction('SET_REGISTER_STEP')
+const SAVE_PROFILE_STEP_ONE = registerAction('SAVE_PROFILE_STEP_ONE', true)
+const SAVE_PROFILE_STEP_TWO = registerAction('SAVE_PROFILE_STEP_TWO', true)
+const HIDE_DIALOG = registerAction('HIDE_DIALOG')
+const SHOW_DIALOG = registerAction('SHOW_DIALOG')
 
 const initialState = {
-  saving: false,
-  error: null,
+  error: false,
   message: '',
+  showDialog: false,
   user_id: null,
-  registerStep: 1
+  registerStep: 2
 }
 
 // Reducer
 export default (state = initialState, action) => {
   switch (action.type) {
-    case SET_FIELD: {
+    case SHOW_DIALOG: {
       return {
         ...state,
-        [action.field]: action.value
+        message: action.message,
+        error: true,
+        showDialog: true
       }
     }
 
-    case SAVE_PROFILE.PENDING: {
+    case HIDE_DIALOG: {
+      return {
+        ...state,
+        showDialog: false
+      }
+    }
+
+    case SAVE_PROFILE_STEP_ONE.PENDING:
+    case SAVE_PROFILE_STEP_TWO.PENDING:
+    {
       return {
         ...state,
         saving: true,
@@ -37,15 +48,19 @@ export default (state = initialState, action) => {
       }
     }
 
-    case SAVE_PROFILE.FULFILLED: {
+    case SAVE_PROFILE_STEP_ONE.FULFILLED:
+    case SAVE_PROFILE_STEP_TWO.FULFILLED:
+    {
       return {
         ...state,
         saving: false,
-        registerStep: 2
+        registerStep: state.registerStep + 1
       }
     }
 
-    case SAVE_PROFILE.REJECTED: {
+    case SAVE_PROFILE_STEP_ONE.REJECTED:
+    case SAVE_PROFILE_STEP_TWO.REJECTED:
+    {
       return {
         ...state,
         saving: false,
@@ -53,35 +68,7 @@ export default (state = initialState, action) => {
       }
     }
 
-    case CHANGE_FILE: {
-      return {
-        ...state,
-        file: action.payload
-      }
-    }
-
-    case UPLOAD_FILE.PENDING: {
-      return {
-        ...state
-      }
-    }
-
-    case UPLOAD_FILE.FULFILLED: {
-      return {
-        ...state,
-        message: 'upload susccess',
-        data: action.payload
-      }
-    }
-
-    case UPLOAD_FILE.REJECTED: {
-      return {
-        ...state,
-        message: action.payload
-      }
-    }
-
-    case 'EIEI': {
+    case SET_REGISTER_STEP: {
       return {
         ...state,
         registerStep: action.payload
@@ -103,12 +90,11 @@ const getOnlyNum = (value) => value.replace(/[^\d]/g, '')
 
 // Action Creators
 export const actions = {
-  setField: (field, value) => ({
-    type: SET_FIELD,
-    field,
-    value
+  setRegisterStep: (step) => ({
+    type: SET_REGISTER_STEP,
+    payload: step
   }),
-  saveRegister: (values) => {
+  saveRegisterStep1: (values) => {
     const field = [
       'user_id',
       'first_name',
@@ -133,10 +119,6 @@ export const actions = {
       'edu_major',
       'edu_gpax',
       'birth_at',
-      // 'known_via',
-      // 'activities',
-      // 'skill_computer',
-      // 'past_camp',
       'parent_relation',
       'telno_parent'
     ]
@@ -155,20 +137,47 @@ export const actions = {
     data.telno_personal = getOnlyNum(data.telno_personal)
     data.telno_parent = getOnlyNum(data.telno_parent)
     data.citizen_id = getOnlyNum(data.citizen_id)
+    let { token } = cookie({req: false})
     if (dataIsNotNull(data)) {
       return {
-        type: SAVE_PROFILE.ACTION,
-        payload: api.post('/profiles', data)
+        type: SAVE_PROFILE_STEP_ONE.ACTION,
+        payload: api.post('/profiles', data, {Authorization: `Bearer ${token}`})
       }
     } else {
       return {
-        type: SAVE_PROFILE.REJECTED,
+        type: SAVE_PROFILE_STEP_ONE.REJECTED,
         payload: 'some field are not assigned or incorrect value'
       }
     }
   },
-  setRegisterStep: (payload) => ({
-    type: 'EIEI',
-    payload
+  saveRegisterStep2: (values) => {
+    const field = [
+      'user_id',
+      'known_via',
+      'activities',
+      'skill_computer',
+      'past_camp'
+    ]
+
+    const data = prepareData(values, field)
+    let { token } = cookie({req: false})
+    if (dataIsNotNull(data)) {
+      return {
+        type: SAVE_PROFILE_STEP_TWO.ACTION,
+        payload: api.put('/profiles', data, {Authorization: `Bearer ${token}`})
+      }
+    } else {
+      return {
+        type: SAVE_PROFILE_STEP_TWO.REJECTED,
+        payload: 'some field are not assigned or incorrect value'
+      }
+    }
+  },
+  onSubmitError: () => ({
+    type: SHOW_DIALOG,
+    message: 'กรุณากรอกข้อมูลให้ครบถ้วน และถูกต้องนะครับ'
+  }),
+  hideDialog: () => ({
+    type: HIDE_DIALOG
   })
 }

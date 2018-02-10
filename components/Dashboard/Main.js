@@ -1,13 +1,18 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
-import { compose } from 'recompose'
+import { compose, lifecycle, withState } from 'recompose'
 import { connect } from 'react-redux'
 import Dropzone from 'react-dropzone'
 import { actions as DashboardActions } from '../../store/reducers/dashboard'
 import Link from 'next/link'
+import moment from 'moment'
 
+import cookie from '../../utils/cookie'
+import api from '../../utils/api'
 import Header from '../Core/Header/Main'
 import Alert from '../Core/Alert'
+import checkRegisterStep from '../../utils/checkRegisterStep'
+import getToken from '../../utils/getToken'
 
 const BackgroundContainer = styled.div`
   background: #29241B url('/static/img/bg.png') center top;
@@ -161,7 +166,11 @@ const CardUpload = styled.div`
     display: flex;
     justify-content: center;
     cursor: pointer;
-    /* filter: blur(2px) !important; */
+
+    ${props => props.countAnswered === 0 && `
+      filter: grayscale(100%) !important;
+    `}
+    
 
     align-items: center;
     border-radius: 15px;
@@ -217,11 +226,9 @@ const DropActiveIcon = styled.div`
 `
 
 const CustomRow = styled.div`
-  // min-height: 70vh;
   margin-top: 50px;
   display: flex;
   align-items: center;
-  // justify-content: center;
   padding-bottom: 40px;
 `
 
@@ -237,13 +244,14 @@ const showNumOfAsnwered = (data) => {
 }
 
 const Card = props => {
-  const { outerClass, content, link, name, dashboard: { files }, setDragActive, onDropFile } = props
+  const { outerClass, content, link, name, dashboard: { files }, setDragActive, onDropFile, answered, initialValues: { user_id: userId } } = props
   return (
     <div className={`${outerClass} mx-auto`}>
       {
         link ? (
           <Link prefetch href='/question'>
             <CardUpload
+              countAnswered={answered}
               {...props}
             >
               {/* <label
@@ -263,7 +271,7 @@ const Card = props => {
               accept={'image/png, image/jpeg, application/pdf'}
               onDragEnter={() => setDragActive({field: name, dropActive: true})}
               onDragLeave={() => setDragActive({field: name, dropActive: false})}
-              onDrop={(files) => onDropFile(name, files)}
+              onDrop={(files) => onDropFile(name, files, userId)}
             >
               <label
                 title={files[name].saving ? '' : props.title}
@@ -382,11 +390,41 @@ const MainUpload = props => {
   )
 }
 
+const getFilePath = (arr) => {
+  if (arr.length === 0) {
+    return ''
+  } else if (arr.length > 1) {
+    let data = arr.reduce((prev, cur) => moment(prev.created_at).isAfter(moment(cur.created_at)) ? prev : cur)
+    return data.path
+  } else {
+    return arr[0].path
+  }
+}
+
 export default compose(
+  withState('answered', 'setAnswered', 0),
   connect(
     state => ({
       dashboard: state.dashboard
     }),
     { ...DashboardActions }
-  )
+  ),
+  getToken(),
+  checkRegisterStep('/dashboard'),
+  lifecycle({
+    async componentDidMount () {
+      const { user_id: userId } = this.props.initialValues
+      let {token} = cookie({req: false})
+      const { data } = await api.get(`/registrants/${userId}`, {Authorization: `Bearer ${token}`})
+      
+      const { documents } = data[0]
+      let parent = getFilePath(documents.filter(file => file.type_id === 2))
+      let transcript = getFilePath(documents.filter(file => file.type_id === 3))
+      this.props.setFilePath({
+        transcript,
+        parent
+      })
+      this.props.setAnswered(data[0].eval_answers.length)
+    }
+  })
 )(MainUpload)

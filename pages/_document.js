@@ -49,6 +49,7 @@ export default class MyDocument extends Document {
           <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
           <link rel="stylesheet" href="/static/css/quill.snow.custom.css" />
           <link rel="stylesheet" href="/static/css/react-date.css"/>
+          <link rel="stylesheet" href="/static/css/animate.css"/>
           <link rel="stylesheet" href="/static/web-fonts-with-css/css/fontawesome-all.min.css"/>
           
           <link rel="shortcut icon" href="/static/img/favicon/favicon.ico" type="image/x-icon"/>
