@@ -397,6 +397,7 @@ const DateInput = ({
     <Label>{label}</Label>
     <Datetime
       {...input}
+      defaultValue={moment('01 Jan 2001 GMT+7', 'DD MMM YYYY')}
       timeFormat={false}
       dateFormat={`DD/MM/YYYY`}
       renderInput={props => <StyledInput {...props} placeholder={placeholder} />}
