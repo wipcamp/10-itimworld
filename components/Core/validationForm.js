@@ -1,14 +1,21 @@
+import moment from 'moment'
+
 export const validate = values => {
   const errors = {}
   const required = 'โปรดระบุ'
+  const range = {
+    start: moment('1998 GMT+7', 'YYYY'),
+    end: moment('2004 GMT+7', 'YYYY')
+  }
 
+  const validDate = (cur) => cur.isBetween(range.start, range.end)
+ 
   const fields = [
     'first_name',
     'last_name',
     'first_name_en',
     'last_name_en',
     'nickname',
-    'birth_at',
     'gender_id',
     'telno_personal',
     'addr_prov',
@@ -39,6 +46,14 @@ export const validate = values => {
       errors[e] = 'โปรดกรอกเบอร์โทรศัพท์ให้ครบถ้วน'
     }
   })
+
+  if (!values.birth_at) {
+    errors.birth_at = required
+  } else if (!moment.isMoment(values.birth_at)) {
+    errors.birth_at = 'กรุณารูปแบบวันที่ให้ถูกต้อง (DD/MM/YYYY)'
+  } else if (!validDate(values.birth_at)) {
+    errors.birth_at = 'กรุณากรอกช่วงวันให้ถูกต้อง (ค.ศ. 1998 - 2004)'
+  }
 
   if (!values.citizen_id) {
     errors.citizen_id = required
