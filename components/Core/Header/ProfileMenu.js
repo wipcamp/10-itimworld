@@ -83,12 +83,21 @@ const Dropdown = styled.div`
   }
 `
 
+const DisplayName = styled.div`
+  color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+`
+
 const ProfileMenu = props => {
-  const { dropdownVisible, toggleDD, setNode } = props
+  const { dropdownVisible, toggleDD, setNode, name } = props
   return (
     <div className='btn-group'
       ref={setNode}
     >
+      <DisplayName>สวัสดี น้อง{name}</DisplayName>
       <Circle
         {...props}
         onClick={toggleDD}>
