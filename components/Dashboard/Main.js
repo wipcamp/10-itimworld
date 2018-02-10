@@ -6,6 +6,7 @@ import Dropzone from 'react-dropzone'
 import { actions as DashboardActions } from '../../store/reducers/dashboard'
 import Link from 'next/link'
 
+import cookie from '../../utils/cookie'
 import api from '../../utils/api'
 import Header from '../Core/Header/Main'
 import Alert from '../Core/Alert'
@@ -366,9 +367,10 @@ export default compose(
   getToken(),
   checkRegisterStep('/dashboard'),
   lifecycle({
-    async componentWillMount () {
+    async componentDidMount () {
       const { user_id: userId } = this.props.initialValues
-      const { data } = await api.get(`/registrants/${userId}`)
+      let {token} = cookie({req: false})
+      const { data } = await api.get(`/registrants/${userId}`, {Authorization: `Bearer ${token}`})
       this.props.setAnswered(data[0].eval_answers.length)
     }
   })
