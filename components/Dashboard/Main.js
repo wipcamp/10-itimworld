@@ -370,7 +370,7 @@ const MainUpload = props => {
   return (
     <div>
       <BackgroundContainer>
-        <Header img={`https://cdn-images-1.medium.com/max/870/1*QVdC5tpOzBrJtc6M28F7XQ.jpeg`} />
+        <Header />
         <div className='container'>
           <Alert {...props} {...props.dashboard} />
           <CustomRow className='row text-center'>
