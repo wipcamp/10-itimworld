@@ -242,7 +242,7 @@ const showNumOfAsnwered = (data) => {
 }
 
 const Card = props => {
-  const { outerClass, content, link, name, dashboard: { files }, setDragActive, onDropFile, answered } = props
+  const { outerClass, content, link, name, dashboard: { files }, setDragActive, onDropFile, answered, initialValues: { user_id: userId } } = props
   return (
     <div className={`${outerClass} mx-auto`}>
       {
@@ -267,7 +267,7 @@ const Card = props => {
               accept={'image/png, image/jpeg, application/pdf'}
               onDragEnter={() => setDragActive({field: name, dropActive: true})}
               onDragLeave={() => setDragActive({field: name, dropActive: false})}
-              onDrop={(files) => onDropFile(name, files)}
+              onDrop={(files) => onDropFile(name, files, userId)}
             >
               <label
                 title={files[name].saving ? '' : props.title}

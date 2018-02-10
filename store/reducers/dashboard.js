@@ -83,7 +83,6 @@ export default (state = initialState, action) => {
     }
 
     case UPLOAD_TRANSCRIPT.FULFILLED: {
-      console.log(action.payload)
       return {
         ...state,
         files: {
@@ -164,7 +163,7 @@ export const actions = {
     value: dropActive,
     attr: 'dropzoneActive'
   }),
-  onDropFile: (field, files) => {
+  onDropFile: (field, files, userId) => {
     const action = {
       transcription_record: UPLOAD_TRANSCRIPT,
       parental_authorization: UPLOAD_PARENTAL_AUTHORIZATION
@@ -173,7 +172,7 @@ export const actions = {
       const formData = new FormData()
       formData.append('file', files[0])
       formData.append('fileType', field)
-      formData.append('userId', 10000)
+      formData.append('userId', userId)
       const headers = {
         'Content-Type': 'multipart/form-data'
       }
