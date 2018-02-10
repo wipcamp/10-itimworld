@@ -128,7 +128,7 @@ const CardUpload = styled.div`
     transition: all .5s;
 
     ${props => !props.filePath && `
-      filter: grayscale(50%) !important;
+      filter: grayscale(100%) !important;
     `}
 
     & label {
@@ -163,7 +163,11 @@ const CardUpload = styled.div`
     width: 290px;
     height: 230px;
     cursor: pointer;
-    /* filter: blur(2px) !important; */
+
+    ${props => props.countAnswered === 0 && `
+      filter: grayscale(100%) !important;
+    `}
+    
 
     align-items: center;
     background-size: cover;
@@ -251,6 +255,7 @@ const Card = props => {
         link ? (
           <Link prefetch href='/question'>
             <CardUpload
+              countAnswered={answered}
               {...props}
             >
               <label
