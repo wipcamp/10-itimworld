@@ -1,8 +1,8 @@
 import React from 'react'
+import {compose, withState} from 'recompose'
 import { connect } from 'react-redux'
 import { actions as tokenActions } from '../../store/reducers/token'
-import styled from 'styled-components'
-import {compose} from 'recompose'
+import styled, { keyframes } from 'styled-components'
 import FacebookLogin from 'react-facebook-login'
 
 import { responser } from '../../utils/auth'
@@ -16,6 +16,31 @@ const Container = styled.div`
   overflow: hidden;
 `
 
+const Spinner = keyframes`
+  from {transform:rotate(0deg);}
+  to {transform:rotate(360deg);}
+`
+
+const Loading = styled.div`
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  background-color: rgba(255, 255, 255, 0.9);
+  transition: .4s;
+  opacity: ${props => props.loading ? 1 : 0};
+  display: ${props => props.loading ? 'flex' : 'none'};
+  flex-direction: column;
+  
+  i {
+    color: #222;
+    font-size: 10em;  
+    animation: ${Spinner} 2s linear infinite;
+  }
+`
+
 const Layout = styled.div`
   min-height: 100vh;
 `
@@ -27,8 +52,15 @@ const Logo = styled.img`
   margin-top: -8em;
 `
 
-const IndexCompose = ({setToken}) => {
+const IndexCompose = ({setToken, loading, setLoad}) => {
   return <Container className='container-fluid'>
+    <Loading loading={loading} className='justify-content-center align-items-center'>
+      <div className='text-center'>
+        <i className='fa fa-refresh' />
+        <h1 className='animated pulse infinite mt-3'>กรุณาคอยสักประเดี๋ยว..</h1>
+        <h4 className='animated pulse infinite'>รู้หมือไร่? หน้าเว็บเลือกทีมได้นะ!</h4>
+      </div>
+    </Loading>
     <div className='row'>
       <Layout className='col-12 d-flex flex-column justify-content-center align-items-center'>
         <Logo src='/static/img/logofinals.png' alt='wipcamp-logo' />
@@ -37,7 +69,8 @@ const IndexCompose = ({setToken}) => {
           autoLoad
           fields={fields}
           scope={scope}
-          callback={(res) => responser(res, setToken)}
+          callback={(res) => responser(res, setToken, setLoad)}
+          icon={`fa fa-facebook mt-2 mr-3`}
           textButton={`Login with Facebook`}
           cssClass='btn btn-primary'
           tag={`button`}
@@ -53,5 +86,6 @@ export default compose(
       token: state.token
     }),
     { ...tokenActions }
-  )
+  ),
+  withState('loading', 'setLoad', true)
 )(IndexCompose)
