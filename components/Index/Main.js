@@ -5,8 +5,7 @@ import styled from 'styled-components'
 import {compose} from 'recompose'
 import FacebookLogin from 'react-facebook-login'
 
-import axios from '../../utils/api'
-
+import { responser } from '../../utils/auth'
 import { appId, fields, scope } from './facebook.json'
 
 const Container = styled.div`
