@@ -5,15 +5,9 @@
   ],
   "plugins": [
     "transform-decorators-legacy",
-    "inline-dotenv",
     [
       "styled-components",
       { "ssr": true, "displayName": true, "preprocess": false }
     ]
-  ],
-  "env": {
-    "test": {
-      "presets": [["next/babel", { "preset-env": { "modules": "commonjs" } }]]
-    }
-  }
+  ]
 }

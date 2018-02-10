@@ -135,7 +135,6 @@ const Error = styled.small`
 `
 
 const Label = styled.label`
-  /* min-height: 50px; */
   padding-left: 10px;
   font-size: 20px;
 `
@@ -283,7 +282,7 @@ const Radio = ({
         )
       }
     </div>
-    <Field name='blood_group' component={renderError} top='-4px' />
+    <Field name={name} component={renderError} top='-4px' />
   </div>
 )
 
@@ -299,7 +298,8 @@ const SingleSelect = ({
   innerClass,
   dropdown,
   values,
-  province
+  province,
+  placeholder
 }) => (
   <div className={outerClass}>
     <Label htmlFor={`${name}-input`} >{label}</Label>
@@ -309,6 +309,7 @@ const SingleSelect = ({
       dropdown={dropdown}
       values={values}
       innerClass={innerClass}
+      placeholder={placeholder}
       disabled={name === 'addr_dist' && !province}
     />
   </div>
@@ -344,11 +345,12 @@ const TextArea = ({
   innerClass,
   outerClass,
   label,
-  name
+  name,
+  placeholder
 }) => (
   <div className={outerClass}>
     <Label htmlFor={`${name}-textarea-input`}>{label}</Label>
-    <StyledTextArea {...input} rows='4' className={innerClass} />
+    <StyledTextArea {...input} rows='4' className={innerClass} placeholder={placeholder} />
     <Error>{touched && error}</Error>
   </div>
 )
@@ -379,18 +381,26 @@ const DataList = ({
   </div>
 )
 
+const range = {
+  start: moment('1998 GMT+7', 'YYYY'),
+  end: moment('2004 GMT+7', 'YYYY')
+}
+
 const DateInput = ({
   input,
   meta: { touched, error, warning },
   label,
-  outerClass
+  outerClass,
+  placeholder
 }) => (
   <div className={outerClass} >
     <Label>{label}</Label>
     <Datetime
       {...input}
       timeFormat={false}
-      renderInput={props => <StyledInput {...props} />}
+      dateFormat={`DD/MM/YYYY`}
+      renderInput={props => <StyledInput {...props} placeholder={placeholder} />}
+      isValidDate={(cur) => cur.isBetween(range.start, range.end)}
       viewMode={'years'}
     />
     <Error>{touched && error}</Error>
@@ -416,7 +426,7 @@ const FieldInput = (props) => {
         return <Field {...props} component={Input} normalize={normalizeCitizenId} />
       } else if (props.name === 'edu_gpax') {
         return <Field {...props} component={Input} normalize={normalizeGpax} />
-      } else if (['first_name', 'last_name'].includes(props.name)) {
+      } else if (['first_name', 'last_name', 'nickname'].includes(props.name)) {
         return <Field {...props} component={Input} normalize={normalizeThai} />
       } else if (props.name.includes('_en')) {
         return <Field {...props} component={Input} normalize={normalizeEng} />

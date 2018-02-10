@@ -4,9 +4,11 @@ import { compose, lifecycle } from 'recompose'
 import { actions as questionActions } from '../../store/reducers/question'
 import Editor from './Editor'
 import api from '../../utils/api'
+import getCookie from '../../utils/cookie'
+import getToken from '../../utils/getToken'
 import {Link} from '../../routes'
 import styled from 'styled-components'
-import Header from './../Core/Header/Main'
+import Header from '../Core/Header/Main'
 
 const Container = styled.div`
   background: #29241B url('/static/img/bg.png') center top;
@@ -19,7 +21,7 @@ const Container = styled.div`
 
 const Question = styled.div`
   background: url('/static/img/${props => props.count===1?`frame.png`:`frame.png`}') left top;
-  // filter: grayscale(80%);
+  ${props => props.answered ?'':'filter: grayscale(80%);'}
   height: 108px;
   width: 289px;
   background-repeat: no-repeat;
@@ -40,10 +42,15 @@ const Question = styled.div`
 
 
 export const MainQuestion = props => {
-  const { question: { questions: allQuestion }, setQuestion } = props
+  const { question: { questions: allQuestion,answered}, setQuestion } = props
   let questionNo = 0
   let count = [1,2,2,1]
   let i = -1
+  let answeredQuestion = []
+  answered.map((data,index)=>{
+    answeredQuestion[index] = data.question_id
+  })
+  console.log(answeredQuestion)
   return (
     <Container>
       <Header/>
@@ -59,7 +66,7 @@ export const MainQuestion = props => {
           return (
             <div className='col-sm-6 pt-3' key={questionNo}>
               <Link route={`/question/answer/${question.id}`} prefetch>
-                <Question count={count[i]}>คำถามที่ {questionNo}</Question>
+                <Question count={count[i]}  answered={answeredQuestion.indexOf(question.id)>=0}>คำถามที่ {questionNo}</Question>
               </Link>
             </div>
           )
@@ -70,12 +77,23 @@ export const MainQuestion = props => {
   )
 }
 
-const getQuestions = (props) => {
+const getQuestions = async (props) => {
   console.log('getQuestions')
+  let { token } = await getCookie({req: false})
   let {setQuestion} = props
-  api.get('/questions')
+  api.get('/questions', {Authorization : `Bearer ${token}`})
   .then((response)=>{
     setQuestion(response.data)
+  })
+}
+
+const getAnsweredQuestions = async (props) => {
+  console.log('getAnsweredQuestions')
+  let { token } = await getCookie({req: false})
+  let {setAnsweredQuestion} = props
+  api.get(`/registrants/${props.initialValues.user_id}`, {Authorization : `Bearer ${token}`})
+  .then((response)=>{
+    setAnsweredQuestion(response.data[0].eval_answers)
   })
 }
 
@@ -86,9 +104,11 @@ export default compose(
     }),
     { ...questionActions }
   ),
+  getToken(),
   lifecycle({
     componentWillMount() {
       getQuestions(this.props)
+      getAnsweredQuestions(this.props)
     }
   })
 )(MainQuestion)

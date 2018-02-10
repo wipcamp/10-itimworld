@@ -54,7 +54,8 @@
       "component": "date",
       "name": "birth_at",
       "label": "วัน/เดือน/ปี เกิด",
-      "outerClass": "col-6 col-md-6 offset-md-2 text-left form-group"
+      "outerClass": "col-6 col-md-6 offset-md-2 text-left form-group",
+      "placeholder": ""
     },
     {
       "name": "citizen_id",
@@ -181,7 +182,7 @@
     {
       "label": "ชื่อโรงเรียน",
       "name": "edu_name",
-      "component": "datalist",
+      "component": "input",
       "outerClass": "col-12 col-sm-6 col-md-5 text-left form-group",
       "innerClass": "form-control d-inline-block ml-1",
       "list": "school",
@@ -192,18 +193,20 @@
     },
     {
       "name": "edu_lv",
-      "label": "ลำดับชั้น",
+      "label": "ระดับชั้น",
       "component": "select",
       "outerClass": "col-8 col-sm-3 col-md-2 text-left form-group",
       "innerClass": "form-control d-inline-block",
       "placeholder": "",
       "dropdown": [
-        "ม.4",
-        "ม.5"
+        "ม.3 ขึ้น ม.4",
+        "ม.4 ขึ้น ม.5",
+        "ม.5 ขึ้น ม.6"
       ],
       "values": [
-        "ม.4",
-        "ม.5"
+        "ม.3 ขึ้น ม.4",
+        "ม.4 ขึ้น ม.5",
+        "ม.5 ขึ้น ม.6"
       ]
     },
     {

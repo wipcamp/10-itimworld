@@ -7,8 +7,9 @@ import api from '../../utils/api'
 import styled from 'styled-components'
 import Router from 'next/router'
 import Header from './../Core/Header/Main'
-
-const USER_ID = 10001
+import getCookie from '../../utils/cookie'
+import getToken from '../../utils/getToken'
+import Alert from '../Core/Alert'
 
 const Container = styled.div`
   background: #29241B url('/static/img/bg.png') center top;
@@ -56,13 +57,13 @@ const QuestionSection = styled.div`
 `
 
 export const MainAnswer = props => {
-  const {setQuestion,question:{answers,currentQuestion}} = props
+  const {setQuestion,question:{answers,currentQuestion,error,show,message}, hideDialog ,postedAnswer} = props
   const questionid = props.url.query.id
-  
   return (
     <Container>
       <Header/>
       <div className='container'>
+        <Alert showDialog={show} error={error} message={message} hideDialog={hideDialog}/>
         <QuestionSection className='h3'>
           {`คำถามที่ ${questionid} : `}{currentQuestion.data}
         </QuestionSection>
@@ -82,23 +83,51 @@ export const MainAnswer = props => {
   )
 }
 
-const saveAnswer = (questionid,data,props) => {
+const saveAnswer = async (questionid,data,props) => {
+  let { token } = await getCookie({req: false})
   console.log('saving')
   let {question:{currentAnswerId}} = props
+  console.log(props)
   if(!currentAnswerId.id) {
     console.log('posting')
     api.post(`/answers`,{
       question_id: questionid,
-      user_id: USER_ID,
+      user_id: props.initialValues.user_id,
       data: data,
+    },{
+      Authorization : `Bearer ${token}`
     })
+      .then(res => {
+        console.log(res)
+        props.postedAnswer({error:false,message:'บันทึกคำตอบเสร็จสมบูรณ์'})
+      })
+      .then(
+        setTimeout(()=>Router.push('/question'),3000)
+      )
+      .catch(err => {
+        console.log(err)
+        props.postedAnswer({error:true,message:'บันทึกคำตอบล้มเหลว!'})
+      })
   }else {
     console.log('updating')
     api.put(`/answers`,{
       question_id: questionid,
-      user_id: USER_ID,
+      user_id: props.initialValues.user_id,
       data: data,
+    },{
+      Authorization : `Bearer ${token}`
     })
+      .then(res => {
+        console.log(res)
+        props.postedAnswer({error:false,message:'บันทึกคำตอบเสร็จสมบูรณ์'})
+      })
+      .then(()=>
+        setTimeout(()=>Router.push('/question'),3000)
+      )
+      .catch(err => {
+        console.log(err)
+        props.postedAnswer({error:true,message:'บันทึกคำตอบล้มเหลว!'})
+      })
   }
 }
 
@@ -106,18 +135,20 @@ const back = () => {
   Router.push('/question')
 }
 
-const getQuestionData = (props) => {
+const getQuestionData = async (props) => {
+  let { token } = await getCookie({req: false})
   console.log('getQuestionData')
   let {url:{query:id},setCurrentQuestion} = props
-      api.get(`/questions/${id.id}`)
-      .then((response)=> {
-        setCurrentQuestion(response.data[0])
-      })
+  api.get(`/questions/${id.id}`,{Authorization : `Bearer ${token}`})
+  .then((response)=> {
+    setCurrentQuestion(response.data[0])
+  })
 }
 
-const getAnswerData = (props) => {
+const getAnswerData = async (props) => {
+  let { token } = await getCookie({req: false})
   let {url:{query:id},setCurrentAnswerId,setAnswer} = props
-  api.get(`/users/${USER_ID}/answers/${id.id}`)
+  api.get(`/users/${props.initialValues.user_id}/answers/${id.id}`,{Authorization : `Bearer ${token}`})
   .then((response) => {
     if(response.data.data[0]!==undefined) {
       setCurrentAnswerId(response.data.data[0].id)
@@ -139,6 +170,7 @@ export default compose(
     }),
     { ...questionActions }
   ),
+  getToken(),
   lifecycle({
     componentWillMount() {
       getQuestionData(this.props)

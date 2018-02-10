@@ -1,5 +1,6 @@
 import React from 'react'
 import styled, {keyframes} from 'styled-components'
+import {logout} from '../../../utils/auth'
 
 const boxShadowColor = '255,255,255'
 
@@ -83,20 +84,28 @@ const Dropdown = styled.div`
   }
 `
 
+const DisplayName = styled.div`
+  color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+`
+
 const ProfileMenu = props => {
-  const { dropdownVisible, toggleDD, setNode } = props
+  const { dropdownVisible, toggleDD, setNode, name } = props
   return (
     <div className='btn-group'
       ref={setNode}
     >
+      <DisplayName>สวัสดี น้อง{name}</DisplayName>
       <Circle
         {...props}
         onClick={toggleDD}>
         <i className='fas fa-user' />
       </Circle>
       <Dropdown className={`dropdown-menu dropdown-menu-right ${dropdownVisible && 'show'}`} >
-        <a className='dropdown-item' href='#'>แก้ไขข้อมูลส่วนตัว</a>
-        <a className='dropdown-item' href='#'>ออกจากระบบ</a>
+        <a className='dropdown-item' onClick={() => logout()}>ออกจากระบบ</a>
       </Dropdown>
     </div>
   )
