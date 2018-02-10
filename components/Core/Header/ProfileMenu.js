@@ -79,7 +79,9 @@ const Dropdown = styled.div`
     z-index: 2;
   }
 
-
+  & .dropdown-item {
+    cursor: pointer;
+  }
   & .dropdown-item:hover {
     background: lightgray;
   }

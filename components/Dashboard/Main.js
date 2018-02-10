@@ -58,7 +58,7 @@ const CardUpload = styled.div`
       `
     : props => !props.filePath ? `
         background-image: url(${props.img});
-      `:`
+      ` : `
         background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}yes.png);
       `
 }
@@ -75,7 +75,7 @@ const CardUpload = styled.div`
   }
 
   @media (max-width: 575.98px) {
-    ${props => props.link ? '':'margin-top: 20px;'}
+    ${props => props.link ? '' : 'margin-top: 20px;'}
     height: 236px;
     width: 201px;
   }
@@ -239,19 +239,8 @@ const CustomRow = styled.div`
   padding-bottom: 40px;
 `
 
-const showNumOfAsnwered = (data) => {
-  switch (data) {
-    case 0:
-      return `<span style='color: red'>0 / 6</span>`
-    case 6:
-      return `<span style='color: green'>6 / 6</span>`
-    default:
-      return `<span style='color: orange'>${data} / 6</span>`
-  }
-}
-
 const Card = props => {
-  const { outerClass, content, link, name, dashboard: { files }, setDragActive, onDropFile, answered, initialValues: { user_id: userId } } = props
+  const { outerClass, link, name, dashboard: { files }, setDragActive, onDropFile, answered, initialValues: { user_id: userId } } = props
   return (
     <div className={`${outerClass} mx-auto`}>
       {
@@ -260,12 +249,7 @@ const Card = props => {
             <CardUpload
               countAnswered={answered}
               {...props}
-            >
-              {/* <label
-                dangerouslySetInnerHTML={{ __html: `${content} ${showNumOfAsnwered(3)}` }}
-              /> */}
-
-            </CardUpload>
+            />
           </Link>
         ) : (
           <CardUpload
@@ -307,7 +291,7 @@ const Card = props => {
           </CardUpload>
         )
       }
-      {name === 'parental_authorization' ? <Download show /> : <Download />}
+      {name == 'parental_authorization' ? <Download show /> : <Download />}
     </div>
   )
 }
@@ -334,8 +318,9 @@ const DownloadLink = styled.a`
 const Download = props => {
   return (
     props.show
-      ? <DownloadLink href='/static/files/parent_authorization.pdf' target='_blank'>ดาวน์โหลดเอกสาร</DownloadLink>
-      : <DownloadLink />
+      ? <DownloadLink href='/static/file/parent_authorization.pdf'>
+      ดาวน์โหลดเอกสาร
+      </DownloadLink> : <DownloadLink />
   )
 }
 
