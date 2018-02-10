@@ -1,4 +1,5 @@
 import React from 'react'
+import Router from 'next/router'
 import styled from 'styled-components'
 import ProfileMenu from './ProfileMenu'
 import { withState, withHandlers, compose, lifecycle, withStateHandlers } from 'recompose'
@@ -33,6 +34,16 @@ const BackButton = styled.i`
   color: #fff;
 `
 
+const backStep = () => {
+  let path = window.location.pathname
+  if (/[1-9]/g.test(path)) {
+    path = '/question'
+  } else {
+    path = '/dashboard'
+  }
+  Router.push(path)
+}
+
 const HeaderContainer = props => (
   <Header>
     <div className='container-fluid'>
@@ -41,7 +52,7 @@ const HeaderContainer = props => (
           <ImgLogo className='mx-auto' src='/static/img/logo.svg' alt='wipcamp-logo' />  
         </div>
         <Margin className='col-12 d-flex align-items-center justify-content-center'>
-          <BackButton className='fas fa-chevron-circle-left mr-auto' />
+          <BackButton onClick={() => backStep()} className='fas fa-chevron-circle-left mr-auto' />
           <ProfileMenu {...props} />
         </Margin>
       </div>
