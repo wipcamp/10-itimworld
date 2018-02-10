@@ -51,7 +51,6 @@ export const MainQuestion = props => {
   answered.map((data,index)=>{
     answeredQuestion[index] = data.question_id
   })
-  console.log(answeredQuestion)
   return (
     <Container>
       <Header/>
@@ -79,7 +78,6 @@ export const MainQuestion = props => {
 }
 
 const getQuestions = async (props) => {
-  console.log('getQuestions')
   let { token } = await getCookie({req: false})
   let {setQuestion} = props
   api.get('/questions', {Authorization : `Bearer ${token}`})
@@ -89,7 +87,6 @@ const getQuestions = async (props) => {
 }
 
 const getAnsweredQuestions = async (props) => {
-  console.log('getAnsweredQuestions')
   let { token } = await getCookie({req: false})
   let {setAnsweredQuestion} = props
   api.get(`/registrants/${props.initialValues.user_id}`, {Authorization : `Bearer ${token}`})

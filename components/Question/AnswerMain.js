@@ -86,7 +86,6 @@ export const MainAnswer = props => {
 const isAnswerEmpty = (props) => {
   let {question:{answers}} = props
   if(answers.length===undefined || answers.length<2) {
-    console.log('please input !',answers.length)
     return true
   }
   return false
@@ -95,15 +94,12 @@ const isAnswerEmpty = (props) => {
 const saveAnswer = async (questionid,data,props) => {
   let {question:{answers}} = props
   if(answers.length===undefined || answers.length<2) {
-    console.log('please input !',answers.length)
     return
   }
   
   let { token } = await getCookie({req: false})
-  console.log('saving')
   let {question:{currentAnswerId}} = props
   if(!currentAnswerId.id) {
-    console.log('posting')
     api.post(`/answers`,{
       question_id: questionid,
       user_id: props.initialValues.user_id,
@@ -112,18 +108,15 @@ const saveAnswer = async (questionid,data,props) => {
       Authorization : `Bearer ${token}`
     })
       .then(res => {
-        console.log(res)
         props.postedAnswer({error:false,message:'บันทึกคำตอบเสร็จสมบูรณ์'})
       })
       .then(
         setTimeout(()=>Router.push('/question'),3000)
       )
       .catch(err => {
-        console.log(err)
         props.postedAnswer({error:true,message:'บันทึกคำตอบล้มเหลว!'})
       })
   }else {
-    console.log('updating')
     api.put(`/answers`,{
       question_id: questionid,
       user_id: props.initialValues.user_id,
@@ -132,14 +125,12 @@ const saveAnswer = async (questionid,data,props) => {
       Authorization : `Bearer ${token}`
     })
       .then(res => {
-        console.log(res)
         props.postedAnswer({error:false,message:'บันทึกคำตอบเสร็จสมบูรณ์'})
       })
       .then(()=>
         setTimeout(()=>Router.push('/question'),3000)
       )
       .catch(err => {
-        console.log(err)
         props.postedAnswer({error:true,message:'บันทึกคำตอบล้มเหลว!'})
       })
   }
@@ -151,7 +142,6 @@ const back = () => {
 
 const getQuestionData = async (props) => {
   let { token } = await getCookie({req: false})
-  console.log('getQuestionData')
   let {url:{query:id},setCurrentQuestion} = props
   api.get(`/questions/${id.id}`,{Authorization : `Bearer ${token}`})
   .then((response)=> {
