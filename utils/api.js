@@ -1,9 +1,9 @@
 import axios from 'axios'
+import {api} from '../env.json'
 
 const createInstance = () => {
   return axios.create({
-    // baseURL: process.env.API,
-    baseURL: 'http://localhost:8000/api/v1',
+    baseURL: api,
     headers: {
       // 'x-access-token': ''
       // 'Accept': 'application/json',
