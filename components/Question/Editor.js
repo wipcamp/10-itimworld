@@ -5,8 +5,28 @@ import { compose } from 'recompose'
 import { actions as questionActions } from '../../store/reducers/question'
 
 export class Editor extends React.Component {
+
+  constructor(props) {
+    super(props)
+    this.quillRef = null
+    this.reactQuillRef = null
+  }
+
   state = {
     value: ''
+  }
+
+  componentDidMount() {
+    this.attachQuillRefs()
+  }
+  
+  componentDidUpdate() {
+    this.attachQuillRefs()
+  }
+
+  attachQuillRefs = () => {
+    if (typeof this.reactQuillRef.getEditor !== 'function') return;
+    this.quillRef = this.reactQuillRef.getEditor();
   }
 
   componentWillMount () {
@@ -32,10 +52,11 @@ export class Editor extends React.Component {
     if (typeof window !== 'undefined' && ReactQuill) {
       return (
         <ReactQuill
-          onChange={(val) => setAnswer(questionNumber, val)}
+          onChange={(val) => setAnswer(questionNumber, val,this.quillRef.getText().length)}
           theme='snow'
           value={answers.data}
           modules={this.modules}
+          ref={(el) => { this.reactQuillRef = el }}
         />          
       )
     }

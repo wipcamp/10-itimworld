@@ -74,7 +74,7 @@ export const MainAnswer = props => {
               <BackButton className='btn btn-large float-left' onClick={()=>back()}>กลับ</BackButton>
             </div>
             <div className='col-6'>
-              <SubmitButton className='btn btn-large float-right' onClick={()=>saveAnswer(questionid,answers.data,props)}>บันทึก</SubmitButton>
+              <SubmitButton className='btn btn-large float-right' disabled={isAnswerEmpty(props)} onClick={()=>saveAnswer(questionid,answers.data,props)}>บันทึก</SubmitButton>
             </div>
           </div>
         </SubmitSection>
@@ -83,11 +83,25 @@ export const MainAnswer = props => {
   )
 }
 
+const isAnswerEmpty = (props) => {
+  let {question:{answers}} = props
+  if(answers.length===undefined || answers.length<2) {
+    console.log('please input !',answers.length)
+    return true
+  }
+  return false
+}
+
 const saveAnswer = async (questionid,data,props) => {
+  let {question:{answers}} = props
+  if(answers.length===undefined || answers.length<2) {
+    console.log('please input !',answers.length)
+    return
+  }
+  
   let { token } = await getCookie({req: false})
   console.log('saving')
   let {question:{currentAnswerId}} = props
-  console.log(props)
   if(!currentAnswerId.id) {
     console.log('posting')
     api.post(`/answers`,{
