@@ -1,10 +1,11 @@
 import cookieParser, {checkToken} from '../utils/cookie'
 
 export default (path) => (Component) => {
-  Component.getInitialProps = async ({...ctx, req, res}) => {
-    if (ctx.req.headers.cookie) {
-      let token = await cookieParser(ctx).token
-      checkToken(res, token, path)
+  Component.getInitialProps = async (ctx) => {
+    let token = {}
+    if (ctx) {
+      token = await cookieParser(ctx).token
+      checkToken(ctx.res, token, path)
     }
   }
   return Component
