@@ -9,7 +9,7 @@ import styled from 'styled-components'
 import Header from './../Core/Header/Main'
 
 const Container = styled.div`
-  background: url('/static/img/bg.png') center top;
+  background: #29241B url('/static/img/bg.png') center top;
   height: auto;
   min-height:100vh;
   background-size: cover;
