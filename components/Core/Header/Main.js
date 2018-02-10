@@ -93,7 +93,7 @@ export default compose(
       let { token } = cookie({req: false})
       let { data } = await api.post(`/auth/me`, null, {Authorization: `Bearer ${token}`})
       if (data) {
-        props.setImg(`http://graph.facebook.com/${data.provider_acc}/picture?height=50000`)
+        props.setImg(`https://graph.facebook.com/${data.provider_acc}/picture?height=50000`)
         let { data: registrant } = await api.get(`/registrants/${data.id}`, {Authorization: `Bearer ${token}`})
         registrant = registrant[0]
         props.setName(registrant.nickname)
