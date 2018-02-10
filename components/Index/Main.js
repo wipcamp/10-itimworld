@@ -68,10 +68,10 @@ const IndexCompose = ({setToken, loading, setLoad}) => {
         <Logo src='/static/img/logofinals.png' alt='wipcamp-logo' />
         <FacebookLogin
           appId={appId}
-          autoLoad
           fields={fields}
           scope={scope}
-          callback={(res) => responser(res, setToken, setLoad)}
+          onClick={() => setLoad(true)}
+          callback={(res) => responser(res, setToken)}
           icon={`fa fa-facebook mt-2 mr-3`}
           textButton={`Login with Facebook`}
           cssClass='btn btn-primary'
@@ -89,5 +89,5 @@ export default compose(
     }),
     { ...tokenActions }
   ),
-  withState('loading', 'setLoad', true)
+  withState('loading', 'setLoad', false)
 )(IndexCompose)
