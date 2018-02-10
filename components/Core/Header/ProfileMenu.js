@@ -104,7 +104,6 @@ const ProfileMenu = props => {
         <i className='fas fa-user' />
       </Circle>
       <Dropdown className={`dropdown-menu dropdown-menu-right ${dropdownVisible && 'show'}`} >
-        <a className='dropdown-item' href='#'>แก้ไขข้อมูลส่วนตัว</a>
         <a className='dropdown-item' href='#'>ออกจากระบบ</a>
       </Dropdown>
     </div>
