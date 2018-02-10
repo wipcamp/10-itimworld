@@ -21,10 +21,10 @@ const checkStep = (path) => Component => {
       if (!data.length) { // user not register
         if (path === registerPath) {
           props.setRegisterStep(1)
+          show = true
         } else if (path === dashboardPath) {
           Router.push(registerPath)
         }
-        show = true
       } else {
         data = data[0]
         if (path === registerPath) {
