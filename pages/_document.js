@@ -64,12 +64,12 @@ export default class MyDocument extends Document {
           <meta property="og:title" content="WIP Camp #10 : Ways to IT Professionals Camp : ค่ายเส้นทางสู่ฝันนักไอที "/>
           <meta property="og:type" content="company"/>
           <meta property="og:url" content="https://itim.wip.camp/"/>
-          <meta property="og:image" content="https://itim.wip.camp/static/image/og.jpg"/>
+          <meta property="og:image" content="https://itim.wip.camp/static/img/og.jpg"/>
           <meta property="og:site_name" content="WIP Camp #10 : Ways to IT Professionals Camp : ค่ายเส้นทางสู่ฝันนักไอที"/>
           
           <link rel="shortcut icon" href="/static/img/favicon/favicon.ico" type="image/x-icon"/>
           <link rel="apple-touch-icon" sizes="60x60" href="/static/img/apple-touch-icon.png"/>
-          <link rel="icon" href="/static//img/favicon/favicon.ico" type="/static/img/x-icon"/>
+          <link rel="icon" href="/static/img/favicon/favicon.ico" type="/static/img/x-icon"/>
           <link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicon/favicon-32x32.png"/>
           <link rel="icon" type="image/png" sizes="16x16" href="/static/img/favicon/favicon-16x16.png"/>
           <link rel="manifest" href="/static/img/favicon/site.webmanifest"/>
