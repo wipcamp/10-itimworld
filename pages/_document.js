@@ -1,6 +1,10 @@
 import Document, { Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 import injectGlobal from '../components/Core/injectGlobal'
+import htmlescape from 'htmlescape'
+
+const { API_URL } = process.env
+const env = { API_URL }
 
 injectGlobal()
 
@@ -30,13 +34,15 @@ const hotjar = `
 `
 
 export default class MyDocument extends Document {
-  static getInitialProps({ renderPage }) {
+  static async getInitialProps(ctx) {
+    const { renderPage } = ctx
+    const props = await Document.getInitialProps(ctx)
     const sheet = new ServerStyleSheet()
     const page = renderPage(App => props =>
       sheet.collectStyles(<App {...props} />)
     )
     const styleTags = sheet.getStyleElement()
-    return { ...page, styleTags }
+    return { ...page, styleTags, ...ctx }
   }
 
   render() {
@@ -67,6 +73,9 @@ export default class MyDocument extends Document {
         </Head>
         <body>
           <Main />
+          <script
+            dangerouslySetInnerHTML={{ __html: '__ENV__ = ' + htmlescape(env) }}
+          />
           <NextScript />
         </body>
         <noscript dangerouslySetInnerHTML={{__html: googleTagManagerNoScript}} />
