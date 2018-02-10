@@ -113,6 +113,8 @@ export const validate = values => {
       errors.other_blood_group = required
     } else if (!values.other_blood_group.trim()) {
       errors.other_blood_group = 'โปรดอย่าเว้นช่องว่าง'
+    } else if (values.other_blood_group > 16) {
+      errors.other_blood_group = `ป้อนได้ไม่เกิน 16 ตัวอักษร`
     }
   }
 
