@@ -12,7 +12,7 @@ const Background = styled.div`
   min-height: 100vh;
   min-width: 100vw;
   margin-top: -100vh;
-  background: url('/static/img/bg2-02.png');
+  background: url('/static/img/background.png');
   background-size: cover;
   background-position: center;
 `
