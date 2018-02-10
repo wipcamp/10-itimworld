@@ -1,5 +1,6 @@
 import React from 'react'
 import styled, {keyframes} from 'styled-components'
+import {logout} from '../../../utils/auth'
 
 const boxShadowColor = '255,255,255'
 
@@ -104,7 +105,7 @@ const ProfileMenu = props => {
         <i className='fas fa-user' />
       </Circle>
       <Dropdown className={`dropdown-menu dropdown-menu-right ${dropdownVisible && 'show'}`} >
-        <a className='dropdown-item' href='#'>ออกจากระบบ</a>
+        <a className='dropdown-item' onClick={() => logout()}>ออกจากระบบ</a>
       </Dropdown>
     </div>
   )

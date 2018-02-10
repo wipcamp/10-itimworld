@@ -1,5 +1,6 @@
 import {Router} from '../routes'
 import axios from './api'
+import getCookie from './cookie'
 import cookie from 'cookie'
 
 export const auth = async (res, setToken) => {
@@ -7,6 +8,13 @@ export const auth = async (res, setToken) => {
   document.cookie = cookie.serialize('token', data.accessToken, { maxAge: 60 * 60 * 24 * 5 })
   setToken(data.accessToken)
   Router.pushRoute('/register')
+}
+
+export const logout = async () => {
+  let { token } = await getCookie({req: false})
+  await axios.post('/auth/logout', null, {Authorization: `Bearer ${token}`})
+  document.cookie = cookie.serialize('token', null)
+  Router.pushRoute('/logout')
 }
 
 export const postData = async res => {
