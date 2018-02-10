@@ -334,7 +334,7 @@ const DownloadLink = styled.a`
 const Download = props => {
   return (
     props.show
-      ? <DownloadLink href='/static/file/parent_authorization.pdf' target='_blank'>ดาวน์โหลดเอกสาร</DownloadLink>
+      ? <DownloadLink href='/static/files/parent_authorization.pdf' target='_blank'>ดาวน์โหลดเอกสาร</DownloadLink>
       : <DownloadLink />
   )
 }
