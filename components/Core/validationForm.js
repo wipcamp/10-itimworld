@@ -9,7 +9,7 @@ export const validate = values => {
   }
 
   const validDate = (cur) => cur.isBetween(range.start, range.end)
- 
+
   const fields = [
     'first_name',
     'last_name',
@@ -37,13 +37,51 @@ export const validate = values => {
     'known_via'
   ]
 
+  const maximumLength = [
+    {
+      field: ['nickname'],
+      length: 32
+    },
+    {
+      field: ['addr_prov', 'addr_dist', 'edu_lv', 'edu_major', 'first_name', 'last_name', 'first_name_en', 'last_name_en'],
+      length: 64
+    },
+    {
+      field: ['edu_name'],
+      length: 128
+    },
+    {
+      field: ['congenital_diseases', 'allergic_foods', 'congenital_drugs'],
+      length: 191
+    },
+    {
+      field: ['citizen_id'],
+      length: 13
+    }
+  ]
+
   fields.map(e => {
     if (!values[e]) {
       errors[e] = required
     } else if (typeof values[e] === 'string' && !values[e].trim()) {
       errors[e] = 'โปรดอย่าเว้นช่องว่าง'
+    } else if (maximumLength[0].field.includes(e) &&
+                values[e].length > maximumLength[0].length) {
+      errors[e] = `ป้อนได้ไม่เกิน ${maximumLength[0].length} ตัวอักษร`
+    } else if (maximumLength[1].field.includes(e) &&
+                values[e].length > maximumLength[1].length) {
+      errors[e] = `ป้อนได้ไม่เกิน ${maximumLength[1].length} ตัวอักษร`
+    } else if (maximumLength[2].field.includes(e) &&
+                values[e].length > maximumLength[2].length) {
+      errors[e] = `ป้อนได้ไม่เกิน ${maximumLength[2].length} ตัวอักษร`
+    } else if (maximumLength[3].field.includes(e) &&
+                values[e].length > maximumLength[3].length) {
+      errors[e] = `ป้อนได้ไม่เกิน ${maximumLength[3].length} ตัวอักษร`
+    } else if (maximumLength[4].field.includes(e) &&
+                values[e].length > maximumLength[4].length) {
+      errors[e] = `ป้อนได้ไม่เกิน ${maximumLength[4].length} ตัวอักษร`
     } else if (e.includes('telno') && values[e].replace(/[^\d]/g, '').length !== 10) {
-      errors[e] = 'โปรดกรอกเบอร์โทรศัพท์ให้ครบถ้วน'
+      errors[e] = 'โปรดกรอกเบอร์โทรศัพท์ให้ครบ 10 ตัว'
     }
   })
 
