@@ -1,6 +1,7 @@
 import actionCreator from '../../utils/actionCreator'
 import api from '../../utils/api'
 import { convertToInt, convertToFloat, dataIsNotNull } from '../../utils/helper'
+import cookie from '../../utils/cookie'
 
 // Actions
 const registerAction = actionCreator('register')
@@ -136,10 +137,11 @@ export const actions = {
     data.telno_personal = getOnlyNum(data.telno_personal)
     data.telno_parent = getOnlyNum(data.telno_parent)
     data.citizen_id = getOnlyNum(data.citizen_id)
+    let { token } = cookie({req: false})
     if (dataIsNotNull(data)) {
       return {
         type: SAVE_PROFILE_STEP_ONE.ACTION,
-        payload: api.post('/profiles', data)
+        payload: api.post('/profiles', data, {Authorization: `Bearer ${token}`})
       }
     } else {
       return {
@@ -158,11 +160,11 @@ export const actions = {
     ]
 
     const data = prepareData(values, field)
-
+    let { token } = cookie({req: false})
     if (dataIsNotNull(data)) {
       return {
         type: SAVE_PROFILE_STEP_TWO.ACTION,
-        payload: api.put('/profiles', data)
+        payload: api.put('/profiles', data, {Authorization: `Bearer ${token}`})
       }
     } else {
       return {
