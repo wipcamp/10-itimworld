@@ -1,5 +1,5 @@
 import React from 'react'
-import { compose, lifecycle } from 'recompose'
+import { compose, lifecycle, withProps } from 'recompose'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
@@ -10,6 +10,7 @@ import Alert from '../Core/Alert'
 import StepOne from './StepOne'
 import StepTwo from './StepTwo'
 import { validate } from '../Core/validationForm'
+import checkRegisterStep from '../../utils/checkRegisterStep'
 
 const BackgroundContainer = styled.div`
   background: #252525;
@@ -56,18 +57,23 @@ export const MainRegister = props => {
 }
 
 export default compose(
+  withProps(
+    props => ({
+      initialValues: {
+        user_id: 10009
+      }
+    })
+  ),
   connect(
-    state => ({
+    (state, ownProps) => ({
       registerData: state.register
     }),
     {...registerActions}
   ),
+  checkRegisterStep(),
   reduxForm({
     form: 'register',
     validate,
-    initialValues: {
-      user_id: 10009
-    },
     onSubmitFail: (_, __, ___, props) => props.onSubmitError()
   }),
   lifecycle({
