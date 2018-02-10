@@ -48,7 +48,7 @@ export default () => injectGlobal`
     padding: 0.5em 1.6em;
     @media (min-width: 1024px) {
       max-width: 500px;
-      padding: 0.6em 4.5em;
+      padding: 0.6em 3em;
     }
   }
   .metro:hover {
@@ -61,6 +61,5 @@ export default () => injectGlobal`
 
   .form-check {
     margin-bottom: 0;
-
   }
 `

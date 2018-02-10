@@ -4,12 +4,15 @@ import { compose, lifecycle } from 'recompose'
 import { actions as questionActions } from '../../store/reducers/question'
 import Editor from './Editor'
 import api from '../../utils/api'
+import getCookie from '../../utils/cookie'
+import getToken from '../../utils/getToken'
 import {Link} from '../../routes'
 import styled from 'styled-components'
-import Header from './../upload/header'
+import Header from '../Core/Header/Main'
+import checkRegisterStep from '../../utils/checkRegisterStep'
 
 const Container = styled.div`
-  background: url('/static/img/bg-d2.png') center top;
+  background: #29241B url('/static/img/bg.png') center top;
   height: auto;
   min-height:100vh;
   background-size: cover;
@@ -18,9 +21,10 @@ const Container = styled.div`
 `
 
 const Question = styled.div`
-  background: url('/static/img/${props => props.count===1?`question.png`:`question2.png`}') left top;
-  height: 100px;
-  width: 260px;
+  background: url('/static/img/${props => props.count===1?`frame.png`:`frame.png`}') left top;
+  ${props => props.answered ?'':'filter: grayscale(80%);'}
+  height: 108px;
+  width: 289px;
   background-repeat: no-repeat;
   background-size: contain;
   color: #FFF;
@@ -39,10 +43,15 @@ const Question = styled.div`
 
 
 export const MainQuestion = props => {
-  const { question: { questions: allQuestion }, setQuestion } = props
+  const { question: { questions: allQuestion,answered}, setQuestion } = props
   let questionNo = 0
   let count = [1,2,2,1]
   let i = -1
+  let answeredQuestion = []
+  answered.map((data,index)=>{
+    answeredQuestion[index] = data.question_id
+  })
+  console.log(answeredQuestion)
   return (
     <Container>
       <Header/>
@@ -50,15 +59,15 @@ export const MainQuestion = props => {
         <div className='row'>
 
         { allQuestion.map((question) => {
-          if(i==count.length){
+          if(i==count.length-1){
             i=-1
           }
           questionNo++
           i++
           return (
-            <div className='col-sm-6 pt-3'>
-              <Link route={`/question/answer/${question.id}`} prefetch key={question.id}>
-                <Question count={count[i]}>คำถามที่ {questionNo}</Question>
+            <div className='col-sm-6 pt-3' key={questionNo}>
+              <Link route={`/question/answer/${question.id}`} prefetch>
+                <Question count={count[i]}  answered={answeredQuestion.indexOf(question.id)>=0}>คำถามที่ {questionNo}</Question>
               </Link>
             </div>
           )
@@ -69,12 +78,23 @@ export const MainQuestion = props => {
   )
 }
 
-const getQuestions = (props) => {
+const getQuestions = async (props) => {
   console.log('getQuestions')
+  let { token } = await getCookie({req: false})
   let {setQuestion} = props
-  api.get('/questions')
+  api.get('/questions', {Authorization : `Bearer ${token}`})
   .then((response)=>{
     setQuestion(response.data)
+  })
+}
+
+const getAnsweredQuestions = async (props) => {
+  console.log('getAnsweredQuestions')
+  let { token } = await getCookie({req: false})
+  let {setAnsweredQuestion} = props
+  api.get(`/registrants/${props.initialValues.user_id}`, {Authorization : `Bearer ${token}`})
+  .then((response)=>{
+    setAnsweredQuestion(response.data[0].eval_answers)
   })
 }
 
@@ -85,9 +105,12 @@ export default compose(
     }),
     { ...questionActions }
   ),
+  getToken(),
+  checkRegisterStep('/question'),
   lifecycle({
     componentWillMount() {
       getQuestions(this.props)
+      getAnsweredQuestions(this.props)
     }
   })
 )(MainQuestion)

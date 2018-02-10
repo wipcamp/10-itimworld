@@ -6,12 +6,13 @@ import Editor from './Editor'
 import api from '../../utils/api'
 import styled from 'styled-components'
 import Router from 'next/router'
-import Header from './../upload/header'
-
-const USER_ID = 2
+import Header from './../Core/Header/Main'
+import getCookie from '../../utils/cookie'
+import getToken from '../../utils/getToken'
+import Alert from '../Core/Alert'
 
 const Container = styled.div`
-  background: url('/static/img/bg-d2.png') center top;
+  background: #29241B url('/static/img/bg.png') center top;
   height: auto;
   min-height:100vh;
   background-size: cover;
@@ -20,7 +21,10 @@ const Container = styled.div`
 `
 
 const SubmitButton = styled.button`
-  background-color: #336699;
+  height: 45px;
+  width: 100px;
+  font-size: 24px;
+  background-color: #B5A06B;
   color: #fff;
   font-weight: bold;
   &:hover {
@@ -29,9 +33,12 @@ const SubmitButton = styled.button`
 `
 
 const BackButton = styled.button`
+  height: 45px;
+  width: 100px;
+  font-size: 24px;
   background-color: rgba(0,0,0,0);
-  border: 1px solid #336699;
-  color: #336699;
+  border: 1px solid #695C3D;
+  color: #695C3D;
   font-weight: bold;
 
   &:hover {
@@ -44,18 +51,19 @@ const SubmitSection = styled.div`
 `
 
 const QuestionSection = styled.div`
+  color: #FFF;
   padding-top: 25px;
   padding-bottom: 25px;
 `
 
 export const MainAnswer = props => {
-  const {setQuestion,question:{answers,currentQuestion}} = props
+  const {setQuestion,question:{answers,currentQuestion,error,show,message}, hideDialog ,postedAnswer} = props
   const questionid = props.url.query.id
-  
   return (
     <Container>
       <Header/>
       <div className='container'>
+        <Alert showDialog={show} error={error} message={message} hideDialog={hideDialog}/>
         <QuestionSection className='h3'>
           {`คำถามที่ ${questionid} : `}{currentQuestion.data}
         </QuestionSection>
@@ -66,7 +74,7 @@ export const MainAnswer = props => {
               <BackButton className='btn btn-large float-left' onClick={()=>back()}>กลับ</BackButton>
             </div>
             <div className='col-6'>
-              <SubmitButton className='btn btn-large float-right' onClick={()=>saveAnswer(questionid,answers.data,props)}>บันทึก</SubmitButton>
+              <SubmitButton className='btn btn-large float-right' disabled={isAnswerEmpty(props)} onClick={()=>saveAnswer(questionid,answers.data,props)}>บันทึก</SubmitButton>
             </div>
           </div>
         </SubmitSection>
@@ -75,23 +83,65 @@ export const MainAnswer = props => {
   )
 }
 
-const saveAnswer = (questionid,data,props) => {
+const isAnswerEmpty = (props) => {
+  let {question:{answers}} = props
+  if(answers.length===undefined || answers.length<2) {
+    console.log('please input !',answers.length)
+    return true
+  }
+  return false
+}
+
+const saveAnswer = async (questionid,data,props) => {
+  let {question:{answers}} = props
+  if(answers.length===undefined || answers.length<2) {
+    console.log('please input !',answers.length)
+    return
+  }
+  
+  let { token } = await getCookie({req: false})
   console.log('saving')
   let {question:{currentAnswerId}} = props
   if(!currentAnswerId.id) {
     console.log('posting')
     api.post(`/answers`,{
       question_id: questionid,
-      user_id: USER_ID,
+      user_id: props.initialValues.user_id,
       data: data,
+    },{
+      Authorization : `Bearer ${token}`
     })
+      .then(res => {
+        console.log(res)
+        props.postedAnswer({error:false,message:'บันทึกคำตอบเสร็จสมบูรณ์'})
+      })
+      .then(
+        setTimeout(()=>Router.push('/question'),3000)
+      )
+      .catch(err => {
+        console.log(err)
+        props.postedAnswer({error:true,message:'บันทึกคำตอบล้มเหลว!'})
+      })
   }else {
     console.log('updating')
     api.put(`/answers`,{
       question_id: questionid,
-      user_id: USER_ID,
+      user_id: props.initialValues.user_id,
       data: data,
+    },{
+      Authorization : `Bearer ${token}`
     })
+      .then(res => {
+        console.log(res)
+        props.postedAnswer({error:false,message:'บันทึกคำตอบเสร็จสมบูรณ์'})
+      })
+      .then(()=>
+        setTimeout(()=>Router.push('/question'),3000)
+      )
+      .catch(err => {
+        console.log(err)
+        props.postedAnswer({error:true,message:'บันทึกคำตอบล้มเหลว!'})
+      })
   }
 }
 
@@ -99,18 +149,20 @@ const back = () => {
   Router.push('/question')
 }
 
-const getQuestionData = (props) => {
+const getQuestionData = async (props) => {
+  let { token } = await getCookie({req: false})
   console.log('getQuestionData')
   let {url:{query:id},setCurrentQuestion} = props
-      api.get(`/questions/${id.id}`)
-      .then((response)=> {
-        setCurrentQuestion(response.data[0])
-      })
+  api.get(`/questions/${id.id}`,{Authorization : `Bearer ${token}`})
+  .then((response)=> {
+    setCurrentQuestion(response.data[0])
+  })
 }
 
-const getAnswerData = (props) => {
+const getAnswerData = async (props) => {
+  let { token } = await getCookie({req: false})
   let {url:{query:id},setCurrentAnswerId,setAnswer} = props
-  api.get(`/users/${USER_ID}/answers/${id.id}`)
+  api.get(`/users/${props.initialValues.user_id}/answers/${id.id}`,{Authorization : `Bearer ${token}`})
   .then((response) => {
     if(response.data.data[0]!==undefined) {
       setCurrentAnswerId(response.data.data[0].id)
@@ -132,6 +184,7 @@ export default compose(
     }),
     { ...questionActions }
   ),
+  getToken(),
   lifecycle({
     componentWillMount() {
       getQuestionData(this.props)

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Field, formValues } from 'redux-form'
 import { actions } from '../../store/reducers/register'
 import moment from 'moment'
-import { normalizeCitizenId, normalizePhone, normalizeGpax } from './normalizeForm'
+import { normalizeCitizenId, normalizePhone, normalizeGpax, normalizeDate, normalizeThai, normalizeEng } from './normalizeForm'
 import { province } from '../Register/data-dropdown.json'
 import Datetime from 'react-datetime'
 
@@ -134,8 +134,15 @@ const Error = styled.small`
   
 `
 
+const RequiredStyled = styled.sup`
+  color: red;
+`
+
+const Required = () => (
+  <RequiredStyled>*</RequiredStyled>
+)
+
 const Label = styled.label`
-  /* min-height: 50px; */
   padding-left: 10px;
   font-size: 20px;
 `
@@ -150,7 +157,7 @@ const Input = ({
   placeholder
 }) => (
   <div className={outerClass}>
-    <Label htmlFor={`${input.name}-input`}>{label}</Label>
+    <Label htmlFor={`${input.name}-input`}>{label}<Required /></Label>
     <StyledInput {...input} type={type} placeholder={placeholder} className={innerClass} />
     <Error>{touched && error}</Error>
   </div>
@@ -182,7 +189,7 @@ const MultipleSelect = ({
   onChange
 }) => (
   <div className={outerClass}>
-    <Label htmlFor={`${htmlFor}-multiple`}>{label}</Label>
+    <Label htmlFor={`${htmlFor}-multiple`}>{label}<Required /></Label>
     <div className='col-12 px-0'>
       <div className='row'>
         {
@@ -235,7 +242,7 @@ const Radio = ({
   blood
 }) => (
   <div className={outerClass}>
-    <Label htmlFor={`${htmlFor}-input`}>{label}</Label>
+    <Label htmlFor={`${htmlFor}-input`}>{label}<Required /></Label>
     <div>
       {
         data.map((option, index) => {
@@ -283,7 +290,7 @@ const Radio = ({
         )
       }
     </div>
-    <Field name='blood_group' component={renderError} top='-4px' />
+    <Field name={name} component={renderError} top='-4px' />
   </div>
 )
 
@@ -299,16 +306,18 @@ const SingleSelect = ({
   innerClass,
   dropdown,
   values,
-  province
+  province,
+  placeholder
 }) => (
   <div className={outerClass}>
-    <Label htmlFor={`${name}-input`} >{label}</Label>
+    <Label htmlFor={`${name}-input`} >{label}<Required /></Label>
     <Field
       name={name}
       component={Select}
       dropdown={dropdown}
       values={values}
       innerClass={innerClass}
+      placeholder={placeholder}
       disabled={name === 'addr_dist' && !province}
     />
   </div>
@@ -344,11 +353,12 @@ const TextArea = ({
   innerClass,
   outerClass,
   label,
-  name
+  name,
+  placeholder
 }) => (
   <div className={outerClass}>
-    <Label htmlFor={`${name}-textarea-input`}>{label}</Label>
-    <StyledTextArea {...input} rows='4' className={innerClass} />
+    <Label htmlFor={`${name}-textarea-input`}>{label}<Required /></Label>
+    <StyledTextArea {...input} rows='4' className={innerClass} placeholder={placeholder} />
     <Error>{touched && error}</Error>
   </div>
 )
@@ -364,7 +374,7 @@ const DataList = ({
   name
 }) => (
   <div className={outerClass}>
-    <Label htmlFor={`${name}-input`}>{label}</Label>
+    <Label htmlFor={`${name}-input`}>{label}<Required /></Label>
     <div>
       <StyledInput list={list} className={innerClass} {...input} />
       <datalist id={list} >
@@ -379,18 +389,29 @@ const DataList = ({
   </div>
 )
 
+const range = {
+  start: moment('1998 GMT+7', 'YYYY'),
+  end: moment('2004 GMT+7', 'YYYY')
+}
+
+const defaultValue = moment('01 Jan 2001 GMT+7', 'DD MMM YYYY')
+
 const DateInput = ({
   input,
   meta: { touched, error, warning },
   label,
-  outerClass
+  outerClass,
+  placeholder
 }) => (
   <div className={outerClass} >
-    <Label>{label}</Label>
+    <Label>{label}<Required /></Label>
     <Datetime
       {...input}
+      defaultValue={defaultValue}
       timeFormat={false}
-      renderInput={props => <StyledInput {...props} />}
+      dateFormat={`DD/MM/YYYY`}
+      renderInput={props => <StyledInput {...props} placeholder={placeholder} />}
+      isValidDate={(cur) => cur.isBetween(range.start, range.end)}
       viewMode={'years'}
     />
     <Error>{touched && error}</Error>
@@ -416,6 +437,10 @@ const FieldInput = (props) => {
         return <Field {...props} component={Input} normalize={normalizeCitizenId} />
       } else if (props.name === 'edu_gpax') {
         return <Field {...props} component={Input} normalize={normalizeGpax} />
+      } else if (['first_name', 'last_name', 'nickname', 'addr_dist'].includes(props.name)) {
+        return <Field {...props} component={Input} normalize={normalizeThai} />
+      } else if (props.name.includes('_en')) {
+        return <Field {...props} component={Input} normalize={normalizeEng} />
       }
       return <Field {...props} component={Input} />
 
@@ -446,8 +471,12 @@ const FieldInput = (props) => {
       return <Field {...props} component={TextArea} />
 
     case 'date':
-      return <div className='col-12'>
-        <Field {...props} component={DateInput} />
+      return <Field {...props} component={DateInput} normalize={normalizeDate} />
+
+    case 'header':
+      return <div className='col-12 text-left'>
+        <h1>{props.label}</h1>
+        <hr />
       </div>
 
     case 'hr':

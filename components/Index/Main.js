@@ -1,13 +1,11 @@
 import React from 'react'
-import Router from 'next/router'
+import {compose, withState} from 'recompose'
 import { connect } from 'react-redux'
 import { actions as tokenActions } from '../../store/reducers/token'
-import styled from 'styled-components'
-import {compose} from 'recompose'
+import styled, { keyframes } from 'styled-components'
 import FacebookLogin from 'react-facebook-login'
 
-import axios from '../../utils/api'
-
+import { responser } from '../../utils/auth'
 import { appId, fields, scope } from './facebook.json'
 
 const Container = styled.div`
@@ -16,6 +14,33 @@ const Container = styled.div`
   background-size: cover;
   background-position: center bottom;
   overflow: hidden;
+`
+
+const Spinner = keyframes`
+  from {transform:rotate(0deg);}
+  to {transform:rotate(360deg);}
+`
+
+const Loading = styled.div`
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  background-color: rgba(255, 255, 255, 0.9);
+  transition: all 1.5s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  
+  i {
+    color: #222;
+    font-size: 10em;  
+    animation: ${Spinner} 2s linear infinite;
+  }
+
+  opacity: ${props => props.loading ? 1 : 0};
+  visibility: ${props => props.loading ? 'visible' : 'hidden'};
 `
 
 const Layout = styled.div`
@@ -29,42 +54,25 @@ const Logo = styled.img`
   margin-top: -8em;
 `
 
-const auth = async (res, setToken) => {
-  let {data} = await axios.post('/auth/login', { ...res }, null)
-  document.cookie = `token=${data.accessToken}; expires=${60 * 60 * 24 * 5};`
-  setToken(data.accessToken)
-  Router.push('/register')
-}
-
-const postData = async res => {
-  let { data } = await axios.post('/users', { ...res }, null)
-  if (data) {
-    return data
-  }
-  return null
-}
-
-const getUserData = res => axios.post(`/users/${res.id}`, { ...res }, null)
-
-const responser = async (res, setToken) => {
-  let user = await getUserData(res)
-  if (!user.data.data) {
-    user = await postData(res)
-  }
-  auth(res, setToken)
-}
-
-const IndexCompose = ({setToken}) => {
+const IndexCompose = ({setToken, loading, setLoad}) => {
   return <Container className='container-fluid'>
+    <Loading loading={loading} className={`justify-content-center align-items-center`}>
+      <div className='text-center'>
+        <i className='fa fa-refresh' />
+        <h1 className='animated pulse infinite mt-3'>กรุณาคอยสักประเดี๋ยว..</h1>
+        <h4 className='animated pulse infinite'>รู้หมือไร่? หน้าเว็บเลือกทีมได้นะ!</h4>
+      </div>
+    </Loading>
     <div className='row'>
       <Layout className='col-12 d-flex flex-column justify-content-center align-items-center'>
-        <Logo src='/static/img/wipcamp-logo.svg' alt='wipcamp-logo' />
+        <Logo src='/static/img/logofinals.png' alt='wipcamp-logo' />
         <FacebookLogin
           appId={appId}
           autoLoad
           fields={fields}
           scope={scope}
-          callback={(res) => responser(res, setToken)}
+          callback={(res) => responser(res, setToken, setLoad)}
+          icon={`fa fa-facebook mt-2 mr-3`}
           textButton={`Login with Facebook`}
           cssClass='btn btn-primary'
           tag={`button`}
@@ -80,5 +88,6 @@ export default compose(
       token: state.token
     }),
     { ...tokenActions }
-  )
+  ),
+  withState('loading', 'setLoad', true)
 )(IndexCompose)

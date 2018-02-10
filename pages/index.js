@@ -1,6 +1,5 @@
 import React from 'react'
-// import IndexPage from '../components/Index/Main'
-import IndexPage from '../components/Index/Landing'
+import IndexPage from '../components/Index/Main'
 import { compose } from 'recompose'
 
 import withRedux from '../store/wrapper'
