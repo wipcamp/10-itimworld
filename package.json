@@ -14,7 +14,7 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "br": "yarn build && node server.js"
+    "br": "yarn build && yarn start"
   },
   "dependencies": {
     "axios": "^0.17.1",
