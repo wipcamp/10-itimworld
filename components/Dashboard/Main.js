@@ -9,6 +9,8 @@ import Link from 'next/link'
 import api from '../../utils/api'
 import Header from '../Core/Header/Main'
 import Alert from '../Core/Alert'
+import checkRegisterStep from '../../utils/checkRegisterStep'
+import getToken from '../../utils/getToken'
 
 const BackgroundContainer = styled.div`
   background: #B8D0EC;
@@ -361,9 +363,12 @@ export default compose(
     }),
     { ...DashboardActions }
   ),
+  getToken(),
+  checkRegisterStep('/dashboard'),
   lifecycle({
     async componentWillMount () {
-      const { data } = await api.get('/registrants/10009')
+      const { user_id: userId } = this.props.initialValues
+      const { data } = await api.get(`/registrants/${userId}`)
       this.props.setAnswered(data[0].eval_answers.length)
     }
   })

@@ -11,6 +11,7 @@ import StepOne from './StepOne'
 import StepTwo from './StepTwo'
 import { validate } from '../Core/validationForm'
 import checkRegisterStep from '../../utils/checkRegisterStep'
+import getToken from '../../utils/getToken'
 
 const BackgroundContainer = styled.div`
   background: #252525;
@@ -57,20 +58,14 @@ export const MainRegister = props => {
 }
 
 export default compose(
-  withProps(
-    props => ({
-      initialValues: {
-        user_id: 10009
-      }
-    })
-  ),
   connect(
     (state, ownProps) => ({
       registerData: state.register
     }),
     {...registerActions}
   ),
-  checkRegisterStep(),
+  getToken(),
+  checkRegisterStep('/register'),
   reduxForm({
     form: 'register',
     validate,
