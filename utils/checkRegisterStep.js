@@ -3,6 +3,7 @@ import React from 'react'
 import api from './api'
 import cookie from './cookie'
 import Router from 'next/router'
+import Loading from '../components/Core/Loading'
 
 const checkStep = (path) => Component => {
   return class extends React.Component {
@@ -51,7 +52,7 @@ const checkStep = (path) => Component => {
 
     render () {
       if (!this.state.showComponent) {
-        return <div />
+        return <Loading />
       }
       return (
         <Component {...this.props} />
