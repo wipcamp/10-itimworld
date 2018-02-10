@@ -386,6 +386,8 @@ const range = {
   end: moment('2004 GMT+7', 'YYYY')
 }
 
+const defaultValue = moment('01 Jan 2001 GMT+7', 'DD MMM YYYY')
+
 const DateInput = ({
   input,
   meta: { touched, error, warning },
@@ -397,7 +399,7 @@ const DateInput = ({
     <Label>{label}</Label>
     <Datetime
       {...input}
-      defaultValue={moment('01 Jan 2001 GMT+7', 'DD MMM YYYY')}
+      defaultValue={defaultValue}
       timeFormat={false}
       dateFormat={`DD/MM/YYYY`}
       renderInput={props => <StyledInput {...props} placeholder={placeholder} />}
