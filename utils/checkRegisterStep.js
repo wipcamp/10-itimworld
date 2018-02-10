@@ -1,6 +1,7 @@
 /* global alert */
 import React from 'react'
 import api from './api'
+import cookie from './cookie'
 import Router from 'next/router'
 
 const checkStep = (path) => Component => {
@@ -9,12 +10,13 @@ const checkStep = (path) => Component => {
       showComponent: false
     }
 
-    async componentWillMount () {
+    async componentDidMount () {
       const { props } = this
       const registerPath = '/register'
       const dashboardPath = '/dashboard'
+      let {token} = cookie({req: false})
       let data =
-      await api.get(`/registrants/${props.initialValues.user_id}`)
+      await api.get(`/registrants/${props.initialValues.user_id}`, {Authorization: `Bearer ${token}`})
           .then(res => res.data)
           .catch(err => alert(err))
       let show = false
