@@ -76,14 +76,12 @@ export default compose(
       document.addEventListener('click', props.handleClickOutside)
       let { token } = cookie({req: false})
       let { data } = await api.post(`/auth/me`, null, {Authorization: `Bearer ${token}`})
-      console.log(data)
       if (data) {
         props.setImg(`http://graph.facebook.com/${data.provider_acc}/picture?height=50000`)
-        console.log(data.id)
+        let { data: registrant } = await api.get(`/registrants/${data.id}`, {Authorization: `Bearer ${token}`})
+        registrant = registrant[0]
+        props.setName(registrant.nickname)
       }
-      let { data: registrant } = await api.get(`/registrants/${data.id}`, {Authorization: `Bearer ${token}`})
-      registrant = registrant[0]
-      props.setName(registrant.nickname)
     },
     componentWillUnmount () {
       document.removeEventListener('click', this.props.handleClickOutside)
