@@ -1,11 +1,12 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
-import { compose } from 'recompose'
+import { compose, lifecycle, withState } from 'recompose'
 import { connect } from 'react-redux'
 import Dropzone from 'react-dropzone'
 import { actions as DashboardActions } from '../../store/reducers/dashboard'
 import Link from 'next/link'
 
+import api from '../../utils/api'
 import Header from '../Core/Header/Main'
 import Alert from '../Core/Alert'
 
@@ -239,7 +240,7 @@ const showNumOfAsnwered = (data) => {
 }
 
 const Card = props => {
-  const { outerClass, content, link, name, dashboard: { files }, setDragActive, onDropFile } = props
+  const { outerClass, content, link, name, dashboard: { files }, setDragActive, onDropFile, answered } = props
   return (
     <div className={`${outerClass} mx-auto`}>
       {
@@ -249,7 +250,7 @@ const Card = props => {
               {...props}
             >
               <label
-                dangerouslySetInnerHTML={{ __html: `${content} ${showNumOfAsnwered(3)}` }}
+                dangerouslySetInnerHTML={{ __html: `${content} ${showNumOfAsnwered(answered)}` }}
               />
             </CardUpload>
           </Link>
@@ -353,10 +354,17 @@ const MainUpload = props => {
 }
 
 export default compose(
+  withState('answered', 'setAnswered', 0),
   connect(
     state => ({
       dashboard: state.dashboard
     }),
     { ...DashboardActions }
-  )
+  ),
+  lifecycle({
+    async componentWillMount () {
+      const { data } = await api.get('/registrants/10009')
+      this.props.setAnswered(data[0].eval_answers.length)
+    }
+  })
 )(MainUpload)
