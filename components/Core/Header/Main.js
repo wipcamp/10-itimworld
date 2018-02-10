@@ -4,7 +4,7 @@ import ProfileMenu from './ProfileMenu'
 import { withState, withHandlers, compose, lifecycle, withStateHandlers } from 'recompose'
 
 const Header = styled.div`
-  background: #564238;
+  background: rgba(109,75,65,0.5);
   padding: 5px 0;
   position: relative;
   display: flex;
@@ -13,7 +13,7 @@ const Header = styled.div`
 `
 
 const ImgLogo = styled.img`
-  height: 52px;
+  height: 54px;
   cursor: default;
   user-select: none;
   user-drag: none;
