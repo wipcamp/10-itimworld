@@ -383,8 +383,8 @@ const DataList = ({
 )
 
 const range = {
-  start: moment('1998 GMT+7'),
-  end: moment('2004 GMT+7')
+  start: moment('1998 GMT+7', 'YYYY'),
+  end: moment('2004 GMT+7', 'YYYY')
 }
 
 const DateInput = ({
