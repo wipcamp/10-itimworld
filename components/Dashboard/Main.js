@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import Dropzone from 'react-dropzone'
 import { actions as DashboardActions } from '../../store/reducers/dashboard'
 import Link from 'next/link'
+import moment from 'moment'
 
 import cookie from '../../utils/cookie'
 import api from '../../utils/api'
@@ -356,6 +357,17 @@ const MainUpload = props => {
   )
 }
 
+const getFilePath = (arr) => {
+  if (arr.length === 0) {
+    return ''
+  } else if (arr.length > 1) {
+    let data = arr.reduce((prev, cur) => moment(prev.created_at).isAfter(moment(cur.created_at)) ? prev : cur)
+    return data.path
+  } else {
+    return arr[0].path
+  }
+}
+
 export default compose(
   withState('answered', 'setAnswered', 0),
   connect(
@@ -371,6 +383,14 @@ export default compose(
       const { user_id: userId } = this.props.initialValues
       let {token} = cookie({req: false})
       const { data } = await api.get(`/registrants/${userId}`, {Authorization: `Bearer ${token}`})
+      
+      const { documents } = data[0]
+      let parent = getFilePath(documents.filter(file => file.type_id === 2))
+      let transcript = getFilePath(documents.filter(file => file.type_id === 3))
+      this.props.setFilePath({
+        transcript,
+        parent
+      })
       this.props.setAnswered(data[0].eval_answers.length)
     }
   })
