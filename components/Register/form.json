@@ -193,7 +193,7 @@
     },
     {
       "name": "edu_lv",
-      "label": "ลำดับชั้น",
+      "label": "ระดับชั้น",
       "component": "select",
       "outerClass": "col-8 col-sm-3 col-md-2 text-left form-group",
       "innerClass": "form-control d-inline-block",
