@@ -1,14 +1,15 @@
 import axios from 'axios'
-import {api} from '../env.json'
+let api
+try {
+  api = require('../env.json').api
+} catch (e) {
+  api = require('../env.example.json').api
+}
 
 const createInstance = (headers) => {
   return axios.create({
     baseURL: api,
-    headers: {
-      // 'x-access-token': ''
-      // 'Accept': 'application/json',
-      // 'Content-Type': 'application/json'
-    }
+    headers
   })
 }
 
