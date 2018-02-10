@@ -162,7 +162,7 @@
       "name": "religion_id",
       "label": "ศาสนา",
       "component": "select",
-      "outerClass": "col-12 col-sm-3 text-left form-group",
+      "outerClass": "col-12 col-3 text-left form-group",
       "innerClass": "form-control d-block",
       "placeholder": "",
       "values": [1,2,3,4,5,6],
