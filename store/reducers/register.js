@@ -4,11 +4,9 @@ import { convertToInt, convertToFloat, dataIsNotNull } from '../../utils/helper'
 
 // Actions
 const registerAction = actionCreator('register')
-const SET_FIELD = 'SET_FIELD'
+const SET_REGISTER_STEP = registerAction('SET_REGISTER_STEP')
 const SAVE_PROFILE_STEP_ONE = registerAction('SAVE_PROFILE_STEP_ONE', true)
 const SAVE_PROFILE_STEP_TWO = registerAction('SAVE_PROFILE_STEP_TWO', true)
-const CHANGE_FILE = registerAction('CHANGE_FILE')
-const UPLOAD_FILE = registerAction('CHANGE_FILE', true)
 const HIDE_DIALOG = registerAction('HIDE_DIALOG')
 const SHOW_DIALOG = registerAction('SHOW_DIALOG')
 
@@ -23,13 +21,6 @@ const initialState = {
 // Reducer
 export default (state = initialState, action) => {
   switch (action.type) {
-    case SET_FIELD: {
-      return {
-        ...state,
-        [action.field]: action.value
-      }
-    }
-
     case SHOW_DIALOG: {
       return {
         ...state,
@@ -76,35 +67,7 @@ export default (state = initialState, action) => {
       }
     }
 
-    case CHANGE_FILE: {
-      return {
-        ...state,
-        file: action.payload
-      }
-    }
-
-    case UPLOAD_FILE.PENDING: {
-      return {
-        ...state
-      }
-    }
-
-    case UPLOAD_FILE.FULFILLED: {
-      return {
-        ...state,
-        message: 'upload susccess',
-        data: action.payload
-      }
-    }
-
-    case UPLOAD_FILE.REJECTED: {
-      return {
-        ...state,
-        message: action.payload
-      }
-    }
-
-    case 'EIEI': {
+    case SET_REGISTER_STEP: {
       return {
         ...state,
         registerStep: action.payload
@@ -126,10 +89,9 @@ const getOnlyNum = (value) => value.replace(/[^\d]/g, '')
 
 // Action Creators
 export const actions = {
-  setField: (field, value) => ({
-    type: SET_FIELD,
-    field,
-    value
+  setRegisterStep: (step) => ({
+    type: SET_REGISTER_STEP,
+    payload: step
   }),
   saveRegisterStep1: (values) => {
     const field = [
@@ -174,7 +136,6 @@ export const actions = {
     data.telno_personal = getOnlyNum(data.telno_personal)
     data.telno_parent = getOnlyNum(data.telno_parent)
     data.citizen_id = getOnlyNum(data.citizen_id)
-    console.log(data)
     if (dataIsNotNull(data)) {
       return {
         type: SAVE_PROFILE_STEP_ONE.ACTION,
@@ -216,9 +177,5 @@ export const actions = {
   }),
   hideDialog: () => ({
     type: HIDE_DIALOG
-  }),
-  setRegisterStep: (payload) => ({
-    type: 'EIEI',
-    payload
   })
 }
