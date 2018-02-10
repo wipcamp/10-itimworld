@@ -11,28 +11,37 @@ const checkStep = (path) => Component => {
 
     async componentWillMount () {
       const { props } = this
+      const registerPath = '/register'
+      const dashboardPath = '/dashboard'
       let data =
       await api.get(`/registrants/${props.initialValues.user_id}`)
-          .then(res => res.data[0])
+          .then(res => res.data)
           .catch(err => alert(err))
       let show = false
-      if (path === '/register') {
-        if (!data) {
-        } else if (!data.first_name) {
+      if (!data.length) { // user not register
+        if (path === registerPath) {
           props.setRegisterStep(1)
-          show = true
-        } else if (!data.profile_registrant.skill_computer) {
-          props.setRegisterStep(2)
-          show = true
-        } else {
-          Router.push('/dashboard')
+        } else if (path === dashboardPath) {
+          Router.push(registerPath)
         }
-        this.setState({showComponent: show})
-      } else if (path === '/dashboard') {
-        if (!data.first_name || !data.profile_registrant.skill_computer) {
-          Router.push('/register')
-        } else {
-          show = true
+        show = true
+      } else {
+        data = data[0]
+        if (path === registerPath) {
+          if (!data) {
+          } else if (!data.profile_registrant.skill_computer) {
+            props.setRegisterStep(2)
+            show = true
+          } else {
+            Router.push()
+          }
+          this.setState({showComponent: show})
+        } else if (path === dashboardPath) {
+          if (!data.first_name || !data.profile_registrant.skill_computer) {
+            Router.push(registerPath)
+          } else {
+            show = true
+          }
         }
       }
       this.setState({ showComponent: show })
