@@ -14,9 +14,9 @@ const Loading = styled.div`
   left: 0;
   z-index: 99;
   background-color: rgba(255, 255, 255, 0.9);
-  transition: .4s;
+  transition: all 1.5s ease-in-out;
   opacity: ${props => props.loading ? 1 : 0};
-  display: ${props => props.loading ? 'flex' : 'none'};
+  visibility: ${props => props.loading ? 'visible' : 'hidden'};
   flex-direction: column;
   
   & i {

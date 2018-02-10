@@ -29,9 +29,8 @@ const Loading = styled.div`
   left: 0;
   z-index: 99;
   background-color: rgba(255, 255, 255, 0.9);
-  transition: .4s;
-  opacity: ${props => props.loading ? 1 : 0};
-  display: ${props => props.loading ? 'flex' : 'none'};
+  transition: all 1.5s ease-in-out;
+  display: flex;
   flex-direction: column;
   
   i {
@@ -39,6 +38,9 @@ const Loading = styled.div`
     font-size: 10em;  
     animation: ${Spinner} 2s linear infinite;
   }
+
+  opacity: ${props => props.loading ? 1 : 0};
+  visibility: ${props => props.loading ? 'visible' : 'hidden'};
 `
 
 const Layout = styled.div`
@@ -54,7 +56,7 @@ const Logo = styled.img`
 
 const IndexCompose = ({setToken, loading, setLoad}) => {
   return <Container className='container-fluid'>
-    <Loading loading={loading} className='justify-content-center align-items-center'>
+    <Loading loading={loading} className={`justify-content-center align-items-center`}>
       <div className='text-center'>
         <i className='fa fa-refresh' />
         <h1 className='animated pulse infinite mt-3'>กรุณาคอยสักประเดี๋ยว..</h1>
