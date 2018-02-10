@@ -15,6 +15,7 @@ const checkStep = (path) => Component => {
       const { props } = this
       const registerPath = '/register'
       const dashboardPath = '/dashboard'
+      const questionPath = '/question'
       let {token} = cookie({req: false})
       let data =
       await api.get(`/registrants/${props.initialValues.user_id}`, {Authorization: `Bearer ${token}`})
@@ -25,7 +26,7 @@ const checkStep = (path) => Component => {
         if (path === registerPath) {
           props.setRegisterStep(1)
           show = true
-        } else if (path === dashboardPath) {
+        } else if (path === dashboardPath || path === questionPath) {
           Router.push(registerPath)
         }
       } else {
@@ -39,7 +40,7 @@ const checkStep = (path) => Component => {
             Router.push(dashboardPath)
           }
           this.setState({showComponent: show})
-        } else if (path === dashboardPath) {
+        } else if (path === dashboardPath || path === questionPath) {
           if (!data.first_name || !data.profile_registrant.skill_computer) {
             Router.push(registerPath)
           } else {
