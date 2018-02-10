@@ -101,6 +101,9 @@ const saveAnswer = async (questionid,data,props) => {
         console.log(res)
         props.postedAnswer({error:false,message:'บันทึกคำตอบเสร็จสมบูรณ์'})
       })
+      .then(
+        setTimeout(()=>Router.push('/question'),3000)
+      )
       .catch(err => {
         console.log(err)
         props.postedAnswer({error:true,message:'บันทึกคำตอบล้มเหลว!'})
@@ -118,6 +121,9 @@ const saveAnswer = async (questionid,data,props) => {
         console.log(res)
         props.postedAnswer({error:false,message:'บันทึกคำตอบเสร็จสมบูรณ์'})
       })
+      .then(()=>
+        setTimeout(()=>Router.push('/question'),3000)
+      )
       .catch(err => {
         console.log(err)
         props.postedAnswer({error:true,message:'บันทึกคำตอบล้มเหลว!'})
