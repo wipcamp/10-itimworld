@@ -437,7 +437,7 @@ const FieldInput = (props) => {
         return <Field {...props} component={Input} normalize={normalizeCitizenId} />
       } else if (props.name === 'edu_gpax') {
         return <Field {...props} component={Input} normalize={normalizeGpax} />
-      } else if (['first_name', 'last_name', 'nickname'].includes(props.name)) {
+      } else if (['first_name', 'last_name', 'nickname', 'addr_dist'].includes(props.name)) {
         return <Field {...props} component={Input} normalize={normalizeThai} />
       } else if (props.name.includes('_en')) {
         return <Field {...props} component={Input} normalize={normalizeEng} />
