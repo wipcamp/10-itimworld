@@ -9,6 +9,7 @@ const SET_FIELD_FILE = dashboardAction('SET_FIELD')
 const HIDE_DIALOG = dashboardAction('HIDE_DIALOG')
 const UPLOAD_TRANSCRIPT = dashboardAction('UPLOAD_TRANSCRIPT', true)
 const UPLOAD_PARENTAL_AUTHORIZATION = dashboardAction('UPLOAD_PARENTAL_AUTHORIZATION', true)
+const SET_FILE_PATH = dashboardAction('SET_FILE_PATH')
 
 const initialState = {
   files: {
@@ -151,6 +152,23 @@ export default (state = initialState, action) => {
       }
     }
 
+    case SET_FILE_PATH: {
+      return {
+        ...state,
+        files: {
+          ...state.files,
+          parental_authorization: {
+            ...state.files.parental_authorization,
+            filePath: action.parent
+          },
+          transcription_record: {
+            ...state.files.transcription_record,
+            filePath: action.transcript
+          }
+        }
+      }
+    }
+
     default:
       return state
   }
@@ -207,5 +225,10 @@ export const actions = {
     return {
       type: HIDE_DIALOG
     }
-  }
+  },
+  setFilePath: ({parent, transcript}) => ({
+    type: SET_FILE_PATH,
+    parent,
+    transcript
+  })
 }
