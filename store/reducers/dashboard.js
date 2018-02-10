@@ -1,6 +1,7 @@
 /* global FormData */
 import actionCreator from '../../utils/actionCreator'
 import api from '../../utils/api'
+import cookie from '../../utils/cookie'
 
 // Actions
 const dashboardAction = actionCreator('dropdown')
@@ -173,8 +174,11 @@ export const actions = {
       formData.append('file', files[0])
       formData.append('fileType', field)
       formData.append('userId', userId)
+
+      let {token} = cookie({req: false})
       const headers = {
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`
       }
 
       return {
