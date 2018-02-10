@@ -48,8 +48,8 @@ const Layout = styled.div`
 `
 
 const Logo = styled.img`
-  min-width: 300px;
-  max-width: 500px;
+  width: 100%;
+  max-width: 630px;
   margin-bottom: 5em;
   margin-top: -8em;
 `

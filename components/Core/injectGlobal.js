@@ -40,15 +40,17 @@ export default () => injectGlobal`
     } 
   }
   .metro {
-    font-size: 1.5em;
+    font-size: 1.2em;
     cursor: pointer;
     background-color: #24409b;
     border-color: #24409b;
+    width:257px;
     max-width: 320px;
     padding: 0.5em 1.6em;
     @media (min-width: 1024px) {
+      width: 300px;
       max-width: 500px;
-      padding: 0.6em 3em;
+      /* padding: 0.6em 3em; */
     }
   }
   .metro:hover {
