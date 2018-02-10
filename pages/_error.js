@@ -1,8 +1,8 @@
 import React from 'react'
-import Landing from '../components/Index/Landing'
+import ErrorComponent from '../components/Core/Error'
 
 const Error = ({ statusCode }) => (
-  <Landing />
+  <ErrorComponent />
 )
 
 Error.getInitialProps = ({ res, jsonPageRes }) => {

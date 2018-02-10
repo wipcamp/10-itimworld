@@ -6,7 +6,7 @@ import Editor from './Editor'
 import api from '../../utils/api'
 import styled from 'styled-components'
 import Router from 'next/router'
-import Header from './../upload/header'
+import Header from './../Core/Header/Main'
 
 const USER_ID = 10001
 
