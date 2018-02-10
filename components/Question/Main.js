@@ -9,6 +9,7 @@ import getToken from '../../utils/getToken'
 import {Link} from '../../routes'
 import styled from 'styled-components'
 import Header from '../Core/Header/Main'
+import checkRegisterStep from '../../utils/checkRegisterStep'
 
 const Container = styled.div`
   background: #29241B url('/static/img/bg.png') center top;
@@ -105,6 +106,7 @@ export default compose(
     { ...questionActions }
   ),
   getToken(),
+  checkRegisterStep('/question'),
   lifecycle({
     componentWillMount() {
       getQuestions(this.props)
