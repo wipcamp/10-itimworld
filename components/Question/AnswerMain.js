@@ -11,7 +11,7 @@ import Header from './../Core/Header/Main'
 const USER_ID = 10001
 
 const Container = styled.div`
-  background: url('/static/img/bg-d2.png') center top;
+  background: #29241B url('/static/img/bg.png') center top;
   height: auto;
   min-height:100vh;
   background-size: cover;
@@ -20,7 +20,10 @@ const Container = styled.div`
 `
 
 const SubmitButton = styled.button`
-  background-color: #336699;
+  height: 45px;
+  width: 100px;
+  font-size: 24px;
+  background-color: #B5A06B;
   color: #fff;
   font-weight: bold;
   &:hover {
@@ -29,9 +32,12 @@ const SubmitButton = styled.button`
 `
 
 const BackButton = styled.button`
+  height: 45px;
+  width: 100px;
+  font-size: 24px;
   background-color: rgba(0,0,0,0);
-  border: 1px solid #336699;
-  color: #336699;
+  border: 1px solid #695C3D;
+  color: #695C3D;
   font-weight: bold;
 
   &:hover {
@@ -44,6 +50,7 @@ const SubmitSection = styled.div`
 `
 
 const QuestionSection = styled.div`
+  color: #FFF;
   padding-top: 25px;
   padding-bottom: 25px;
 `

@@ -15,18 +15,11 @@ import checkRegisterStep from '../../utils/checkRegisterStep'
 import getToken from '../../utils/getToken'
 
 const BackgroundContainer = styled.div`
-  background: #B8D0EC;
+  background: #29241B url('/static/img/bg.png') center top;
   min-height: 100vh;
   height: auto;
-  background-image: url('/static/img/bg2-01.png');
   background-size: cover;
   background-attachment: fixed;
-
-
-  @media screen and (min-width: 576px) {
-    background-image: url('/static/img/bg-d2.png');
-    background-position-x: 50%;
-  }
 `
 
 const loadingIcon = keyframes`
@@ -53,6 +46,38 @@ const CardUpload = styled.div`
   color: #B8D0EC;
   user-select: none;
   position: relative;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center top;
+  
+  ${props => !props.filePath?`
+    background-image: url(${props.img});
+    `:`
+    background-image: url(${props.img.substring(0,`${props.img.length}`-4)}yes.png);
+    ;
+    `}
+  height: 290px;
+  width: 248px;
+  transition: all .5s;
+  margin: 0 auto;
+  border-radius: 10px;
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    height: 232px;
+    width: 200px;
+  }
+
+  @media (max-width: 575.98px) {
+    ${props=>props.link?'':'margin-top: 20px;'}
+    height: 236px;
+    width: 201px;
+  }
+
+  &:hover {
+    cursor:pointer;
+    transform: scale(1.010);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  }
 
   & input[type=file] {
     position: absolute;
@@ -115,21 +140,16 @@ const CardUpload = styled.div`
   }
 
   & .dropzone {
-    margin: 20px auto;
+    margin: 0px auto;
     display: flex;
     justify-content: center;
-    width: 290px;
-    height: 230px;
+    height: 100%;
     cursor: pointer;
 
     background-size: cover;
-    background-image: url(${props => props.img});
+    ${`/*background-image: url(${props => props.img});*/`}
     border-radius: 15px;
     transition: all .5s;
-
-    ${props => !props.filePath && `
-      filter: grayscale(100%) !important;
-    `}
 
     & label {
       cursor: pointer;
@@ -138,30 +158,13 @@ const CardUpload = styled.div`
       justify-content: center;
       align-items: center;
       height: 100%;
-    }
-
-    &:hover {
-      transform: scale(1.005);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
-      
-    }
-
-    @media only screen and (min-width: 768px) and (max-width: 991px) {
-      width: 210px;
-      height: 168px;
-    }
-
-    @media(min-width: 992px) {
-      margin: 10px ${props => props.margin};
-    }
+    }    
   }
 
   & > label {
     margin: 20px auto;
     display: flex;
     justify-content: center;
-    width: 290px;
-    height: 230px;
     cursor: pointer;
 
     ${props => props.countAnswered === 0 && `
@@ -170,8 +173,6 @@ const CardUpload = styled.div`
     
 
     align-items: center;
-    background-size: cover;
-    background-image: url(${props => props.img});
     border-radius: 15px;
     transition: all .5s;
 
@@ -186,11 +187,6 @@ const CardUpload = styled.div`
       color: #E57373;
     `}
 
-    &:hover {
-      transform: scale(1.005);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
-      
-    }
     @media only screen and (min-width: 768px) and (max-width: 991px) {
       width: 210px;
       height: 168px;
@@ -230,7 +226,7 @@ const DropActiveIcon = styled.div`
 `
 
 const CustomRow = styled.div`
-  min-height: 80vh;
+  margin-top: 50px;
   display: flex;
   align-items: center;
   padding-bottom: 40px;
@@ -258,9 +254,10 @@ const Card = props => {
               countAnswered={answered}
               {...props}
             >
-              <label
-                dangerouslySetInnerHTML={{ __html: `${content} ${showNumOfAsnwered(answered)}` }}
-              />
+              {/* <label
+                dangerouslySetInnerHTML={{ __html: `${content} ${showNumOfAsnwered(3)}` }}
+              /> */}
+              
             </CardUpload>
           </Link>
         ) : (
@@ -279,7 +276,7 @@ const Card = props => {
               <label
                 title={files[name].saving ? '' : props.title}
                 htmlFor={`${name}-file-input`}
-                dangerouslySetInnerHTML={{ __html: content }}
+                // dangerouslySetInnerHTML={{ __html: content }}
               />
               <AbsoluteContainer>
                 {
@@ -303,8 +300,40 @@ const Card = props => {
           </CardUpload>
         )
       }
+      {name=='parental_authorization'?<Download show/>:<Download/>}
     </div>
   )
+}
+
+const DownloadLink = styled.a`
+  color: #FFF;
+  text-decoration: underline;
+  font-size: 16px;
+  padding-top: 4px;
+  height: 24px;
+  display: block;
+  text-align: center;
+  width: auto;
+
+  &:link {
+    color: #FFF;
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+`
+
+const Download = props => {
+  return(
+    props.show?
+    <DownloadLink href='/static/file/parent_authorization.pdf'>
+      ดาวน์โหลดเอกสาร
+    </DownloadLink>
+    :
+    <DownloadLink/>
+  )
+  
 }
 
 const cardData = [
@@ -312,7 +341,7 @@ const cardData = [
     name: '1',
     outerClass: 'col-12 col-md-4 pr-md-0',
     margin: '0 0 auto',
-    img: '/static/img/upload-card-1.png',
+    img: '/static/img/card3.png',
     content: 'ตอบคำถาม <br/>',
     link: true,
     title: 'ไปหน้าตอบคำถาม'
@@ -321,7 +350,7 @@ const cardData = [
     name: 'transcription_record',
     outerClass: 'col-12 col-md-4 px-md-0',
     margin: 'auto 0',
-    img: '/static/img/upload-card-2.png',
+    img: '/static/img/card1.png',
     content: 'อัพโหลดใบ ปพ.1',
     isError: true,
     title: 'คลิก เพื่ออัพโหลดเอกสาร'
@@ -330,7 +359,7 @@ const cardData = [
     name: 'parental_authorization',
     outerClass: 'col-12 col-md-4 pl-md-0',
     margin: 'auto 0 0',
-    img: '/static/img/upload-card-1.png',
+    img: '/static/img/card2.png',
     content: 'อัพโหลดใบเอกสาร<br />ขออนุญาตผู้ปกครอง',
     isUpload: true,
     title: 'คลิก เพื่ออัพโหลดเอกสาร'
@@ -351,7 +380,6 @@ const MainUpload = props => {
                   key={index}
                   {...props}
                   {...data}
-
                 />
               ))
             }
