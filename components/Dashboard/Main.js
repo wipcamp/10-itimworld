@@ -226,7 +226,7 @@ const DropActiveIcon = styled.div`
 `
 
 const CustomRow = styled.div`
-  min-height: 70vh;
+  min-height: 80vh;
   display: flex;
   align-items: center;
   padding-bottom: 40px;
