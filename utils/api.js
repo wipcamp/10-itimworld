@@ -1,13 +1,9 @@
 import axios from 'axios'
 
-const createInstance = () => {
+const createInstance = (headers) => {
   return axios.create({
     baseURL: process.env.API,
-    headers: {
-      // 'x-access-token': ''
-      // 'Accept': 'application/json',
-      // 'Content-Type': 'application/json'
-    }
+    headers
   })
 }
 
@@ -16,25 +12,24 @@ const handleResponse = res => res.data ? Promise.resolve(res) : Promise.reject(r
 const catchError = err => Promise.reject(err.message)
 
 export default {
-  get: path => (
-    createInstance()
+  get: (path, headers = {}) => (
+    createInstance(headers)
       .get(path)
       .then(handleResponse)
       .catch(catchError)
   ),
   post: (path, body = {}, headers = {}) => (
-    createInstance()
+    createInstance(headers)
       .request({
         url: path,
         method: 'POST',
-        headers,
         data: body
       })
       .then(handleResponse)
       .catch(catchError)
   ),
-  put: (path, body = {}) => (
-    createInstance()
+  put: (path, body = {}, headers = {}) => (
+    createInstance(headers)
       .request({
         url: path,
         method: 'PUT',
