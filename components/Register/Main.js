@@ -21,11 +21,11 @@ const BackgroundContainer = styled.div`
   background-size: cover;
   background-attachment: fixed;
 
-  background-image: url('/static/img/bg1-01.png');
+  background-image: url('/static/img/background.png');
 
 
   @media screen and (min-width: 768px) {
-    background-image: url('/static/img/bg-regis.png');
+    background-image: url('/static/img/background.png');
     background-size: cover;
     background-position: 50% 100%;
   }
