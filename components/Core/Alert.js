@@ -8,9 +8,43 @@ z-index: 100;
 width: 100%;
 transition: transform 0.7s linear;
 
+  .alert {
+    border: 0;
+    color: #fff;
+    
+    .close {
+      font-weight: 400;
+      font-size: 200%;
+      opacity: 0.7;
+    }
+
+    span {
+      background-color: rgba(10, 10, 10, 0.3);
+      max-height: 20px;
+      max-width: 20px;
+      min-width: 20px;
+      min-height: 20px;
+      display: flex;
+      text-shadow: none;
+      border-radius: 50%;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      text-shadow: none;
+    }
+  }
+
+  .alert-danger {
+    background-color: #ff3860;
+  }
+
+  .alert-success {
+    background-color: #23d160;
+  }
 & button {
   outline: none;
   cursor: pointer;
+  
 }
 
 ${props => props.show ? `
