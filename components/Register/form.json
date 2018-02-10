@@ -46,7 +46,7 @@
       "label": "ชื่อเล่น",
       "component": "input",
       "type": "text",
-      "outerClass": "col-6 col-sm-4 text-left form-group",
+      "outerClass": "col-12 col-sm-4 text-left form-group",
       "innerClass": "form-control",
       "placeholder": ""
     },
@@ -54,7 +54,7 @@
       "component": "date",
       "name": "birth_at",
       "label": "วัน/เดือน/ปี เกิด",
-      "outerClass": "col-6 col-md-6 offset-sm-2 text-left form-group",
+      "outerClass": "col-12 col-md-6 offset-sm-2 text-left form-group",
       "placeholder": ""
     },
     {
