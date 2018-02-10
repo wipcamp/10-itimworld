@@ -49,6 +49,7 @@ export default class MyDocument extends Document {
           <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
           <link rel="stylesheet" href="/static/css/quill.snow.custom.css" />
           <link rel="stylesheet" href="/static/css/react-date.css"/>
+          <link rel="stylesheet" href="/static/web-fonts-with-css/css/fontawesome-all.min.css"/>
           
           <link rel="shortcut icon" href="/static/img/favicon/favicon.ico" type="image/x-icon"/>
           <link rel="apple-touch-icon" sizes="60x60" href="/static/img/apple-touch-icon.png"/>
@@ -66,7 +67,6 @@ export default class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
-          <script defer src='/static/js/fontawesome-all.min.js' />
         </body>
         <noscript dangerouslySetInnerHTML={{__html: googleTagManagerNoScript}} />
 
