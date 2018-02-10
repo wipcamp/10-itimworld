@@ -15,7 +15,8 @@ const initialState = {
   questions: [],
   answers: {
     questionid: '',
-    data: ''
+    data: '',
+    length: 0
   },
   currentQuestion:'',
   currentAnswerId:'',
@@ -40,7 +41,8 @@ export default (state = initialState, action) => {
         ...state,
         answers: {
           questionid: action.qid,
-          data: action.answer
+          data: action.answer,
+          length: action.length
         }
       }
     }
@@ -97,10 +99,11 @@ export const actions = {
     type: SET_QUESTION,
     questions,
   }),
-  setAnswer: (qid, answer) => ({
+  setAnswer: (qid, answer, length) => ({
     type: SET_ANSWER,
     qid,
-    answer
+    answer,
+    length
   }),
   setCurrentQuestion: (questionData) => ({
     type: SET_CURRENT_QUESTION,
