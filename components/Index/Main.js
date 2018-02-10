@@ -31,7 +31,7 @@ const IndexCompose = ({setToken}) => {
   return <Container className='container-fluid'>
     <div className='row'>
       <Layout className='col-12 d-flex flex-column justify-content-center align-items-center'>
-        <Logo src='/static/img/wipcamp-logo.svg' alt='wipcamp-logo' />
+        <Logo src='/static/img/logofinals.png' alt='wipcamp-logo' />
         <FacebookLogin
           appId={appId}
           autoLoad
