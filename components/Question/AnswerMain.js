@@ -97,8 +97,14 @@ const saveAnswer = async (questionid,data,props) => {
     },{
       Authorization : `Bearer ${token}`
     })
-      .then(props.postedAnswer({error:false,message:'บันทึกคำตอบเสร็จสมบูรณ์'}))
-      .catch(props.postedAnswer({error:true,message:'บันทึกคำตอบล้มเหลว!'}))
+      .then(res => {
+        console.log(res)
+        props.postedAnswer({error:false,message:'บันทึกคำตอบเสร็จสมบูรณ์'})
+      })
+      .catch(err => {
+        console.log(err)
+        props.postedAnswer({error:true,message:'บันทึกคำตอบล้มเหลว!'})
+      })
   }else {
     console.log('updating')
     api.put(`/answers`,{
