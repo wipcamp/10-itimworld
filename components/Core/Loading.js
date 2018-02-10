@@ -22,7 +22,7 @@ const Loading = styled.div`
   
   & i {
     color: #222;
-    font-size: 10em;  
+    font-size: 9em;  
     animation: ${Spinner} 2s linear infinite;
   }
 `
@@ -31,7 +31,7 @@ export default () => (
   <Loading loading className='justify-content-center align-items-center'>
     <div className='text-center'>
       <i className='fas fa-sync-alt' />
-      <h1 className='animated pulse infinite mt-3'>กรุณาคอยสักประเดี๋ยว..</h1>
+      <h2 className='animated pulse infinite mt-3'>กรุณาคอยสักประเดี๋ยว..</h2>
       <h4 className='animated pulse infinite'>รู้หมือไร่? หน้าเว็บเลือกทีมได้นะ!</h4>
     </div>
   </Loading>
