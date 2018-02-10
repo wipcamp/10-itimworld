@@ -15,7 +15,6 @@ const checkStep = (path) => Component => {
       await api.get(`/registrants/${props.initialValues.user_id}`)
           .then(res => res.data[0])
           .catch(err => alert(err))
-      console.log(data)
       let show = false
       if (path === '/register') {
         if (!data) {

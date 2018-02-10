@@ -4,7 +4,6 @@ import FormContainer from './FormContainer'
 import { fields } from './form.json'
 
 const StepOne = (props) => {
-  console.log(props)
   return (
     <FormContainer
       {...props}
