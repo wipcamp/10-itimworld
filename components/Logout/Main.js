@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import Router from 'next/router'
 
 const Container = styled.div`
   min-height: 100vh;
@@ -11,22 +12,25 @@ const Background = styled.div`
   min-height: 100vh;
   min-width: 100vw;
   margin-top: -100vh;
-  background: url('/static/img/bg2-02.png');
+  background: url('/static/img/background.png');
   background-size: cover;
   background-position: center;
 `
 
-const Logout = () => (
-  <div className='container-fluid'>
-    <div className='row'>
-      <Container className='col-12 text-center d-flex flex-column justify-content-center align-items-center'>
-        <h1 className='animated pulse infinite'>จะไปแล้วหรอ..</h1>
-        <h1 className='animated pulse infinite'>อยู่ด้วยกันก่อนได้ไหม?</h1>
-        <h6 className='mt-5'>ออกจากระบบสำเร็จ</h6>
-      </Container>
-      <Background />
+const Logout = () => {
+  setTimeout(()=>window.location.replace('https://wip.camp'),4000)
+  return (
+    <div className='container-fluid'>
+      <div className='row'>
+        <Container className='col-12 text-center d-flex flex-column justify-content-center align-items-center'>
+          <h1 className='animated pulse infinite'>จะไปแล้วหรอ..</h1>
+          <h1 className='animated pulse infinite'>อยู่ด้วยกันก่อนได้ไหม?</h1>
+          <h6 className='mt-5'>ออกจากระบบสำเร็จ</h6>
+        </Container>
+        <Background />
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 export default Logout
