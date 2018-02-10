@@ -1,14 +1,8 @@
 import axios from 'axios'
-let api
-try {
-  api = require('../env.json').api
-} catch (e) {
-  api = require('../env.example.json').api
-}
 
 const createInstance = (headers) => {
   return axios.create({
-    baseURL: api,
+    baseURL: process.env.API,
     headers
   })
 }
