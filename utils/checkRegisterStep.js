@@ -35,7 +35,7 @@ const checkStep = (path) => Component => {
             props.setRegisterStep(2)
             show = true
           } else {
-            Router.push()
+            Router.push(dashboardPath)
           }
           this.setState({showComponent: show})
         } else if (path === dashboardPath) {
