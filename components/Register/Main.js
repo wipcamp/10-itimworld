@@ -1,5 +1,5 @@
 import React from 'react'
-import { compose, lifecycle } from 'recompose'
+import { compose, lifecycle, withProps } from 'recompose'
 import { reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
