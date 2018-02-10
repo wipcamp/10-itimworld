@@ -18,6 +18,7 @@ const Loading = styled.div`
   opacity: ${props => props.loading ? 1 : 0};
   visibility: ${props => props.loading ? 'visible' : 'hidden'};
   flex-direction: column;
+  display: flex;
   
   & i {
     color: #222;
