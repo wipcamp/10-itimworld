@@ -13,6 +13,10 @@ import { validate } from '../Core/validationForm'
 import checkRegisterStep from '../../utils/checkRegisterStep'
 import getToken from '../../utils/getToken'
 
+const Image = styled.img`
+  max-width: 340px;
+`
+
 const BackgroundContainer = styled.div`
   background: #252525;
   min-height: 100vh;
@@ -41,7 +45,7 @@ export const MainRegister = props => {
           <Alert {...props} {...registerData} />
           <div className='row '>
             <div className='col-12 mt-4 col-md-6 mx-auto text-center justify-content-center'>
-              <img src='/static/img/logo.svg' className='img-fluid' alt='wipcamp-logo' />
+              <Image src='/static/img/logo.svg' className='img-fluid mb-3' alt='wipcamp-logo' />
             </div>
             <div className='col-12 col-sm-10 mx-auto text-center' >
               {
