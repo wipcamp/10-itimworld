@@ -4,7 +4,7 @@ import { compose } from 'recompose'
 
 import serverRender from '../../utils/serverRender'
 import withRedux from '../../store/wrapper'
-import Messenger from '../components/Core/Messenger'
+import Messenger from '../../components/Core/Messenger'
 
 const Answer = props => (
   <AnswerPage {...props} />
