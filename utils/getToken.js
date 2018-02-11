@@ -2,6 +2,7 @@ import React from 'react'
 import cookie from './cookie'
 import api from './api'
 import Loading from '../components/Core/Loading'
+import Router from 'next/router'
 
 export default () => Component => {
   return class extends React.Component {
@@ -13,7 +14,7 @@ export default () => Component => {
     async componentDidMount () {
       let { token } = cookie({req: false})
       if (token === 'null' || !token) {
-        this.props.url.push('/')
+        Router.push('/')
       }
       let { data } =
       await api.post(`/auth/me`, null, {Authorization: `Bearer ${token}`})
