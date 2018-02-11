@@ -2,7 +2,7 @@
   "fields": [
     {
       "name": "skill_computer",
-      "label": "น้อง ๆ เคยมีทักษะคอมพิวเตอร์มาก่อนหรือเปล่า",
+      "label": "น้อง ๆ มีทักษะคอมพิวเตอร์อะไรบ้าง",
       "component": "textarea",
       "outerClass": "col-12 text-left form-group",
       "innerClass": "form-control",
