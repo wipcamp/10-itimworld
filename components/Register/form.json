@@ -167,7 +167,7 @@
       "placeholder": "",
       "values": [1,2,3,4],
       "dropdown": [
-        "พุธ",
+        "พุทธ",
         "คริสต์",
         "อิสลาม",
         "อื่นๆ"
@@ -272,7 +272,7 @@
     },
     {
       "name": "congenital_drugs",
-      "label": "ยาประจำตัว",
+      "label": "ยาที่แพ้",
       "component": "input",
       "outerClass": "col-12 col-sm-5 col-md-4 text-left form-group",
       "innerClass": "form-control",
