@@ -1,5 +1,5 @@
 import React from 'react'
-import {compose, withState} from 'recompose'
+import {compose, withState, lifecycle} from 'recompose'
 import { connect } from 'react-redux'
 import { actions as tokenActions } from '../../store/reducers/token'
 import styled, { keyframes } from 'styled-components'
@@ -54,7 +54,7 @@ const Logo = styled.img`
   margin-top: -8em;
 `
 
-const IndexCompose = ({setToken, loading, setLoad}) => {
+const IndexCompose = ({url, setToken, loading, setLoad}) => {
   return <Container className='container-fluid'>
     <Loading loading={loading} className={`justify-content-center align-items-center`}>
       <div className='text-center'>
@@ -89,5 +89,13 @@ export default compose(
     }),
     { ...tokenActions }
   ),
-  withState('loading', 'setLoad', false)
+  withState('loading', 'setLoad', false),
+  lifecycle({
+    async componentDidMount () {
+      let {url, setLoad} = this.props
+      if (url && url.query.code && setLoad) {
+        await setLoad(true)
+      }
+    }
+  })
 )(IndexCompose)
