@@ -57,13 +57,13 @@ const QuestionSection = styled.div`
 `
 
 export const MainAnswer = props => {
-  const {setQuestion,question:{answers,currentQuestion,error,show,message}, hideDialog ,postedAnswer} = props
+  const {question: {answers, currentQuestion, error, show, message}, hideDialog} = props
   const questionid = props.url.query.id
   return (
     <Container>
-      <Header/>
+      <Header />
       <div className='container'>
-        <Alert showDialog={show} error={error} message={message} hideDialog={hideDialog}/>
+        <Alert showDialog={show} error={error} message={message} hideDialog={hideDialog} />
         <QuestionSection className='h3'>
           {`คำถามที่ ${questionid} : `}{currentQuestion.data}
         </QuestionSection>
@@ -71,10 +71,10 @@ export const MainAnswer = props => {
         <SubmitSection>
           <div className='row'>
             <div className='col-6'>
-              <BackButton className='btn btn-large float-left' onClick={()=>back()}>กลับ</BackButton>
+              <BackButton className='btn btn-large float-left' onClick={() => back()}>กลับ</BackButton>
             </div>
             <div className='col-6'>
-              <SubmitButton className='btn btn-large float-right' disabled={isAnswerEmpty(props)} onClick={()=>saveAnswer(questionid,answers.data,props)}>บันทึก</SubmitButton>
+              <SubmitButton className='btn btn-large float-right' disabled={isAnswerEmpty(props)} onClick={() => saveAnswer(questionid, answers.data, props)}>บันทึก</SubmitButton>
             </div>
           </div>
         </SubmitSection>
@@ -84,63 +84,54 @@ export const MainAnswer = props => {
 }
 
 const isAnswerEmpty = (props) => {
-  let {question:{answers}} = props
-  if(answers.length===undefined || answers.length<2) {
-    console.log('please input !',answers.length)
+  let {question: {answers}} = props
+  if (answers.length === undefined || answers.length < 2) {
     return true
   }
   return false
 }
 
-const saveAnswer = async (questionid,data,props) => {
-  let {question:{answers}} = props
-  if(answers.length===undefined || answers.length<2) {
-    console.log('please input !',answers.length)
+const saveAnswer = async (questionid, data, props) => {
+  let {question: {answers}} = props
+  if (answers.length === undefined || answers.length < 2) {
     return
   }
-  
+
   let { token } = await getCookie({req: false})
-  console.log('saving')
-  let {question:{currentAnswerId}} = props
-  if(!currentAnswerId.id) {
-    console.log('posting')
-    api.post(`/answers`,{
+  let {question: {currentAnswerId}} = props
+  if (!currentAnswerId.id) {
+    api.post(`/answers`, {
       question_id: questionid,
       user_id: props.initialValues.user_id,
-      data: data,
-    },{
-      Authorization : `Bearer ${token}`
+      data: data
+    }, {
+      Authorization: `Bearer ${token}`
     })
       .then(res => {
-        console.log(res)
-        props.postedAnswer({error:false,message:'บันทึกคำตอบเสร็จสมบูรณ์'})
+        props.postedAnswer({error: false, message: 'บันทึกคำตอบเสร็จสมบูรณ์'})
       })
       .then(
-        setTimeout(()=>Router.push('/question'),3000)
+        setTimeout(() => Router.push('/question'), 3000)
       )
-      .catch(err => {
-        console.log(err)
-        props.postedAnswer({error:true,message:'บันทึกคำตอบล้มเหลว!'})
+      .catch(() => {
+        props.postedAnswer({error: true, message: 'บันทึกคำตอบล้มเหลว!'})
       })
-  }else {
-    console.log('updating')
-    api.put(`/answers`,{
+  } else {
+    api.put(`/answers`, {
       question_id: questionid,
       user_id: props.initialValues.user_id,
-      data: data,
-    },{
-      Authorization : `Bearer ${token}`
+      data: data
+    }, {
+      Authorization: `Bearer ${token}`
     })
       .then(res => {
-        console.log(res)
-        props.postedAnswer({error:false,message:'บันทึกคำตอบเสร็จสมบูรณ์'})
+        props.postedAnswer({error: false, message: 'บันทึกคำตอบเสร็จสมบูรณ์'})
       })
-      .then(()=>
-        setTimeout(()=>Router.push('/question'),3000)
+      .then(() =>
+        setTimeout(() => Router.push('/question'), 3000)
       )
-      .catch(err => {
-        console.log(err)
-        props.postedAnswer({error:true,message:'บันทึกคำตอบล้มเหลว!'})
+      .catch(() => {
+        props.postedAnswer({error: true, message: 'บันทึกคำตอบล้มเหลว!'})
       })
   }
 }
@@ -151,46 +142,45 @@ const back = () => {
 
 const getQuestionData = async (props) => {
   let { token } = await getCookie({req: false})
-  console.log('getQuestionData')
-  let {url:{query:id},setCurrentQuestion} = props
-  api.get(`/questions/${id.id}`,{Authorization : `Bearer ${token}`})
-  .then((response)=> {
-    setCurrentQuestion(response.data[0])
-  })
+  let {url: {query: id}, setCurrentQuestion} = props
+  api.get(`/questions/${id.id}`, {Authorization: `Bearer ${token}`})
+    .then((response) => {
+      setCurrentQuestion(response.data[0])
+    })
 }
 
 const getAnswerData = async (props) => {
   let { token } = await getCookie({req: false})
-  let {url:{query:id},setCurrentAnswerId,setAnswer} = props
-  api.get(`/users/${props.initialValues.user_id}/answers/${id.id}`,{Authorization : `Bearer ${token}`})
-  .then((response) => {
-    if(response.data.data[0]!==undefined) {
-      setCurrentAnswerId(response.data.data[0].id)
-      setAnswer(response.data.data[0].questionid,response.data.data[0].data)
-    }
-  })
+  let {url: {query: id}, setCurrentAnswerId, setAnswer} = props
+  api.get(`/users/${props.initialValues.user_id}/answers/${id.id}`, {Authorization: `Bearer ${token}`})
+    .then((response) => {
+      if (response.data.data[0] !== undefined) {
+        setCurrentAnswerId(response.data.data[0].id)
+        setAnswer(response.data.data[0].questionid, response.data.data[0].data)
+      }
+    })
 }
 
 const clearAnswerData = (props) => {
-  let {url:{query:id},setCurrentAnswerId,setAnswer} = props
-  setAnswer(id.id,'')
+  let {url: {query: id}, setCurrentAnswerId, setAnswer} = props
+  setAnswer(id.id, '')
   setCurrentAnswerId('')
 }
 
 export default compose(
   connect(
     state => ({
-      question: state.question,
+      question: state.question
     }),
     { ...questionActions }
   ),
   getToken(),
   lifecycle({
-    componentWillMount() {
+    componentWillMount () {
       getQuestionData(this.props)
       getAnswerData(this.props)
     },
-    componentWillUnmount() {
+    componentWillUnmount () {
       clearAnswerData(this.props)
     }
   })
