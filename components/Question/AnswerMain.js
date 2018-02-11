@@ -141,6 +141,7 @@ const back = () => {
 }
 
 const getQuestionData = async (props) => {
+  console.log(props)
   let { token } = await getCookie({req: false})
   let {url: {query: id}, setCurrentQuestion} = props
   api.get(`/questions/${id.id}`, {Authorization: `Bearer ${token}`})

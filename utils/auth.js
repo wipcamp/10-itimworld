@@ -13,7 +13,10 @@ export const auth = async (res, setToken) => {
 export const logout = async () => {
   let { token } = await getCookie({req: false})
   await axios.post('/auth/logout', null, {Authorization: `Bearer ${token}`})
-  document.cookie = cookie.serialize('token', null)
+  let allCookie = cookie.parse(document.cookie)
+  for (const key of Object.keys(allCookie)) {
+    document.cookie = await cookie.serialize(key, allCookie[key], { maxAge: 0 })
+  }
   Router.pushRoute('/logout')
 }
 
