@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { compose, lifecycle } from 'recompose'
 import { actions as questionActions } from '../../store/reducers/question'
-import Editor from './Editor'
 import api from '../../utils/api'
 import getCookie from '../../utils/cookie'
 import getToken from '../../utils/getToken'
@@ -21,8 +20,8 @@ const Container = styled.div`
 `
 
 const Question = styled.div`
-  background: url('/static/img/${props => props.count===1?`frame.png`:`frame.png`}') left top;
-  ${props => props.answered ?'':'filter: grayscale(80%);'}
+  background: url('/static/img/frame.png') left top;
+  ${props => props.answered ? '' : 'filter: grayscale(80%);'}
   height: 108px;
   width: 289px;
   background-repeat: no-repeat;
@@ -41,37 +40,28 @@ const Question = styled.div`
   }
 `
 
-
 export const MainQuestion = props => {
-  const { question: { questions: allQuestion,answered}, setQuestion } = props
+  const { question: { questions: allQuestion, answered } } = props
   let questionNo = 0
-  let count = [1,2,2,1]
-  let i = -1
   let answeredQuestion = []
-  answered.map((data,index)=>{
+  answered.map((data, index) => {
     answeredQuestion[index] = data.question_id
   })
-  console.log(answeredQuestion)
   return (
     <Container>
-      <Header/>
+      <Header />
       <div className='container pt-5'>
         <div className='row'>
-
-        { allQuestion.map((question) => {
-          if(i==count.length-1){
-            i=-1
-          }
-          questionNo++
-          i++
-          return (
-            <div className='col-sm-6 pt-3' key={questionNo}>
-              <Link route={`/question/answer/${question.id}`} prefetch>
-                <Question count={count[i]}  answered={answeredQuestion.indexOf(question.id)>=0}>คำถามที่ {questionNo}</Question>
-              </Link>
-            </div>
-          )
-        })}
+          { allQuestion.map((question) => {
+            questionNo++
+            return (
+              <div className='col-sm-6 pt-3' key={questionNo}>
+                <Link route={`/question/answer/${question.id}`} prefetch>
+                  <Question answered={answeredQuestion.indexOf(question.id) >= 0}>คำถามที่ {questionNo}</Question>
+                </Link>
+              </div>
+            )
+          })}
         </div>
       </div>
     </Container>
@@ -79,23 +69,21 @@ export const MainQuestion = props => {
 }
 
 const getQuestions = async (props) => {
-  console.log('getQuestions')
   let { token } = await getCookie({req: false})
   let {setQuestion} = props
-  api.get('/questions', {Authorization : `Bearer ${token}`})
-  .then((response)=>{
-    setQuestion(response.data)
-  })
+  api.get('/questions', {Authorization: `Bearer ${token}`})
+    .then((response) => {
+      setQuestion(response.data)
+    })
 }
 
 const getAnsweredQuestions = async (props) => {
-  console.log('getAnsweredQuestions')
   let { token } = await getCookie({req: false})
   let {setAnsweredQuestion} = props
-  api.get(`/registrants/${props.initialValues.user_id}`, {Authorization : `Bearer ${token}`})
-  .then((response)=>{
-    setAnsweredQuestion(response.data[0].eval_answers)
-  })
+  api.get(`/registrants/${props.initialValues.user_id}`, {Authorization: `Bearer ${token}`})
+    .then((response) => {
+      setAnsweredQuestion(response.data[0].eval_answers)
+    })
 }
 
 export default compose(
@@ -108,7 +96,7 @@ export default compose(
   getToken(),
   checkRegisterStep('/question'),
   lifecycle({
-    componentWillMount() {
+    componentWillMount () {
       getQuestions(this.props)
       getAnsweredQuestions(this.props)
     }
