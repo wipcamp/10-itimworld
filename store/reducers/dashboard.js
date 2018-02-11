@@ -10,6 +10,7 @@ const HIDE_DIALOG = dashboardAction('HIDE_DIALOG')
 const UPLOAD_TRANSCRIPT = dashboardAction('UPLOAD_TRANSCRIPT', true)
 const UPLOAD_PARENTAL_AUTHORIZATION = dashboardAction('UPLOAD_PARENTAL_AUTHORIZATION', true)
 const SET_FILE_PATH = dashboardAction('SET_FILE_PATH')
+const SET_APPROVE_FILE = dashboardAction('SET_APPROVE_FILE')
 
 const initialState = {
   files: {
@@ -17,13 +18,15 @@ const initialState = {
       filePath: '',
       uploaded: true,
       saving: false,
-      dropzoneActive: false
+      dropzoneActive: false,
+      isApprove: -2
     },
     parental_authorization: {
       filePath: '',
       uploaded: false,
       saving: false,
-      dropzoneActive: false
+      dropzoneActive: false,
+      isApprove: -2
     }
   },
   error: false,
@@ -169,6 +172,23 @@ export default (state = initialState, action) => {
       }
     }
 
+    case SET_APPROVE_FILE: {
+      return {
+        ...state,
+        files: {
+          ...state.files,
+          parental_authorization: {
+            ...state.files.parental_authorization,
+            isApprove: action.parent
+          },
+          transcription_record: {
+            ...state.files.transcription_record,
+            isApprove: action.transcript
+          }
+        }
+      }
+    }
+
     default:
       return state
   }
@@ -228,6 +248,11 @@ export const actions = {
   },
   setFilePath: ({parent, transcript}) => ({
     type: SET_FILE_PATH,
+    parent,
+    transcript
+  }),
+  setApprove: ({parent, transcript}) => ({
+    type: SET_APPROVE_FILE,
     parent,
     transcript
   })
