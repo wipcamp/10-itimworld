@@ -18,6 +18,7 @@ export const logout = async () => {
     document.cookie = await cookie.serialize(key, allCookie[key], { maxAge: 0 })
   }
   Router.pushRoute('/logout')
+  setTimeout(() => window.location.replace('https://wip.camp'), 2500)
 }
 
 export const postData = async res => {
