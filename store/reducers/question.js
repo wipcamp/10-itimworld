@@ -5,7 +5,6 @@ const questionAction = actionCreator('answer')
 const SET_QUESTION = questionAction('SET_QUESTION')
 const SET_ANSWER = questionAction('SET_ANSWER')
 const SET_CURRENT_QUESTION = questionAction('SET_CURRENT_QUESTION')
-const SAVE_ANSWER = questionAction('SAVE_ANSWER')
 const SET_CURRENT_ANSWER_ID = questionAction('SET_CURRENT_ANSWER_ID')
 const HIDE_DIALOG = questionAction('HIDE_DIALOG')
 const POSTED_ANSWER = questionAction('POSTED_ANSWER')
@@ -18,8 +17,8 @@ const initialState = {
     data: '',
     length: 0
   },
-  currentQuestion:'',
-  currentAnswerId:'',
+  currentQuestion: '',
+  currentAnswerId: '',
   error: false,
   show: false,
   message: '',
@@ -32,7 +31,7 @@ export default (state = initialState, action) => {
     case SET_QUESTION: {
       return {
         ...state,
-        questions:action.questions
+        questions: action.questions
       }
     }
 
@@ -69,7 +68,7 @@ export default (state = initialState, action) => {
         show: false
       }
     }
-    
+
     case POSTED_ANSWER: {
       return {
         ...state,
@@ -89,15 +88,13 @@ export default (state = initialState, action) => {
     default:
       return state
   }
-
-  
 }
 
 // Action Creators
 export const actions = {
   setQuestion: (questions) => ({
     type: SET_QUESTION,
-    questions,
+    questions
   }),
   setAnswer: (qid, answer, length) => ({
     type: SET_ANSWER,
@@ -118,11 +115,10 @@ export const actions = {
     data
   }),
   hideDialog: () => ({
-    type: HIDE_DIALOG,
+    type: HIDE_DIALOG
   }),
   setAnsweredQuestion: (answered) => ({
     type: SET_ANSWERED_QUESTION,
     answered
-
   })
 }
