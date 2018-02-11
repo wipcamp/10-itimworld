@@ -64,17 +64,7 @@ const CardUpload = styled.div`
       `
 }
 
-  ${props => props.approve === 1 && `
-    box-shadow: 0px 0px 100px green;
-  `}
-
-  ${props => props.approve === 0 && `
-    box-shadow: 0px 0px 100px red;
-  `}
-
-  ${props => props.approve === null && `
-    box-shadow: 0px 0px 100px yellow;
-  `}
+  
   
   height: 290px;
   width: 248px;
@@ -331,7 +321,7 @@ const DownloadLink = styled.a`
 const Download = props => {
   return (
     props.show
-      ? <DownloadLink href='/static/file/parent_authorization.pdf'>
+      ? <DownloadLink href='/static/files/parent_authorization.pdf' target='_blank'>
       ดาวน์โหลดเอกสาร
       </DownloadLink> : <DownloadLink />
   )
@@ -374,13 +364,12 @@ const ProgressBar = styled.div`
 
 const MainUpload = props => {
   const { answered, dashboard: { files: { parental_authorization: parent, transcription_record: transcript } } } = props
-  console.log(props)
   return (
     <div>
       <BackgroundContainer>
         <Header />
         <div className='container'>
-          <div className='row justify-content-center mt-3'>
+          {/* <div className='row justify-content-center mt-3'>
             <div className='col-8'>
               <div className='card'>
                 <div className='card-body'>
@@ -398,7 +387,7 @@ const MainUpload = props => {
 
             </div>
 
-          </div>
+          </div> */}
           <Alert {...props} {...props.dashboard} />
           <CustomRow className='row text-center'>
             {
@@ -429,7 +418,6 @@ const getFilePath = (arr) => {
 }
 
 const getApprove = (arr) => {
-
   if (arr.length === 0) {
     return -1
   } else if (arr.find(data => data.is_approve === 1)) {
@@ -459,7 +447,7 @@ export default compose(
       const { documents } = data[0]
       let parent = getFilePath(documents.filter(file => file.type_id === 2))
       let transcript = getFilePath(documents.filter(file => file.type_id === 3))
-      console.log(this.props)
+
       this.props.setFilePath({
         transcript,
         parent
