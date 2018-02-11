@@ -7,7 +7,7 @@
     },
     {
       "name": "first_name",
-      "label": "ชื่อจริง (ภาษาไทย)",
+      "label": "ชื่อ (ภาษาไทย)",
       "component": "input",
       "type": "text",
       "outerClass": "col-12 col-sm-6 text-left form-group",
@@ -16,7 +16,7 @@
     },
     {
       "name": "last_name",
-      "label": "นามสกุลจริง (ภาษาไทย)",
+      "label": "นามสกุล (ภาษาไทย)",
       "component": "input",
       "type": "text",
       "outerClass": "col-12 col-sm-6 text-left form-group",
@@ -25,7 +25,7 @@
     },
     {
       "name": "first_name_en",
-      "label": "ชื่อจริง (ภาษาอังกฤษ)",
+      "label": "ชื่อ (ภาษาอังกฤษ)",
       "component": "input",
       "type": "text",
       "outerClass": "col-12 col-sm-6 text-left form-group",
@@ -34,7 +34,7 @@
     },
     {
       "name": "last_name_en",
-      "label": "นามสกุลจริง (ภาษาอังกฤษ)",
+      "label": "นามสกุล (ภาษาอังกฤษ)",
       "component": "input",
       "type": "text",
       "outerClass": "col-12 col-sm-6 text-left form-group",
@@ -48,14 +48,14 @@
       "type": "text",
       "outerClass": "col-12 col-sm-4 text-left form-group",
       "innerClass": "form-control",
-      "placeholder": ""
+      "placeholder": "ตัวอย่าง วิปโป้"
     },
     {
       "component": "date",
       "name": "birth_at",
       "label": "วัน/เดือน/ปี เกิด",
-      "outerClass": "col-12 col-md-6 offset-sm-2 text-left form-group",
-      "placeholder": ""
+      "outerClass": "col-12 col-sm-8 col-md-6 offset-md-2 text-left form-group",
+      "placeholder": "วว/ดด/ปปปป"
     },
     {
       "name": "citizen_id",
@@ -93,7 +93,7 @@
       "outerClass": "col-12 col-sm-4 col-md-4 text-left form-group",
       "innerClass": "form-control",
       "type": "tel",
-      "placeholder": ""
+      "placeholder": "ตัวอย่าง (081-234-5678)"
     },
     {
       "name": "addr_prov",
@@ -162,7 +162,7 @@
       "name": "religion_id",
       "label": "ศาสนา",
       "component": "select",
-      "outerClass": "col-12 col-3 text-left form-group",
+      "outerClass": "col-12 col-md-3 text-left form-group",
       "innerClass": "form-control d-block",
       "placeholder": "",
       "values": [1,2,3,4],
@@ -184,7 +184,7 @@
       "outerClass": "col-12 col-sm-6 col-md-4 text-left form-group",
       "innerClass": "form-control d-inline-block ml-1",
       "list": "school",
-      "placeholder": "",
+      "placeholder": "ตัวอย่าง โรงเรียนวิปแคมป์",
       "dropdown": [
         "โรงเรียนของเราน่าอยู่"
       ]
@@ -243,7 +243,7 @@
       "outerClass": "col-12 col-sm-6 text-left form-group",
       "innerClass": "form-control",
       "type": "tel",
-      "placeholder": ""
+      "placeholder": "ตัวอย่าง (081-234-5678)"
     },
     {
       "name": "parent_relation",
@@ -252,7 +252,7 @@
       "outerClass": "col-12 col-sm-6 text-left form-group",
       "innerClass": "form-control",
       "type": "text",
-      "placeholder": ""
+      "placeholder": "ตัวอย่าง มารดา"
     },
     {
       "name": "allergic_foods",
@@ -260,7 +260,7 @@
       "component": "input",
       "outerClass": "col-12 col-sm-5 col-md-4 text-left form-group",
       "innerClass": "form-control",
-      "placeholder": ""
+      "placeholder": "ถ้าไม่มีให้ใส่ -"
     },
     {
       "name": "congenital_diseases",
@@ -268,7 +268,7 @@
       "component": "input",
       "outerClass": "col-12 col-sm-5 col-md-4 text-left form-group",
       "innerClass": "form-control",
-      "placeholder": ""
+      "placeholder": "ถ้าไม่มีให้ใส่ -"
     },
     {
       "name": "congenital_drugs",
@@ -276,7 +276,7 @@
       "component": "input",
       "outerClass": "col-12 col-sm-5 col-md-4 text-left form-group",
       "innerClass": "form-control",
-      "placeholder": ""
+      "placeholder": "ถ้าไม่มีให้ใส่ -"
     }
   ]
 }

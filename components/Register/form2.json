@@ -2,7 +2,7 @@
   "fields": [
     {
       "name": "skill_computer",
-      "label": "น้องๆ เคยมีทักษะคอมพิวเตอร์มาก่อนหรือเปล่า",
+      "label": "น้อง ๆ เคยมีทักษะคอมพิวเตอร์มาก่อนหรือเปล่า",
       "component": "textarea",
       "outerClass": "col-12 text-left form-group",
       "innerClass": "form-control",
@@ -10,7 +10,7 @@
     },
     {
       "name": "past_camp",
-      "label": "ค่ายที่เคยเข้า",
+      "label": "ค่ายที่เคยเข้าร่วม",
       "component": "textarea",
       "outerClass": "col-12 text-left form-group",
       "innerClass": "form-control",
@@ -18,7 +18,7 @@
     },
     {
       "name": "activities",
-      "label": "กิจกรรมต่าง ๆ",
+      "label": "กิจกรรมต่าง ๆ ที่เคยทำมาและอยากเล่าให้ฟัง",
       "component": "textarea",
       "outerClass": "col-12 text-left form-group",
       "innerClass": "form-control",
