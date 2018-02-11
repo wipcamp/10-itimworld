@@ -74,6 +74,7 @@ const HeaderContainer = props => (
 )
 
 export default compose(
+  withState('wipid', 'setWipid', ''),
   withState('name', 'setName', ''),
   withState('img', 'setImg', null),
   withState('guide', 'setGuide', true),
@@ -109,6 +110,7 @@ export default compose(
         props.setImg(`https://graph.facebook.com/${data.provider_acc}/picture?height=50000`)
         let { data: registrant } = await api.get(`/registrants/${data.id}`, {Authorization: `Bearer ${token}`})
         registrant = registrant[0]
+        props.setWipid(data.id)
         props.setName(registrant.nickname)
       }
     },

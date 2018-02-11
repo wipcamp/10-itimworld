@@ -23,7 +23,6 @@ export const validate = values => {
     'religion_id',
     'edu_name',
     'edu_lv',
-    'edu_gpax',
     'edu_major',
     'telno_parent',
     'parent_relation',
@@ -116,6 +115,16 @@ export const validate = values => {
     } else if (values.other_blood_group > 16) {
       errors.other_blood_group = `ป้อนได้ไม่เกิน 16 ตัวอักษร`
     }
+  }
+
+  if (!values.edu_gpax) {
+    errors.edu_gpax = required
+  } else if (!/^[0-9.]+$/.test(values.edu_gpax)) {
+    errors.edu_gpax = 'อนุญาต ให้ใส่เฉพาะตัวเลข'
+  } else if (Number(values.edu_gpax) > 4 || Number(values.edu_gpax) < 0) {
+    errors.edu_gpax = 'ให้อยู่ช่วง 0 ถึง 4'
+  } else if (values.edu_gpax.split('.')[1] && values.edu_gpax.split('.')[1].length > 2) {
+    errors.edu_gpax = 'ทศนิยม 2 ตำแหน่ง'
   }
 
   return errors

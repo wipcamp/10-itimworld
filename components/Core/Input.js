@@ -154,11 +154,14 @@ const Input = ({
   meta: { touched, error },
   outerClass,
   innerClass,
-  placeholder
+  placeholder,
+  step,
+  min,
+  max
 }) => (
   <div className={outerClass}>
     <Label htmlFor={`${input.name}-input`}>{label}<Required /></Label>
-    <StyledInput {...input} type={type} placeholder={placeholder} className={innerClass} />
+    <StyledInput {...input} min={min} max={max} step={step} type={type} className={innerClass} />
     <Error>{touched && error}</Error>
   </div>
 )
@@ -435,8 +438,6 @@ const FieldInput = (props) => {
         return <Field {...props} component={Input} normalize={normalizePhone} />
       } else if (props.name === 'citizen_id') {
         return <Field {...props} component={Input} normalize={normalizeCitizenId} />
-      } else if (props.name === 'edu_gpax') {
-        return <Field {...props} component={Input} normalize={normalizeGpax} />
       } else if (['first_name', 'last_name', 'nickname', 'addr_dist'].includes(props.name)) {
         return <Field {...props} component={Input} normalize={normalizeThai} />
       } else if (props.name.includes('_en')) {

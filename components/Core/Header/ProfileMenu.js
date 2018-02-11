@@ -96,16 +96,25 @@ const DisplayName = styled.div`
     display: none;
     @media (min-width: 800px) {
       display: flex;
+      flex-direction: column;
+      align-items: flex-end;
     }
 `
 
 const ProfileMenu = props => {
-  const { dropdownVisible, toggleDD, setNode, name } = props
+  const { dropdownVisible, toggleDD, setNode, name, wipid } = props
   return (
     <div className='btn-group'
       ref={setNode}
     >
-      <DisplayName>สวัสดี น้อง{name || 'ทหารเอก'}</DisplayName>
+      <DisplayName>
+        <div>
+          WIP ID: {wipid || '10xxxx'}
+        </div>
+        <div>
+          สวัสดี น้อง{name || 'ทหารเอก'}
+        </div>
+      </DisplayName>
       <Circle
         {...props}
         onClick={toggleDD}>
