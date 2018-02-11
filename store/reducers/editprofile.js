@@ -1,4 +1,6 @@
 import actionCreator from '../../utils/actionCreator'
+import api from '../../utils/api'
+import cookie from '../../utils/cookie'
 
 // Actions
 const editProfileAction = actionCreator('edit_profile')
@@ -50,5 +52,10 @@ export default (state = initialState, action) => {
 export const actions = {
   saveProfile: (values) => {
     console.log(values)
+    let {token} = cookie({req: false})
+    return {
+      type: SAVE_PROFILE.ACTION,
+      payload: api.put('/profiles', values, {Authorization: `Bearer ${token}`})
+    }
   }
 }
