@@ -4,7 +4,7 @@ import {logout} from '../../../utils/auth'
 
 const boxShadowColor = '255,255,255'
 
-const pulse = keyframes`
+export const pulse = keyframes`
   0% {
     box-shadow: 0 0 0 0 rgba(${boxShadowColor}, 0.9);
   }
@@ -79,7 +79,9 @@ const Dropdown = styled.div`
     z-index: 2;
   }
 
-
+  & .dropdown-item {
+    cursor: pointer;
+  }
   & .dropdown-item:hover {
     background: lightgray;
   }

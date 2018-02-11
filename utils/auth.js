@@ -13,8 +13,12 @@ export const auth = async (res, setToken) => {
 export const logout = async () => {
   let { token } = await getCookie({req: false})
   await axios.post('/auth/logout', null, {Authorization: `Bearer ${token}`})
-  document.cookie = cookie.serialize('token', null)
+  let allCookie = cookie.parse(document.cookie)
+  for (const key of Object.keys(allCookie)) {
+    document.cookie = await cookie.serialize(key, allCookie[key], { maxAge: 0 })
+  }
   Router.pushRoute('/logout')
+  setTimeout(() => window.location.replace('https://wip.camp'), 2500)
 }
 
 export const postData = async res => {
@@ -27,11 +31,10 @@ export const postData = async res => {
 
 export const getUserData = res => axios.post(`/users/${res.id}`, { ...res }, null)
 
-export const responser = async (res, setToken, setLoad) => {
+export const responser = async (res, setToken) => {
   let user = await getUserData(res)
   if (!user.data.data) {
     user = await postData(res)
   }
-  setLoad(false)
   auth(res, setToken)
 }
