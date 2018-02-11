@@ -84,7 +84,7 @@ export default compose(
   reduxForm({
     form: 'register',
     validate,
-    onSubmitFail: (_, __, ___, props) => props.onSubmitError()
+    onSubmitFail: (err, __, ___, props) => props.onSubmitError(err)
   }),
   lifecycle({
     componentWillReceiveProps (nextProps) {

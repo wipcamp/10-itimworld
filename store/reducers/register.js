@@ -23,9 +23,9 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case SHOW_DIALOG: {
-      return {
+      return action.payload && {
         ...state,
-        message: action.message,
+        message: 'กรุณากรอกข้อมูลให้ครบถ้วน และถูกต้องนะครับ',
         error: true,
         showDialog: true
       }
@@ -44,7 +44,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         saving: true,
-        error: null
+        error: false
       }
     }
 
@@ -64,7 +64,9 @@ export default (state = initialState, action) => {
       return {
         ...state,
         saving: false,
-        message: action.payload
+        message: action.payload,
+        error: true,
+        showDialog: true
       }
     }
 
@@ -173,9 +175,9 @@ export const actions = {
       }
     }
   },
-  onSubmitError: () => ({
+  onSubmitError: (err) => ({
     type: SHOW_DIALOG,
-    message: 'กรุณากรอกข้อมูลให้ครบถ้วน และถูกต้องนะครับ'
+    payload: err
   }),
   hideDialog: () => ({
     type: HIDE_DIALOG
