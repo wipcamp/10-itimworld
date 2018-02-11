@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Field, formValues } from 'redux-form'
 import { actions } from '../../store/reducers/register'
 import moment from 'moment'
-import { normalizeCitizenId, normalizePhone, normalizeGpax, normalizeDate, normalizeThai, normalizeEng } from './normalizeForm'
+import { normalizeCitizenId, normalizePhone, normalizeDate, normalizeThai, normalizeEng } from './normalizeForm'
 import { province } from '../Register/data-dropdown.json'
 import Datetime from 'react-datetime'
 
