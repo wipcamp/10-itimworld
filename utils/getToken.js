@@ -2,6 +2,7 @@ import React from 'react'
 import cookie from './cookie'
 import api from './api'
 import Loading from '../components/Core/Loading'
+import {Router} from '../routes'
 
 export default () => Component => {
   return class extends React.Component {
@@ -13,13 +14,13 @@ export default () => Component => {
     async componentDidMount () {
       let { token } = cookie({req: false})
       if (token === 'null' || !token) {
-        this.props.url.push('/')
+        Router.pushRoute('/')
       }
       let { data } =
       await api.post(`/auth/me`, null, {Authorization: `Bearer ${token}`})
-          .catch(() => this.props.url.push('/'))
+          .catch(() => Router.pushRoute('/'))
       this.setState({
-        initialValues: { user_id: data.id },
+        initialValues: { user_id: data && data.id ? data.id : null },
         show: true
       })
     }

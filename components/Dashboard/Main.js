@@ -49,19 +49,20 @@ const CardUpload = styled.div`
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center top;
-  
-  ${props => !props.filePath ? `
-    background-image: url(${props.img});
-    ` : `
-    background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}yes.png);
-    ;
-    `}
 
-  ${props => props.answeredQuestion === 6 ? `
-    background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}yes.png);
-  ` : `
-    background-image: url(${props.img});
-  `}
+  ${props => Number.isInteger(props.countAnswered)
+    ? props.countAnswered === 6 ? `
+        background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}yes.png);
+      ` : `
+        background-image: url(${props.img});
+      `
+    : props => !props.filePath ? `
+        background-image: url(${props.img});
+      ` : `
+        background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}yes.png);
+      `
+}
+  
   height: 290px;
   width: 248px;
   transition: all .5s;
@@ -246,7 +247,6 @@ const Card = props => {
         link ? (
           <Link prefetch href='/question'>
             <CardUpload
-              answeredQuestion={answered}
               countAnswered={answered}
               {...props}
             />
