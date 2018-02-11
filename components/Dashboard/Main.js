@@ -49,6 +49,7 @@ const CardUpload = styled.div`
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center top;
+  cursor:pointer;
 
   ${props => Number.isInteger(props.countAnswered)
     ? props.countAnswered === 6 ? `
@@ -62,6 +63,18 @@ const CardUpload = styled.div`
         background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}yes.png);
       `
 }
+
+  ${props => props.approve === 1 && `
+    box-shadow: 0px 0px 100px green;
+  `}
+
+  ${props => props.approve === 0 && `
+    box-shadow: 0px 0px 100px red;
+  `}
+
+  ${props => props.approve === null && `
+    box-shadow: 0px 0px 100px yellow;
+  `}
   
   height: 290px;
   width: 248px;
@@ -81,7 +94,6 @@ const CardUpload = styled.div`
   }
 
   &:hover {
-    cursor:pointer;
     transform: scale(1.010);
     box-shadow: 0 8px 30px rgba(0,0,0,0.5);
   }
@@ -151,7 +163,6 @@ const CardUpload = styled.div`
     display: flex;
     justify-content: center;
     height: 100%;
-    cursor: pointer;
 
     background-size: cover;
     ${`/*background-image: url(${props => props.img});*/`}
@@ -255,6 +266,7 @@ const Card = props => {
           <CardUpload
             {...props}
             {...files[name]}
+            approve={files[name].isApprove}
           >
             <Dropzone
               className='dropzone'
@@ -263,6 +275,7 @@ const Card = props => {
               onDragEnter={() => setDragActive({field: name, dropActive: true})}
               onDragLeave={() => setDragActive({field: name, dropActive: false})}
               onDrop={(files) => onDropFile(name, files, userId)}
+              disabled={files[name].isApprove === 1 || files[name].isApprove === -2}
             >
               <label
                 title={files[name].saving ? '' : props.title}
@@ -408,6 +421,17 @@ const getFilePath = (arr) => {
   }
 }
 
+const getApprove = (arr) => {
+  if (arr.length === 0) {
+    return -1
+  } else if (arr.find(data => data.is_approve === 1)) {
+    return 1
+  } else if (arr.find(data => data.is_approve === 0)) {
+    return 0
+  }
+  return null
+}
+
 export default compose(
   withState('answered', 'setAnswered', 0),
   connect(
@@ -430,6 +454,10 @@ export default compose(
       this.props.setFilePath({
         transcript,
         parent
+      })
+      this.props.setApprove({
+        parent: getApprove(documents.filter(file => file.type_id === 2)),
+        transcript: getApprove(documents.filter(file => file.type_id === 3))
       })
       this.props.setAnswered(data[0].eval_answers.length)
     }
