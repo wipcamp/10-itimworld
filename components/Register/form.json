@@ -243,7 +243,7 @@
       "name": "telno_parent",
       "label": "โทรศัพท์ของผู้ปกครอง",
       "component": "input",
-      "outerClass": "col-12 col-sm-6 text-left form-group",
+      "outerClass": "col-12 offset-sm-2 col-sm-6 offset-md-0 text-left form-group",
       "innerClass": "form-control",
       "type": "tel",
       "placeholder": "ตัวอย่าง (081-234-5678)"
