@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import dynamic from 'next/dynamic'
 import {pageId, appId} from './messenger.json'
 
-const MessengerCustomerChat = dynamic(import('react-messenger-customer-chat'),{
+const MessengerCustomerChat = dynamic(import('react-messenger-customer-chat'), {
   ssr: false
 })
 
