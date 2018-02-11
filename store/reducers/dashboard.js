@@ -237,7 +237,7 @@ export const actions = {
     } else {
       return {
         type: action[field].REJECTED,
-        payload: 'นามสกุลไฟล์ไม่ถูกต้อง'
+        payload: 'นามสกุลไฟล์ไม่ถูกต้อง อัพโหลดได้เฉพาะ .jpeg .png .pdf'
       }
     }
   },
