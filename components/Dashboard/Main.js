@@ -373,6 +373,8 @@ const ProgressBar = styled.div`
 `
 
 const MainUpload = props => {
+  const { answered, dashboard: { files: { parental_authorization: parent, transcription_record: transcript } } } = props
+  console.log(props)
   return (
     <div>
       <BackgroundContainer>
@@ -383,7 +385,12 @@ const MainUpload = props => {
               <div className='card'>
                 <div className='card-body'>
                   <ProgressBar>
-                    เสร็จแล้ว
+                    {
+                      (answered === 6 && parent.isApprove === 1 && transcript.isApprove === 1) ? (
+                        'เสร็จเรียบร้อย'
+                      ) : `ยังไม่เสร็จจ้า คำถามตอบไปแล้ว ${answered}, transcript อยู่สถานะ ${transcript.isApprove}, parent อยู่สถานะ ${parent.isApprove}`
+                    }
+                    
                   </ProgressBar>
 
                 </div>
@@ -422,6 +429,7 @@ const getFilePath = (arr) => {
 }
 
 const getApprove = (arr) => {
+
   if (arr.length === 0) {
     return -1
   } else if (arr.find(data => data.is_approve === 1)) {
@@ -451,6 +459,7 @@ export default compose(
       const { documents } = data[0]
       let parent = getFilePath(documents.filter(file => file.type_id === 2))
       let transcript = getFilePath(documents.filter(file => file.type_id === 3))
+      console.log(this.props)
       this.props.setFilePath({
         transcript,
         parent
