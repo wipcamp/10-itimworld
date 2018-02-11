@@ -354,12 +354,31 @@ const cardData = [
   }
 ]
 
+const ProgressBar = styled.div`
+
+
+`
+
 const MainUpload = props => {
   return (
     <div>
       <BackgroundContainer>
         <Header />
         <div className='container'>
+          <div className='row justify-content-center mt-3'>
+            <div className='col-8'>
+              <div className='card'>
+                <div className='card-body'>
+                  <ProgressBar>
+                    เสร็จแล้ว
+                  </ProgressBar>
+
+                </div>
+              </div>
+
+            </div>
+
+          </div>
           <Alert {...props} {...props.dashboard} />
           <CustomRow className='row text-center'>
             {
