@@ -10,11 +10,6 @@ const Answer = props => (
   <AnswerPage {...props} />
 )
 
-Answer.getInitialProps = async ({ query }) => {
-  await console.log('queryyyyyyyyyyyyyyy !!!!!! --------> ', query)
-  return query
-}
-
 export default compose(
   withRedux(),
   serverRender(`/`),
