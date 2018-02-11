@@ -19,9 +19,9 @@ const Messenger = styled(MessengerCustomerChat)`
   right: 0;
 `
 
-export default (Component) => () => (
+export default (Component) => (props) => (
   <Container>
-    <Component />
+    <Component {...props} />
     <Messenger
       pageId={pageId}
       appId={appId}

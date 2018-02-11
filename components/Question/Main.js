@@ -56,7 +56,7 @@ export const MainQuestion = props => {
             questionNo++
             return (
               <div className='col-sm-6 pt-3' key={questionNo}>
-                <Link href={{ pathname: '/question/answer', query: { id: question.id } }} prefetch>
+                <Link to={`/question/answer/${question.id}`} prefetch>
                   <Question answered={answeredQuestion.indexOf(question.id) >= 0}>คำถามที่ {questionNo}</Question>
                 </Link>
               </div>
