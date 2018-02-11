@@ -48,8 +48,8 @@ const Layout = styled.div`
 `
 
 const Logo = styled.img`
-  min-width: 300px;
-  max-width: 500px;
+  width: 100%;
+  max-width: 630px;
   margin-bottom: 5em;
   margin-top: -8em;
 `
@@ -65,7 +65,7 @@ const IndexCompose = ({setToken, loading, setLoad}) => {
     </Loading>
     <div className='row'>
       <Layout className='col-12 d-flex flex-column justify-content-center align-items-center'>
-        <Logo src='/static/img/logofinals.png' alt='wipcamp-logo' />
+        <Logo src='/static/img/logofinals.png' alt='wipcamp-logo' className='animated fadeInDown' />
         <FacebookLogin
           appId={appId}
           fields={fields}
@@ -74,7 +74,7 @@ const IndexCompose = ({setToken, loading, setLoad}) => {
           callback={(res) => responser(res, setToken)}
           icon={`fa fa-facebook mt-2 mr-3`}
           textButton={`Login with Facebook`}
-          cssClass='btn btn-primary'
+          cssClass='btn btn-primary animated fadeInUp blink'
           tag={`button`}
         />
       </Layout>
