@@ -5,8 +5,7 @@ import { compose } from 'recompose'
 import { actions as questionActions } from '../../store/reducers/question'
 
 export class Editor extends React.Component {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.quillRef = null
     this.reactQuillRef = null
@@ -16,17 +15,17 @@ export class Editor extends React.Component {
     value: ''
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.attachQuillRefs()
   }
-  
-  componentDidUpdate() {
+
+  componentDidUpdate () {
     this.attachQuillRefs()
   }
 
   attachQuillRefs = () => {
-    if (typeof this.reactQuillRef.getEditor !== 'function') return;
-    this.quillRef = this.reactQuillRef.getEditor();
+    if (typeof this.reactQuillRef.getEditor !== 'function') return
+    this.quillRef = this.reactQuillRef.getEditor()
   }
 
   componentWillMount () {
@@ -34,10 +33,10 @@ export class Editor extends React.Component {
       this.ReactQuill = require('react-quill')
     }
     this.modules = {
-      toolbar : [
+      toolbar: [
         [{ 'size': ['small', false, 'large', 'huge'] }],
-        ['bold', 'italic', 'underline','strike'],
-        ['blockquote','code-block'],
+        ['bold', 'italic', 'underline', 'strike'],
+        ['blockquote', 'code-block'],
         [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
         [{ 'align': [] }],
         [{ 'color': [] }, { 'background': [] }],
@@ -52,12 +51,12 @@ export class Editor extends React.Component {
     if (typeof window !== 'undefined' && ReactQuill) {
       return (
         <ReactQuill
-          onChange={(val) => setAnswer(questionNumber, val,this.quillRef.getText().length)}
+          onChange={(val) => setAnswer(questionNumber, val, this.quillRef.getText().length)}
           theme='snow'
           value={answers.data}
           modules={this.modules}
           ref={(el) => { this.reactQuillRef = el }}
-        />          
+        />
       )
     }
     return <textarea />

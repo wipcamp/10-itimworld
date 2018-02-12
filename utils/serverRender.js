@@ -7,6 +7,7 @@ export default (path) => (Component) => {
       token = await cookieParser(ctx).token
       checkToken(ctx.res, token, path)
     }
+    return ctx
   }
   return Component
 }

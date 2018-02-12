@@ -4,7 +4,12 @@ import promise from 'redux-promise-middleware'
 import logger from 'redux-logger'
 import reducers from './reducers'
 
-const middlewares = [promise(), thunkMiddleware]
+import Raven from 'raven-js'
+import createRavenMiddleware from 'raven-for-redux'
+
+Raven.config('https://84c20434b19a4b789bebc41df8128b47@sentry.io/286316').install()
+
+const middlewares = [promise(), thunkMiddleware, createRavenMiddleware(Raven, {})]
 
 // Get the Redux DevTools extension and fallback to a no-op function
 let devtools = f => f

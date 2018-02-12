@@ -1,4 +1,18 @@
-import {injectGlobal} from 'styled-components'
+import { injectGlobal, keyframes } from 'styled-components'
+
+const boxShadowColor = '95,105,138'
+
+const pulse = keyframes`
+  0% {
+    box-shadow: 0 0 0 0 rgba(${boxShadowColor}, 0.9);
+  }
+  70% {
+    box-shadow: 0 0 0 0.8rem rgba(${boxShadowColor}, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(${boxShadowColor}, 0);
+  }
+`
 
 export default () => injectGlobal`
   @font-face {
@@ -39,16 +53,23 @@ export default () => injectGlobal`
       background: #768694;
     } 
   }
+  
+  .blink {
+    animation: ${pulse} 2s infinite;
+  }
+
   .metro {
-    font-size: 1.5em;
+    font-size: 1.2em;
     cursor: pointer;
     background-color: #24409b;
     border-color: #24409b;
+    width:257px;
     max-width: 320px;
     padding: 0.5em 1.6em;
     @media (min-width: 1024px) {
+      width: 300px;
       max-width: 500px;
-      padding: 0.6em 3em;
+      /* padding: 0.6em 3em; */
     }
   }
   .metro:hover {
@@ -62,4 +83,5 @@ export default () => injectGlobal`
   .form-check {
     margin-bottom: 0;
   }
+
 `

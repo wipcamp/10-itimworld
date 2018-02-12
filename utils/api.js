@@ -8,7 +8,7 @@ const createInstance = (headers) => {
   })
 }
 
-const handleResponse = res => res.data ? Promise.resolve(res) : Promise.reject(res)
+const handleResponse = res => !res.data.error ? Promise.resolve(res) : Promise.reject(new Error(res.data.error))
 
 const catchError = err => Promise.reject(err.message)
 

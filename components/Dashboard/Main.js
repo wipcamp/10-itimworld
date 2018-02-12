@@ -49,19 +49,23 @@ const CardUpload = styled.div`
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center top;
-  
-  ${props => !props.filePath ? `
-    background-image: url(${props.img});
-    `:`
-    background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}yes.png);
-    ;
-    `}
+  cursor:pointer;
 
-  ${props => props.answeredQuestion === 6 ? `
-    background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}yes.png);
-  ` : `
-    background-image: url(${props.img});
-  `}
+  ${props => Number.isInteger(props.countAnswered)
+    ? props.countAnswered === 6 ? `
+        background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}yes.png);
+      ` : `
+        background-image: url(${props.img});
+      `
+    : props => !props.filePath ? `
+        background-image: url(${props.img});
+      ` : `
+        background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}yes.png);
+      `
+}
+
+  
+  
   height: 290px;
   width: 248px;
   transition: all .5s;
@@ -74,13 +78,12 @@ const CardUpload = styled.div`
   }
 
   @media (max-width: 575.98px) {
-    ${props => props.link ? '':'margin-top: 20px;'}
+    ${props => props.link ? '' : 'margin-top: 20px;'}
     height: 236px;
     width: 201px;
   }
 
   &:hover {
-    cursor:pointer;
     transform: scale(1.010);
     box-shadow: 0 8px 30px rgba(0,0,0,0.5);
   }
@@ -150,7 +153,6 @@ const CardUpload = styled.div`
     display: flex;
     justify-content: center;
     height: 100%;
-    cursor: pointer;
 
     background-size: cover;
     ${`/*background-image: url(${props => props.img});*/`}
@@ -238,39 +240,23 @@ const CustomRow = styled.div`
   padding-bottom: 40px;
 `
 
-const showNumOfAsnwered = (data) => {
-  switch (data) {
-    case 0:
-      return `<span style='color: red'>0 / 6</span>`
-    case 6:
-      return `<span style='color: green'>6 / 6</span>`
-    default:
-      return `<span style='color: orange'>${data} / 6</span>`
-  }
-}
-
 const Card = props => {
-  const { outerClass, content, link, name, dashboard: { files }, setDragActive, onDropFile, answered, initialValues: { user_id: userId } } = props
+  const { outerClass, link, name, dashboard: { files }, setDragActive, onDropFile, answered, initialValues: { user_id: userId } } = props
   return (
     <div className={`${outerClass} mx-auto`}>
       {
         link ? (
           <Link prefetch href='/question'>
             <CardUpload
-              answeredQuestion={answered}
               countAnswered={answered}
               {...props}
-            >
-              {/* <label
-                dangerouslySetInnerHTML={{ __html: `${content} ${showNumOfAsnwered(3)}` }}
-              /> */}
-
-            </CardUpload>
+            />
           </Link>
         ) : (
           <CardUpload
             {...props}
             {...files[name]}
+            approve={files[name].isApprove}
           >
             <Dropzone
               className='dropzone'
@@ -279,6 +265,7 @@ const Card = props => {
               onDragEnter={() => setDragActive({field: name, dropActive: true})}
               onDragLeave={() => setDragActive({field: name, dropActive: false})}
               onDrop={(files) => onDropFile(name, files, userId)}
+              disabled={files[name].isApprove === 1 || files[name].isApprove === -2}
             >
               <label
                 title={files[name].saving ? '' : props.title}
@@ -307,7 +294,7 @@ const Card = props => {
           </CardUpload>
         )
       }
-      {name === 'parental_authorization' ? <Download show /> : <Download />}
+      {name == 'parental_authorization' ? <Download show /> : <Download />}
     </div>
   )
 }
@@ -334,8 +321,9 @@ const DownloadLink = styled.a`
 const Download = props => {
   return (
     props.show
-      ? <DownloadLink href='/static/files/parent_authorization.pdf' target='_blank'>ดาวน์โหลดเอกสาร</DownloadLink>
-      : <DownloadLink />
+      ? <DownloadLink href='/static/files/parent_authorization.pdf' target='_blank'>
+      ดาวน์โหลดเอกสาร
+      </DownloadLink> : <DownloadLink />
   )
 }
 
@@ -369,12 +357,37 @@ const cardData = [
   }
 ]
 
+const ProgressBar = styled.div`
+
+
+`
+
 const MainUpload = props => {
+  const { answered, dashboard: { files: { parental_authorization: parent, transcription_record: transcript } } } = props
   return (
     <div>
       <BackgroundContainer>
         <Header />
         <div className='container'>
+          {/* <div className='row justify-content-center mt-3'>
+            <div className='col-8'>
+              <div className='card'>
+                <div className='card-body'>
+                  <ProgressBar>
+                    {
+                      (answered === 6 && parent.isApprove === 1 && transcript.isApprove === 1) ? (
+                        'เสร็จเรียบร้อย'
+                      ) : `ยังไม่เสร็จจ้า คำถามตอบไปแล้ว ${answered}, transcript อยู่สถานะ ${transcript.isApprove}, parent อยู่สถานะ ${parent.isApprove}`
+                    }
+                    
+                  </ProgressBar>
+
+                </div>
+              </div>
+
+            </div>
+
+          </div> */}
           <Alert {...props} {...props.dashboard} />
           <CustomRow className='row text-center'>
             {
@@ -404,6 +417,17 @@ const getFilePath = (arr) => {
   }
 }
 
+const getApprove = (arr) => {
+  if (arr.length === 0) {
+    return -1
+  } else if (arr.find(data => data.is_approve === 1)) {
+    return 1
+  } else if (arr.find(data => data.is_approve === 0)) {
+    return 0
+  }
+  return null
+}
+
 export default compose(
   withState('answered', 'setAnswered', 0),
   connect(
@@ -423,9 +447,14 @@ export default compose(
       const { documents } = data[0]
       let parent = getFilePath(documents.filter(file => file.type_id === 2))
       let transcript = getFilePath(documents.filter(file => file.type_id === 3))
+
       this.props.setFilePath({
         transcript,
         parent
+      })
+      this.props.setApprove({
+        parent: getApprove(documents.filter(file => file.type_id === 2)),
+        transcript: getApprove(documents.filter(file => file.type_id === 3))
       })
       this.props.setAnswered(data[0].eval_answers.length)
     }

@@ -1,5 +1,5 @@
 import React from 'react'
-import {compose, withState} from 'recompose'
+import {compose, withState, lifecycle} from 'recompose'
 import { connect } from 'react-redux'
 import { actions as tokenActions } from '../../store/reducers/token'
 import styled, { keyframes } from 'styled-components'
@@ -29,9 +29,8 @@ const Loading = styled.div`
   left: 0;
   z-index: 99;
   background-color: rgba(255, 255, 255, 0.9);
-  transition: .4s;
-  opacity: ${props => props.loading ? 1 : 0};
-  display: ${props => props.loading ? 'flex' : 'none'};
+  transition: all 1.5s ease-in-out;
+  display: flex;
   flex-direction: column;
   
   i {
@@ -39,6 +38,9 @@ const Loading = styled.div`
     font-size: 10em;  
     animation: ${Spinner} 2s linear infinite;
   }
+
+  opacity: ${props => props.loading ? 1 : 0};
+  visibility: ${props => props.loading ? 'visible' : 'hidden'};
 `
 
 const Layout = styled.div`
@@ -46,15 +48,15 @@ const Layout = styled.div`
 `
 
 const Logo = styled.img`
-  min-width: 300px;
-  max-width: 500px;
+  width: 100%;
+  max-width: 630px;
   margin-bottom: 5em;
   margin-top: -8em;
 `
 
-const IndexCompose = ({setToken, loading, setLoad}) => {
+const IndexCompose = ({url, setToken, loading, setLoad}) => {
   return <Container className='container-fluid'>
-    <Loading loading={loading} className='justify-content-center align-items-center'>
+    <Loading loading={loading} className={`justify-content-center align-items-center`}>
       <div className='text-center'>
         <i className='fa fa-refresh' />
         <h1 className='animated pulse infinite mt-3'>กรุณาคอยสักประเดี๋ยว..</h1>
@@ -63,16 +65,16 @@ const IndexCompose = ({setToken, loading, setLoad}) => {
     </Loading>
     <div className='row'>
       <Layout className='col-12 d-flex flex-column justify-content-center align-items-center'>
-        <Logo src='/static/img/logofinals.png' alt='wipcamp-logo' />
+        <Logo src='/static/img/logofinals.png' alt='wipcamp-logo' className='animated fadeInDown' />
         <FacebookLogin
           appId={appId}
-          autoLoad
           fields={fields}
           scope={scope}
-          callback={(res) => responser(res, setToken, setLoad)}
+          onClick={() => setLoad(true)}
+          callback={(res) => responser(res, setToken)}
           icon={`fa fa-facebook mt-2 mr-3`}
           textButton={`Login with Facebook`}
-          cssClass='btn btn-primary'
+          cssClass='btn btn-primary animated fadeInUp blink'
           tag={`button`}
         />
       </Layout>
@@ -87,5 +89,13 @@ export default compose(
     }),
     { ...tokenActions }
   ),
-  withState('loading', 'setLoad', true)
+  withState('loading', 'setLoad', false),
+  lifecycle({
+    async componentDidMount () {
+      let {url, setLoad} = this.props
+      if (url && url.query.code && setLoad) {
+        await setLoad(true)
+      }
+    }
+  })
 )(IndexCompose)

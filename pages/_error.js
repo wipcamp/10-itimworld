@@ -1,5 +1,7 @@
 import React from 'react'
+import {compose} from 'recompose'
 import ErrorComponent from '../components/Core/Error'
+import Messenger from '../components/Core/Messenger'
 
 const Error = ({ statusCode }) => (
   <ErrorComponent />
@@ -10,4 +12,6 @@ Error.getInitialProps = ({ res, jsonPageRes }) => {
   return { statusCode }
 }
 
-export default Error
+export default compose(
+  Messenger
+)(Error)
