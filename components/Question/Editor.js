@@ -28,20 +28,31 @@ export class Editor extends React.Component {
     this.quillRef = this.reactQuillRef.getEditor()
   }
 
+  imageHandler = () => {
+    var range = this.quillRef.getSelection()
+    var value = window.prompt('โปรดระบุ URL ของรูป')
+    this.quillRef.insertEmbed(range.index, 'image', value)
+  }
+
   componentWillMount () {
     if (typeof window !== 'undefined') {
       this.ReactQuill = require('react-quill')
     }
     this.modules = {
-      toolbar: [
-        [{ 'size': ['small', false, 'large', 'huge'] }],
-        ['bold', 'italic', 'underline', 'strike'],
-        ['blockquote', 'code-block'],
-        [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-        [{ 'align': [] }],
-        [{ 'color': [] }, { 'background': [] }],
-        ['clean']
-      ]
+      toolbar: {
+        container: [
+          [{ 'size': ['small', false, 'large', 'huge'] }],
+          ['bold', 'italic', 'underline', 'strike'],
+          ['blockquote', 'code-block'],
+          [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+          [{ 'align': [] }],
+          ['image', { 'color': [] }, { 'background': [] }],
+          ['clean']
+        ],
+        handlers: {
+          image: this.imageHandler
+        }
+      }
     }
   }
 
