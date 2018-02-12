@@ -1,11 +1,30 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import FieldInput from '../Core/Input'
+
+const slideFromLeft = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateX(-2000px);
+  }
+  60% {
+      opacity: 1;
+      transform: translateX(15px);
+  }
+  80% {
+      transform: translateX(-10px);
+  }
+  100% {
+      transform: translateX(0);
+  }
+`
 
 const FormContainer = styled.form`
   background: #fff;
   border-radius: 10px;
   margin-bottom: 50px;
+
+  animation: ${slideFromLeft} 2s ease-in-out;
 `
 
 const SubmitButton = styled.button`
