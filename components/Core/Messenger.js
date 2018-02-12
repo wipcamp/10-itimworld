@@ -1,11 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import dynamic from 'next/dynamic'
 import {pageId, appId} from './messenger.json'
 
-const MessengerCustomerChat = dynamic(import('react-messenger-customer-chat'), {
-  ssr: false
-})
+let MessengerCustomerChat = null
+let Messenger = null
 
 const Container = styled.div`
   min-height: 100vh;
@@ -13,19 +11,32 @@ const Container = styled.div`
   position: relative;
 `
 
-const Messenger = styled(MessengerCustomerChat)`
-  position: absolute;
-  bottom: 0;
-  right: 0;
-`
-
 export default (Component) => (props) => (
   <Container>
     <Component {...props} />
-    <Messenger
-      pageId={pageId}
-      appId={appId}
-      htmlRef={`div`}
-    />
+    <MessengerContainer />
   </Container>
 )
+
+class MessengerContainer extends React.Component {
+  componentDidMount () {
+    MessengerCustomerChat = require('react-messenger-customer-chat')
+    Messenger = styled(MessengerCustomerChat)`
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    `
+    this.forceUpdate()
+  }
+
+  render () {
+    if (Messenger === null) return <div />
+    return (
+      <Messenger
+        pageId={pageId}
+        appId={appId}
+        htmlRef={`div`}
+      />
+    )
+  }
+}

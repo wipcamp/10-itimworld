@@ -74,10 +74,7 @@ export default compose(
   withProps(
     props => ({
       initialValues: {
-        ...props.initialValues,
-        allergic_foods: '-',
-        congenital_diseases: '-',
-        congenital_drugs: '-'
+        ...props.initialValues
       }
     })
   ),
