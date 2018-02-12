@@ -12,6 +12,7 @@ import cookie from '../../utils/cookie'
 import getToken from '../../utils/getToken'
 import { validate } from '../Core/validationForm'
 import Alert from '../Core/Alert'
+import checkStep from '../../utils/checkRegisterStep'
 
 import { actions as editprofileActions } from '../../store/reducers/editprofile'
 
@@ -125,6 +126,7 @@ export default compose(
     }
   ),
   getToken(),
+  checkStep('/editprofile'),
   reduxForm({
     validate,
     form: 'edit-profile',
