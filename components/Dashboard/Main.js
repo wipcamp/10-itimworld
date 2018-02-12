@@ -312,6 +312,7 @@ const TranscriptComponent = () => (
     <DownloadLink inline target='_blank' href='https://en.wikipedia.org/wiki/JPEG'>.jpeg</DownloadLink>{` `}
     <DownloadLink inline target='_blank' href='https://en.wikipedia.org/wiki/Portable_Network_Graphics'>.jpeg</DownloadLink>{` `}
     <DownloadLink inline target='_blank' href='https://en.wikipedia.org/wiki/Portable_Document_Format'>.pdf</DownloadLink>{` `}
+    ไม่เกิน 2 MB
   </DetailTranscript>
 )
 
