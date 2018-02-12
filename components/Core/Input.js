@@ -161,7 +161,7 @@ const Input = ({
 }) => (
   <div className={outerClass}>
     <Label htmlFor={`${input.name}-input`}>{label}<Required /></Label>
-    <StyledInput {...input} min={min} max={max} step={step} type={type} className={innerClass} />
+    <StyledInput {...input} min={min} max={max} step={step} type={type} className={innerClass} placeholder={placeholder} />
     <Error>{touched && error}</Error>
   </div>
 )
