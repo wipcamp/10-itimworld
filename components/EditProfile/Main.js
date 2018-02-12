@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { reduxForm } from 'redux-form'
 import moment from 'moment'
 import styled from 'styled-components'
+import Router from 'next/router'
 
 import EditForm from './EditFormContainer'
 import api from '../../utils/api'
@@ -91,8 +92,6 @@ const BackgroundContainer = styled.div`
 `
 
 const MainEditProfile = props => {
-  console.log(props)
-  // const { showDialog, error, message } = props.editprofileData
   return (
     <BackgroundContainer>
       <div className='container'>
@@ -143,8 +142,15 @@ export default compose(
         ...data.profile_registrant
       }
       let user = mapingProfileField(userData)
-      console.log(props)
       props.initialize(user)
+    },
+    componentWillReceiveProps (nextProps) {
+      if (nextProps.editprofileData.success) {
+        nextProps.setSucces()
+        setTimeout(() => {
+          Router.push('/dashboard')
+        }, 2000)
+      }
     }
   })
 )(MainEditProfile)
