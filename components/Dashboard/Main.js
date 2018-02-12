@@ -59,9 +59,11 @@ const CardUpload = styled.div`
       `
     : props => !props.filePath ? `
         background-image: url(${props.img});
-      ` : `
+      ` : props.isApprove === 1 ? `
         background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}yes.png);
-      `
+      ` : props.isApprove === 0 ? `
+        background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}no.png);
+      ` : `background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}pending.png);`
 }
 
   
