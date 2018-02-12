@@ -294,6 +294,7 @@ const Card = props => {
           </CardUpload>
         )
       }
+      {name === '1' && <DownloadLink empty />}
       {name === 'transcription_record' && <TranscriptComponent>รองรับเฉพาะไฟล์นามสกุล .png .jpeg .pdf</TranscriptComponent>}
       {name === 'parental_authorization' && <Download />}
     </div>
@@ -303,7 +304,8 @@ const Card = props => {
 const DetailTranscript = styled.div`
   color: #fff;
   font-size: 16px;
-  padding-top: 4px;
+  padding-top: 10px;
+  height: 50px;
 `
 
 const TranscriptComponent = () => (
@@ -320,8 +322,8 @@ const DownloadLink = styled.a`
   color: #fff;
   text-decoration: underline;
   font-size: 16px;
-  padding-top: 4px;
-  height: 24px;
+  padding-top: 10px;
+  height: 50px;
   text-align: center;
   width: auto;
 
@@ -336,6 +338,12 @@ const DownloadLink = styled.a`
   &:hover {
     color: #fff;
     text-decoration: none;
+  }
+
+  @media (min-width: 0px) and (max-width: 767px) {
+    ${props => props.empty && `
+    height: 20px;
+    `}
   }
 `
 
