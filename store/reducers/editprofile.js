@@ -9,12 +9,14 @@ const editProfileAction = actionCreator('edit_profile')
 const SAVE_PROFILE = editProfileAction('SAVE_PROFILE', true)
 const SHOW_DIALOG = editProfileAction('SHOW_DIALOG')
 const HIDE_DIALOG = editProfileAction('HIDE_DIALOG')
+const SET_SUCCESS = editProfileAction('SET_SUCCESS')
 
 const initialState = {
   saving: false,
   error: false,
   message: '',
-  showDialog: false
+  showDialog: false,
+  success: false
 }
 
 // Reducer
@@ -48,8 +50,9 @@ export default (state = initialState, action) => {
       return {
         ...state,
         saving: false,
-        message: action.payload,
-        showDialog: true
+        message: 'บันทึกข้อมูลเรียบร้อย',
+        showDialog: true,
+        success: true
       }
     }
 
@@ -60,6 +63,13 @@ export default (state = initialState, action) => {
         message: action.payload,
         showDialog: true,
         error: true
+      }
+    }
+
+    case SET_SUCCESS: {
+      return {
+        ...state,
+        success: false
       }
     }
 
@@ -144,5 +154,8 @@ export const actions = {
   }),
   hideDialog: () => ({
     type: HIDE_DIALOG
+  }),
+  setSucces: () => ({
+    type: SET_SUCCESS
   })
 }
