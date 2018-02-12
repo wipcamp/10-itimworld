@@ -10,6 +10,7 @@ import api from '../../utils/api'
 import cookie from '../../utils/cookie'
 import getToken from '../../utils/getToken'
 import { validate } from '../Core/validationForm'
+import Alert from '../Core/Alert'
 
 import { actions as editprofileActions } from '../../store/reducers/editprofile'
 
@@ -62,14 +63,14 @@ const mapingProfileField = (values) => {
       const blood = values.blood_group
       if (!['A', 'B', 'AB', 'O'].includes(blood)) {
         data.other_blood_group = blood
-        data.blood_group = 'other'
+        data[field] = 'other'
       } else {
-        data.blood_group = blood
+        data[field] = blood
       }
-    } else if (field === 'gender_id') {
-      data.gender_id = values.gender_id.toString()
+    } else if (['gender_id', 'edu_gpax'].includes(field)) {
+      data[field] = values[field].toString()
     } else if (field === 'birth_at') {
-      data.birth_at = moment(values.birth_at, 'YYYY-MM-DD')
+      data[field] = moment(values[field], 'YYYY-MM-DD')
     } else {
       data[field] = values[field]
     }
@@ -91,9 +92,11 @@ const BackgroundContainer = styled.div`
 
 const MainEditProfile = props => {
   console.log(props)
+  // const { showDialog, error, message } = props.editprofileData
   return (
     <BackgroundContainer>
       <div className='container'>
+        <Alert {...props} {...props.editprofileData} />
         <div className='row justify-content-center'>
           <div className='col-6 col-md-5 mt-4 mb-2'>
             <img src='/static/img/logo.svg' alt='' />
@@ -117,12 +120,16 @@ export default compose(
     state => ({
       editprofileData: state.editprofile
     }),
-    { onSubmit: editprofileActions.saveProfile }
+    {
+      ...editprofileActions,
+      onSubmit: editprofileActions.saveProfile
+    }
   ),
   getToken(),
   reduxForm({
     validate,
-    form: 'edit-profile'
+    form: 'edit-profile',
+    onSubmitFail: (err, __, ___, props) => props.onSubmitError(err)
   }),
   lifecycle({
     async componentDidMount () {
@@ -131,21 +138,12 @@ export default compose(
       let {token} = cookie({req: false})
       let { data } = await api.get(`/registrants/${userId}`, {Authorization: `Bearer ${token}`})
       data = data[0]
-      console.log(data)
-      // const blood = data.blood_group
-      // if (!['A', 'B', 'AB', 'O'].includes(blood)) {
-      //   data.other_blood_group = blood
-      //   data.blood_group = 'other'
-      // }
       const userData = {
         ...data,
         ...data.profile_registrant
-        // gender_id: data.gender_id.toString(),
-        // birth_at: moment(data.birth_at, 'YYYY-MM-DD')
       }
-
       let user = mapingProfileField(userData)
-      console.log(user)
+      console.log(props)
       props.initialize(user)
     }
   })
