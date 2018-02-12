@@ -8,6 +8,7 @@ import { convertToInt, convertToFloat, dataIsNotNull } from '../../utils/helper'
 const editProfileAction = actionCreator('edit_profile')
 const SAVE_PROFILE = editProfileAction('SAVE_PROFILE', true)
 const SHOW_DIALOG = editProfileAction('SHOW_DIALOG')
+const HIDE_DIALOG = editProfileAction('HIDE_DIALOG')
 
 const initialState = {
   saving: false,
@@ -20,11 +21,18 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case SHOW_DIALOG: {
-      return {
+      return action.payload && {
         ...state,
-        message: action.message,
+        message: 'กรุณากรอกข้อมูลให้ครบถ้วน และถูกต้องนะครับ',
         error: true,
         showDialog: true
+      }
+    }
+
+    case HIDE_DIALOG: {
+      return {
+        ...state,
+        showDialog: false
       }
     }
 
@@ -130,8 +138,11 @@ export const actions = {
       }
     }
   },
-  onSubmitError: () => ({
+  onSubmitError: (err) => ({
     type: SHOW_DIALOG,
-    message: 'กรุณากรอกข้อมูลให้ครบถ้วน และถูกต้องนะครับ'
+    payload: err
+  }),
+  hideDialog: () => ({
+    type: HIDE_DIALOG
   })
 }
