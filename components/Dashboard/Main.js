@@ -314,7 +314,7 @@ const TranscriptComponent = () => (
   <DetailTranscript>
     รองรับเฉพาะไฟล์นามสกุล{` `}
     <DownloadLink inline target='_blank' href='https://en.wikipedia.org/wiki/JPEG'>.jpeg</DownloadLink>{` `}
-    <DownloadLink inline target='_blank' href='https://en.wikipedia.org/wiki/Portable_Network_Graphics'>.jpeg</DownloadLink>{` `}
+    <DownloadLink inline target='_blank' href='https://en.wikipedia.org/wiki/Portable_Network_Graphics'>.png</DownloadLink>{` `}
     <DownloadLink inline target='_blank' href='https://en.wikipedia.org/wiki/Portable_Document_Format'>.pdf</DownloadLink>{` `}
     ไม่เกิน 2 MB
   </DetailTranscript>
@@ -393,7 +393,7 @@ const ProgressBar = styled.div`
 `
 
 const MainUpload = props => {
-  const { answered, dashboard: { files: { parental_authorization: parent, transcription_record: transcript } } } = props
+  const { dashboard: { files: { parental_authorization: parent, transcription_record: transcript } } } = props
   return (
     <div>
       <BackgroundContainer>
@@ -452,10 +452,10 @@ const getApprove = (arr) => {
     return -1
   } else if (arr.find(data => data.is_approve === 1)) {
     return 1
-  } else if (arr.find(data => data.is_approve === 0)) {
-    return 0
+  } else if (arr.find(data => data.is_approve === null)) {
+    return null
   }
-  return null
+  return 0
 }
 
 export default compose(
