@@ -56,13 +56,13 @@ const HeaderContainer = props => (
   <Header>
     <div className='container-fluid'>
       <div className='row'>
-        <div className='col-12 d-flex align-items-center justify-content-center'>
+        <div className='col-12 d-md-flex align-items-center justify-content-center'>
           <ImgLogo className='mx-auto' src='/static/img/logo.svg' alt='wipcamp-logo' />
         </div>
 
         <Margin className='col-12 d-flex align-items-center justify-content-center'>
           {
-            !(checkDashboard() === '/dashboard')
+            (checkDashboard() !== '/dashboard')
               ? <BackButton onClick={() => backStep()} className='fas fa-chevron-circle-left mr-auto' />
               : <TempBox className='mx-auto' />
           }
@@ -74,8 +74,8 @@ const HeaderContainer = props => (
 )
 
 export default compose(
-  withState('wipid', 'setWipid', ''),
-  withState('name', 'setName', ''),
+  withState('wipid', 'setWipid', '10xxxx'),
+  withState('name', 'setName', 'ทหารเอก'),
   withState('img', 'setImg', null),
   withState('guide', 'setGuide', true),
   withState('node', 'setNode', null),

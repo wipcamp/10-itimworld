@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, {keyframes} from 'styled-components'
 import {logout} from '../../../utils/auth'
+import Link from 'next/link'
 
 const boxShadowColor = '255,255,255'
 
@@ -88,17 +89,27 @@ const Dropdown = styled.div`
 `
 
 const DisplayName = styled.div`
-    color: white;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  display: none;
+  @media (min-width: 576px) {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 10px;
-    display: none;
-    @media (min-width: 800px) {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-    }
+    flex-direction: column;
+    align-items: flex-end;
+  }
+`
+
+const DisplayWip = styled.div`
+  color: #fff;
+  display: none;
+  margin-right: 10px;
+  text-align: right;
+  @media (min-width: 0px) and (max-width: 575px) {
+    display: flex;
+  }
 `
 
 const ProfileMenu = props => {
@@ -109,18 +120,24 @@ const ProfileMenu = props => {
     >
       <DisplayName>
         <div>
-          WIP ID: {wipid || '10xxxx'}
+          WIP ID: {wipid}
         </div>
         <div>
-          สวัสดี น้อง{name || 'ทหารเอก'}
+          สวัสดี น้อง{name}
         </div>
       </DisplayName>
+      <DisplayWip>
+        WIP ID
+        <br />
+        {wipid}
+      </DisplayWip>
       <Circle
         {...props}
         onClick={toggleDD}>
         <i className='fas fa-user' />
       </Circle>
       <Dropdown className={`dropdown-menu dropdown-menu-right ${dropdownVisible && 'show'}`} >
+        <Link href='/editprofile'><a className='dropdown-item'>แก้ไขข้อมูลส่วนตัว</a></Link>
         <a className='dropdown-item' onClick={() => logout()}>ออกจากระบบ</a>
       </Dropdown>
     </div>

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Field, formValues } from 'redux-form'
 import { actions } from '../../store/reducers/register'
 import moment from 'moment'
-import { normalizeCitizenId, normalizePhone, normalizeGpax, normalizeDate, normalizeThai, normalizeEng } from './normalizeForm'
+import { normalizeCitizenId, normalizePhone, normalizeDate, normalizeThai, normalizeEng } from './normalizeForm'
 import { province } from '../Register/data-dropdown.json'
 import Datetime from 'react-datetime'
 
@@ -157,11 +157,13 @@ const Input = ({
   placeholder,
   step,
   min,
-  max
+  max,
+  title,
+  pattern
 }) => (
   <div className={outerClass}>
     <Label htmlFor={`${input.name}-input`}>{label}<Required /></Label>
-    <StyledInput {...input} min={min} max={max} step={step} type={type} className={innerClass} />
+    <StyledInput {...input} min={min} max={max} step={step} type={type} className={innerClass} placeholder={placeholder} pattern={pattern} title={title} required />
     <Error>{touched && error}</Error>
   </div>
 )
@@ -176,7 +178,7 @@ const InputNoLabel = ({
   disabled
 }) => (
   <div className={outerClass}>
-    <StyledInput {...input} type={type} placeholder={placeholder} disabled={disabled} className={innerClass} />
+    <StyledInput {...input} type={type} placeholder={placeholder} disabled={disabled} className={innerClass} required />
     <Error position={`absolute`} className='text-left'>{touched && error}</Error>
   </div>
 )
@@ -338,7 +340,7 @@ const Select = ({
   placeholder
 }) => (
   <div className={outerClass}>
-    <StyledSelect {...input} className={innerClass} disabled={disabled} width={width}>
+    <StyledSelect {...input} className={innerClass} disabled={disabled} width={width} required>
       <option value='' >{disabled ? '-' : `${placeholder || 'โปรดเลือก'}`}</option>
       {
         dropdown.map((v, i) => (
@@ -361,7 +363,7 @@ const TextArea = ({
 }) => (
   <div className={outerClass}>
     <Label htmlFor={`${name}-textarea-input`}>{label}<Required /></Label>
-    <StyledTextArea {...input} rows='4' className={innerClass} placeholder={placeholder} />
+    <StyledTextArea {...input} rows='4' className={innerClass} placeholder={placeholder} required />
     <Error>{touched && error}</Error>
   </div>
 )
@@ -413,9 +415,11 @@ const DateInput = ({
       defaultValue={defaultValue}
       timeFormat={false}
       dateFormat={`DD/MM/YYYY`}
-      renderInput={props => <StyledInput {...props} placeholder={placeholder} />}
+      renderInput={props => <StyledInput {...props} placeholder={placeholder} required />}
       isValidDate={(cur) => cur.isBetween(range.start, range.end)}
       viewMode={'years'}
+      pattern='[0-9]{1,2}/[0-9]{1,2}/[0-9]{4}' 
+      title='รูปแบบการกรอกปฏิทิน วว/ดด/ปปปป'
     />
     <Error>{touched && error}</Error>
   </div>
@@ -435,13 +439,13 @@ const FieldInput = (props) => {
   switch (props.component) {
     case 'input':
       if (props.type === 'tel') {
-        return <Field {...props} component={Input} normalize={normalizePhone} />
+        return <Field {...props} pattern='[0]{1}[0-9]{2}-[0-9]{3}-[0-9]{4}' title='รูปแบบเบอร์โทร 0xx-xxx-xxxx' component={Input} normalize={normalizePhone} />
       } else if (props.name === 'citizen_id') {
         return <Field {...props} component={Input} normalize={normalizeCitizenId} />
       } else if (['first_name', 'last_name', 'nickname', 'addr_dist'].includes(props.name)) {
-        return <Field {...props} component={Input} normalize={normalizeThai} />
+        return <Field {...props} pattern='[ก-ุฯ-๙\s]*' title='อนุญาตให้พิมพ์เฉพาะภาษาไทยเท่านั้น' component={Input} normalize={normalizeThai} />
       } else if (props.name.includes('_en')) {
-        return <Field {...props} component={Input} normalize={normalizeEng} />
+        return <Field {...props} pattern="[a-zA-Z' \s]*" title='อนุญาตให้พิมพ์เฉพาะภาษาอังกฤษเท่านั้น' component={Input} normalize={normalizeEng} />
       }
       return <Field {...props} component={Input} />
 

@@ -74,17 +74,14 @@ export default compose(
   withProps(
     props => ({
       initialValues: {
-        ...props.initialValues,
-        allergic_foods: '-',
-        congenital_diseases: '-',
-        congenital_drugs: '-'
+        ...props.initialValues
       }
     })
   ),
   reduxForm({
     form: 'register',
     validate,
-    onSubmitFail: (_, __, ___, props) => props.onSubmitError()
+    onSubmitFail: (err, __, ___, props) => props.onSubmitError(err)
   }),
   lifecycle({
     componentWillReceiveProps (nextProps) {

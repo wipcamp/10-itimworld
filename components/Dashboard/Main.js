@@ -59,9 +59,11 @@ const CardUpload = styled.div`
       `
     : props => !props.filePath ? `
         background-image: url(${props.img});
-      ` : `
+      ` : props.isApprove === 1 ? `
         background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}yes.png);
-      `
+      ` : props.isApprove === 0 ? `
+        background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}no.png);
+      ` : `background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}pending.png);`
 }
 
   
@@ -294,36 +296,64 @@ const Card = props => {
           </CardUpload>
         )
       }
-      {name == 'parental_authorization' ? <Download show /> : <Download />}
+      {name === '1' && <DownloadLink empty />}
+      {name === 'transcription_record' && <TranscriptComponent>รองรับเฉพาะไฟล์นามสกุล .png .jpeg .pdf</TranscriptComponent>}
+      {name === 'parental_authorization' && <Download />}
     </div>
   )
 }
 
+const DetailTranscript = styled.div`
+  color: #fff;
+  font-size: 16px;
+  padding-top: 10px;
+  height: 50px;
+`
+
+const TranscriptComponent = () => (
+  <DetailTranscript>
+    รองรับเฉพาะไฟล์นามสกุล{` `}
+    <DownloadLink inline target='_blank' href='https://en.wikipedia.org/wiki/JPEG'>.jpeg</DownloadLink>{` `}
+    <DownloadLink inline target='_blank' href='https://en.wikipedia.org/wiki/Portable_Network_Graphics'>.png</DownloadLink>{` `}
+    <DownloadLink inline target='_blank' href='https://en.wikipedia.org/wiki/Portable_Document_Format'>.pdf</DownloadLink>{` `}
+    ไม่เกิน 2 MB
+  </DetailTranscript>
+)
+
 const DownloadLink = styled.a`
-  color: #FFF;
+  color: #fff;
   text-decoration: underline;
   font-size: 16px;
-  padding-top: 4px;
-  height: 24px;
-  display: block;
+  padding-top: 10px;
+  height: 50px;
   text-align: center;
   width: auto;
+
+  ${props => !props.inline && `
+    display: block;
+  `}
 
   &:link {
     color: #FFF;
   }
 
   &:hover {
+    color: #fff;
     text-decoration: none;
+  }
+
+  @media (min-width: 0px) and (max-width: 767px) {
+    ${props => props.empty && `
+    height: 20px;
+    `}
   }
 `
 
 const Download = props => {
   return (
-    props.show
-      ? <DownloadLink href='/static/files/parent_authorization.pdf' target='_blank'>
+    <DownloadLink href='/static/files/parent_authorization.pdf' target='_blank'>
       ดาวน์โหลดเอกสาร
-      </DownloadLink> : <DownloadLink />
+    </DownloadLink>
   )
 }
 
@@ -363,7 +393,7 @@ const ProgressBar = styled.div`
 `
 
 const MainUpload = props => {
-  const { answered, dashboard: { files: { parental_authorization: parent, transcription_record: transcript } } } = props
+  const { dashboard: { files: { parental_authorization: parent, transcription_record: transcript } } } = props
   return (
     <div>
       <BackgroundContainer>
@@ -379,7 +409,7 @@ const MainUpload = props => {
                         'เสร็จเรียบร้อย'
                       ) : `ยังไม่เสร็จจ้า คำถามตอบไปแล้ว ${answered}, transcript อยู่สถานะ ${transcript.isApprove}, parent อยู่สถานะ ${parent.isApprove}`
                     }
-                    
+
                   </ProgressBar>
 
                 </div>
@@ -422,10 +452,10 @@ const getApprove = (arr) => {
     return -1
   } else if (arr.find(data => data.is_approve === 1)) {
     return 1
-  } else if (arr.find(data => data.is_approve === 0)) {
-    return 0
+  } else if (arr.find(data => data.is_approve === null)) {
+    return null
   }
-  return null
+  return 0
 }
 
 export default compose(

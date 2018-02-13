@@ -21,7 +21,7 @@ const Container = styled.div`
 
 const Question = styled.div`
   background: url('/static/img/frame.png') left top;
-  ${props => props.answered ? '' : 'filter: grayscale(80%);'}
+  ${props => props.answered ? '' : 'filter: grayscale(80%) !important;'}
   height: 108px;
   width: 289px;
   background-repeat: no-repeat;
@@ -42,7 +42,6 @@ const Question = styled.div`
 
 export const MainQuestion = props => {
   const { question: { questions: allQuestion, answered } } = props
-  let questionNo = 0
   let answeredQuestion = []
   answered.map((data, index) => {
     answeredQuestion[index] = data.question_id
@@ -52,12 +51,11 @@ export const MainQuestion = props => {
       <Header />
       <div className='container pt-5'>
         <div className='row'>
-          { allQuestion.map((question) => {
-            questionNo++
+          { allQuestion.map((question, index) => {
             return (
-              <div className='col-sm-6 pt-3' key={questionNo}>
+              <div className='col-sm-6 pt-3' key={index}>
                 <Link to={`/question/answer/${question.id}`} prefetch>
-                  <Question answered={answeredQuestion.indexOf(question.id) >= 0}>คำถามที่ {questionNo}</Question>
+                  <Question answered={answeredQuestion.indexOf(question.id) >= 0}>คำถามที่ {index + 1}</Question>
                 </Link>
               </div>
             )

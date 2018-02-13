@@ -82,15 +82,25 @@ const Alert = props => {
     <StyledAlert className={`row justify-content-center `} show={showDialog}>
       <div className='col-12 col-md-7'>
         <div className={`alert alert-${error ? 'danger' : 'success'}`} role='alert'>
-          <i className={`fas fa-${error ? 'exclamation-triangle' : 'check-circle'} fa-lg`} />
-          {` ${message}`}
-          <button
-            type='button'
-            className='close'
-            onClick={hideDialog}
-          >
-            <span>&times;</span>
-          </button>
+          <div className='row'>
+            <div className='1 ml-auto align-self-center'>
+              <i className={`fas fa-${error ? 'exclamation-triangle' : 'check-circle'} fa-2x`} />
+            </div>
+            <div className='col-9 pr-0 align-self-center'>
+              {` ${message}`}
+
+            </div>
+            <div className='col-1 ml-auto align-self-center'>
+              <button
+                type='button'
+                className='close'
+                onClick={hideDialog}
+              >
+                <span>&times;</span>
+              </button>
+
+            </div>
+          </div>
         </div>
       </div>
     </StyledAlert>

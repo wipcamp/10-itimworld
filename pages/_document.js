@@ -88,9 +88,6 @@ export default class MyDocument extends Document {
             dangerouslySetInnerHTML={{ __html: '__ENV__ = ' + htmlescape(env) }}
           />
           <NextScript />
-          <script src="https://cdn.ravenjs.com/3.22.2/raven.min.js"
-          crossorigin="anonymous"></script>
-          <script>Raven.config('https://84c20434b19a4b789bebc41df8128b47@sentry.io/286316').install()</script>
         </body>
         <noscript dangerouslySetInnerHTML={{__html: googleTagManagerNoScript}} />
 
