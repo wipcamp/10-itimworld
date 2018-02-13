@@ -13,6 +13,7 @@ import getToken from '../../utils/getToken'
 import { validate } from '../Core/validationForm'
 import Alert from '../Core/Alert'
 import checkStep from '../../utils/checkRegisterStep'
+import Header from '../Core/Header/Main'
 
 import { actions as editprofileActions } from '../../store/reducers/editprofile'
 
@@ -95,6 +96,7 @@ const BackgroundContainer = styled.div`
 const MainEditProfile = props => {
   return (
     <BackgroundContainer>
+      <Header />
       <div className='container'>
         <Alert {...props} {...props.editprofileData} />
         <div className='row justify-content-center'>

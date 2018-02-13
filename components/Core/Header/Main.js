@@ -62,7 +62,7 @@ const HeaderContainer = props => (
 
         <Margin className='col-12 d-flex align-items-center justify-content-center'>
           {
-            !(checkDashboard() === '/dashboard')
+            (checkDashboard() !== '/dashboard')
               ? <BackButton onClick={() => backStep()} className='fas fa-chevron-circle-left mr-auto' />
               : <TempBox className='mx-auto' />
           }
