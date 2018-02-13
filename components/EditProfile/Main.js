@@ -74,6 +74,29 @@ const mapingProfileField = (values) => {
       data[field] = values[field].toString()
     } else if (field === 'birth_at') {
       data[field] = moment(values[field], 'YYYY-MM-DD')
+    } else if (field.includes('telno')) {
+      let number = values[field]
+      if (number.length <= 3) {
+        data[field] = number
+      } else if (number.length <= 6) {
+        data[field] = `${number.slice(0, 3)}-${number.slice(3)}`
+      } else {
+        data[field] = `${number.slice(0, 3)}-${number.slice(3, 6)}-${number.slice(6, 10)}`
+      }
+    } else if (field === 'citizen_id') {
+      let numberId = values[field]
+      let len = numberId.length
+      if (numberId < 2) {
+        data[field] = numberId
+      } else if (len < 6) {
+        data[field] = `${numberId.slice(0, 1)}-${numberId.slice(1)}`
+      } else if (len < 11) {
+        data[field] = `${numberId.slice(0, 1)}-${numberId.slice(1, 5)}-${numberId.slice(5)}`
+      } else if (len < 13) {
+        data[field] = `${numberId.slice(0, 1)}-${numberId.slice(1, 5)}-${numberId.slice(5, 10)}-${numberId.slice(10)}`
+      } else {
+        data[field] = `${numberId.slice(0, 1)}-${numberId.slice(1, 5)}-${numberId.slice(5, 10)}-${numberId.slice(10, 12)}-${numberId.slice(12, 13)}`
+      }
     } else {
       data[field] = values[field]
     }
