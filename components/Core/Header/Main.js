@@ -29,7 +29,9 @@ const TempBox = styled.div`
 `
 
 const Margin = styled.div`
-  margin-top: -42px;
+  @media (min-width: 768px) {
+    margin-top: -42px;
+  }
 `
 
 const BackButton = styled.i`
@@ -56,7 +58,7 @@ const HeaderContainer = props => (
   <Header>
     <div className='container-fluid'>
       <div className='row'>
-        <div className='col-12 d-md-flex align-items-center justify-content-center'>
+        <div className='col-12 d-none d-md-flex align-items-center justify-content-center'>
           <ImgLogo className='mx-auto' src='/static/img/logo.svg' alt='wipcamp-logo' />
         </div>
 
