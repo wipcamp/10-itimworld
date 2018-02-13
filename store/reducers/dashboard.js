@@ -157,7 +157,6 @@ export default (state = initialState, action) => {
     }
 
     case INIT_DASHBOARD: {
-      console.log(action)
       return {
         ...state,
         files: {
