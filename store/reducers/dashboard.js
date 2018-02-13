@@ -95,7 +95,8 @@ export default (state = initialState, action) => {
           transcription_record: {
             ...state.files.transcription_record,
             saving: false,
-            filePath: action.payload.data.data.path
+            filePath: action.payload.data.data.path,
+            isApprove: null
           }
         },
         error: false,
@@ -112,7 +113,8 @@ export default (state = initialState, action) => {
           parental_authorization: {
             ...state.files.parental_authorization,
             saving: false,
-            filePath: action.payload.data.data.path
+            filePath: action.payload.data.data.path,
+            isApprove: null
           }
         },
         error: false,
