@@ -161,7 +161,7 @@ const Input = ({
 }) => (
   <div className={outerClass}>
     <Label htmlFor={`${input.name}-input`}>{label}<Required /></Label>
-    <StyledInput {...input} min={min} max={max} step={step} type={type} className={innerClass} placeholder={placeholder} />
+    <StyledInput {...input} min={min} max={max} step={step} type={type} className={innerClass} placeholder={placeholder} required />
     <Error>{touched && error}</Error>
   </div>
 )
@@ -176,7 +176,7 @@ const InputNoLabel = ({
   disabled
 }) => (
   <div className={outerClass}>
-    <StyledInput {...input} type={type} placeholder={placeholder} disabled={disabled} className={innerClass} />
+    <StyledInput {...input} type={type} placeholder={placeholder} disabled={disabled} className={innerClass} required />
     <Error position={`absolute`} className='text-left'>{touched && error}</Error>
   </div>
 )
@@ -338,7 +338,7 @@ const Select = ({
   placeholder
 }) => (
   <div className={outerClass}>
-    <StyledSelect {...input} className={innerClass} disabled={disabled} width={width}>
+    <StyledSelect {...input} className={innerClass} disabled={disabled} width={width} required>
       <option value='' >{disabled ? '-' : `${placeholder || 'โปรดเลือก'}`}</option>
       {
         dropdown.map((v, i) => (
@@ -361,7 +361,7 @@ const TextArea = ({
 }) => (
   <div className={outerClass}>
     <Label htmlFor={`${name}-textarea-input`}>{label}<Required /></Label>
-    <StyledTextArea {...input} rows='4' className={innerClass} placeholder={placeholder} />
+    <StyledTextArea {...input} rows='4' className={innerClass} placeholder={placeholder} required />
     <Error>{touched && error}</Error>
   </div>
 )
@@ -413,7 +413,7 @@ const DateInput = ({
       defaultValue={defaultValue}
       timeFormat={false}
       dateFormat={`DD/MM/YYYY`}
-      renderInput={props => <StyledInput {...props} placeholder={placeholder} />}
+      renderInput={props => <StyledInput {...props} placeholder={placeholder} required />}
       isValidDate={(cur) => cur.isBetween(range.start, range.end)}
       viewMode={'years'}
     />
