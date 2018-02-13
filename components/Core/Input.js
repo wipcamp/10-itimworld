@@ -157,11 +157,13 @@ const Input = ({
   placeholder,
   step,
   min,
-  max
+  max,
+  title,
+  pattern
 }) => (
   <div className={outerClass}>
     <Label htmlFor={`${input.name}-input`}>{label}<Required /></Label>
-    <StyledInput {...input} min={min} max={max} step={step} type={type} className={innerClass} placeholder={placeholder} required />
+    <StyledInput {...input} min={min} max={max} step={step} type={type} className={innerClass} placeholder={placeholder} pattern={pattern} title={title} required />
     <Error>{touched && error}</Error>
   </div>
 )
@@ -416,6 +418,8 @@ const DateInput = ({
       renderInput={props => <StyledInput {...props} placeholder={placeholder} required />}
       isValidDate={(cur) => cur.isBetween(range.start, range.end)}
       viewMode={'years'}
+      pattern='[0-9]{1,2}/[0-9]{1,2}/[0-9]{4}' 
+      title='รูปแบบการกรอกปฏิทิน วว/ดด/ปปปป'
     />
     <Error>{touched && error}</Error>
   </div>
@@ -435,13 +439,13 @@ const FieldInput = (props) => {
   switch (props.component) {
     case 'input':
       if (props.type === 'tel') {
-        return <Field {...props} component={Input} normalize={normalizePhone} />
+        return <Field {...props} pattern='[0]{1}[0-9]{2}-[0-9]{3}-[0-9]{4}' title='รูปแบบเบอร์โทร 0xx-xxx-xxxx' component={Input} normalize={normalizePhone} />
       } else if (props.name === 'citizen_id') {
         return <Field {...props} component={Input} normalize={normalizeCitizenId} />
       } else if (['first_name', 'last_name', 'nickname', 'addr_dist'].includes(props.name)) {
-        return <Field {...props} component={Input} normalize={normalizeThai} />
+        return <Field {...props} pattern='[ก-ุฯ-๙\s]*' title='อนุญาตให้พิมพ์เฉพาะภาษาไทยเท่านั้น' component={Input} normalize={normalizeThai} />
       } else if (props.name.includes('_en')) {
-        return <Field {...props} component={Input} normalize={normalizeEng} />
+        return <Field {...props} pattern="[a-zA-Z' \s]*" title='อนุญาตให้พิมพ์เฉพาะภาษาอังกฤษเท่านั้น' component={Input} normalize={normalizeEng} />
       }
       return <Field {...props} component={Input} />
 
