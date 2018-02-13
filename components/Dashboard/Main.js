@@ -299,9 +299,35 @@ const Card = props => {
       {name === '1' && <DownloadLink empty />}
       {name === 'transcription_record' && <TranscriptComponent>รองรับเฉพาะไฟล์นามสกุล .png .jpeg .pdf</TranscriptComponent>}
       {name === 'parental_authorization' && <Download />}
+
+      <Aligner>
+        {
+          files[name] && files[name].isApprove === 0 &&
+          <ReasonApprove className='reason_approve'>{files[name].approveReason}</ReasonApprove>
+        }
+      </Aligner>
     </div>
   )
 }
+
+const Aligner = styled.div`
+  @media (min-width: 768px) {
+    min-height: 100px;
+  }
+
+`
+
+const ReasonApprove = styled.div`
+  color: #fff;
+  border-radius: 10px;
+  padding: 5px 10px;
+  background: rgba(234, 12, 12, 0.5);
+  display: inline-block;
+  min-width: 90%;
+  max-width: 90%;
+  margin: 10px 0;
+  transition: all 1s;
+`
 
 const DetailTranscript = styled.div`
   color: #fff;
@@ -449,13 +475,17 @@ const getFilePath = (arr) => {
 
 const getApprove = (arr) => {
   if (arr.length === 0) {
-    return -1
+    return { isApprove: -1 }
   } else if (arr.find(data => data.is_approve === 1)) {
-    return 1
+    return { isApprove: 1 }
   } else if (arr.find(data => data.is_approve === null)) {
-    return null
+    return { isApprove: null }
   }
-  return 0
+  const approveReason = arr.reduce((prev, cur) => prev.id < cur.id ? cur : prev).approve_reason || 'ไม่พบเหตุผล รอการอัพเดทอีกครั้ง'
+  return {
+    isApprove: 0,
+    approveReason
+  }
 }
 
 export default compose(
@@ -475,16 +505,15 @@ export default compose(
       const { data } = await api.get(`/registrants/${userId}`, {Authorization: `Bearer ${token}`})
 
       const { documents } = data[0]
-      let parent = getFilePath(documents.filter(file => file.type_id === 2))
-      let transcript = getFilePath(documents.filter(file => file.type_id === 3))
-
-      this.props.setFilePath({
-        transcript,
-        parent
-      })
-      this.props.setApprove({
-        parent: getApprove(documents.filter(file => file.type_id === 2)),
-        transcript: getApprove(documents.filter(file => file.type_id === 3))
+      this.props.initDashboard({
+        transcript: {
+          ...getApprove(documents.filter(file => file.type_id === 3)),
+          filePath: getFilePath(documents.filter(file => file.type_id === 3))
+        },
+        parent: {
+          ...getApprove(documents.filter(file => file.type_id === 2)),
+          filePath: getFilePath(documents.filter(file => file.type_id === 2))
+        }
       })
       this.props.setAnswered(data[0].eval_answers.length)
     }
