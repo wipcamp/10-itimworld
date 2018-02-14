@@ -62,15 +62,7 @@ const mapingProfileField = (values) => {
   ]
   let data = {}
   fields.map(field => {
-    if (field === 'blood_group') {
-      const blood = values.blood_group
-      if (!['A', 'B', 'AB', 'O'].includes(blood)) {
-        data.other_blood_group = blood
-        data[field] = 'other'
-      } else {
-        data[field] = blood
-      }
-    } else if (['gender_id', 'edu_gpax'].includes(field)) {
+    if (['gender_id', 'edu_gpax'].includes(field)) {
       data[field] = values[field].toString()
     } else if (field === 'birth_at') {
       data[field] = moment(values[field], 'YYYY-MM-DD')
