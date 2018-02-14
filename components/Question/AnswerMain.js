@@ -62,7 +62,7 @@ export const MainAnswer = props => {
   return (
     <Container>
       <Header />
-      <div className='container'>
+      <div className='container pb-5'>
         <Alert showDialog={show} error={error} message={message} hideDialog={hideDialog} />
         <QuestionSection className='h3'>
           {`คำถามที่ ${questionid} : `}{currentQuestion.data}
