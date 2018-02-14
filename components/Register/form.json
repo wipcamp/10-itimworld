@@ -151,9 +151,9 @@
           "htmlFor": "blood-o"
         },
         {
-          "innerClass": "form-check form-check-inline col-8 mr-0 col-md-4 text-left form-group pr-0",
-          "value": "other",
-          "label": "อื่นๆ",
+          "innerClass": "form-check form-check-inline col-8 mr-0 col-md-3 text-left form-group pr-0",
+          "value": "ไม่ทราบ",
+          "label": "ไม่ทราบ",
           "htmlFor": "blood-other"
         }
       ]
