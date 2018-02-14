@@ -49,7 +49,7 @@ export const MainQuestion = props => {
   return (
     <Container>
       <Header />
-      <div className='container pt-5'>
+      <div className='container pt-5 pb-5'>
         <div className='row'>
           { allQuestion.map((question, index) => {
             return (

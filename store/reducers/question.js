@@ -9,6 +9,7 @@ const SET_CURRENT_ANSWER_ID = questionAction('SET_CURRENT_ANSWER_ID')
 const HIDE_DIALOG = questionAction('HIDE_DIALOG')
 const POSTED_ANSWER = questionAction('POSTED_ANSWER')
 const SET_ANSWERED_QUESTION = questionAction('SET_ANSWERED_QUESTION')
+const POSTING_ANSWER = questionAction('POSTING_ANSWER')
 
 const initialState = {
   questions: [],
@@ -22,7 +23,8 @@ const initialState = {
   error: false,
   show: false,
   message: '',
-  answered: []
+  answered: [],
+  isPending: false
 }
 
 // Reducer
@@ -68,7 +70,12 @@ export default (state = initialState, action) => {
         show: false
       }
     }
-
+    case POSTING_ANSWER: {
+      return {
+        ...state,
+        isPending: action.data
+      }
+    }
     case POSTED_ANSWER: {
       return {
         ...state,
@@ -120,5 +127,9 @@ export const actions = {
   setAnsweredQuestion: (answered) => ({
     type: SET_ANSWERED_QUESTION,
     answered
+  }),
+  postingAnswer: (data) => ({
+    type: POSTING_ANSWER,
+    data
   })
 }
