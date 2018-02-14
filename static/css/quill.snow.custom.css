@@ -6,15 +6,20 @@
  */
 .quill {
   background-color: #F5F8FA;
-  border-radius: 18px;
+  border-radius: 7px;
 }
 .ql-container {
   box-sizing: border-box;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 13px;
-  height: 200px;
+  height: 250px;
   margin: 0px;
   position: relative;
+}
+@media (min-width:1024px) and (min-height:670px) {
+  .ql-container {
+    height: 300px;
+  }
 }
 .ql-container.ql-disabled .ql-tooltip {
   visibility: hidden;
@@ -862,8 +867,8 @@
   box-sizing: border-box;
   font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
   padding: 8px;
-  border-top-left-radius: 18px;
-  border-top-right-radius: 18px;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
 }
 .ql-toolbar.ql-snow .ql-formats {
   margin-right: 15px;
@@ -956,6 +961,6 @@
 }
 .ql-container.ql-snow {
   border: 2px solid #E0E0E0;
-  border-bottom-left-radius: 18px;
-  border-bottom-right-radius: 18px;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
 }
