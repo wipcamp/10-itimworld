@@ -4,7 +4,7 @@ import { compose, lifecycle } from 'recompose'
 import { actions as questionActions } from '../../store/reducers/question'
 import Editor from './Editor'
 import api from '../../utils/api'
-import styled from 'styled-components'
+import styled, {keyframes} from 'styled-components'
 import Router from 'next/router'
 import Header from './../Core/Header/Main'
 import getCookie from '../../utils/cookie'
@@ -56,8 +56,19 @@ const QuestionSection = styled.div`
   padding-bottom: 25px;
 `
 
+const Spinner = keyframes`
+  from {transform:rotate(0deg);}
+  to {transform:rotate(360deg);}
+`
+
+const Loading = styled.i`
+    color: #FFF;
+    font-size: 24px;  
+    animation: ${Spinner} 2s linear infinite;
+`
+
 export const MainAnswer = props => {
-  const {question: {answers, currentQuestion, error, show, message}, hideDialog} = props
+  const {question: {answers, currentQuestion, error, show, message, isPending}, hideDialog} = props
   const questionid = props.url.query.id
   return (
     <Container>
@@ -74,7 +85,7 @@ export const MainAnswer = props => {
               <BackButton className='btn btn-large float-left' onClick={() => back()}>กลับ</BackButton>
             </div>
             <div className='col-6'>
-              <SubmitButton className='btn btn-large float-right' disabled={isAnswerEmpty(props)} onClick={() => saveAnswer(questionid, answers.data, props)}>บันทึก</SubmitButton>
+              <SubmitButton className='btn btn-large float-right' disabled={isAnswerEmpty(props) || isPending} onClick={() => saveAnswer(questionid, answers.data, props)}>{ isPending ? <Loading className='fas fa-sync-alt' /> : 'บันทึก' }</SubmitButton>
             </div>
           </div>
         </SubmitSection>
@@ -93,6 +104,7 @@ const isAnswerEmpty = (props) => {
 
 const saveAnswer = async (questionid, data, props) => {
   let {question: {answers}} = props
+  props.postingAnswer(true)
   if (answers.length === undefined || answers.length < 2) {
     return
   }
@@ -109,12 +121,14 @@ const saveAnswer = async (questionid, data, props) => {
     })
       .then(res => {
         props.postedAnswer({error: false, message: 'บันทึกคำตอบเสร็จสมบูรณ์'})
+        props.postingAnswer(false)
       })
       .then(
         setTimeout(() => Router.push('/question'), 3000)
       )
       .catch(() => {
         props.postedAnswer({error: true, message: 'บันทึกคำตอบล้มเหลว!'})
+        props.postingAnswer(false)
       })
   } else {
     api.put(`/answers`, {
@@ -126,12 +140,14 @@ const saveAnswer = async (questionid, data, props) => {
     })
       .then(res => {
         props.postedAnswer({error: false, message: 'บันทึกคำตอบเสร็จสมบูรณ์'})
+        props.postingAnswer(false)
       })
       .then(() =>
         setTimeout(() => Router.push('/question'), 3000)
       )
       .catch(() => {
         props.postedAnswer({error: true, message: 'บันทึกคำตอบล้มเหลว!'})
+        props.postingAnswer(false)
       })
   }
 }
@@ -151,12 +167,14 @@ const getQuestionData = async (props) => {
 
 const getAnswerData = async (props) => {
   let { token } = await getCookie({req: false})
-  let {url: {query: id}, setCurrentAnswerId, setAnswer} = props
+  let {url: {query: id}, setCurrentAnswerId, setAnswer, postingAnswer} = props
   api.get(`/users/${props.initialValues.user_id}/answers/${id.id}`, {Authorization: `Bearer ${token}`})
     .then((response) => {
       if (response.data.data[0] !== undefined) {
         setCurrentAnswerId(response.data.data[0].id)
         setAnswer(response.data.data[0].questionid, response.data.data[0].data)
+      } else {
+        postingAnswer(false)
       }
     })
 }
