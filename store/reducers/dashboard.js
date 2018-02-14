@@ -9,24 +9,23 @@ const SET_FIELD_FILE = dashboardAction('SET_FIELD')
 const HIDE_DIALOG = dashboardAction('HIDE_DIALOG')
 const UPLOAD_TRANSCRIPT = dashboardAction('UPLOAD_TRANSCRIPT', true)
 const UPLOAD_PARENTAL_AUTHORIZATION = dashboardAction('UPLOAD_PARENTAL_AUTHORIZATION', true)
-const SET_FILE_PATH = dashboardAction('SET_FILE_PATH')
-const SET_APPROVE_FILE = dashboardAction('SET_APPROVE_FILE')
+const INIT_DASHBOARD = dashboardAction('INIT_DASHBOARD')
 
 const initialState = {
   files: {
     transcription_record: {
       filePath: '',
-      uploaded: true,
       saving: false,
       dropzoneActive: false,
-      isApprove: -2
+      isApprove: -2,
+      approveReason: ''
     },
     parental_authorization: {
       filePath: '',
-      uploaded: false,
       saving: false,
       dropzoneActive: false,
-      isApprove: -2
+      isApprove: -2,
+      approveReason: ''
     }
   },
   error: false,
@@ -157,35 +156,18 @@ export default (state = initialState, action) => {
       }
     }
 
-    case SET_FILE_PATH: {
+    case INIT_DASHBOARD: {
       return {
         ...state,
         files: {
           ...state.files,
           parental_authorization: {
             ...state.files.parental_authorization,
-            filePath: action.parent
+            ...action.parent
           },
           transcription_record: {
             ...state.files.transcription_record,
-            filePath: action.transcript
-          }
-        }
-      }
-    }
-
-    case SET_APPROVE_FILE: {
-      return {
-        ...state,
-        files: {
-          ...state.files,
-          parental_authorization: {
-            ...state.files.parental_authorization,
-            isApprove: action.parent
-          },
-          transcription_record: {
-            ...state.files.transcription_record,
-            isApprove: action.transcript
+            ...action.transcript
           }
         }
       }
@@ -248,13 +230,8 @@ export const actions = {
       type: HIDE_DIALOG
     }
   },
-  setFilePath: ({parent, transcript}) => ({
-    type: SET_FILE_PATH,
-    parent,
-    transcript
-  }),
-  setApprove: ({parent, transcript}) => ({
-    type: SET_APPROVE_FILE,
+  initDashboard: ({parent, transcript}) => ({
+    type: INIT_DASHBOARD,
     parent,
     transcript
   })

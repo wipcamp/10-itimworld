@@ -94,22 +94,9 @@ const DisplayName = styled.div`
   justify-content: center;
   align-items: center;
   margin-right: 10px;
-  display: none;
-  @media (min-width: 576px) {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
-`
-
-const DisplayWip = styled.div`
-  color: #fff;
-  display: none;
-  margin-right: 10px;
-  text-align: right;
-  @media (min-width: 0px) and (max-width: 575px) {
-    display: flex;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 `
 
 const ProfileMenu = props => {
@@ -126,11 +113,6 @@ const ProfileMenu = props => {
           สวัสดี น้อง{name}
         </div>
       </DisplayName>
-      <DisplayWip>
-        WIP ID
-        <br />
-        {wipid}
-      </DisplayWip>
       <Circle
         {...props}
         onClick={toggleDD}>
