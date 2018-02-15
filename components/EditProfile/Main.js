@@ -115,12 +115,7 @@ const MainEditProfile = props => {
       <div className='container'>
         <Alert {...props} {...props.editprofileData} />
         <div className='row justify-content-center'>
-          <div className='col-6 col-md-5 mt-4 mb-2'>
-            <img src='/static/img/logo.svg' alt='' />
-          </div>
-        </div>
-        <div className='row justify-content-center'>
-          <div className='col-12 col-md-10 mb-4'>
+          <div className='col-12 col-md-10 my-4'>
             <EditForm
               {...props}
               fields={allFields}
