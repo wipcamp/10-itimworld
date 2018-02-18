@@ -413,54 +413,64 @@ const cardData = [
   }
 ]
 
-const ProgressBar = styled.div`
+const StyledProgressBar = styled.div.attrs({
+  className: 'row justify-content-center mt-3'
+})`
+  transition: all 1.5s ease-in-out;
+  max-height: 0;
 
+  .card {
+    opacity: 0;
+    transition: all 1.5s;
+    font-size: 120%;
+  }
 
+  ${props => props.data &&
+            props.data.answered === 6 &&
+            props.data.parentApprove === 1 &&
+            props.data.transcriptApprove === 1 && `
+    max-height: inherit;
+
+    .card {
+      opacity: 1;
+    }          
+  `}
 `
 
-const MainUpload = props => {
-  const { dashboard: { files: { parental_authorization: parent, transcription_record: transcript } } } = props
-  return (
-    <div>
-      <BackgroundContainer>
-        <Header />
-        <div className='container'>
-          {/* <div className='row justify-content-center mt-3'>
-            <div className='col-8'>
-              <div className='card'>
-                <div className='card-body'>
-                  <ProgressBar>
-                    {
-                      (answered === 6 && parent.isApprove === 1 && transcript.isApprove === 1) ? (
-                        'เสร็จเรียบร้อย'
-                      ) : `ยังไม่เสร็จจ้า คำถามตอบไปแล้ว ${answered}, transcript อยู่สถานะ ${transcript.isApprove}, parent อยู่สถานะ ${parent.isApprove}`
-                    }
-
-                  </ProgressBar>
-
-                </div>
-              </div>
-
-            </div>
-
-          </div> */}
-          <Alert {...props} {...props.dashboard} />
-          <CustomRow className='row text-center'>
-            {
-              cardData.map((data, index) => (
-                <Card
-                  key={index}
-                  {...props}
-                  {...data}
-                />
-              ))
-            }
-          </CustomRow>
+const ProgressBar = ({ answered, dashboard: { files: { parental_authorization: { isApprove: parentApprove }, transcription_record: { isApprove: transcriptApprove } } } }) => (
+  <StyledProgressBar data={{answered, parentApprove, transcriptApprove}}>
+    <div className='col-md-8 col-12'>
+      <div className='card'>
+        <div className='card-body text-center'>
+          เสร็จเรียบร้อย รอการประกาศผลในวันที่ DD MMM นี้นะครับ
         </div>
-      </BackgroundContainer>
+      </div>
     </div>
-  )
-}
+  </StyledProgressBar>
+)
+
+const MainUpload = props => (
+  <div>
+    <BackgroundContainer>
+      <Header />
+      <div className='container'>
+        <ProgressBar {...props} />
+        <Alert {...props} {...props.dashboard} />
+        <CustomRow className='row text-center'>
+          {
+            cardData.map((data, index) => (
+              <Card
+                key={index}
+                {...props}
+                {...data}
+              />
+            ))
+          }
+        </CustomRow>
+      </div>
+    </BackgroundContainer>
+  </div>
+)
 
 const getFilePath = (arr) => {
   if (arr.length === 0) {
