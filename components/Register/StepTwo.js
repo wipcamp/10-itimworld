@@ -9,6 +9,7 @@ const StepTwo = (props) => {
       {...props}
       fields={fields}
       buttonText={`ลงทะเบียน`}
+      steptwo
     />
   )
 }
