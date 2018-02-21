@@ -50,7 +50,7 @@ transition: transform 0.7s linear;
 ${props => props.show ? `
   transform: translateY(0);  
 ` : `
-  transform: translateY(-100px);
+  transform: translateY(-20000px);
 `}
 
 @media (min-width: 576px) {
