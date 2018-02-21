@@ -49,15 +49,23 @@ const SubmitButton = styled.button`
 
 const FormContainer = (props) => {
   const { handleSubmit, pristine, submitting, buttonText, onSubmit } = props
+  const { fields, steptwo } = props
   return (
     <div>
       <RegisterSection onSubmit={handleSubmit(onSubmit)}>
         <SubHeader>ลงทะเบียน</SubHeader>
-        <div className='row px-3 pb-5 pt-3'>
+        <div className='row px-3 pb-4 pt-3'>
           {
-            props.fields.map((field, index) => (
+            fields.map((field, index) => (
               <FieldInput key={field + index} {...field} />
             ))
+          }
+          {
+            steptwo && (
+              <div className='col'>
+                <p className='mb-1'><strong>เมื่อลงทะเบียนจะถือว่า คุณยอมรับ<a href='https://wip.camp/legal' target='_blank'>ข้อตกลง</a></strong></p>
+              </div>
+            )
           }
           <div className='col-12'>
             <SubmitButton
