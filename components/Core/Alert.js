@@ -6,7 +6,7 @@ position: fixed;
 top: 0;
 z-index: 100;
 width: 100%;
-transition: transform 0.7s linear;
+transition: transform 1s linear;
 
   .alert {
     border: 0;
@@ -50,7 +50,7 @@ transition: transform 0.7s linear;
 ${props => props.show ? `
   transform: translateY(0);  
 ` : `
-  transform: translateY(-100px);
+  transform: translateY(-300px);
 `}
 
 @media (min-width: 576px) {

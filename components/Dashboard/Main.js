@@ -303,7 +303,7 @@ const Card = props => {
       <Aligner>
         {
           files[name] && files[name].isApprove === 0 &&
-          <ReasonApprove className='reason_approve'>{files[name].approveReason}</ReasonApprove>
+          <ReasonApprove className='reason_approve' dangerouslySetInnerHTML={{__html: files[name].approveReason}} />
         }
       </Aligner>
     </div>
@@ -478,13 +478,11 @@ const getApprove = (arr) => {
     return { isApprove: -1 }
   } else if (arr.find(data => data.is_approve === 1)) {
     return { isApprove: 1 }
-  } else if (arr.find(data => data.is_approve === null)) {
-    return { isApprove: null }
   }
-  const approveReason = arr.reduce((prev, cur) => prev.id < cur.id ? cur : prev).approve_reason || 'ไม่พบเหตุผล รอการอัพเดทอีกครั้ง'
+  const lastDoc = arr[arr.length - 1]
   return {
-    isApprove: 0,
-    approveReason
+    isApprove: lastDoc.is_approve,
+    approveReason: lastDoc.approve_reason || 'กรุณาติดต่อพี่วิปโป้ ได้ที่<a href="https://www.facebook.com/wipcamp" target="_blank">แฟนเพจ</a>เพื่อสอบถามปัญหา'
   }
 }
 
