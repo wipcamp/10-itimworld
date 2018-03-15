@@ -13,6 +13,7 @@ import Header from '../Core/Header/Main'
 import Alert from '../Core/Alert'
 import checkRegisterStep from '../../utils/checkRegisterStep'
 import getToken from '../../utils/getToken'
+import { closeUploadDocument } from '../../schedule.json'
 
 const BackgroundContainer = styled.div`
   background: #29241B url('/static/img/bg.png') center top;
@@ -57,16 +58,19 @@ const CardUpload = styled.div`
       ` : `
         background-image: url(${props.img});
       `
-    : props => !props.filePath ? `
+    : props => !props.filePath ? (
+      props.isApprove === -3 ? `
+        background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}-closed.png);
+      ` : `
         background-image: url(${props.img});
-      ` : props.isApprove === 1 ? `
+      `) : props.isApprove === 1 ? `
         background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}yes.png);
       ` : props.isApprove === 0 ? `
         background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}no.png);
       ` : `background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}pending.png);`
 }
 
-  
+  ${props => console.log(props)}
   
   height: 290px;
   width: 248px;
@@ -267,7 +271,7 @@ const Card = props => {
               onDragEnter={() => setDragActive({field: name, dropActive: true})}
               onDragLeave={() => setDragActive({field: name, dropActive: false})}
               onDrop={(files) => onDropFile(name, files, userId)}
-              disabled={files[name].isApprove === 1 || files[name].isApprove === -2}
+              disabled={[1, -2, -3].includes(files[name].isApprove)}
             >
               <label
                 title={files[name].saving ? '' : props.title}
@@ -473,8 +477,11 @@ const getFilePath = (arr) => {
   }
 }
 
+console.log(closeUploadDocument)
 const getApprove = (arr) => {
   if (arr.length === 0) {
+    const end = moment(`${closeUploadDocument} GMT+7`, 'DD MMM YYYY hh:mm:ss')
+    if (moment().isAfter(end)) return { isApprove: -3 }
     return { isApprove: -1 }
   } else if (arr.find(data => data.is_approve === 1)) {
     return { isApprove: 1 }
