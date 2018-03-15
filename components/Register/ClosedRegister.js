@@ -31,7 +31,7 @@ const ClosedRegister = (props) => (
     <div>
       <ImgLogo src='/static/img/logo.svg' alt='wipcamp-logo' />
       <p>
-        หมดเวลารับสมัครแล้ว<br />ขอขอบใจออเจ้าทั้งหลายที่ให้ความสนใจ<br />แล้วพนกันใหม่ศกหน้า
+        หมดเวลารับสมัครแล้ว<br />ขอขอบใจออเจ้าทั้งหลายที่ให้ความสนใจ<br />แล้วพบกันใหม่ศกหน้า
       </p>
     </div>
   </CenterContainer>
