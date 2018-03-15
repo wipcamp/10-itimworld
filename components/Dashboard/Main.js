@@ -272,7 +272,6 @@ const Card = props => {
               <label
                 title={files[name].saving ? '' : props.title}
                 htmlFor={`${name}-file-input`}
-                
               />
               <AbsoluteContainer>
                 {
@@ -438,7 +437,14 @@ const StyledProgressBar = styled.div.attrs({
 `
 
 const ProgressBar = (props) => {
-  const { answered, dashboard: { files: { parental_authorization: { isApprove: parentApprove }, transcription_record: { isApprove: transcriptApprove } } } } = props
+  const { answered,
+    dashboard: {
+      files: {
+        parental_authorization: { isApprove: parentApprove },
+        transcription_record: { isApprove: transcriptApprove }
+      }
+    }
+  } = props
   return (
     <StyledProgressBar data={{answered, parentApprove, transcriptApprove}}>
       <div className='col-md-8 col-12'>
