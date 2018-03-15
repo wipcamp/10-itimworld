@@ -272,7 +272,7 @@ const Card = props => {
               <label
                 title={files[name].saving ? '' : props.title}
                 htmlFor={`${name}-file-input`}
-                // dangerouslySetInnerHTML={{ __html: content }}
+                
               />
               <AbsoluteContainer>
                 {
@@ -418,7 +418,7 @@ const StyledProgressBar = styled.div.attrs({
 })`
   transition: all 1.5s ease-in-out;
   max-height: 0;
-
+  
   .card {
     opacity: 0;
     transition: all 1.5s;
@@ -437,17 +437,28 @@ const StyledProgressBar = styled.div.attrs({
   `}
 `
 
-const ProgressBar = ({ answered, dashboard: { files: { parental_authorization: { isApprove: parentApprove }, transcription_record: { isApprove: transcriptApprove } } } }) => (
-  <StyledProgressBar data={{answered, parentApprove, transcriptApprove}}>
-    <div className='col-md-8 col-12'>
-      <div className='card'>
-        <div className='card-body text-center'>
-          เสร็จเรียบร้อย รอการประกาศผลในวันที่ DD MMM นี้นะครับ
+const ProgressBar = (props) => {
+  const { answered, dashboard: { files: { parental_authorization: { isApprove: parentApprove }, transcription_record: { isApprove: transcriptApprove } } } } = props
+  return (
+    <StyledProgressBar data={{answered, parentApprove, transcriptApprove}}>
+      <div className='col-md-8 col-12'>
+        <div className='card'>
+          <div className='card-body text-center'>
+            {
+              answered === 6 &&
+              parentApprove === 1 &&
+              transcriptApprove === 1 && (
+                <span dangerouslySetInnerHTML={{ __html: `
+                การสมัครของน้องเสร็จเรียบร้อยทุกขั้นตอนแล้ว<br /> รอประกาศผลวันที่ 31 มีนาคม พ.ศ.2561 ที่เว็บไซต์ <a href='https://wip.camp'>wip.camp</a> นะครับ
+                ` }} />
+              )
+            }
+          </div>
         </div>
       </div>
-    </div>
-  </StyledProgressBar>
-)
+    </StyledProgressBar>
+  )
+}
 
 const MainUpload = props => (
   <div>
