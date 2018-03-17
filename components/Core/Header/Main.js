@@ -2,7 +2,7 @@ import React from 'react'
 import Router from 'next/router'
 import styled from 'styled-components'
 import ProfileMenu from './ProfileMenu'
-import { withState, withHandlers, compose, lifecycle, withStateHandlers } from 'recompose'
+import { withState, withHandlers, compose, lifecycle, withStateHandlers, withProps } from 'recompose'
 
 import cookie from '../../../utils/cookie'
 import api from '../../../utils/api'
@@ -76,9 +76,14 @@ const HeaderContainer = props => (
 )
 
 export default compose(
-  withState('wipid', 'setWipid', '10xxxx'),
-  withState('name', 'setName', 'ทหารเอก'),
-  withState('img', 'setImg', null),
+  withState('header', 'initHeader', {
+    wipid: '10XXXX',
+    name: 'ทหารเอก',
+    img: null
+  }),
+  withProps(props => ({
+    ...props.header
+  })),
   withState('guide', 'setGuide', true),
   withState('node', 'setNode', null),
   withStateHandlers(
@@ -109,11 +114,13 @@ export default compose(
       let { token } = cookie({req: false})
       let { data } = await api.post(`/auth/me`, null, {Authorization: `Bearer ${token}`})
       if (data) {
-        props.setImg(`https://graph.facebook.com/${data.provider_acc}/picture?height=50000`)
         let { data: registrant } = await api.get(`/registrants/${data.id}`, {Authorization: `Bearer ${token}`})
         registrant = registrant[0]
-        props.setWipid(data.id)
-        props.setName(registrant.nickname)
+        props.initHeader({
+          img: `https://graph.facebook.com/${data.provider_acc}/picture?height=50000`,
+          wipid: data.id,
+          name: registrant.nickname
+        })
       }
     },
     componentWillUnmount () {

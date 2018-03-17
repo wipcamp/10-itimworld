@@ -1,14 +1,18 @@
 /* global alert */
 import React from 'react'
+import moment from 'moment'
 import api from './api'
 import cookie from './cookie'
 import Router from 'next/router'
 import Loading from '../components/Core/Loading'
+import ClosedRegisterComponent from '../components/Register/ClosedRegister'
+import { closeRegister as closeSchedule } from '../schedule.json'
 
 const checkStep = (path) => Component => {
   return class extends React.Component {
     state = {
-      showComponent: false
+      doneLoading: false,
+      closedRegister: false
     }
 
     async componentDidMount () {
@@ -17,13 +21,17 @@ const checkStep = (path) => Component => {
       const dashboardPath = '/dashboard'
       let {token} = cookie({req: false})
       let data =
-      await api.get(`/registrants/${props.initialValues.user_id}`, {Authorization: `Bearer ${token}`})
+        await api.get(`/registrants/${props.initialValues.user_id}`, {Authorization: `Bearer ${token}`})
           .then(res => res.data)
           .catch(err => alert(err))
       let show = false
+      let closedRegister = false
       if (!data.length) { // user not register
         if (path === registerPath) {
-          props.setRegisterStep(1)
+          closedRegister = this.isClosed()
+          if (!closedRegister) {
+            props.setRegisterStep(1)
+          }
           show = true
         } else {
           Router.push(registerPath)
@@ -33,12 +41,14 @@ const checkStep = (path) => Component => {
         if (path === registerPath) {
           if (!data) {
           } else if (!data.profile_registrant.skill_computer) {
-            props.setRegisterStep(2)
+            closedRegister = this.isClosed()
+            if (!closedRegister) {
+              props.setRegisterStep(2)
+            }
             show = true
           } else {
             Router.push(dashboardPath)
           }
-          this.setState({showComponent: show})
         } else {
           if (!data.first_name || !data.profile_registrant.skill_computer) {
             Router.push(registerPath)
@@ -47,13 +57,18 @@ const checkStep = (path) => Component => {
           }
         }
       }
-      this.setState({ showComponent: show })
+      this.setState({ doneLoading: show, closedRegister })
+    }
+
+    isClosed () {
+      const end = moment(`${closeSchedule} GMT+7`, 'DD MMM YYYY hh:mm:ss')
+      return moment().isAfter(end)
     }
 
     render () {
-      if (!this.state.showComponent) {
-        return <Loading />
-      }
+      const { closedRegister, doneLoading } = this.state
+      if (!doneLoading) return <Loading />
+      if (closedRegister) return <ClosedRegisterComponent />
       return (
         <Component {...this.props} />
       )

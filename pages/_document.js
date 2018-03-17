@@ -88,7 +88,7 @@ export default class MyDocument extends Document {
             dangerouslySetInnerHTML={{ __html: '__ENV__ = ' + htmlescape(env) }}
           />
           <NextScript />
-        </body>
+        </body>        
         <noscript dangerouslySetInnerHTML={{__html: googleTagManagerNoScript}} />
 
       </html>

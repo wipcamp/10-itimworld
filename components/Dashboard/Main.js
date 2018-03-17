@@ -13,6 +13,7 @@ import Header from '../Core/Header/Main'
 import Alert from '../Core/Alert'
 import checkRegisterStep from '../../utils/checkRegisterStep'
 import getToken from '../../utils/getToken'
+import { closeUploadDocument } from '../../schedule.json'
 
 const BackgroundContainer = styled.div`
   background: #29241B url('/static/img/bg.png') center top;
@@ -57,16 +58,19 @@ const CardUpload = styled.div`
       ` : `
         background-image: url(${props.img});
       `
-    : props => !props.filePath ? `
+    : props => !props.filePath ? (
+      props.isApprove === -3 ? `
+        background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}-closed.png);
+      ` : `
         background-image: url(${props.img});
-      ` : props.isApprove === 1 ? `
+      `) : props.isApprove === 1 ? `
         background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}yes.png);
       ` : props.isApprove === 0 ? `
         background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}no.png);
       ` : `background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}pending.png);`
 }
 
-  
+  ${props => console.log(props)}
   
   height: 290px;
   width: 248px;
@@ -267,12 +271,11 @@ const Card = props => {
               onDragEnter={() => setDragActive({field: name, dropActive: true})}
               onDragLeave={() => setDragActive({field: name, dropActive: false})}
               onDrop={(files) => onDropFile(name, files, userId)}
-              disabled={files[name].isApprove === 1 || files[name].isApprove === -2}
+              disabled={[1, -2, -3].includes(files[name].isApprove)}
             >
               <label
                 title={files[name].saving ? '' : props.title}
                 htmlFor={`${name}-file-input`}
-                // dangerouslySetInnerHTML={{ __html: content }}
               />
               <AbsoluteContainer>
                 {
@@ -413,54 +416,82 @@ const cardData = [
   }
 ]
 
-const ProgressBar = styled.div`
+const StyledProgressBar = styled.div.attrs({
+  className: 'row justify-content-center mt-3'
+})`
+  transition: all 1.5s ease-in-out;
+  max-height: 0;
+  
+  .card {
+    opacity: 0;
+    transition: all 1.5s;
+    font-size: 120%;
+  }
 
+  ${props => props.data &&
+            props.data.answered === 6 &&
+            props.data.parentApprove === 1 &&
+            props.data.transcriptApprove === 1 && `
+    max-height: inherit;
 
+    .card {
+      opacity: 1;
+    }          
+  `}
 `
 
-const MainUpload = props => {
-  const { dashboard: { files: { parental_authorization: parent, transcription_record: transcript } } } = props
+const ProgressBar = (props) => {
+  const { answered,
+    dashboard: {
+      files: {
+        parental_authorization: { isApprove: parentApprove },
+        transcription_record: { isApprove: transcriptApprove }
+      }
+    }
+  } = props
   return (
-    <div>
-      <BackgroundContainer>
-        <Header />
-        <div className='container'>
-          {/* <div className='row justify-content-center mt-3'>
-            <div className='col-8'>
-              <div className='card'>
-                <div className='card-body'>
-                  <ProgressBar>
-                    {
-                      (answered === 6 && parent.isApprove === 1 && transcript.isApprove === 1) ? (
-                        'เสร็จเรียบร้อย'
-                      ) : `ยังไม่เสร็จจ้า คำถามตอบไปแล้ว ${answered}, transcript อยู่สถานะ ${transcript.isApprove}, parent อยู่สถานะ ${parent.isApprove}`
-                    }
-
-                  </ProgressBar>
-
-                </div>
-              </div>
-
-            </div>
-
-          </div> */}
-          <Alert {...props} {...props.dashboard} />
-          <CustomRow className='row text-center'>
+    <StyledProgressBar data={{answered, parentApprove, transcriptApprove}}>
+      <div className='col-md-8 col-12'>
+        <div className='card'>
+          <div className='card-body text-center'>
             {
-              cardData.map((data, index) => (
-                <Card
-                  key={index}
-                  {...props}
-                  {...data}
-                />
-              ))
+              answered === 6 &&
+              parentApprove === 1 &&
+              transcriptApprove === 1 && (
+                <span dangerouslySetInnerHTML={{ __html: `
+                การสมัครของน้องเสร็จเรียบร้อยทุกขั้นตอนแล้ว<br /> รอประกาศผลวันที่ 31 มีนาคม พ.ศ.2561 ที่เว็บไซต์ <a href='https://wip.camp'>wip.camp</a> นะครับ
+                ` }} />
+              )
             }
-          </CustomRow>
+          </div>
         </div>
-      </BackgroundContainer>
-    </div>
+      </div>
+    </StyledProgressBar>
   )
 }
+
+const MainUpload = props => (
+  <div>
+    <BackgroundContainer>
+      <Header />
+      <div className='container'>
+        <ProgressBar {...props} />
+        <Alert {...props} {...props.dashboard} />
+        <CustomRow className='row text-center'>
+          {
+            cardData.map((data, index) => (
+              <Card
+                key={index}
+                {...props}
+                {...data}
+              />
+            ))
+          }
+        </CustomRow>
+      </div>
+    </BackgroundContainer>
+  </div>
+)
 
 const getFilePath = (arr) => {
   if (arr.length === 0) {
@@ -473,8 +504,11 @@ const getFilePath = (arr) => {
   }
 }
 
+console.log(closeUploadDocument)
 const getApprove = (arr) => {
   if (arr.length === 0) {
+    const end = moment(`${closeUploadDocument} GMT+7`, 'DD MMM YYYY hh:mm:ss')
+    if (moment().isAfter(end)) return { isApprove: -3 }
     return { isApprove: -1 }
   } else if (arr.find(data => data.is_approve === 1)) {
     return { isApprove: 1 }
