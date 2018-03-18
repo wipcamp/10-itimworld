@@ -2,6 +2,8 @@ import React from 'react'
 import styled, {keyframes} from 'styled-components'
 import {logout} from '../../../utils/auth'
 import Link from 'next/link'
+import { closeRegister } from '../../../schedule.json'
+import moment from 'moment'
 
 const boxShadowColor = '255,255,255'
 
@@ -100,6 +102,8 @@ const DisplayName = styled.div`
 `
 
 const ProfileMenu = props => {
+  const end = moment(`${closeRegister} GMT+7`, 'DD MMM YYYY hh:mm:ss')
+  const isClosed = moment().isAfter(end)
   const { dropdownVisible, toggleDD, setNode, name, wipid } = props
   return (
     <div className='btn-group'
@@ -119,7 +123,9 @@ const ProfileMenu = props => {
         <i className='fas fa-user' />
       </Circle>
       <Dropdown className={`dropdown-menu dropdown-menu-right ${dropdownVisible && 'show'}`} >
-        <Link href='/editprofile'><a className='dropdown-item'>แก้ไขข้อมูลส่วนตัว</a></Link>
+        {
+          !isClosed && <Link href='/editprofile'><a className='dropdown-item'>แก้ไขข้อมูลส่วนตัว</a></Link>
+        }
         <a className='dropdown-item' onClick={() => logout()}>ออกจากระบบ</a>
       </Dropdown>
     </div>
