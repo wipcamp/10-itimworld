@@ -52,6 +52,10 @@ const CardUpload = styled.div`
   background-position: center top;
   cursor:pointer;
 
+  ${props => (props.isApprove === -3 || props.isApprove === -2) && `
+    cursor: no-drop;
+  `}
+
   ${props => Number.isInteger(props.countAnswered)
     ? props.countAnswered === 6 ? `
         background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}yes.png);
@@ -166,7 +170,6 @@ const CardUpload = styled.div`
     transition: all .5s;
 
     & label {
-      cursor: pointer;
       position: absolute;
       display: flex;
       justify-content: center;
@@ -179,7 +182,7 @@ const CardUpload = styled.div`
     margin: 20px auto;
     display: flex;
     justify-content: center;
-    cursor: pointer;
+    /* cursor: pointer; */
 
     ${props => props.countAnswered === 0 && `
       filter: grayscale(100%) !important;
