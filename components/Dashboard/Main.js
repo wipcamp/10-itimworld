@@ -52,6 +52,10 @@ const CardUpload = styled.div`
   background-position: center top;
   cursor:pointer;
 
+  ${props => (props.isApprove === -3 || props.isApprove === -2) && `
+    cursor: no-drop;
+  `}
+
   ${props => Number.isInteger(props.countAnswered)
     ? props.countAnswered === 6 ? `
         background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}yes.png);
@@ -67,10 +71,15 @@ const CardUpload = styled.div`
         background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}yes.png);
       ` : props.isApprove === 0 ? `
         background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}no.png);
+      ` : props.isApprove === -3 ? `
+        background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}-closed.png);
       ` : `background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}pending.png);`
 }
 
-  ${props => console.log(props)}
+  ${props => props.closed && `
+    cursor: default;
+    background-image: url('/static/img/card3-closed.png');
+  `}
   
   height: 290px;
   width: 248px;
@@ -166,7 +175,6 @@ const CardUpload = styled.div`
     transition: all .5s;
 
     & label {
-      cursor: pointer;
       position: absolute;
       display: flex;
       justify-content: center;
@@ -179,7 +187,7 @@ const CardUpload = styled.div`
     margin: 20px auto;
     display: flex;
     justify-content: center;
-    cursor: pointer;
+    /* cursor: pointer; */
 
     ${props => props.countAnswered === 0 && `
       filter: grayscale(100%) !important;
@@ -247,17 +255,27 @@ const CustomRow = styled.div`
 `
 
 const Card = props => {
+  const end = moment(`${closeUploadDocument} GMT+7`, 'DD MMM YYYY hh:mm:ss')
+  const isClosed = moment().isAfter(end)
   const { outerClass, link, name, dashboard: { files }, setDragActive, onDropFile, answered, initialValues: { user_id: userId } } = props
   return (
     <div className={`${outerClass} mx-auto`}>
       {
         link ? (
-          <Link prefetch href='/question'>
+          isClosed ? (
             <CardUpload
+              closed={answered !== 6}
               countAnswered={answered}
               {...props}
             />
-          </Link>
+          ) : (
+            <Link prefetch href='/question'>
+              <CardUpload
+                countAnswered={answered}
+                {...props}
+              />
+            </Link>
+          )
         ) : (
           <CardUpload
             {...props}
@@ -504,7 +522,6 @@ const getFilePath = (arr) => {
   }
 }
 
-console.log(closeUploadDocument)
 const getApprove = (arr) => {
   if (arr.length === 0) {
     const end = moment(`${closeUploadDocument} GMT+7`, 'DD MMM YYYY hh:mm:ss')
@@ -514,6 +531,8 @@ const getApprove = (arr) => {
     return { isApprove: 1 }
   }
   const lastDoc = arr[arr.length - 1]
+  const end = moment(`${closeUploadDocument} GMT+7`, 'DD MMM YYYY hh:mm:ss')
+  if (moment().isAfter(end)) return { isApprove: -3 }
   return {
     isApprove: lastDoc.is_approve,
     approveReason: lastDoc.approve_reason || 'กรุณาติดต่อพี่วิปโป้ ได้ที่<a href="https://www.facebook.com/wipcamp" target="_blank">แฟนเพจ</a>เพื่อสอบถามปัญหา'
