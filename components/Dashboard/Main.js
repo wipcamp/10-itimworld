@@ -67,10 +67,10 @@ const CardUpload = styled.div`
         background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}yes.png);
       ` : props.isApprove === 0 ? `
         background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}no.png);
+      ` : props.isApprove === -3 ? `
+        background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}-closed.png);
       ` : `background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}pending.png);`
 }
-
-  ${props => console.log(props)}
   
   height: 290px;
   width: 248px;
@@ -504,7 +504,6 @@ const getFilePath = (arr) => {
   }
 }
 
-console.log(closeUploadDocument)
 const getApprove = (arr) => {
   if (arr.length === 0) {
     const end = moment(`${closeUploadDocument} GMT+7`, 'DD MMM YYYY hh:mm:ss')
@@ -514,6 +513,8 @@ const getApprove = (arr) => {
     return { isApprove: 1 }
   }
   const lastDoc = arr[arr.length - 1]
+  const end = moment(`${closeUploadDocument} GMT+7`, 'DD MMM YYYY hh:mm:ss')
+  if (moment().isAfter(end)) return { isApprove: -3 }
   return {
     isApprove: lastDoc.is_approve,
     approveReason: lastDoc.approve_reason || 'กรุณาติดต่อพี่วิปโป้ ได้ที่<a href="https://www.facebook.com/wipcamp" target="_blank">แฟนเพจ</a>เพื่อสอบถามปัญหา'
