@@ -75,6 +75,11 @@ const CardUpload = styled.div`
         background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}-closed.png);
       ` : `background-image: url(${props.img.substring(0, `${props.img.length}` - 4)}pending.png);`
 }
+
+  ${props => props.closed && `
+    cursor: default;
+    background-image: url('/static/img/card3-closed.png');
+  `}
   
   height: 290px;
   width: 248px;
@@ -250,17 +255,27 @@ const CustomRow = styled.div`
 `
 
 const Card = props => {
+  const end = moment(`${closeUploadDocument} GMT+7`, 'DD MMM YYYY hh:mm:ss')
+  const isClosed = moment().isAfter(end)
   const { outerClass, link, name, dashboard: { files }, setDragActive, onDropFile, answered, initialValues: { user_id: userId } } = props
   return (
     <div className={`${outerClass} mx-auto`}>
       {
         link ? (
-          <Link prefetch href='/question'>
+          isClosed ? (
             <CardUpload
+              closed={answered !== 6}
               countAnswered={answered}
               {...props}
             />
-          </Link>
+          ) : (
+            <Link prefetch href='/question'>
+              <CardUpload
+                countAnswered={answered}
+                {...props}
+              />
+            </Link>
+          )
         ) : (
           <CardUpload
             {...props}
