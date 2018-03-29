@@ -12,8 +12,9 @@ const BackgroundContainer = styled.div`
 const Box = styled.div`
     background-color:white;
     border-radius:5px;
-    padding:20px;
+    padding:40px;
     border:1px solid black;
+    width:40vw;
 `
 const DivButton = styled.div`
     display:flex;
@@ -26,13 +27,15 @@ export default class index extends React.Component {
       return (
         <BackgroundContainer>
           <div className='container'>
-            <Box>
-              <div className='d-flex justify-content-center'>แน่ใจนะ</div>
-              <DivButton>
-                <a href='index'><button type='button' className='btn'>back</button></a>
-                <a href='end'><button type='button' className='btn'>ok</button></a>
-              </DivButton>
-            </Box>
+            <div className='d-flex justify-content-center'>
+              <Box>
+                <div className='d-flex justify-content-center'><h3>แน่ใจนะ</h3></div>
+                <DivButton>
+                  <a href='index'><button type='button' className='btn'><h3>back</h3></button></a>
+                  <a href='end'><button type='button' className='btn'><h3>ok</h3></button></a>
+                </DivButton>
+              </Box>
+            </div>
           </div>
         </BackgroundContainer>
       )

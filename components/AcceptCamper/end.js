@@ -12,8 +12,10 @@ const BackgroundContainer = styled.div`
 const Box = styled.div`
     background-color:white;
     border-radius:5px;
-    padding:20px;
+    padding:40px;
     border:1px solid black;
+    width:40vw;
+    text-align:center;
 `
 export default class index extends React.Component {
     state = {}
@@ -22,9 +24,11 @@ export default class index extends React.Component {
       return (
         <BackgroundContainer>
           <div className='container'>
-            <Box>
-              <div className='d-flex justify-content-center'>แล้วพบกันใหม่นะ</div>
-            </Box>
+            <div className='d-flex justify-content-center'>
+              <Box >
+                <div><h3>แล้วพบกันใหม่นะ</h3></div>
+              </Box>
+            </div>
           </div>
         </BackgroundContainer>
       )
