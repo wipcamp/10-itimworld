@@ -4,14 +4,21 @@ import ConfirmTwo from '../../components/AcceptCamper/confirmTwo'
 
 export default class index extends React.Component {
     state = {
-      change: false
+      step: 1
+    }
+
+    nextStep = () => {
+      this.setState({
+        step: 2
+      })
     }
 
     render () {
+      const { step } = this.state
       return (
         <div>
-          <ConfirmFirst />
-          <ConfirmTwo />
+          {step === 1 && <ConfirmFirst nextStep={this.nextStep} />}
+          {step === 2 && <ConfirmTwo />}
         </div>
       )
     }

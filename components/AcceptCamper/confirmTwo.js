@@ -10,17 +10,12 @@ const BackgroundContainer = styled.div`
     padding:60px;
 `
 const Box = styled.div`
-    background-color:white;
-    border-radius:5px;
-    padding:40px;
-    border:1px solid black;
-    width:40vw;
-`
-const DivButton = styled.div`
-    margin-top:5px;
-    display:flex;
-    justify-content:space-around;
-`
+    background-color : white;
+    padding : 2em;
+    border-radius : 10px;
+    margin-top : 5em;
+    font-size:1.2em;
+ `
 export default class index extends React.Component {
     state = {}
 
@@ -28,19 +23,24 @@ export default class index extends React.Component {
       return (
         <BackgroundContainer>
           <div className='container'>
-            <div className='d-flex justify-content-center'>
-              <Box>
-                <div className='d-flex justify-content-center'><h3>ยอมแล้ว บอกเหตุผลหน่อย</h3></div>
+            <div className='row d-flex justify-content-center'>
+              <Box className='col-lg-6 col-sm-10'>
+                <div className='d-flex justify-content-center'><label>ยอมแล้ว บอกเหตุผลหน่อย</label></div>
                 <div className='input-group'>
                   <div className='input-group-prepend'>
                     <span className='input-group-text' />
                   </div>
                   <textarea className='form-control' aria-label='With textarea' />
                 </div>
-                <DivButton>
-                  <a href='index'><button type='button' className='btn'><h3>back</h3></button></a>
-                  <a href='end'><button type='button' className='btn'><h3>ok</h3></button></a>
-                </DivButton>
+                <div className='row mt-3 text-center justify-content-center'>
+                  <div className='col-6'>
+                    <a href='index'><button type='button' className='btn btn-outline-primary'>back</button></a>
+                  </div>
+                  <div className='col-6'>
+                    <a href='end'><button type='button' className='btn btn-outline-danger'>ok</button></a>
+                  </div>
+                </div>
+
               </Box>
             </div>
           </div>
