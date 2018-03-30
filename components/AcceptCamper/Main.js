@@ -205,6 +205,8 @@ export default class index extends React.Component {
           <Modal Show={this.state.isShow} toggle={this.toggle} {...this.state} />
           <Modal2 Show2={this.state.isShow2} toggle={this.toggle2} {...this.state} />
         </BackgroundContainer>
+        // <div>
+        // </div>
       )
     }
 }
