@@ -32,7 +32,7 @@ export default class index extends React.Component {
                 <div className='d-flex justify-content-center'><h3>แน่ใจนะ</h3></div>
                 <DivButton>
                   <a href='index'><button type='button' className='btn'><h3>back</h3></button></a>
-                  <a href='end'><button type='button' className='btn'><h3>ok</h3></button></a>
+                  <a><button onClick={this.props.nextStep} type='button' className='btn'><h3>ok</h3></button></a>
                 </DivButton>
               </Box>
             </div>
