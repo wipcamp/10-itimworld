@@ -31,7 +31,8 @@ const ModalContainer = styled.div`
 `
 
 const Where = styled.div`
-  min-height: 30px;
+  min-height: 35px;
+  margin-top : 0.8em;
 `
 
 const Modal = (props) => (
@@ -70,9 +71,46 @@ const Modal = (props) => (
   </ModalContainer>
 )
 
+const Modal2 = (props) => (
+  <ModalContainer isShow={props.Show2}>
+    <div className='container'>
+      <div className='row justify-content-center'>
+        <div className='col-10'>
+          <div className='mt-4 card'>
+            <div className='card-body'>
+              <h1 className='text-center'>แน่ใจป่าว</h1>
+              <hr />
+              <div>
+                แน่ใจแล้วหรอ คิดดีๆน๊าาาา
+              </div>
+              <hr />
+              <div className='row'>
+                <div className='col-6'>
+                  <button
+                    className='btn btn-block'
+                    onClick={props.toggle}
+                  >
+                    ยกเลิก
+                  </button>
+                </div>
+                <div className='col-6'>
+                  <button className='btn btn-success btn-block' onClick={() => Router.push('/accept-camper/confirm')}>
+                      ยืนยัน
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ModalContainer>
+)
+
 export default class index extends React.Component {
     state = {
       isShow: false,
+      isShow2: false,
       comeByYourself: ''
     }
 
@@ -80,6 +118,13 @@ export default class index extends React.Component {
       let isShow = this.state.isShow
       this.setState({
         isShow: !isShow
+      })
+    }
+
+    toggle2 = () => {
+      let isShow = this.state.isShow2
+      this.setState({
+        isShow2: !isShow
       })
     }
 
@@ -99,7 +144,7 @@ export default class index extends React.Component {
                   <div>
                     <h1>ยืนยันสิทธิ</h1>
                     <form>
-                      <div className='col-6 form-check'>
+                      <div className='col-12 form-check'>
                         <input
                           id='comeBy-y-input'
                           type='radio'
@@ -109,7 +154,7 @@ export default class index extends React.Component {
                         />
                         <label className='form-check-label lead' htmlFor='comeBy-y-input'>มาเอง</label>
                       </div>
-                      <div className='col-8 form-check'>
+                      <div className='col-12 form-check'>
                         <input
                           id='comeBy-y-input2'
                           type='radio'
@@ -145,11 +190,11 @@ export default class index extends React.Component {
                       <input className='my-2' type='file' />
                     </form>
                     <div className='row mt-3'>
-                      <div className='col-6'>
-                        <button className='btn btn-outline-primary' onClick={this.toggle}>OK</button>
+                      <div className='col-6 text-center'>
+                        <button className='btn btn-outline-primary btn-lg' onClick={this.toggle}>OK</button>
                       </div>
-                      <div className='col-6'>
-                        <button className='btn btn-outline-danger' onClick={this.toggle}>สละสิทธิ</button>
+                      <div className='col-6 text-center'>
+                        <button className='btn btn-outline-danger' onClick={this.toggle2}>สละสิทธิ</button>
                       </div>
                     </div>
                   </div>
@@ -158,6 +203,7 @@ export default class index extends React.Component {
             </div>
           </div>
           <Modal Show={this.state.isShow} toggle={this.toggle} {...this.state} />
+          <Modal2 Show2={this.state.isShow2} toggle={this.toggle2} {...this.state} />
         </BackgroundContainer>
       )
     }
