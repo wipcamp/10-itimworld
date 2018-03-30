@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import Router from 'next/router'
 
 const BackgroundContainer = styled.div`
   background-image: url("../../static/img/background.png");
@@ -12,6 +13,8 @@ const BackgroundContainer = styled.div`
 const Box = styled.div`
   background-color : white;
   padding : 2em;
+  border-radius : 10px;
+  margin-top : 5em;
 `
 
 const ModalContainer = styled.div`
@@ -54,8 +57,8 @@ const Modal = (props) => (
                   </button>
                 </div>
                 <div className='col-6'>
-                  <button className='btn btn-success btn-block'>
-                    ยืนยัน
+                  <button className='btn btn-success btn-block' onClick={() => Router.push('/accept-camper/finish')}>
+                      ยืนยัน
                   </button>
                 </div>
               </div>
@@ -141,12 +144,12 @@ export default class index extends React.Component {
                       </div>
                       <input className='my-2' type='file' />
                     </form>
-                    <div className='row'>
+                    <div className='row mt-3'>
                       <div className='col-6'>
-                        <button className='' onClick={this.toggle}>OK</button>
+                        <button className='btn btn-outline-primary' onClick={this.toggle}>OK</button>
                       </div>
                       <div className='col-6'>
-                        <button className='' onClick={this.toggle}>สละสิทธิ</button>
+                        <button className='btn btn-outline-danger' onClick={this.toggle}>สละสิทธิ</button>
                       </div>
                     </div>
                   </div>
