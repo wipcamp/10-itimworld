@@ -14,7 +14,7 @@ const Box = styled.div`
     padding : 2em;
     border-radius : 10px;
     margin-top : 5em;
-    font-size:1.05em;
+    font-size:1.2em;
 `
 export default class index extends React.Component {
     state = {}
@@ -24,8 +24,8 @@ export default class index extends React.Component {
         <BackgroundContainer>
           <div className='container'>
             <div className='row d-flex justify-content-center'>
-              <Box className='col-6 d-flex justify-content-center'>
-                <div><h3>แล้วพบกันใหม่นะ</h3></div>
+              <Box className='col-lg-6 col-sm-10 d-flex justify-content-center'>
+                <div><label>แล้วพบกันใหม่นะ</label></div>
               </Box>
             </div>
           </div>
