@@ -10,12 +10,11 @@ const BackgroundContainer = styled.div`
     padding:60px;
 `
 const Box = styled.div`
-    background-color:white;
-    border-radius:5px;
-    padding:40px;
-    border:1px solid black;
-    width:40vw;
-    text-align:center;
+    background-color : white;
+    padding : 2em;
+    border-radius : 10px;
+    margin-top : 5em;
+    font-size:1.05em;
 `
 export default class index extends React.Component {
     state = {}
@@ -24,8 +23,8 @@ export default class index extends React.Component {
       return (
         <BackgroundContainer>
           <div className='container'>
-            <div className='d-flex justify-content-center'>
-              <Box >
+            <div className='row d-flex justify-content-center'>
+              <Box className='col-6 d-flex justify-content-center'>
                 <div><h3>แล้วพบกันใหม่นะ</h3></div>
               </Box>
             </div>

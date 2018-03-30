@@ -28,8 +28,8 @@ export default class index extends React.Component {
       return (
         <BackgroundContainer>
           <div className='container'>
-            <div className='d-flex justify-content-center'>
-              <Box>
+            <div className='row d-flex justify-content-center'>
+              <Box className='col-6'>
                 <div className='d-flex justify-content-center'><h3>ยอมแล้ว บอกเหตุผลหน่อย</h3></div>
                 <div className='input-group'>
                   <div className='input-group-prepend'>

@@ -27,8 +27,8 @@ export default class index extends React.Component {
       return (
         <BackgroundContainer>
           <div className='container'>
-            <div className='d-flex justify-content-center'>
-              <Box>
+            <div className='row d-flex justify-content-center'>
+              <Box className='col-6'>
                 <div className='d-flex justify-content-center'><h3>แน่ใจนะ</h3></div>
                 <DivButton>
                   <a href='index'><button type='button' className='btn'><h3>back</h3></button></a>
