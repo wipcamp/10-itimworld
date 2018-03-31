@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Router from 'next/router'
+import { RadioContainer, CheckRadio, Label, StyledSelect, StyledTextArea } from '../Core/Input'
 
 const BackgroundContainer = styled.div`
   background-image: url("../../static/img/background.png");
@@ -34,6 +35,29 @@ const ModalContainer = styled.div`
 const Where = styled.div`
   min-height: 35px;
   margin-top : 0.8em;
+`
+
+const BlockValidate = styled.div.attrs({
+  className: 'p-2 rounded my-1'
+})`
+  transition: all .3s;
+  ${props => props.valid === 1 && `
+    background: #008DC4;
+  
+  `}
+  input {
+    color: black;
+  }
+  ${props => props.valid === -1 && `
+    background: #E3454B;
+    color: white;
+
+    input {
+      color: white;
+    }
+  `}
+
+  
 `
 
 const Modal = (props) => (
@@ -110,9 +134,56 @@ const Modal2 = (props) => (
 
 export default class index extends React.Component {
     state = {
+      comeByYourself: '',
+      file: null,
+      shirtSize: '',
+      place: '',
+      valid: {
+        comeByYourself: 0,
+        file: 0,
+        shirtSize: 0
+      },
       isShow: false,
-      isShow2: false,
-      comeByYourself: ''
+      isShow2: false
+
+    }
+
+    _setField = (key, value) => {
+      this.setState({
+        [key]: value
+      })
+    }
+
+    _changeFile = (e) => {
+      const { valid } = this.state
+      const file = e.target.files[0]
+      if (!file || file.size > 2097152) {
+        valid.file = -1
+        alert('ขนาดไฟล์เกิน 2 MB')
+      } else {
+        valid.file = 0
+      }
+      this.setState({
+        file,
+        valid
+      })
+    }
+
+    _onSubmit = (e) => {
+      e.preventDefault()
+      const { file } = this.state
+      if (!file || file.size > 2097152) {
+        alert('ขนาดไฟล์เกิน 2 MB')
+      }
+      // if (!this.state.file) {
+      //   this.setState({
+      //     err: true
+      //   })
+      // } else {
+      //   this.setState({
+      //     showModal: true
+      //   })
+      // }
     }
 
     toggle = () => {
@@ -136,71 +207,160 @@ export default class index extends React.Component {
     }
 
     render () {
+      const shirtSize = [
+        {
+          val: 's',
+          text: 'S รอบอก 34 นิ้ว, ความยาว 26 นิ้ว'
+        },
+        {
+          val: 'm',
+          text: 'M รอบอก 36 นิ้ว, ความยาว 26.5 นิ้ว'
+        },
+        {
+          val: 'f',
+          text: 'F รอบอก 38 นิ้ว, ความยาว 27 นิ้ว'
+        },
+        {
+          val: 'l',
+          text: 'L รอบอก 40 นิ้ว, ความยาว 28 นิ้ว'
+        },
+        {
+          val: 'xl',
+          text: 'XL รอบอก 42 นิ้ว, ความยาว 29 นิ้ว'
+        },
+        {
+          val: '2xl',
+          text: '2XL รอบอก 44 นิ้ว, ความยาว 30 นิ้ว'
+        },
+        {
+          val: '3xl',
+          text: '3XL รอบอก 48 นิ้ว, ความยาว 31 นิ้ว'
+        }
+      ]
+      const { valid } = this.state
       return (
         <BackgroundContainer>
           <div className='container'>
             <div className='row justify-content-center'>
-              <div className='col-12'>
+              <div className='col-12 col-md-8'>
                 <div className='box-shadow bg-light rounded my-4 p-3'>
                   <div>
-                    <h1 className='text-center'>ยืนยันสิทธิ</h1>
+                    <h1 className='text-center'>ยืนยันสิทธิ์</h1>
                     <hr />
-                    <form>
-                      <div className='col-12 form-check'>
-                        <input
-                          id='comeBy-y-input'
-                          type='radio'
-                          name='comeByYourself'
-                          value='y'
-                          onChange={() => this.selectComeByYourself('y')}
-                        />
-                        <label className='form-check-label lead' htmlFor='comeBy-y-input'>มาเอง</label>
+                    <form
+                      onSubmit={this._onSubmit}
+                    >
+                      <BlockValidate
+                        valid={valid.comeByYourself}
+                      >
+                        <Label>น้องสะดวกเดินทางมามหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรีอย่างไร</Label>
+                        <div className='form-check'>
+                          <RadioContainer>
+                            <input
+                              id='comeBy-y-input'
+                              type='radio'
+                              name='comeByYourself'
+                              value='y'
+                              onChange={(e) => this._setField('comeByYourself', e.target.value)}
+                              required
+                            />
+                            <CheckRadio top={`7px`} />
+                            <label
+                              className='form-check-label lead pl-5'
+                              htmlFor='comeBy-y-input'
+                            >
+                              เดินทางมาเอง
+                            </label>
+                          </RadioContainer>
+                        </div>
+                        <div className='form-check'>
+                          <RadioContainer>
+                            <input
+                              id='comeBy-n-input'
+                              type='radio'
+                              name='comeByYourself'
+                              value='n'
+                              onChange={(e) => this._setField('comeByYourself', e.target.value)}
+                            />
+                            <CheckRadio top={`7px`} />
+                            <label
+                              className='form-check-label lead pl-5'
+                              htmlFor='comeBy-n-input'
+                            >
+                              ให้พี่ยักษ์ และลิงไปรับที่จุดต่าง ๆ
+                            </label>
+                          </RadioContainer>
+                        </div>
+                        <div className='form-group'>
+                          <StyledSelect
+                            name='where'
+                            className={`form-control p-1`}
+                            required
+                            disabled={this.state.comeByYourself !== 'n'}
+                            onChange={(e) => this._setField('shirtSize', e.target.value)}
+                          >
+                            <option value=''>โปรดเลือกสถานที่ ที่จะให้ไปรับ</option>
+                            <option value='หัวลำโพง'>หัวลำโพง</option>
+                            <option value='หมอชิต'>หมอชิต</option>
+                            <option value='อนุเสาวรีย์ชัยสมรภูมิ'>อนุเสาวรีย์ชัยสมรภูมิ</option>
+                            <option value='สายใต้ใหม่'>สายใต้ใหม่</option>
+                          </StyledSelect>
+                        </div>
+                      </BlockValidate>
+                      <BlockValidate
+                        valid={valid.shirtSize}
+                      >
+                        <Label>เลือกไซส์เสื้อที่เจ้าต้องการ</Label>
+                        <div className='form-group'>
+                          <StyledSelect
+                            name='sizeShirt'
+                            className={`form-control p-1`}
+                            required
+                            // onChange={(e) => this._setField('shirtSize', e.target.value)}
+                          >
+                            <option value=''>โปรดเลือกไซส์เสื้อ</option>
+                            {
+                              shirtSize.map((data, i) => (
+                                <option key={i} value={data.val}>{data.text}</option>
+                              ))
+                            }
+                          </StyledSelect>
+                        </div>
+                      </BlockValidate>
+                      <BlockValidate
+                        valid={valid.file}
+                      >
+                        <Label>อัพโหลดสลิปจ่ายเงิน</Label>
+                        <div className='form-group'>
+                          <input
+                            className=''
+                            type='file'
+                            required
+                            onChange={this._changeFile}
+                            accept='image/png, image/jpeg, application/pdf'
+                          />
+                        </div>
+                        <small>รับเฉพาะไฟล์ .png, .jpeg, .pdf ขนาดไม่เกิน 2MB</small>
+                      </BlockValidate>
+                      
+                      <hr />
+                      <div className='row mt-3'>
+                        <div className='col-8 text-center'>
+                          <button
+                            type='submit'
+                            className='btn btn-outline-primary btn-block pointer'
+                            // onClick={this.toggle}
+                          >OK</button>
+                        </div>
+                        <div className='col-4 pointer text-center'>
+                          <button
+                            type='button'
+                            className='btn btn-outline-danger btn-block pointer'
+                            onClick={this.toggle2}
+                          >สละสิทธิ</button>
+                        </div>
                       </div>
-                      <div className='col-12 form-check'>
-                        <input
-                          id='comeBy-y-input2'
-                          type='radio'
-                          name='comeByYourself'
-                          value='n'
-                          onChange={() => this.selectComeByYourself('n')}
-                        />
-                        <label className='form-check-label lead' htmlFor='comeBy-y-input2'>มารับหน่อย</label>
-                      </div>
-                      <Where>
-                        {
-                          this.state.comeByYourself === 'n' && (
-                            <select name='where'>
-                              <option value=''>หัวลำโพง</option>
-                              <option value=''>หมอชิต</option>
-                              <option value=''>อนุเสาวรีย์ชัยสมรภูมิ</option>
-                              <option value=''>สายใต้ใหม่</option>
-                            </select>
-                          )
-                        }
-                      </Where>
-                      <div className='my-2'>
-                        <select name='size'>
-                          <option value=''>ไซส์เสื้อ</option>
-                          <option value='s'>s</option>
-                          <option value='m'>m</option>
-                          <option value='f'>f</option>
-                          <option value='l'>l</option>
-                          <option value='xl'>xl</option>
-                          <option value='2xl'>2xl</option>
-                          <option value='3xl'>3xl</option>
-                        </select> <br />
-                      </div>
-                      <input className='my-2' type='file' />
                     </form>
-                    <hr />
-                    <div className='row mt-3'>
-                      <div className='col-8 text-center'>
-                        <button className='btn btn-outline-primary btn-block pointer' onClick={this.toggle}>OK</button>
-                      </div>
-                      <div className='col-4 pointer text-center'>
-                        <button className='btn btn-outline-danger btn-block pointer' onClick={this.toggle2}>สละสิทธิ</button>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
