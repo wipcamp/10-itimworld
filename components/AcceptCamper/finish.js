@@ -34,6 +34,7 @@ export default class index extends React.Component {
             <div className='row d-flex justify-content-center'>
               <Box className='box-shadow bg-light rounded col-lg-6 col-sm-10 '>
                 <div className='text-center d-flex justify-content-center'><h3>ตกลงแล้ว</h3></div>
+                <hr />
                 <div className='text-center d-flex justify-content-center'><label>หมายเหตุ หากสลิปมีปัญหาจะมีการติดต่อไปภายหลัง</label></div>
                 <div className='text-center d-flex justify-content-center'>
                   <button type='button' className='pointer btn btn-outline-primary mt-3'><h3>เข้ากลุ่มดิ๊</h3></button>
