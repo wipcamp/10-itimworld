@@ -8,6 +8,14 @@ const BackgroundContainer = styled.div`
     background-size : cover;
     background-position : center;
     padding:60px;
+    
+    .box-shadow {
+      box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .1);
+    }
+  
+    .pointer {
+      cursor: pointer;
+    }
 `
 const Box = styled.div`
     background-color : white;
@@ -24,7 +32,7 @@ export default class index extends React.Component {
         <BackgroundContainer>
           <div className='container'>
             <div className='row d-flex justify-content-center'>
-              <Box className='col-lg-6 col-sm-10'>
+              <Box className='col-lg-6 col-sm-10 box-shadow my-4 p-3'>
                 <div className='d-flex justify-content-center'><label>ยอมแล้ว บอกเหตุผลหน่อย</label></div>
                 <div className='input-group'>
                   <div className='input-group-prepend'>
@@ -34,10 +42,10 @@ export default class index extends React.Component {
                 </div>
                 <div className='row mt-3 text-center justify-content-center'>
                   <div className='col-6'>
-                    <a href='index'><button type='button' className='btn btn-outline-primary'>back</button></a>
+                    <a href='index'><button type='button' className='btn btn-outline-primary pointer'>back</button></a>
                   </div>
                   <div className='col-6'>
-                    <a href='end'><button type='button' className='btn btn-outline-danger'>ok</button></a>
+                    <a href='end'><button type='button' className='btn btn-outline-danger pointer'>ok</button></a>
                   </div>
                 </div>
 
