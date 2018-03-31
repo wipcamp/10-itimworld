@@ -70,7 +70,7 @@ export default class CheckName extends React.Component {
     let {token} = await cookie({req: false})
     let fetchedData = await api.post(`/auth/me`, null, {Authorization: `Bearer ${token}`})
     await this.setState({
-      user: 100301,
+      user: fetchedData.data.id,
       loading: true
     })
     let data = await campers.filter(data => {
