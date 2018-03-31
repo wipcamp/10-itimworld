@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import cookie from '../../utils/cookie'
+import api from '../../utils/api'
 import campers from './campers.json'
 
 const H = styled.h1`
@@ -65,9 +67,10 @@ export default class CheckName extends React.Component {
     isPasssed: false
   }
   async componentDidMount () {
+    let {token} = await cookie({req: false})
+    let fetchedData = await api.post(`/auth/me`, null, {Authorization: `Bearer ${token}`})
     await this.setState({
-      user: 100301,
-      // user: 1003,
+      user: fetchedData.data.id,
       loading: true
     })
     let data = await campers.filter(data => {
@@ -103,7 +106,7 @@ export default class CheckName extends React.Component {
       <div className='text-center mt-2'>
         <H>เสียใจด้วยนะ...</H>
         <P>ฮึบเข้าไว้! ครั้งหน้าลองใหม่!</P>
-        <a href='http://wip.camp'>
+        <a href='https://wip.camp'>
           <Button type='button' className='btn btn-outline-warning text-center'>กลับหน้าหลัก</Button>
         </a>
       </div>
