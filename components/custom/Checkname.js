@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import wip from '../../wip.json'
+import cookie from '../../utils/cookie'
+import api from '../../utils/api'
 
 const H = styled.h1`
 font-size:3em;
@@ -60,14 +62,23 @@ font-family: 'Pridi';
 `
 export default class CheckName extends React.Component {
   state = {
-    user: '',
-    loading: true
+    user: [],
+    loading: true,
+    wipId: ''
   }
-  componentDidMount = () => {
+
+  async componentDidMount () {
+    let {token} = await cookie({req: false})
+    let {data} = await api.post(`/auth/me`, null, {Authorization: `Bearer ${token}`})
+    this.setState({wipId: data.id})
     this.setState({
       user: '',
       loading: false
     })
+    let newArray = wip.filter((el) => {
+      return el.wip_id === data.id
+    })
+    this.setState({user: newArray})
   }
 
   render () {
@@ -76,11 +87,11 @@ export default class CheckName extends React.Component {
         loading ...
       </div>
     }
-    if (wip.indexOf(this.state.user) > -1) {
+    if (this.state.user.length > 0) {
       return <div className='text-center mt-2'>
         <H>ขอแสดงความยินดีด้วย!</H>
         <P>คุณได้เข้าร่วมกองทัพกับเรา</P>
-        <a href='http://wip.camp' className=''>
+        <a href='https://wip.camp' className=''>
           <Button type='button' className='btn btn-outline-success text-center'>ยืนยันสิทธิ์</Button>
         </a>
       </div>
@@ -89,7 +100,7 @@ export default class CheckName extends React.Component {
       <div className='text-center mt-2'>
         <H>เสียใจด้วยนะ...</H>
         <P>ฮึบเข้าไว้! ครั้งหน้าลองใหม่!</P>
-        <a href='http://wip.camp'>
+        <a href='https://wip.camp'>
           <Button type='button' className='btn btn-outline-warning text-center'>กลับหน้าหลัก</Button>
         </a>
       </div>
