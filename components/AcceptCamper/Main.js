@@ -70,7 +70,7 @@ const Modal = (props) => (
               <h1 className='text-center'>ยืนยัน</h1>
               <hr />
               <div>
-                content
+                ตรวจสอบข้อมูลดี ๆ นะ
               </div>
               <hr />
               <div className='row'>
@@ -174,6 +174,7 @@ export default class index extends React.Component {
       const { file } = this.state
       if (!file || file.size > 2097152) {
         alert('ขนาดไฟล์เกิน 2 MB')
+      } else {
       }
       // if (!this.state.file) {
       //   this.setState({
