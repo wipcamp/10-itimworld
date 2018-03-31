@@ -1,58 +1,68 @@
 import React from 'react'
-import styled from 'styled-components'
+import Link from 'next/link'
+import { StyledTextArea } from '../Core/Input'
 
-const BackgroundContainer = styled.div`
-    background-image: url("../../static/img/background.png");
-    min-height : 100vh;
-    width : 100%;
-    background-size : cover;
-    background-position : center;
-    padding:60px;
-    
-    .box-shadow {
-      box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .1);
-    }
-  
-    .pointer {
-      cursor: pointer;
-    }
-`
-const Box = styled.div`
-    background-color : white;
-    padding : 2em;
-    border-radius : 10px;
-    margin-top : 5em;
-    font-size:1.2em;
- `
-export default class index extends React.Component {
-    state = {}
 
-    render () {
-      return (
-        <BackgroundContainer>
-          <div className='container'>
-            <div className='row d-flex justify-content-center'>
-              <Box className='col-lg-6 col-sm-10 box-shadow my-4 p-3'>
-                <div className='d-flex justify-content-center'><label>ยอมแล้ว บอกเหตุผลหน่อย</label></div>
+class ConfirmTwo extends React.Component {
+  state = {
+    reason: ''
+  }
+
+  _onSubmit = (e) => {
+    e.preventDefault()
+    // console.log(this.state.reason)
+  }
+
+  _updateReason = (e) => {
+    this.setState({
+      reason: e.target.value
+    })
+  }
+
+  render () {
+    return (
+      <div className='container'>
+        <div className='row d-flex justify-content-center'>
+          <div className='col-lg-6 col-sm-10'>
+            <div className='box-shadow my-4 p-3 bg-light'>
+              <form
+                onSubmit={this._onSubmit}
+              >
+                <h2 className='text-center'>ยอมแล้ว บอกเหตุผลหน่อย</h2>
+                <hr />
                 <div className='input-group'>
                   <div className='input-group-prepend'>
                     <span className='input-group-text' />
                   </div>
-                  <textarea className='form-control' aria-label='With textarea' />
+                  <StyledTextArea
+                    className='form-control bg-light'
+                    placeholder={`ช่วยใส่เหตุผลให้หน่อย`}
+                    value={this.state.reason}
+                    onChange={this._updateReason}
+                    required
+                  />
                 </div>
                 <div className='row mt-3 text-center justify-content-center'>
                   <div className='col-6'>
-                    <a href='index'><button type='button' className='btn btn-outline-primary pointer'>back</button></a>
+                    <Link href={`/accept-camper`}>
+                      <a className='btn btn-outline-primary pointer btn-block'>ย้อนกลับไปหน้ายืนยันสิทธิ</a>
+                    </Link>
                   </div>
                   <div className='col-6'>
-                    <a href='end'><button type='button' className='btn btn-outline-danger pointer'>ok</button></a>
+                    <button
+                      className='btn btn-outline-danger pointer btn-block'
+                    >
+                      ส่งเหตุผล
+                    </button>
                   </div>
                 </div>
-
-              </Box>
+              </form>
             </div>
           </div>
-        </BackgroundContainer>
-      )
-    }
+        </div>
+      </div>
+    )
+  }
 }
+
+export default ConfirmTwo
