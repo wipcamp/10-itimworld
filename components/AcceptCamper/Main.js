@@ -152,7 +152,7 @@ export default class index extends React.Component {
         file: 0,
         shirtSize: 0
       },
-      isShow: true,
+      isShow: false,
       isShow2: false
 
     }

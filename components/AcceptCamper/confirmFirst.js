@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import Link from 'next/link'
 
 const BackgroundContainer = styled.div`
     background-image: url("../../static/img/background.png");
@@ -17,13 +18,6 @@ const BackgroundContainer = styled.div`
       cursor: pointer;
     }
 `
-const Box = styled.div`
-    background-color : white;
-    padding : 2em;
-    border-radius : 10px;
-    margin-top : 5em;
-    font-size:1.5em;
-`
 
 export default class index extends React.Component {
     state = {}
@@ -33,17 +27,28 @@ export default class index extends React.Component {
         <BackgroundContainer>
           <div className='container'>
             <div className='row d-flex justify-content-center'>
-              <Box className='col-sm-10 col-lg-6 box-shadow my-4 p-3'>
-                <div className='d-flex justify-content-center'><label>แน่ใจนะ</label></div>
-                <div className='row text-center justify-content-center'>
-                  <div className='col-6'>
-                    <a href='index'><button type='button' className='btn btn-outline-primary pointer'>back</button></a>
-                  </div>
-                  <div className='col-6'>
-                    <a><button onClick={this.props.nextStep} type='button' className='btn btn-outline-danger pointer'>ok</button></a>
+              <div className='col-sm-10 col-lg-6'>
+                <div className='box-shadow my-4 p-3 bg-light'>
+                  <h2 className='text-center'>แน่ใจนะ</h2>
+                  <hr />
+                  <div className='row text-center justify-content-center'>
+                    <div className='col-8'>
+                      <Link href='/accept-camper'>
+                        <a className='btn btn-outline-primary btn-block pointer'>ย้อนกลับ</a>
+                      </Link>
+                    </div>
+                    <div className='col-4'>
+                      <button
+                        onClick={this.props.nextStep}
+                        type='button'
+                        className='btn btn-outline-danger btn-block pointer'
+                      >
+                        ยืนยันอีกครั้ง
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </Box>
+              </div>
             </div>
           </div>
         </BackgroundContainer>
