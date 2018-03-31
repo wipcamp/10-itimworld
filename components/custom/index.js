@@ -31,10 +31,9 @@ const Text = styled.p`
   }
   font-family: 'Pridi';
   color: white;
-  padding-top: 2%;
-  font-size: 1.5em;
+  font-size: 2em;
  @media (max-width: 1024px) {
-   font-size: 2.5vw;
+   font-size: .72em;
  }
 `
 
@@ -52,11 +51,16 @@ const ImgY = styled.img`
 `
 
 const BoxY = styled.div`
-  width: 100%;
-  height: 50%;
   background-color: #5D985C;
+  width: 100%;
+  padding: 1em;
   vertical-align: middle;
   text-align:center;
+  height: auto;
+  max-height: 70%;
+  @media (max-width:1024px) {
+    padding: .4em 1em;
+  }
 `
 const SelectorY = styled.div`
   border-top: 10px solid transparent;
@@ -69,11 +73,24 @@ const SelectorL = styled.div`
 	border-right: 10px solid #FCB933;
 `
 const BoxL = styled.div`
-  text-align: center;
-  width: 100%;
-  height: 50%;
   background-color: #FCB933;
+  width: 100%;
+  padding: 1em;
+  vertical-align: middle;
+  text-align:center;
+  height: auto;
+  max-height: 70%;
+  @media (max-width:1024px) {
+    padding: .4em 1em;
+  }
 `
+
+const CustomTextL = styled(Text)`
+  @media(max-width: 1024px) {
+    font-size: .65em;
+  }
+`
+
 const ImgL = styled.img`
   width: 140%;
   float: left;
@@ -132,7 +149,7 @@ export default class Custom extends React.Component {
             </Sec>
             <Sec className='row'>
               <div className='col-7 d-flex align-items-center justify-content-center'>
-                <BoxY className='rounded'><Text>หึ! วันนี้แล้วสินะ งั้นเจ้าหนูที่หลงทางงอยู่ตรงนั้นก็คงเป็นหนึ่งในผู้สมัครล่ะสิ</Text></BoxY>
+                <BoxY className='rounded'><Text>หึ! วันนี้แล้วสินะ งั้นเจ้าหนูที่หลงทางอยู่ตรงนั้นก็คงเป็นหนึ่งในผู้สมัครล่ะสิ</Text></BoxY>
                 <SelectorY />
               </div>
               <div className='col-5'>
@@ -163,7 +180,7 @@ export default class Custom extends React.Component {
               </div>
               <div className='col-7 d-flex align-items-center justify-content-center'>
                 <SelectorL />
-                <BoxL className='rounded'><Text>รับของข้าไปด้วยสิ อ๋อ ส่วนทางที่ถูกต้องน่ะ เจ้าต้องกดกล่องดวงใจ แล้วสิ่งนั้นจะนำทางเจ้าไปเอง</Text></BoxL>
+                <BoxL className='rounded'><CustomTextL>รับของข้าไปด้วยสิ อ๋อ ส่วนทางที่ถูกต้องน่ะ เจ้าต้องกดกล่องดวงใจ แล้วสิ่งนั้นจะนำทางเจ้าไปเอง</CustomTextL></BoxL>
               </div>
             </Sec>
           </Div>

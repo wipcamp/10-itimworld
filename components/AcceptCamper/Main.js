@@ -344,7 +344,7 @@ export default class index extends React.Component {
                         </div>
                         <small>รับเฉพาะไฟล์ .png, .jpeg, .pdf ขนาดไม่เกิน 2MB</small>
                       </BlockValidate>
-                      
+
                       <hr />
                       <div className='row mt-3'>
                         <div className='col-8 text-center'>
