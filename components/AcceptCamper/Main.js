@@ -188,7 +188,10 @@ export default class index extends React.Component {
                           <option value='3xl'>3xl</option>
                         </select> <br />
                       </div>
-                      <input className='my-2' type='file' />
+                      <div className='row mt-3'>
+                        <p className='col-lg-2 col-md-12'>( สลิปใบเสร็จ )</p>
+                        <input className='col-lg-10 col-md-12' type='file' />
+                      </div>
                     </form>
                     <div className='row mt-3'>
                       <div className='col-6 text-center'>
