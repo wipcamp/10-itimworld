@@ -85,7 +85,7 @@ const BoxL = styled.div`
   }
 `
 
-const CustomTextL = styled(Text)`
+const CustomText = styled(Text)`
   @media(max-width: 1024px) {
     font-size: .65em;
   }
@@ -149,7 +149,7 @@ export default class Custom extends React.Component {
             </Sec>
             <Sec className='row'>
               <div className='col-7 d-flex align-items-center justify-content-center'>
-                <BoxY className='rounded'><Text>หึ! วันนี้แล้วสินะ งั้นเจ้าหนูที่หลงทางอยู่ตรงนั้นก็คงเป็นหนึ่งในผู้สมัครล่ะสิ</Text></BoxY>
+                <BoxY className='rounded'><CustomText>หึ! วันนี้แล้วสินะ งั้นเจ้าหนูที่หลงทางอยู่ตรงนั้นก็คงเป็นหนึ่งในผู้สมัครล่ะสิ</CustomText></BoxY>
                 <SelectorY />
               </div>
               <div className='col-5'>
@@ -180,7 +180,7 @@ export default class Custom extends React.Component {
               </div>
               <div className='col-7 d-flex align-items-center justify-content-center'>
                 <SelectorL />
-                <BoxL className='rounded'><CustomTextL>รับของข้าไปด้วยสิ อ๋อ ส่วนทางที่ถูกต้องน่ะ เจ้าต้องกดกล่องดวงใจ แล้วสิ่งนั้นจะนำทางเจ้าไปเอง</CustomTextL></BoxL>
+                <BoxL className='rounded'><CustomText>รับของข้าไปด้วยสิ อ๋อ ส่วนทางที่ถูกต้องน่ะ เจ้าต้องกดกล่องดวงใจ แล้วสิ่งนั้นจะนำทางเจ้าไปเอง</CustomText></BoxL>
               </div>
             </Sec>
           </Div>
