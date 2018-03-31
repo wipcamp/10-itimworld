@@ -17,27 +17,28 @@ const BackgroundContainer = styled.div`
       cursor: pointer;
     }
 `
-const Box = styled.div`
-    background-color : white;
-    padding : 2em;
-    border-radius : 10px;
-    margin-top : 5em;
-    font-size:1.2em;
-`
-export default class index extends React.Component {
-    state = {}
 
-    render () {
-      return (
-        <BackgroundContainer>
-          <div className='container'>
-            <div className='row d-flex justify-content-center'>
-              <Box className='col-lg-6 col-sm-10 d-flex justify-content-center box-shadow my-4 p-3'>
-                <div><label>แล้วพบกันใหม่นะ</label></div>
-              </Box>
+const End = (props) => (
+  <BackgroundContainer>
+    <div className='container'>
+      <div className='row justify-content-center'>
+        <div className='col-lg-6 col-sm-10'>
+          <div className='bg-light box-shadow my-4 p-3 rounded text-center'>
+            <h2>แล้วพบกันใหม่นะ</h2>
+            <div className='row justify-content-center my-4'>
+              <div className='col-6'>
+                <a
+                  href='https://wip.camp'
+                  className='btn btn-outline-primary btn-block'
+                >ไปที่เว็บ WIP Camp</a>
+
+              </div>
             </div>
           </div>
-        </BackgroundContainer>
-      )
-    }
-}
+        </div>
+      </div>
+    </div>
+  </BackgroundContainer>
+)
+
+export default End
