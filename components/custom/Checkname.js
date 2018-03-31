@@ -94,7 +94,7 @@ export default class CheckName extends React.Component {
       return <div className='text-center mt-2'>
         <H>ขอแสดงความยินดีด้วย!</H>
         <P>คุณได้เข้าร่วมกองทัพกับเรา</P>
-        <a href='http://itims.wip.camp' className=''>
+        <a href='/accept-camper ' className=''>
           <Button type='button' className='btn btn-outline-success text-center'>ยืนยันสิทธิ์</Button>
         </a>
       </div>
