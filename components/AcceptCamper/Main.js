@@ -25,16 +25,20 @@ const ModalContainer = styled.div`
   width: 100%;
   min-height: 100vh;
   top: 0;
+  z-index: 10;
+  .card {
+    opacity: 0;
+    transition: all .3s;
+  }
   ${props => props.isShow ? `
     display: block;
+    
+    .card {
+      opacity: 1;
+    }
   ` : `
     display: none;
   `}
-`
-
-const Where = styled.div`
-  min-height: 35px;
-  margin-top : 0.8em;
 `
 
 const BlockValidate = styled.div.attrs({
@@ -76,14 +80,17 @@ const Modal = (props) => (
               <div className='row'>
                 <div className='col-6'>
                   <button
-                    className='btn btn-block'
+                    className='btn btn-block pointer'
                     onClick={props.toggle}
                   >
                     ยกเลิก
                   </button>
                 </div>
                 <div className='col-6'>
-                  <button className='btn btn-success btn-block' onClick={() => Router.push('/accept-camper/finish')}>
+                  <button
+                    onClick={props.post}
+                    className='btn btn-success btn-block pointer'
+                  >
                       ยืนยัน
                   </button>
                 </div>
@@ -112,15 +119,17 @@ const Modal2 = (props) => (
               <div className='row'>
                 <div className='col-6'>
                   <button
-                    className='btn btn-block'
+                    className='btn btn-block pointer'
                     onClick={props.toggle}
                   >
                     ยกเลิก
                   </button>
                 </div>
                 <div className='col-6'>
-                  <button className='btn btn-success btn-block' onClick={() => Router.push('/accept-camper/confirm')}>
-                      ยืนยัน
+                  <button
+                    className='btn btn-warning btn-block pointer' onClick={() => Router.push('/accept-camper/confirm')}
+                  >
+                    ยืนยันการสละสิทธิ์
                   </button>
                 </div>
               </div>
@@ -143,7 +152,7 @@ export default class index extends React.Component {
         file: 0,
         shirtSize: 0
       },
-      isShow: false,
+      isShow: true,
       isShow2: false
 
     }
@@ -175,16 +184,8 @@ export default class index extends React.Component {
       if (!file || file.size > 2097152) {
         alert('ขนาดไฟล์เกิน 2 MB')
       } else {
+        this.toggle()
       }
-      // if (!this.state.file) {
-      //   this.setState({
-      //     err: true
-      //   })
-      // } else {
-      //   this.setState({
-      //     showModal: true
-      //   })
-      // }
     }
 
     toggle = () => {
@@ -201,10 +202,9 @@ export default class index extends React.Component {
       })
     }
 
-    selectComeByYourself = (value) => {
-      this.setState({
-        comeByYourself: value
-      })
+    post = () => {
+      const { comeByYourself, file, shirtSize, place } = this.state
+      // console.log(comeByYourself, file, shirtSize, place)
     }
 
     render () {
@@ -249,6 +249,7 @@ export default class index extends React.Component {
                     <h1 className='text-center'>ยืนยันสิทธิ์</h1>
                     <hr />
                     <form
+                      method={`POST`}
                       onSubmit={this._onSubmit}
                     >
                       <BlockValidate
@@ -350,7 +351,6 @@ export default class index extends React.Component {
                           <button
                             type='submit'
                             className='btn btn-outline-primary btn-block pointer'
-                            // onClick={this.toggle}
                           >OK</button>
                         </div>
                         <div className='col-4 pointer text-center'>
@@ -367,7 +367,7 @@ export default class index extends React.Component {
               </div>
             </div>
           </div>
-          <Modal Show={this.state.isShow} toggle={this.toggle} {...this.state} />
+          <Modal Show={this.state.isShow} toggle={this.toggle} {...this.state} post={this.post} />
           <Modal2 Show2={this.state.isShow2} toggle={this.toggle2} {...this.state} />
         </BackgroundContainer>
       )
