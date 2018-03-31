@@ -8,6 +8,14 @@ const BackgroundContainer = styled.div`
     background-size : cover;
     background-position : center;
     padding:60px;
+     
+    .box-shadow {
+      box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .1);
+    }
+  
+    .pointer {
+      cursor: pointer;
+    }
 `
 const Box = styled.div`
     background-color : white;
@@ -24,7 +32,7 @@ export default class index extends React.Component {
         <BackgroundContainer>
           <div className='container'>
             <div className='row d-flex justify-content-center'>
-              <Box className='col-lg-6 col-sm-10 d-flex justify-content-center'>
+              <Box className='col-lg-6 col-sm-10 d-flex justify-content-center box-shadow my-4 p-3'>
                 <div><label>แล้วพบกันใหม่นะ</label></div>
               </Box>
             </div>
