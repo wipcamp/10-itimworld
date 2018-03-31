@@ -33,7 +33,7 @@ font-size:2vw;
 text-align: center;
 @font-face {
 font-family: 'Pridi';
-src: url('/static/font/Pridi-Light.ttf');
+src: url('/static/fonts/Pridi-Light.ttf');
 }
 font-family: 'Pridi';
 @media(min-width:320px){
@@ -54,7 +54,7 @@ cursor:pointer;
 text-align: center;
 @font-face {
 font-family: 'Pridi';
-src: url('/static/font/Pridi-Light.ttf');
+src: url('/static/fonts/Pridi-Light.ttf');
 }
 font-family: 'Pridi';
 `
