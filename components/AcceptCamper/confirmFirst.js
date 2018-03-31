@@ -14,7 +14,7 @@ const Box = styled.div`
     padding : 2em;
     border-radius : 10px;
     margin-top : 5em;
-    font-size:1.2em;
+    font-size:1.5em;
 `
 
 export default class index extends React.Component {
