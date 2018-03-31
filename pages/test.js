@@ -1,27 +1,23 @@
 import React from 'react'
-import AllAnnouce from './Annouce/pages/index'
+import AllAnnouce from '../components/custom/Annouce'
+import Check from '../components/custom/Checkname'
 import cookie from '../utils/cookie'
 import api from '../utils/api'
 
 class Test extends React.Component {
   state = {
-      file: {}
+      wipId:''
     }     
     async componentDidMount () {
       let {token} = await cookie({req: false})
-      console.log(token)
       let {data} = await api.post(`/auth/me`, null, {Authorization: `Bearer ${token}`})
-      console.log(data.id)
+      this.setState({wipId:data.id})
     }
-    drop = (files) => {
-      this.setState({
-        file: files[0]
-      })
-    }        
+     
     render() {
       return (
         <div>
-          <AllAnnouce/>
+          <AllAnnouce  wipId={this.state.wipId} />
         </div>
       )
     }

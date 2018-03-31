@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { wip } from '../../wip.json'
+import wip from '../../wip.json'
 
 const H = styled.h1`
 font-size:3em;
@@ -65,7 +65,7 @@ export default class CheckName extends React.Component {
   }
   componentDidMount = () => {
     this.setState({
-      user: 'wi',
+      user: '',
       loading: false
     })
   }
