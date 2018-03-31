@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-
 const Box = styled.div`
     height: 30vh;
     width: 50vw;
@@ -13,7 +12,7 @@ const Box = styled.div`
 `
 
 const index = (props) => (
-    <Box className={props.className}><p>{props.text}</p></Box>
+  <Box className={props.className}><p>{props.text}</p></Box>
 )
 
-export default index;
+export default index

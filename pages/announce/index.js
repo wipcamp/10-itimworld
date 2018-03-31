@@ -1,6 +1,6 @@
 import React from 'react'
-import Custom from '../../../components/custom/index'
-import Linktoannouce from '../../../components/custom/linktoannouce'
+import Custom from '../../components/custom/index'
+import Linktoannouce from '../../components/custom/linktoannouce'
 import styled from 'styled-components'
 
 const Bg = styled.body`
@@ -11,12 +11,12 @@ const Bg = styled.body`
   background-size: cover;
 `
 export default class Index extends React.Component {
-  render() {
+  render () {
     return (
       <div>
         <Bg>
-        <Custom />
-        <Linktoannouce/>
+          <Custom />
+          <Linktoannouce />
         </Bg>
       </div>
     )

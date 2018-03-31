@@ -1,15 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
-import wip from '../../wip.json'
 import cookie from '../../utils/cookie'
 import api from '../../utils/api'
+import campers from './campers.json'
 
 const H = styled.h1`
 font-size:3em;
 text-align: center;
 @font-face {
   font-family: 'Pridi';
-  src: url('/static/font/Pridi-Light.ttf');
+  src: url('/static/fonts/Pridi-Light.ttf');
 }
 font-family: 'Pridi';
 padding-top: 1%;
@@ -62,23 +62,29 @@ font-family: 'Pridi';
 `
 export default class CheckName extends React.Component {
   state = {
-    user: [],
+    user: '',
     loading: true,
-    wipId: ''
+    isPasssed: false
   }
-
   async componentDidMount () {
     let {token} = await cookie({req: false})
-    let {data} = await api.post(`/auth/me`, null, {Authorization: `Bearer ${token}`})
-    this.setState({wipId: data.id})
+    let fetchedData = await api.post(`/auth/me`, null, {Authorization: `Bearer ${token}`})
+    await this.setState({
+      user: 100301,
+      loading: true
+    })
+    let data = await campers.filter(data => {
+      return data.wipId === this.state.user
+    })
+    if (data.length > 0) {
+      this.setState({
+        isPasssed: true,
+        loading: false
+      })
+    }
     this.setState({
-      user: '',
       loading: false
     })
-    let newArray = wip.filter((el) => {
-      return el.wip_id === data.id
-    })
-    this.setState({user: newArray})
   }
 
   render () {
@@ -87,11 +93,11 @@ export default class CheckName extends React.Component {
         loading ...
       </div>
     }
-    if (this.state.user.length > 0) {
+    if (this.state.isPasssed) {
       return <div className='text-center mt-2'>
         <H>ขอแสดงความยินดีด้วย!</H>
         <P>คุณได้เข้าร่วมกองทัพกับเรา</P>
-        <a href='https://wip.camp' className=''>
+        <a href='http://itims.wip.camp' className=''>
           <Button type='button' className='btn btn-outline-success text-center'>ยืนยันสิทธิ์</Button>
         </a>
       </div>

@@ -90,7 +90,7 @@ const ImgL = styled.img`
     width: 110%;
     margin-left: 0%;
   }
-` 
+`
 const Div = styled.div`
   width: 100%;
   background-color: #ffffcc;
@@ -107,63 +107,63 @@ const Div = styled.div`
 
 export default class Custom extends React.Component {
   state = {}
-  render() {
+  render () {
     return (
-      <div className="container d-flex justify-content-center">
-        <div className="row d-flex justify-content-center">
-          <Div className="rounded">
-            <Sec id="Top" className="row">
-              <div className="col-7 d-flex align-items-center justify-content-center">
-                <BoxY className="rounded"><Text>สวัสดีเจ้าลิง เจ้ารู้ไหมว่าวันนี้มีอะไร? ทำไมคนข้างนอกเยอะนัก</Text></BoxY>
-                <SelectorY/>
-                </div>
-              <div className="col-5">
-                <ImgY src="/static/img/todfire.png"/>
+      <div className='container d-flex justify-content-center'>
+        <div className='row d-flex justify-content-center'>
+          <Div className='rounded'>
+            <Sec id='Top' className='row'>
+              <div className='col-7 d-flex align-items-center justify-content-center'>
+                <BoxY className='rounded'><Text>สวัสดีเจ้าลิง เจ้ารู้ไหมว่าวันนี้มีอะไร? ทำไมคนข้างนอกเยอะนัก</Text></BoxY>
+                <SelectorY />
+              </div>
+              <div className='col-5'>
+                <ImgY src='/static/img/todfire.png' />
               </div>
             </Sec>
-            <Sec other className="row">
-              <div className="col-5">
-                <ImgL src="/static/img/hanufire.png"/>
+            <Sec other className='row'>
+              <div className='col-5'>
+                <ImgL src='/static/img/hanufire.png' />
               </div>
-              <div className="col-7 d-flex align-items-center justify-content-center">
-                <SelectorL/>
-                <BoxL className="rounded"><Text>วันนี้เป็นวันประกาศผลค่าย Wip Camp ครั้งที่ 10 ไงล่ะ</Text></BoxL>
-              </div>
-            </Sec>
-            <Sec className="row">
-              <div className="col-7 d-flex align-items-center justify-content-center">
-                <BoxY className="rounded"><Text>หึ! วันนี้แล้วสินะ งั้นเจ้าหนูที่หลงทางงอยู่ตรงนั้นก็คงเป็นหนึ่งในผู้สมัครล่ะสิ</Text></BoxY>
-                <SelectorY/>
-              </div>
-              <div className="col-5">
-                <ImgY src="/static/img/todfire.png"/>
+              <div className='col-7 d-flex align-items-center justify-content-center'>
+                <SelectorL />
+                <BoxL className='rounded'><Text>วันนี้เป็นวันประกาศผลค่าย Wip Camp ครั้งที่ 10 ไงล่ะ</Text></BoxL>
               </div>
             </Sec>
-            <Sec other className="row">
-              <div className="col-5">
-                <ImgL src="/static/img/hanufire.png"/>
+            <Sec className='row'>
+              <div className='col-7 d-flex align-items-center justify-content-center'>
+                <BoxY className='rounded'><Text>หึ! วันนี้แล้วสินะ งั้นเจ้าหนูที่หลงทางงอยู่ตรงนั้นก็คงเป็นหนึ่งในผู้สมัครล่ะสิ</Text></BoxY>
+                <SelectorY />
               </div>
-              <div className="col-7 d-flex align-items-center justify-content-center">
-                <SelectorL/>
-                <BoxL className="rounded"><Text>อา... ใช่ แต่ข้างในมันมืดมากเลยนะ แต่เจ้าหนูไม่มีอะไรพกติดตัวมาสักนิด</Text></BoxL>
-              </div>
-            </Sec>
-            <Sec className="row">
-              <div className="col-7 d-flex align-items-center justify-content-center">
-                <BoxY className="rounded"><Text>อืม... เจ้า! เจ้านั่นแหละ! มารับคบเพลิงของพวกข้าไป เก็บมันไว้ดี ๆ ล่ะ!</Text></BoxY>
-                <SelectorY/>
-              </div>
-              <div className="col-5">
-                <ImgY src="/static/img/todfire.png"/>
+              <div className='col-5'>
+                <ImgY src='/static/img/todfire.png' />
               </div>
             </Sec>
-            <Sec id="Bottom" other className="row">
-              <div className="col-5">
-                <ImgL src="/static/img/hanufire.png"/>
+            <Sec other className='row'>
+              <div className='col-5'>
+                <ImgL src='/static/img/hanufire.png' />
               </div>
-              <div className="col-7 d-flex align-items-center justify-content-center">
-                <SelectorL/>
-                <BoxL className="rounded"><Text>รับของข้าไปด้วยสิ อ๋อ ส่วนทางที่ถูกต้องน่ะ เจ้าต้องกดกล่องดวงใจ แล้วสิ่งนั้นจะนำทางเจ้าไปเอง</Text></BoxL>
+              <div className='col-7 d-flex align-items-center justify-content-center'>
+                <SelectorL />
+                <BoxL className='rounded'><Text>อา... ใช่ แต่ข้างในมันมืดมากเลยนะ แต่เจ้าหนูไม่มีอะไรพกติดตัวมาสักนิด</Text></BoxL>
+              </div>
+            </Sec>
+            <Sec className='row'>
+              <div className='col-7 d-flex align-items-center justify-content-center'>
+                <BoxY className='rounded'><Text>อืม... เจ้า! เจ้านั่นแหละ! มารับคบเพลิงของพวกข้าไป เก็บมันไว้ดี ๆ ล่ะ!</Text></BoxY>
+                <SelectorY />
+              </div>
+              <div className='col-5'>
+                <ImgY src='/static/img/todfire.png' />
+              </div>
+            </Sec>
+            <Sec id='Bottom' other className='row'>
+              <div className='col-5'>
+                <ImgL src='/static/img/hanufire.png' />
+              </div>
+              <div className='col-7 d-flex align-items-center justify-content-center'>
+                <SelectorL />
+                <BoxL className='rounded'><Text>รับของข้าไปด้วยสิ อ๋อ ส่วนทางที่ถูกต้องน่ะ เจ้าต้องกดกล่องดวงใจ แล้วสิ่งนั้นจะนำทางเจ้าไปเอง</Text></BoxL>
               </div>
             </Sec>
           </Div>

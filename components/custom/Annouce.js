@@ -52,7 +52,7 @@ export default class App extends React.Component {
     this.setState({ node })
   }
 
-  render() {
+  render () {
     const { x, y } = this.state
     return (
       <Bg1>

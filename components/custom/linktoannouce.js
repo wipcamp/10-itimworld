@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from 'react'
+import styled from 'styled-components'
 import Tada from '../custom/animate/Tada'
 import Pulse from '../custom/animate/pulse'
 
@@ -48,22 +48,22 @@ const Font = styled.div`
 `
 
 const openBox = () => {
-    document.getElementById('Box').src = '../../static/img/openBox.png'
-    document.getElementById('Box').style.animation = 'none'
+  document.getElementById('Box').src = '../../static/img/openBox.png'
+  document.getElementById('Box').style.animation = 'none'
 }
 
 export default class Introduce extends React.Component {
     state = {}
-    render() {
-        return (
-            <Background className="d-flex justify-content-center align-items-center">
-                <div className="text-center">
-                    <div>
-                        <a href='/test' target="_blank"><Box id='Box' onClick={openBox} src='/static/img/box.svg' /></a>
-                    </div>
-                    <Font>จงเปิดกล่องดวงใจเพื่อตามหาคำตอบ</Font>
-                </div>
-            </Background>
-        )
+    render () {
+      return (
+        <Background className='d-flex justify-content-center align-items-center'>
+          <div className='text-center'>
+            <div>
+              <a href='/announce/annoucement'><Box id='Box' onClick={openBox} src='/static/img/box.svg' /></a>
+            </div>
+            <Font>จงเปิดกล่องดวงใจเพื่อตามหาคำตอบ</Font>
+          </div>
+        </Background>
+      )
     }
 }
