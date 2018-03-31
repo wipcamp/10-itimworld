@@ -76,7 +76,6 @@ export default class MyDocument extends Document {
           <link rel="mask-icon" href="/static/img/favicon/safari-pinned-tab.svg" color="#5bbad5"/>
           <meta name="msapplication-TileColor" content=" #002D40"/>
           <meta name="theme-color" content=" #002D40"/>
-
           <script dangerouslySetInnerHTML={{__html: googleTagManager}} />
           <script dangerouslySetInnerHTML={{__html: hotjar}} />
 

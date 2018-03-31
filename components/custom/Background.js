@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Check from './Checkname'
 
-const Bg = styled.body`
+const Bg = styled.div`
     height: 100vh;
     width:100vw;
     
@@ -43,7 +43,7 @@ const BgLeft = styled.img`
 
     }
 `
-const BgRight = styled.img `
+const BgRight = styled.img`
     position: absolute;
     height: 100vh;
     z-index:1;
@@ -55,9 +55,7 @@ const BgRight = styled.img `
     @media(max-width:768px){
     }
 `
-const Button = styled.button`
-    cursor:pointer;
-`
+
 const BoxL = styled.div`
   width: 30%;
   min-height: 5%;
@@ -70,11 +68,6 @@ const BoxL = styled.div`
   bottom:10vh;
   right:5vw;
   `
-const SelectorL = styled.div`
-  border-top: 10px solid transparent;
-	border-bottom: 10px solid transparent;
-	border-right: 10px solid #FCB933;
-`
 
 const Span = styled.span`
 @font-face {
@@ -90,18 +83,18 @@ const Span = styled.span`
 `
 
 export default class Background extends React.Component {
-  render() {
-    return(
-    <Bg>
-        <BgLeft src="../../static/img/Bgleft.png"/>
-        <BgRight src="../../static/img/BgRight.png"/>
-        <BgBottom src="../../static/img/open.png"/>
-        <BoxL className="rounded text-center pt-1"><Span>เนื่องจากที่แห่งนี้นั้นไร้แสงส่องเข้ามาถึง เจ้าจงใช้คบไฟที่ได้รับมาส่องดูผลสมัครด้วยตนเองเสีย</Span></BoxL>            
-          <div className="d-flex justify-content-center align-items-center">
-          <Check/>
-          </div>   
-    </Bg>
+  render () {
+    return (
+      <Bg>
+        <BgLeft src='/static/img/Bgleft.png' />
+        <BgRight src='/static/img/BgRight.png' />
+        <BgBottom src='/static/img/open.png' />
+        <BoxL className='rounded text-center pt-1'><Span>เนื่องจากที่แห่งนี้นั้นไร้แสงส่องเข้ามาถึง เจ้าจงใช้คบไฟที่ได้รับมาส่องดูผลสมัครด้วยตนเองเสีย</Span></BoxL>
+        <div className='d-flex justify-content-center align-items-center'>
+          <Check />
+        </div>
+      </Bg>
 
     )
   }
-} 
+}

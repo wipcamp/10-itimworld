@@ -1,13 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
-import { wip } from '../../wip.json'
+import campers from './campers.json'
 
 const H = styled.h1`
 font-size:3em;
 text-align: center;
 @font-face {
   font-family: 'Pridi';
-  src: url('/static/font/Pridi-Light.ttf');
+  src: url('/static/fonts/Pridi-Light.ttf');
 }
 font-family: 'Pridi';
 padding-top: 1%;
@@ -61,11 +61,25 @@ font-family: 'Pridi';
 export default class CheckName extends React.Component {
   state = {
     user: '',
-    loading: true
+    loading: true,
+    isPasssed: false
   }
-  componentDidMount = () => {
+  async componentDidMount () {
+    await this.setState({
+      user: 100301,
+      // user: 1003,
+      loading: true
+    })
+    let data = await campers.filter(data => {
+      return data.wipId === this.state.user
+    })
+    if (data.length > 0) {
+      this.setState({
+        isPasssed: true,
+        loading: false
+      })
+    }
     this.setState({
-      user: 'wi',
       loading: false
     })
   }
@@ -76,11 +90,11 @@ export default class CheckName extends React.Component {
         loading ...
       </div>
     }
-    if (wip.indexOf(this.state.user) > -1) {
+    if (this.state.isPasssed) {
       return <div className='text-center mt-2'>
         <H>ขอแสดงความยินดีด้วย!</H>
         <P>คุณได้เข้าร่วมกองทัพกับเรา</P>
-        <a href='http://wip.camp' className=''>
+        <a href='http://itims.wip.camp' className=''>
           <Button type='button' className='btn btn-outline-success text-center'>ยืนยันสิทธิ์</Button>
         </a>
       </div>
