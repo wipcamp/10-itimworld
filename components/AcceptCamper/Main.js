@@ -8,13 +8,14 @@ const BackgroundContainer = styled.div`
   width : 100%;
   background-size : cover;
   background-position : center;
-`
 
-const Box = styled.div`
-  background-color : white;
-  padding : 2em;
-  border-radius : 10px;
-  margin-top : 5em;
+  .box-shadow {
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .1);
+  }
+
+  .pointer {
+    cursor: pointer;
+  }
 `
 
 const ModalContainer = styled.div`
@@ -139,10 +140,11 @@ export default class index extends React.Component {
         <BackgroundContainer>
           <div className='container'>
             <div className='row justify-content-center'>
-              <div className='col-10'>
-                <Box className=''>
+              <div className='col-12'>
+                <div className='box-shadow bg-light rounded my-4 p-3'>
                   <div>
-                    <h1>ยืนยันสิทธิ</h1>
+                    <h1 className='text-center'>ยืนยันสิทธิ</h1>
+                    <hr />
                     <form>
                       <div className='col-12 form-check'>
                         <input
@@ -193,16 +195,17 @@ export default class index extends React.Component {
                         <input className='col-lg-10 col-md-12' type='file' />
                       </div>
                     </form>
+                    <hr />
                     <div className='row mt-3'>
-                      <div className='col-6 text-center'>
-                        <button className='btn btn-outline-primary btn-lg' onClick={this.toggle}>OK</button>
+                      <div className='col-8 text-center'>
+                        <button className='btn btn-outline-primary btn-block pointer' onClick={this.toggle}>OK</button>
                       </div>
-                      <div className='col-6 text-center'>
-                        <button className='btn btn-outline-danger' onClick={this.toggle2}>สละสิทธิ</button>
+                      <div className='col-4 pointer text-center'>
+                        <button className='btn btn-outline-danger btn-block pointer' onClick={this.toggle2}>สละสิทธิ</button>
                       </div>
                     </div>
                   </div>
-                </Box>
+                </div>
               </div>
             </div>
           </div>
