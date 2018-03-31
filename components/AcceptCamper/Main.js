@@ -168,9 +168,10 @@ export default class index extends React.Component {
                         {
                           this.state.comeByYourself === 'n' && (
                             <select name='where'>
-                              <option value=''>ที่ไหนดี</option>
-                              <option value=''>1</option>
-                              <option value=''>2</option>
+                              <option value=''>หัวลำโพง</option>
+                              <option value=''>หมอชิต</option>
+                              <option value=''>อนุเสาวรีย์ชัยสมรภูมิ</option>
+                              <option value=''>สายใต้ใหม่</option>
                             </select>
                           )
                         }
