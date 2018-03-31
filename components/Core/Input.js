@@ -47,7 +47,8 @@ export const CheckRadio = styled.div`
   border-radius: 100%;
   height: 20px;
   width: 20px;
-  top: 4px;
+  top: ${props => props.top || '4px'};
+  
   left: 5px;
   z-index: 5;
   transition: border .25s linear;
