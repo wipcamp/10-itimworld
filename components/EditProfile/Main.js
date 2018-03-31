@@ -146,6 +146,7 @@ export default compose(
   }),
   lifecycle({
     async componentDidMount () {
+      window.location.replace('https://wip.camp')
       const { props } = this
       const { user_id: userId } = props.initialValues
       let {token} = cookie({req: false})
