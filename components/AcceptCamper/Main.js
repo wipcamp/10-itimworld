@@ -40,12 +40,12 @@ const Modal = (props) => (
     <div className='container'>
       <div className='row justify-content-center'>
         <div className='col-10'>
-          <div className='mt-4 card'>
+          <div className='mt-5 card'>
             <div className='card-body'>
               <h1 className='text-center'>ยืนยัน</h1>
               <hr />
               <div>
-                content
+                ตรวจสอบข้อมูลดีๆนะ
               </div>
               <hr />
               <div className='row'>
@@ -167,7 +167,8 @@ export default class index extends React.Component {
                       <Where>
                         {
                           this.state.comeByYourself === 'n' && (
-                            <select name='where'>
+                            <select required name='where'>
+                              <option value=''>ที่ไหนดี</option>
                               <option value=''>หัวลำโพง</option>
                               <option value=''>หมอชิต</option>
                               <option value=''>อนุเสาวรีย์ชัยสมรภูมิ</option>
@@ -192,7 +193,7 @@ export default class index extends React.Component {
                     </form>
                     <div className='row mt-3'>
                       <div className='col-6 text-center'>
-                        <button className='btn btn-outline-primary btn-lg' onClick={this.toggle}>OK</button>
+                        <button className='btn btn-outline-primary' onClick={this.toggle}>OK</button>
                       </div>
                       <div className='col-6 text-center'>
                         <button className='btn btn-outline-danger' onClick={this.toggle2}>สละสิทธิ</button>
