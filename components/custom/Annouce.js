@@ -1,12 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from 'react'
+import styled from 'styled-components'
 import Bg from '../../components/custom/Background'
-
-
 const Bg1 = styled.div`
   overflow-x:hidden;
   overflow-y:hidden;
-` 
+`
+
 const MouseFlashlight = styled.div`
 cursor: none;
 /* --cursorX: 50%;
@@ -31,42 +30,42 @@ z-index:5;
 `
 
 export default class App extends React.Component {
-state = {
-  x: '50%',
-  y: '60%',
-  node: null
-}
+  state = {
+    x: '50%',
+    y: '60%',
+    node: null
+  }
 
-update = (e) => {
-  let x = e.clientX || e.touches[0].clientX
-  let y = e.clientY || e.touches[0].clientY
-  const { node } = this.state
-  x -= node.offsetLeft
-  y -= node.offsetTop
-  this.setState({
-    x: x + 'px',
-    y: y + 'px'
-  })
-}
+  update = (e) => {
+    let x = e.clientX || e.touches[0].clientX
+    let y = e.clientY || e.touches[0].clientY
+    const { node } = this.state
+    x -= node.offsetLeft
+    y -= node.offsetTop
+    this.setState({
+      x: x + 'px',
+      y: y + 'px'
+    })
+  }
 
-loadRef = (node) => {
-   this.setState({ node })
-}
+  loadRef = (node) => {
+    this.setState({ node })
+  }
 
-render() {
-  const { x, y } = this.state
-  return (
-    <Bg1>
-      <MouseFlashlight
-        cursorX={x}
-        cursorY={y}
-        onMouseMove={this.update}
-        onTouchMove={this.update}
-        innerRef={this.loadRef}
-      >
-      <Bg/>
-      </MouseFlashlight>
-    </Bg1>
-  )
-}
+  render() {
+    const { x, y } = this.state
+    return (
+      <Bg1>
+        <MouseFlashlight
+          cursorX={x}
+          cursorY={y}
+          onMouseMove={this.update}
+          onTouchMove={this.update}
+          innerRef={this.loadRef}
+        >
+          <Bg />
+        </MouseFlashlight>
+      </Bg1>
+    )
+  }
 }

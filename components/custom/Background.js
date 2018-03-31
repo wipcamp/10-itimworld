@@ -1,4 +1,4 @@
-import react from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import Check from './Checkname'
 
@@ -79,7 +79,7 @@ const SelectorL = styled.div`
 const Span = styled.span`
 @font-face {
   font-family: 'Pridi';
-  src: url('/static/font/Pridi-Light.ttf');
+  src: url('/static/fonts/Pridi-Light.ttf');
   }
   font-family: 'Pridi';
   font-size: 4vw;
