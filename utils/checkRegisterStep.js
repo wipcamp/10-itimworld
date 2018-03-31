@@ -40,7 +40,7 @@ const checkStep = (path) => Component => {
         data = data[0]
         if (path === registerPath) {
           if (!data) {
-          } else if (!data.profile_registrant.skill_computer) {
+          } else if (false) {
             closedRegister = this.isClosed()
             if (!closedRegister) {
               props.setRegisterStep(2)
@@ -50,7 +50,7 @@ const checkStep = (path) => Component => {
             Router.push(dashboardPath)
           }
         } else {
-          if (!data.first_name || !data.profile_registrant.skill_computer) {
+          if (false) {
             Router.push(registerPath)
           } else {
             show = true

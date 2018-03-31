@@ -15,7 +15,7 @@ const inputStyle = {
   transition: 'all .3s ease-in-out'
 }
 
-const StyledInput = styled.input`
+export const StyledInput = styled.input`
 
   background-color: ${inputStyle.backgroundColor};
   border-radius: 10px;
@@ -30,7 +30,7 @@ const StyledInput = styled.input`
   }
 `
 
-const StyledSelect = styled.select`
+export const StyledSelect = styled.select`
   width: ${props => props.width};
   background-color: ${inputStyle.backgroundColor};
   border-radius: 10px;
@@ -38,7 +38,7 @@ const StyledSelect = styled.select`
   transition: ${inputStyle.transition};
 `
 
-const CheckRadio = styled.div`
+export const CheckRadio = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,7 +65,7 @@ const CheckRadio = styled.div`
 
 `
 
-const RadioContainer = styled.div`
+export const RadioContainer = styled.div`
   position: relative;
 
   & > label {
@@ -109,8 +109,8 @@ const RadioContainer = styled.div`
   }
 `
 
-const StyledTextArea = styled.textarea`
-  background-color: ${inputStyle.backgroundColor};
+export const StyledTextArea = styled.textarea`
+  background-color: ${inputStyle.backgroundColor}; */
   color: ${inputStyle.color};
   transition: ${inputStyle.transition};
 `
@@ -142,7 +142,7 @@ const Required = () => (
   <RequiredStyled>*</RequiredStyled>
 )
 
-const Label = styled.label`
+export const Label = styled.label`
   padding-left: 10px;
   font-size: 20px;
 `
