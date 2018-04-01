@@ -43,7 +43,7 @@ class Finish extends React.Component {
                   <div className='row'>
                     <div className='col-12'>
                       <a
-                        href='https://www.facebook.com/'
+                        href='https://www.facebook.com/groups/184594058826988/'
                         target='_blank'
                         className='pointer btn btn-outline-primary btn-block'
                       >
