@@ -95,9 +95,6 @@ export default compose(
       if (this.props.registerData.registerStep === 2 && nextProps.registerData.registerStep === 3) {
         Router.push('/dashboard')
       }
-    },
-    componentDidMount () {
-      window.location.replace('https://wip.camp')
     }
   })
 )(MainRegister)

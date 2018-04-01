@@ -551,7 +551,6 @@ export default compose(
   checkRegisterStep('/dashboard'),
   lifecycle({
     async componentDidMount () {
-      window.location.replace('https://wip.camp')
       const { user_id: userId } = this.props.initialValues
       let {token} = cookie({req: false})
       const { data } = await api.get(`/registrants/${userId}`, {Authorization: `Bearer ${token}`})
