@@ -26,7 +26,12 @@ const End = (props) => (
       <div className='row justify-content-center'>
         <div className='col-md-8 col-12'>
           <div className='bg-light box-shadow my-4 p-3 rounded text-center'>
-            <h2>แล้วพบกันใหม่นะ</h2>
+            <h2>สละสิทธิ์เสร็จสิ้น</h2>
+            <hr />
+            <div className='my-2 text-center'>
+              <b>"หากเจ้าเปลี่ยนใจ สามารถติดต่อได้ทางแฟนเพจ <a href='https://www.facebook.com/wipcamp'>WIP Camp</a> เพื่อขอคืนค่าการยืนยันสิทธิ์"</b> <br />
+              <h4>แล้วพบกันใหม่นะ...</h4>
+            </div>
             <div className='my-4'>
               <a
                 href='https://wip.camp'

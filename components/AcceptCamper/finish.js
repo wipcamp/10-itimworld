@@ -38,7 +38,13 @@ class Finish extends React.Component {
                 <div className='box-shadow bg-light my-4 p-3 rounded text-center'>
                   <h3>ยืนยันสิทธิ์เรียบร้อย</h3>
                   <hr />
-                  <p className='text-left'><u><b>หมายเหตุ</b></u> หากสลิปมีปัญหาจะมีการติดต่อไปภายหลัง</p>
+                  <p className='text-left'>
+                    ยินดีต้อนรับน้องเอ๋ย ต่อไปนี้เจ้าจักถือว่าเป็นน้องค่าย <b>WIP Camp #10</b> อย่างเป็นทางการ <br />
+                    พวกพี่วานร และ ยักษายินดีเป็นอย่างยิ่งที่จะได้พบพวกเจ้า <br />
+                    <b>ค่ายจะเริ่มวันที่ 30 พ.ค. 2561 - 3 มิ.ย. 2561</b> <br />
+                    แล้วเจอกันนะเหล่าทหารเอก แสนกล้าหาญ ! <br />
+                    <u><b>หมายเหตุ</b></u> หากหลักฐานการโอนเงินมีปัญหาจะมีการติดต่อไปภายหลัง
+                  </p>
                   <hr />
                   <div className='row'>
                     <div className='col-12'>
@@ -47,7 +53,7 @@ class Finish extends React.Component {
                         target='_blank'
                         className='pointer btn btn-outline-primary btn-block'
                       >
-                        เข้ากลุ่มดิ๊
+                        เข้าร่วมโต้วาจากันที่กลุ่ม Facebook เร็ว!
                       </a>
                     </div>
                   </div>
