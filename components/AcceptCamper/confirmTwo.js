@@ -2,6 +2,8 @@ import React from 'react'
 import Link from 'next/link'
 import Router from 'next/router'
 
+import Alert from '../Core/Alert'
+
 import styled, { keyframes } from 'styled-components'
 
 import { StyledTextArea } from '../Core/Input'
@@ -59,20 +61,31 @@ const Loading = styled.div`
 class ConfirmTwo extends React.Component {
   state = {
     reason: '',
-    loading: false
+    loading: false,
+    showAlert: false,
+    alertMess: ''
   }
 
   _onSubmit = (e) => {
     e.preventDefault()
     const { reason } = this.state
     if (!reason) {
-      alert('กรุณากรอกเหตุผล ของเจ้า')
+      this.setState({
+        alertMess: 'กรุณากรอกเหตุผล ของเจ้า',
+        showAlert: true
+      })
       return
     } else if (reason.trim().length < 5) {
-      alert('เหตุผลของเจ้าสั้นเกินไป')
+      this.setState({
+        alertMess: 'เหตุผลของเจ้าสั้นเกินไป',
+        showAlert: true
+      })
       return
     } else if (reason.length > 65535) {
-      alert('เหตุผลของเจ้าไม่ควรเกิน 65,535 อักขระ')
+      this.setState({
+        alertMess: 'เหตุผลของเจ้าไม่ควรเกิน 65,535 อักขระ',
+        showAlert: true
+      })
       return
     }
     this.setState({
@@ -101,9 +114,16 @@ class ConfirmTwo extends React.Component {
     })
   }
 
+  hideAlert = () => {
+    this.setState({
+      showAlert: false
+    })
+  }
+
   render () {
     return (
       <div className='container'>
+        <Alert error showDialog={this.state.showAlert} message={this.state.alertMess} hideDialog={this.hideAlert} />
         <div className='row d-flex justify-content-center'>
           <div className='col-lg-6 col-sm-10'>
             <div className='box-shadow my-4 p-3 bg-light position-relative rounded'>
