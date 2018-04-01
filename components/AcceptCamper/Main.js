@@ -4,6 +4,7 @@ import styled, { keyframes } from 'styled-components'
 import Router from 'next/router'
 import { compose } from 'recompose'
 
+import Alert from '../Core/Alert'
 import { RadioContainer, CheckRadio, Label, StyledSelect } from '../Core/Input'
 import api from '../../utils/api'
 import cookie from '../../utils/cookie'
@@ -226,7 +227,9 @@ class index extends React.Component {
       },
       isShow: false,
       isShow2: false,
-      loading: false
+      loading: false,
+      showAlert: false,
+      alertMess: ''
     }
 
     _setField = (key, value) => {
@@ -249,22 +252,45 @@ class index extends React.Component {
       try {        
         if (!comeByYourself) {
           valid.comeByYourself = -1
+          this.setState({
+            alertMess: 'กรุณาใส่ข้อมูลในกรอบสีแดงให้เรียบร้อย',
+            showAlert: true
+          })
         } else if (comeByYourself === 'n' && !place) {
           valid.comeByYourself = -1
+          this.setState({
+            alertMess: 'กรุณาใส่ข้อมูลในกรอบสีแดงให้เรียบร้อย',
+            showAlert: true
+          })
         } else {
           valid.comeByYourself = 0
           ++re
         }
 
-        if (!file ) {
+        if (!file) {
           valid.file = -1
-          alert('ไม่พบไฟล์')
+          if (re === 0) {
+            this.setState({
+              alertMess: 'ไม่พบไฟล์',
+              showAlert: true
+            })
+          }
         } else if (file.size > 2097152) {
           valid.file = -1
-          alert('ขนาดไฟล์เกิน 2 MB')
+          if (re === 0) {
+            this.setState({
+              alertMess: 'ขนาดไฟล์เกิน 2 MB',
+              showAlert: true
+            })
+          }
         } else if ('image/png, image/jpeg, application/pdf'.split(', ').indexOf(file.type) < 0) {
           valid.file = -1
-          alert('อนุญาตเฉพาะนามสกุล .png .jpeg .pdf')
+          if (re === 0) {
+            this.setState({
+              alertMess: 'อนุญาตเฉพาะนามสกุล .png .jpeg .pdf',
+              showAlert: true
+            })
+          }
         } else {
           valid.file = 0
           ++re
@@ -272,12 +298,17 @@ class index extends React.Component {
 
         if (!shirtSize) {
           valid.shirtSize = -1
+          if (re === 1) {
+            this.setState({
+              alertMess: 'กรุณาใส่ข้อมูลในกรอบสีแดงให้เรียบร้อย',
+              showAlert: true
+            })
+          }
           return re
         } else {
           return ++re
         }
       } finally {
-        console.log(re)
         this.setState({ valid })
         return re
       }
@@ -288,13 +319,22 @@ class index extends React.Component {
       const file = e.target.files[0]
       if (!file ) {
         valid.file = -1
-        alert('ไม่พบไฟล์')
+        this.setState({
+          alertMess: 'ไม่พบไฟล์',
+          showAlert: true
+        })
       } else if (file.size > 2097152) {
         valid.file = -1
-        alert('ขนาดไฟล์เกิน 2 MB')
+        this.setState({
+          alertMess: 'ขนาดไฟล์เกิน 2 MB',
+          showAlert: true
+        })
       } else if ('image/png, image/jpeg, application/pdf'.split(', ').indexOf(file.type) < 0) {
         valid.file = -1
-        alert('อนุญาตเฉพาะนามสกุล .png .jpeg .pdf')
+        this.setState({
+          alertMess: 'อนุญาตเฉพาะนามสกุล .png .jpeg .pdf',
+          showAlert: true
+        })
       } else {
         valid.file = 0
       }
@@ -345,10 +385,17 @@ class index extends React.Component {
         })
         .catch(err => {
           this.setState({
-            loading: false
+            loading: false,
+            showAlert: true,
+            alertMess: `แย่แล้วพบปัญหา: ${err}`
           })
-          alert(`พบปัญหา: ${err}`)
         })
+    }
+
+    hideAlert = () => {
+      this.setState({
+        showAlert: false
+      })
     }
 
     render () {
@@ -386,6 +433,7 @@ class index extends React.Component {
       return (
         <BackgroundContainer>
           <div className='container'>
+            <Alert error showDialog={this.state.showAlert} message={this.state.alertMess} hideDialog={this.hideAlert} />
             <div className='row justify-content-center'>
               <div className='col-12 col-md-8'>
                 <div className='box-shadow bg-light rounded my-4 p-3'>
