@@ -15,7 +15,7 @@ import checkUser from '../../components/AcceptCamper/checkUser'
 
 const BackgroundContainer = styled.div`
     background-image: url("../../static/img/background.png");
-    min-height : 100vh;
+    min-height : calc(100vh - 59px);
     width : 100%;
     background-size : cover;
     background-position : center;
