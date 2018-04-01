@@ -34,7 +34,7 @@ const Box = styled.img`
 const Font = styled.div`
     @font-face {
         font-family: 'Pridi';
-        src: url('/static/font/Pridi-Light.ttf');
+        src: url('/static/fonts/Pridi-Light.ttf');
     }
     font-family: 'Pridi';
     position: relative;

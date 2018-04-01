@@ -4,6 +4,7 @@ import Bg from '../../components/custom/Background'
 const Bg1 = styled.div`
   overflow-x:hidden;
   overflow-y:hidden;
+  background: #bcbaae;
 `
 
 const MouseFlashlight = styled.div`
@@ -23,8 +24,7 @@ z-index:5;
   background: radial-gradient(
     circle 15vmax at ${props => props.cursorX + ' ' + props.cursorY},
     rgba(0,0,0,0) 0%,
-    rgba(0,0,0,.5) 80%,
-    rgba(0,0,0,1) 100%
+    #121c21
   )
 }
 `

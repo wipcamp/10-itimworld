@@ -98,17 +98,14 @@ export default class CheckName extends React.Component {
         <H>ขอแสดงความยินดีด้วย!</H>
         <P>คุณได้เข้าร่วมกองทัพกับเรา</P>
         <a href='/accept-camper ' className=''>
-          <Button type='button' className='btn btn-outline-success text-center'>ยืนยันสิทธิ์</Button>
+          <Button type='button' className='btn btn-success text-center'>ยืนยันสิทธิ์</Button>
         </a>
       </div>
     }
     return (
       <div className='text-center mt-2'>
-        <H>เสียใจด้วยนะ...</H>
-        <P>ฮึบเข้าไว้! ครั้งหน้าลองใหม่!</P>
-        <a href='https://wip.camp'>
-          <Button type='button' className='btn btn-outline-warning text-center'>กลับหน้าหลัก</Button>
-        </a>
+        <H>เสียใจด้วย...</H>
+        <P>ฮึบเข้าไว้! ครั้งหน้าลองใหม่นะ!</P>
       </div>
     )
   }

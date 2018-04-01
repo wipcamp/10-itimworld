@@ -58,9 +58,13 @@ const BgRight = styled.img`
 
 const BoxL = styled.div`
   width: 30%;
+  @media (max-width: 800px) {
+    width: 89%;
+    bottom: 30vh;
+  }
   min-height: 5%;
-  background-color: #fcb933;
-  box-shadow: 0 2px 2px 0 #fff, 0 4px 10px 0 #fff ;
+  background-color: #002D40;
+  box-shadow: 0 1px 2px 0 #000;
   position: absolute; 
   z-index: 2;
   margin-top: 23%;
@@ -69,10 +73,11 @@ const BoxL = styled.div`
   right:5vw;
   `
 
-const Span = styled.span`
-@font-face {
-  font-family: 'Pridi';
-  src: url('/static/fonts/Pridi-Light.ttf');
+const Span = styled.div`
+  padding: .6em 1em;
+  @font-face {
+    font-family: 'Pridi';
+    src: url('/static/fonts/Pridi-Light.ttf');
   }
   font-family: 'Pridi';
   font-size: 4vw;
