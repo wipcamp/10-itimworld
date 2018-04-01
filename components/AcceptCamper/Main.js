@@ -196,7 +196,7 @@ const Modal2 = (props) => (
               <div className='row'>
                 <div className='col-6'>
                   <button
-                    className='btn btn-block pointer'
+                    className='btn btn-block pointer btn-outline-primary'
                     onClick={props.toggle}
                   >
                     ยกเลิก
