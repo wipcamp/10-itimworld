@@ -102,9 +102,10 @@ class ConfirmTwo extends React.Component {
       })
       .catch(err => {
         this.setState({
-          loading: false
+          loading: false,
+          alertMess: `พบปัญหา: ${err}`,
+          showAlert: true
         })
-        alert(`พบปัญหา: ${err}`)
       })
   }
 
