@@ -31,7 +31,7 @@ class index extends React.Component {
 
   render () {
     if (this.state.loading) return <div />
-    return <AcceptCamper />
+    return <AcceptCamper {...this.props} />
   }
 }
 

@@ -1,7 +1,17 @@
 import React from 'react'
+import { compose } from 'recompose'
+
 import ConfirmFirst from '../../components/AcceptCamper/confirmFirst'
 import ConfirmTwo from '../../components/AcceptCamper/confirmTwo'
 import styled from 'styled-components'
+
+import serverRender from '../../utils/serverRender'
+import clientRender from '../../utils/clientRender'
+import withRedux from '../../store/wrapper'
+import Messenger from '../../components/Core/Messenger'
+import getToken from '../../utils/getToken'
+
+import checkUser from '../../components/AcceptCamper/checkUser'
 
 const BackgroundContainer = styled.div`
     background-image: url("../../static/img/background.png");
@@ -19,7 +29,7 @@ const BackgroundContainer = styled.div`
     }
 `
 
-export default class index extends React.Component {
+class ConfirmWaiver extends React.Component {
     state = {
       step: 1
     }
@@ -35,8 +45,17 @@ export default class index extends React.Component {
       return (
         <BackgroundContainer>
           {step === 1 && <ConfirmFirst nextStep={this.nextStep} />}
-          {step === 2 && <ConfirmTwo />}
+          {step === 2 && <ConfirmTwo {...this.props} />}
         </BackgroundContainer>
       )
     }
 }
+
+export default compose(
+  withRedux(),
+  clientRender(`/`),
+  serverRender(`/`),
+  Messenger,
+  getToken(),
+  checkUser('/accept-camper/confirm')
+)(ConfirmWaiver)

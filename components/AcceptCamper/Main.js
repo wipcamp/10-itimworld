@@ -272,14 +272,9 @@ class index extends React.Component {
 
     post = async () => {
       const { comeByYourself, file, shirtSize, place } = this.state
-      console.log('come', comeByYourself)
-      console.log('place', place)
-      console.log('shirt', shirtSize)
-      console.log('file', file)
       this.setState({
         loading: true
       })
-      
       const { token } = cookie({req: false})
       const body = new FormData()
       body.append('comeByYourself', comeByYourself)
@@ -291,14 +286,12 @@ class index extends React.Component {
 
       api.post(`/confirm-campers`, body, {Authorization: `Bearer ${token}`})
         .then(res => {
-          console.log('res', res)
           this.setState({
             loading: false
           })
           Router.push('/accept-camper/finish')
         })
         .catch(err => {
-          console.log(err)
           this.setState({
             loading: false
           })
