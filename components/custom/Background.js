@@ -91,7 +91,7 @@ export default class Background extends React.Component {
         <BgBottom src='/static/img/open.png' />
         <BoxL className='rounded text-center pt-1'><Span>เนื่องจากที่แห่งนี้นั้นไร้แสงส่องเข้ามาถึง เจ้าจงใช้คบไฟที่ได้รับมาส่องดูผลสมัครด้วยตนเองเสีย</Span></BoxL>
         <div className='d-flex justify-content-center align-items-center'>
-          <Check />
+          <Check {...this.props} />
         </div>
       </Bg>
 
