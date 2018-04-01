@@ -92,16 +92,16 @@ export default class CheckName extends React.Component {
         <H>ขอแสดงความยินดีด้วย!</H>
         <P>คุณได้เข้าร่วมกองทัพกับเรา</P>
         <Link href='/accept-camper'>
-          <a className='btn btn-outline-success text-center'>ยืนยันสิทธิ์</a>
+          <a className='btn btn-success text-center'>ยืนยันสิทธิ์</a>
         </Link>
       </div>
     }
     return (
       <div className='text-center mt-2'>
         <H>เสียใจด้วย...</H>
-        <P>ฮึบเข้าไว้! ครั้งหน้าลองใหม่!</P>
+        <P>ฮึบเข้าไว้! อย่ายอมแพ้ โอกาศหน้าเจอกันใหม่นะ!</P>
         <Link href='https://wip.camp'>
-          <a className='btn btn-outline-warning text-center'>กลับหน้าหลัก</a>
+          <a className='btn btn-warning text-center'>กลับหน้าหลัก</a>
         </Link>
       </div>
     )
