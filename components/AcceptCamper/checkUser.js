@@ -20,7 +20,6 @@ export default (path) => (Component) => {
       const waiver = '/accept-camper/confirm'
       const end = '/accept-camper/end'
       const { profile_registrant: { tell_wipper: tellWip }, confirm_camper: confirmCamp } = data
-      console.log('confirm', confirmCamp)
       switch (path) {
         case preConfirm: {
           if (tellWip !== null) {
