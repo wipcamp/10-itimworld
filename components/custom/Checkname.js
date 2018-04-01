@@ -87,11 +87,6 @@ export default class CheckName extends React.Component {
   }
 
   render () {
-    if (this.state.loading) {
-      return <div>
-        loading ...
-      </div>
-    }
     if (this.state.isPasssed) {
       return <div className='text-center mt-2'>
         <H>ขอแสดงความยินดีด้วย!</H>
@@ -103,7 +98,7 @@ export default class CheckName extends React.Component {
     }
     return (
       <div className='text-center mt-2'>
-        <H>เสียใจด้วยนะ...</H>
+        <H>เสียใจด้วย...</H>
         <P>ฮึบเข้าไว้! ครั้งหน้าลองใหม่!</P>
         <Link href='https://wip.camp'>
           <a className='btn btn-outline-warning text-center'>กลับหน้าหลัก</a>

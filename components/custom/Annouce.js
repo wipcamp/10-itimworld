@@ -10,6 +10,7 @@ import getToken from '../../utils/getToken'
 const Bg1 = styled.div`
   overflow-x:hidden;
   overflow-y:hidden;
+  background: #bcbaae;
 `
 
 const MouseFlashlight = styled.div`
@@ -29,8 +30,7 @@ const MouseFlashlight = styled.div`
     background: radial-gradient(
       circle 15vmax at var(--cursorX) var(--cursorY),
       rgba(0,0,0,0) 0%,
-      rgba(0,0,0,.5) 80%,
-      rgba(0,0,0,1) 100%
+      #121c21
     )
   }
 `

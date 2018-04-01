@@ -4,7 +4,7 @@ import styled, { keyframes } from 'styled-components'
 import Router from 'next/router'
 import { compose } from 'recompose'
 
-import { RadioContainer, CheckRadio, Label, StyledSelect, StyledTextArea } from '../Core/Input'
+import { RadioContainer, CheckRadio, Label, StyledSelect } from '../Core/Input'
 import api from '../../utils/api'
 import cookie from '../../utils/cookie'
 import checkUser from './checkUser'
@@ -121,13 +121,19 @@ const Modal = (props) => (
   <ModalContainer isShow={props.Show}>
     <div className='container'>
       <div className='row justify-content-center'>
-        <div className='col-10'>
+        <div className='col-12 col-md-8'>
           <div className='mt-4 card'>
             <div className='card-body'>
-              <h1 className='text-center'>ยืนยัน</h1>
+              <h1 className='text-center'>ยืนยันสิทธิ์</h1>
               <hr />
-              <div className='text-center'>
-                ตรวจสอบข้อมูลดี ๆ นะ
+              <div>
+                กรุณาตรวจสอบให้แน่ใจก่อนว่า
+                <ul>
+                  <li className='text-danger'><b>หลักฐานการโอนเงิน</b> ชัดเจน ไม่เบลอ มีข้อมูลสำคัญครบถ้วน เช่น ชื่อบัญชี, จำนวนเงิน</li>
+                  <li><b>ไซต์เสื้อ</b> ที่ใส่ ถูกต้องตามขนาดกายหยาบของเจ้านะน้องเอ๋ย</li>
+                  <li><b>หากบ้านอยู่ไกล และต้องการให้พวกข้าไปรับ</b> จงตรวจทานสถานที่ให้ดี</li>
+                </ul>
+                หากเจ้ามั่นใจว่า ถูกต้อง ครบถ้วน แล้ว จงกดยืนยันเพื่อรายงานตัวของเจ้า !
               </div>
               <hr />
               <div className='row'>
@@ -165,13 +171,21 @@ const Modal2 = (props) => (
   <ModalContainer isShow={props.Show2}>
     <div className='container'>
       <div className='row justify-content-center'>
-        <div className='col-10'>
+        <div className='col-12 col-md-8'>
           <div className='mt-4 card'>
             <div className='card-body'>
-              <h1 className='text-center'>แน่ใจป่าว</h1>
+              <h1 className='text-center'>คำเตือน</h1>
               <hr />
               <div>
-                แน่ใจแล้วหรอ คิดดีๆน๊าาาา
+                <blockquote className='blockquote' style={{fontSize: '1.2em'}}>
+                  หากเจ้ายืนยันที่จะสละสิทธิ์ พวกพี่ ๆ จะเสียใจเป็นอย่างมาก <br />
+                  แต่พวกพี่ ๆ ยอมรับในการตัดสินใจของน้อง ๆ เสมอ <br />
+                  เพลานี้เป็นเวลาที่จักให้น้องคิดให้ดี ๆ ถี่ถ้วน
+                  หากเปลี่ยนใจ ให้กด <b>"ยกเลิก"</b> เถิด <br />
+                  <b className='text-danger'>เพราะถ้าหากน้องยืนยันที่จะสละสิทธิ์แล้ว น้องไม่สามารถกลับมายืนยันได้อีก</b> <br />
+                  หากน้องคิดดีแล้ว จงกดปุ่ม "ยืนยันการสละสิทธิ์" เสีย
+                  <footer className='blockquote-footer'>พี่วานร และ ยักษา</footer>
+                </blockquote>
               </div>
               <hr />
               <div className='row'>
@@ -185,7 +199,7 @@ const Modal2 = (props) => (
                 </div>
                 <div className='col-6'>
                   <button
-                    className='btn btn-warning btn-block pointer' onClick={() => Router.push('/accept-camper/confirm')}
+                    className='btn btn-danger btn-block pointer' onClick={() => Router.push('/accept-camper/confirm')}
                   >
                     ยืนยันการสละสิทธิ์
                   </button>
@@ -424,8 +438,19 @@ class index extends React.Component {
                       <BlockValidate
                         valid={valid.file}
                       >
-                        <Label>อัพโหลดสลิปจ่ายเงิน</Label>
-                        <div className='form-group'>
+                        <Label>อัพโหลดสลิปจ่ายเงิน</Label> <br />
+                        <div className='mx-auto my-0 text-center'>
+                          <b className='text-danger'>* ต้องแสดงหลักฐานการโอนเงิน จำนวน 450 บาท ไปที่บัญชี *</b>
+                        </div>
+                        <div className='card mb-3 text-center'>
+                          <div style={{fontSize: '1em'}} className='card-body'>
+                            <img style={{width: '25%'}} src='/static/img/scb.jpg' alt='scb' /> <br />
+                            <b>ธนาคารไทยพาณิชย์</b> <br /> เลขที่บัญชี <b>237-222168-5</b> <br />
+                            <b>ชื่อบัญชี นาย ฉันทวัฒน์ ประดิษฐ <br /> และ/หรือ นางสาว ณัฏฐณัฐ วิเมลืองตระกูล</b> <br />
+                            <b>สาขามหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี</b>
+                          </div>
+                        </div>
+                        <div className='form-group mb-0'>
                           <input
                             className=''
                             type='file'
@@ -434,7 +459,7 @@ class index extends React.Component {
                             accept='image/png, image/jpeg, application/pdf'
                           />
                         </div>
-                        <small>รับเฉพาะไฟล์ .png, .jpeg, .pdf ขนาดไม่เกิน 2MB</small>
+                        รับเฉพาะไฟล์ .png, .jpeg, .pdf ขนาดไม่เกิน 2MB
                       </BlockValidate>
 
                       <hr />
@@ -448,9 +473,9 @@ class index extends React.Component {
                         <div className='col-4 pointer text-center'>
                           <button
                             type='button'
-                            className='btn btn-outline-danger btn-block pointer'
+                            className='btn btn-danger btn-block pointer'
                             onClick={this.toggle2}
-                          >สละสิทธิ</button>
+                          >สละสิทธิ์</button>
                         </div>
                       </div>
                     </form>
