@@ -99,7 +99,7 @@ export default class CheckName extends React.Component {
     return (
       <div className='text-center mt-2'>
         <H>เสียใจด้วย...</H>
-        <P>ฮึบเข้าไว้! อย่ายอมแพ้ โอกาศหน้าเจอกันใหม่นะ!</P>
+        <P>ฮึบเข้าไว้! อย่ายอมแพ้ โอกาสหน้าเจอกันใหม่นะ!</P>
         <Link href='https://wip.camp'>
           <a className='btn btn-warning text-center'>กลับหน้าหลัก</a>
         </Link>
