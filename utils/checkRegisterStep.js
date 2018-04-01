@@ -19,6 +19,7 @@ const checkStep = (path) => Component => {
       const { props } = this
       const registerPath = '/register'
       const dashboardPath = '/dashboard'
+      const announcePath = '/announce'
       let {token} = cookie({req: false})
       let data =
         await api.get(`/registrants/${props.initialValues.user_id}`, {Authorization: `Bearer ${token}`})
@@ -26,6 +27,10 @@ const checkStep = (path) => Component => {
           .catch(err => alert(err))
       let show = false
       let closedRegister = false
+      if (path === dashboardPath) {
+        Router.push(announcePath)
+        return
+      }
       if (!data.length) { // user not register
         if (path === registerPath) {
           closedRegister = this.isClosed()
@@ -40,18 +45,18 @@ const checkStep = (path) => Component => {
         data = data[0]
         if (path === registerPath) {
           if (!data) {
-          } else if (false) {
+          } else if (!data.profile_registrant.skill_computer) {
             closedRegister = this.isClosed()
             if (!closedRegister) {
               props.setRegisterStep(2)
             }
             show = true
           } else {
-            Router.push(dashboardPath)
+            Router.push(announcePath)
           }
         } else {
-          if (false) {
-            Router.push(registerPath)
+          if (!data.first_name || !data.profile_registrant.skill_computer) {
+            Router.push(announcePath)
           } else {
             show = true
           }
