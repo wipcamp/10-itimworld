@@ -1,3 +1,4 @@
+/* global window */
 import React from 'react'
 import Router from 'next/router'
 import styled from 'styled-components'
@@ -8,7 +9,7 @@ import cookie from '../../../utils/cookie'
 import api from '../../../utils/api'
 
 const Header = styled.div`
-  background: rgba(109,75,65,0.5);
+  background: rgb(0,92,149);
   padding: 8px 0 7px;
   position: relative;
   display: flex;
@@ -63,11 +64,12 @@ const HeaderContainer = props => (
         </div>
 
         <Margin className='col-12 d-flex align-items-center justify-content-center'>
-          {
+          <TempBox className='mx-auto' />
+          {/* {
             (checkDashboard() !== '/dashboard')
               ? <BackButton onClick={() => backStep()} className='fas fa-chevron-circle-left mr-auto' />
               : <TempBox className='mx-auto' />
-          }
+          } */}
           <ProfileMenu {...props} />
         </Margin>
       </div>

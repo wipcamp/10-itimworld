@@ -95,6 +95,7 @@ export default compose(
   checkRegisterStep('/question'),
   lifecycle({
     componentWillMount () {
+      window.location.replace('https://wip.camp')
       getQuestions(this.props)
       getAnsweredQuestions(this.props)
     }
