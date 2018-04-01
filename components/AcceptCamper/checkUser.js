@@ -15,6 +15,9 @@ export default (path) => (Component) => {
       let { token } = cookie({req: false})
       let { data } = await api.get(`/campers/${this.props.initialValues.user_id}`, {Authorization: `Bearer ${token}`})
       data = data.data[0]
+      if (data === undefined) {
+        return Router.push('/announce/annoucement')
+      }
       const preConfirm = '/accept-camper'
       const finishConfirm = '/accept-camper/finish'
       const waiver = '/accept-camper/confirm'
