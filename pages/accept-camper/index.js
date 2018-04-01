@@ -2,18 +2,15 @@ import React from 'react'
 import AcceptCamper from '../../components/AcceptCamper/Main'
 import serverRender from '../../utils/serverRender'
 import clientRender from '../../utils/clientRender'
-import { compose, lifecycle } from 'recompose'
+import { compose } from 'recompose'
 import campers from '../../components/custom/campers.json'
-import api from '../../utils/api'
-import cookie from '../../utils/cookie'
+
 import Router from 'next/router'
 
 import withRedux from '../../store/wrapper'
 import Messenger from '../../components/Core/Messenger'
 
-import checkStep from '../../utils/checkRegisterStep'
 import getToken from '../../utils/getToken'
-
 
 class index extends React.Component {
   state = {
