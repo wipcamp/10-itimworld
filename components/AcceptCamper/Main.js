@@ -1,7 +1,13 @@
+/* global FormData */
 import React from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import Router from 'next/router'
+import { compose } from 'recompose'
+
 import { RadioContainer, CheckRadio, Label, StyledSelect, StyledTextArea } from '../Core/Input'
+import api from '../../utils/api'
+import cookie from '../../utils/cookie'
+import checkUser from './checkUser'
 
 const BackgroundContainer = styled.div`
   background-image: url("../../static/img/background.png");
@@ -41,6 +47,53 @@ const ModalContainer = styled.div`
   `}
 `
 
+const loadingIcon = keyframes`
+from {
+  transform: rotate(0deg);
+}
+to {
+  transform: rotate(360deg);
+}
+`
+
+const Loading = styled.div`
+position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    ${props => props.saving && `
+      display: flex;
+      cursor: progress;
+    `}
+
+    & .waitanim {
+      width: 80px;
+      height: 80px;
+      opacity: 1;
+      border-top: 8px solid #fff;
+      border-bottom: 8px solid #fff;
+      border-right: 8px solid rgba(255,255,255,0); 
+      border-left: 8px solid rgba(255,255,255,0); 
+      border-radius: 50%;
+      animation: ${loadingIcon} 1s linear infinite;
+    }
+
+    & .waiting {
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.2);
+      height: 100%;
+      width: 100%;
+      z-index: 10;
+    }
+`
+
 const BlockValidate = styled.div.attrs({
   className: 'p-2 rounded my-1'
 })`
@@ -73,7 +126,7 @@ const Modal = (props) => (
             <div className='card-body'>
               <h1 className='text-center'>ยืนยัน</h1>
               <hr />
-              <div>
+              <div className='text-center'>
                 ตรวจสอบข้อมูลดี ๆ นะ
               </div>
               <hr />
@@ -91,11 +144,16 @@ const Modal = (props) => (
                     onClick={props.post}
                     className='btn btn-success btn-block pointer'
                   >
-                      ยืนยัน
+                    ยืนยัน
                   </button>
                 </div>
               </div>
             </div>
+            <Loading saving={props.loading}>
+              <div className={`waiting `} >
+                <div className='waitanim' />
+              </div>
+            </Loading>
           </div>
         </div>
       </div>
@@ -141,7 +199,7 @@ const Modal2 = (props) => (
   </ModalContainer>
 )
 
-export default class index extends React.Component {
+class index extends React.Component {
     state = {
       comeByYourself: '',
       file: null,
@@ -153,8 +211,8 @@ export default class index extends React.Component {
         shirtSize: 0
       },
       isShow: false,
-      isShow2: false
-
+      isShow2: false,
+      loading: false
     }
 
     _setField = (key, value) => {
@@ -166,7 +224,10 @@ export default class index extends React.Component {
     _changeFile = (e) => {
       const { valid } = this.state
       const file = e.target.files[0]
-      if (!file || file.size > 2097152) {
+      if (!file ) {
+        valid.file = -1
+        alert('ไม่พบไฟล์')
+      } else if (file.size > 2097152) {
         valid.file = -1
         alert('ขนาดไฟล์เกิน 2 MB')
       } else if ('image/png, image/jpeg, application/pdf'.split(', ').indexOf(file.type) < 0) {
@@ -184,8 +245,12 @@ export default class index extends React.Component {
     _onSubmit = (e) => {
       e.preventDefault()
       const { file } = this.state
-      if (!file || file.size > 2097152) {
+      if (!file) {
+        alert('ไม่พบไฟล์')
+      } else if (file.size > 2097152) {
         alert('ขนาดไฟล์เกิน 2 MB')
+      } else if ('image/png, image/jpeg, application/pdf'.split(', ').indexOf(file.type) < 0) {
+        alert('อนุญาตเฉพาะนามสกุล .png .jpeg .pdf')
       } else {
         this.toggle()
       }
@@ -205,9 +270,40 @@ export default class index extends React.Component {
       })
     }
 
-    post = () => {
+    post = async () => {
       const { comeByYourself, file, shirtSize, place } = this.state
-      // console.log(comeByYourself, file, shirtSize, place)
+      console.log('come', comeByYourself)
+      console.log('place', place)
+      console.log('shirt', shirtSize)
+      console.log('file', file)
+      this.setState({
+        loading: true
+      })
+      
+      const { token } = cookie({req: false})
+      const body = new FormData()
+      body.append('comeByYourself', comeByYourself)
+      body.append('place', place || 'no')
+      body.append('shirtSize', shirtSize)
+      body.append('file', file)
+      body.append('userId', this.props.initialValues.user_id)
+      body.append('fileType', 'bank_payment_slip')
+
+      api.post(`/confirm-campers`, body, {Authorization: `Bearer ${token}`})
+        .then(res => {
+          console.log('res', res)
+          this.setState({
+            loading: false
+          })
+          Router.push('/accept-camper/finish')
+        })
+        .catch(err => {
+          console.log(err)
+          this.setState({
+            loading: false
+          })
+          alert(`พบปัญหา: ${err}`)
+        })
     }
 
     render () {
@@ -321,7 +417,7 @@ export default class index extends React.Component {
                             name='sizeShirt'
                             className={`form-control p-1`}
                             required
-                            // onChange={(e) => this._setField('shirtSize', e.target.value)}
+                            onChange={(e) => this._setField('shirtSize', e.target.value)}
                           >
                             <option value=''>โปรดเลือกไซส์เสื้อ</option>
                             {
@@ -376,3 +472,7 @@ export default class index extends React.Component {
       )
     }
 }
+
+export default compose(
+  checkUser('/accept-camper')
+)(index)
