@@ -41,5 +41,5 @@ const End = (props) => (
 )
 
 export default compose(
-  checkUser('accept-camper/end')
+  checkUser('/accept-camper/end')
 )(End)
