@@ -121,7 +121,7 @@ const Modal = (props) => (
   <ModalContainer isShow={props.Show}>
     <div className='container'>
       <div className='row justify-content-center'>
-        <div className='col-12 col-md-8'>
+        <div className='col-12 col-md-10'>
           <div className='mt-4 card'>
             <div className='card-body'>
               <h1 className='text-center'>ยืนยันสิทธิ์</h1>
@@ -300,9 +300,6 @@ class index extends React.Component {
 
       api.post(`/confirm-campers`, body, {Authorization: `Bearer ${token}`})
         .then(res => {
-          this.setState({
-            loading: false
-          })
           Router.push('/accept-camper/finish')
         })
         .catch(err => {
