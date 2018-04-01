@@ -88,11 +88,6 @@ export default class CheckName extends React.Component {
   }
 
   render () {
-    if (this.state.loading) {
-      return <div>
-        loading ...
-      </div>
-    }
     if (this.state.isPasssed) {
       return <div className='text-center mt-2'>
         <H>ขอแสดงความยินดีด้วย!</H>

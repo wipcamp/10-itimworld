@@ -60,7 +60,7 @@ const BoxL = styled.div`
   width: 30%;
   @media (max-width: 800px) {
     width: 89%;
-    bottom: 30vh;
+    bottom: 4vh;
   }
   min-height: 5%;
   background-color: #002D40;
