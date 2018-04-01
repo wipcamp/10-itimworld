@@ -8,35 +8,40 @@ import api from '../../utils/api'
 import cookie from '../../utils/cookie'
 import Router from 'next/router'
 
+import withRedux from '../../store/wrapper'
+import Messenger from '../../components/Core/Messenger'
+
+import checkStep from '../../utils/checkRegisterStep'
+import getToken from '../../utils/getToken'
+
+
 class index extends React.Component {
   state = {
-    isShow: false
+    loading: true
   }
 
-  async componentDidMount () {
-    
+  componentWillMount () {
+    const id = this.props.initialValues.user_id
+    let checkCamper = campers.filter(el => el.wipId === id)
+    if (checkCamper.length === 0) {
+      Router.push('/announce/annoucement')
+    } else {
+      this.setState({
+        loading: false
+      })
+    }
   }
+
   render () {
-    return (
-      <div>
-        <AcceptCamper />
-      </div>
-    )
+    if (this.state.loading) return <div />
+    return <AcceptCamper />
   }
 }
 
 export default compose(
+  withRedux(),
   clientRender(`/`),
   serverRender(`/`),
-  lifecycle({
-    async componentWillMount () {
-      let {token} = await cookie({req: false})
-      let { data } = await api.post(`/auth/me`, null, {Authorization: `Bearer ${token}`})
-      let checkCamper = await campers.filter(el => {
-        return el.wipId === data.id
-      })
-      if (checkCamper.length === 0) {
-        Router.push('/announce/annoucement')
-      }
-    }})
+  Messenger,
+  getToken()
 )(index)
