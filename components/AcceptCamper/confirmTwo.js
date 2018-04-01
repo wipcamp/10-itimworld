@@ -64,11 +64,21 @@ class ConfirmTwo extends React.Component {
 
   _onSubmit = (e) => {
     e.preventDefault()
+    const { reason } = this.state
+    if (!reason) {
+      alert('กรุณากรอกเหตุผล ของเจ้า')
+      return
+    } else if (reason.trim().length < 5) {
+      alert('เหตุผลของเจ้าสั้นเกินไป')
+      return
+    } else if (reason.length > 65535) {
+      alert('เหตุผลของเจ้าไม่ควรเกิน 65,535 อักขระ')
+      return
+    }
     this.setState({
       loading: true
     })
     const userId = this.props.initialValues.user_id
-    const { reason } = this.state
     const { token } = cookie({req: false})
     api.put(`/leave-campers/${userId}`, {
       userId,
