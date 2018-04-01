@@ -253,7 +253,7 @@ class index extends React.Component {
       const { valid, comeByYourself, file, shirtSize, place } = this.state
       let re = -1
 
-      try {        
+      try {
         if (!comeByYourself) {
           valid.comeByYourself = -1
           this.setState({
@@ -321,7 +321,7 @@ class index extends React.Component {
     _changeFile = (e) => {
       const { valid } = this.state
       const file = e.target.files[0]
-      if (!file ) {
+      if (!file) {
         valid.file = -1
         this.setState({
           alertMess: 'ไม่พบไฟล์',
@@ -549,18 +549,29 @@ class index extends React.Component {
                             accept='image/png, image/jpeg, application/pdf'
                           />
                         </div>
-                        รับเฉพาะไฟล์ .png, .jpeg, .pdf ขนาดไม่เกิน 2MB
+                        <b>หมายเหตุ </b>
+                        <ul>
+                          <li>
+                            รับเฉพาะไฟล์ .png, .jpeg, .pdf ขนาดไม่เกิน 2MB
+                          </li>
+                          <li>
+                            <b className='text-danger'>หากอัพโหลดไม่ได้</b> ให้ลอง<u>เปลี่ยน</u> <b>อุปกรณ์ที่ใช้</b> (เช่น คอมพิวเตอร์, tablet) หรือลอง<u>เปลี่ยน</u> <b>Web Browser ที่ใช้</b> (เช่น Google Chrome, Firefox)
+                          </li>
+                          <li>
+                            หากแก้ไขตามวิธีข้างต้นแล้วไม่ได้ให้ติดต่อทางแฟนเพจ <a href='https://www.facebook.com/wipcamp'><b>WIP Camp</b></a>
+                          </li>
+                        </ul>
                       </BlockValidate>
 
                       <hr />
                       <div className='row mt-3'>
-                        <div className='col-8 text-center'>
+                        <div className='col-12 mb-3 col-md-7 text-center'>
                           <button
                             type='submit'
                             className='btn btn-outline-primary btn-block pointer'
                           >OK</button>
                         </div>
-                        <div className='col-4 pointer text-center'>
+                        <div className='col-12 mb-3 col-md-5 pointer text-center'>
                           <button
                             type='button'
                             className='btn btn-danger btn-block pointer'

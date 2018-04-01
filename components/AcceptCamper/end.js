@@ -29,7 +29,7 @@ const End = (props) => (
             <h2>สละสิทธิ์เสร็จสิ้น</h2>
             <hr />
             <div className='my-2 text-center'>
-              <b>"หากเจ้าเปลี่ยนใจ สามารถติดต่อได้ทางแฟนเพจ <a href='https://www.facebook.com/wipcamp'>WIP Camp</a> เพื่อขอคืนค่าการยืนยันสิทธิ์"</b> <br />
+              <b>"หากเจ้าเปลี่ยนใจ สามารถติดต่อได้ทางแฟนเพจ <a href='https://www.facebook.com/wipcamp'>WIP Camp</a> เพื่อขอสิทธิ์ในการยืนยันเข้าร่วมกองทัพอีกครั้ง"</b> <br />
               <h4>แล้วพบกันใหม่นะ...</h4>
             </div>
             <div className='my-4'>
