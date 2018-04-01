@@ -230,9 +230,57 @@ class index extends React.Component {
     }
 
     _setField = (key, value) => {
+      const { valid } = this.state
+      if (key === 'place') {
+        valid.comeByYourself = 0
+      } else {
+        valid[key] = 0
+      }
       this.setState({
-        [key]: value
+        [key]: value,
+        valid
       })
+    }
+
+    validateForm = () => {
+      const { valid, comeByYourself, file, shirtSize, place } = this.state
+      let re = -1
+
+      try {        
+        if (!comeByYourself) {
+          valid.comeByYourself = -1
+        } else if (comeByYourself === 'n' && !place) {
+          valid.comeByYourself = -1
+        } else {
+          valid.comeByYourself = 0
+          ++re
+        }
+
+        if (!file ) {
+          valid.file = -1
+          alert('ไม่พบไฟล์')
+        } else if (file.size > 2097152) {
+          valid.file = -1
+          alert('ขนาดไฟล์เกิน 2 MB')
+        } else if ('image/png, image/jpeg, application/pdf'.split(', ').indexOf(file.type) < 0) {
+          valid.file = -1
+          alert('อนุญาตเฉพาะนามสกุล .png .jpeg .pdf')
+        } else {
+          valid.file = 0
+          ++re
+        }
+
+        if (!shirtSize) {
+          valid.shirtSize = -1
+          return re
+        } else {
+          return ++re
+        }
+      } finally {
+        console.log(re)
+        this.setState({ valid })
+        return re
+      }
     }
 
     _changeFile = (e) => {
@@ -258,14 +306,7 @@ class index extends React.Component {
 
     _onSubmit = (e) => {
       e.preventDefault()
-      const { file } = this.state
-      if (!file) {
-        alert('ไม่พบไฟล์')
-      } else if (file.size > 2097152) {
-        alert('ขนาดไฟล์เกิน 2 MB')
-      } else if ('image/png, image/jpeg, application/pdf'.split(', ').indexOf(file.type) < 0) {
-        alert('อนุญาตเฉพาะนามสกุล .png .jpeg .pdf')
-      } else {
+      if (this.validateForm() === 2) {
         this.toggle()
       }
     }
@@ -402,7 +443,7 @@ class index extends React.Component {
                             className={`form-control p-1`}
                             required
                             disabled={this.state.comeByYourself !== 'n'}
-                            onChange={(e) => this._setField('shirtSize', e.target.value)}
+                            onChange={(e) => this._setField('place', e.target.value)}
                           >
                             <option value=''>โปรดเลือกสถานที่ ที่จะให้ไปรับ</option>
                             <option value='หัวลำโพง'>หัวลำโพง</option>
