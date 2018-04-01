@@ -1,15 +1,88 @@
 import React from 'react'
 import Link from 'next/link'
+import Router from 'next/router'
+
+import styled, { keyframes } from 'styled-components'
+
 import { StyledTextArea } from '../Core/Input'
+import api from '../../utils/api'
+import cookie from '../../utils/cookie'
+
+const loadingIcon = keyframes`
+from {
+  transform: rotate(0deg);
+}
+to {
+  transform: rotate(360deg);
+}
+`
+
+const Loading = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+
+  ${props => props.saving && `
+    display: flex;
+    cursor: progress;
+  `}
+
+    & .waitanim {
+      width: 80px;
+      height: 80px;
+      opacity: 1;
+      border-top: 8px solid #fff;
+      border-bottom: 8px solid #fff;
+      border-right: 8px solid rgba(255,255,255,0); 
+      border-left: 8px solid rgba(255,255,255,0); 
+      border-radius: 50%;
+      animation: ${loadingIcon} 1s linear infinite;
+    }
+
+    & .waiting {
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.2);
+      height: 100%;
+      width: 100%;
+      z-index: 10;
+    }
+`
 
 class ConfirmTwo extends React.Component {
   state = {
-    reason: ''
+    reason: '',
+    loading: false
   }
 
   _onSubmit = (e) => {
     e.preventDefault()
-    // console.log(this.state.reason)
+    this.setState({
+      loading: true
+    })
+    const userId = this.props.initialValues.user_id
+    const { reason } = this.state
+    const { token } = cookie({req: false})
+    api.put(`/leave-campers/${userId}`, {
+      userId,
+	    reason
+    }, {Authorization: `Bearer ${token}`})
+      .then(res => {
+        Router.push('/accept-camper/end')
+      })
+      .catch(err => {
+        this.setState({
+          loading: false
+        })
+        alert(`พบปัญหา: ${err}`)
+      })
   }
 
   _updateReason = (e) => {
@@ -23,7 +96,7 @@ class ConfirmTwo extends React.Component {
       <div className='container'>
         <div className='row d-flex justify-content-center'>
           <div className='col-lg-6 col-sm-10'>
-            <div className='box-shadow my-4 p-3 bg-light'>
+            <div className='box-shadow my-4 p-3 bg-light position-relative rounded'>
               <form
                 onSubmit={this._onSubmit}
               >
@@ -63,6 +136,11 @@ class ConfirmTwo extends React.Component {
                   </div>
                 </div>
               </form>
+              <Loading saving={this.state.loading}>
+                <div className={`waiting `} >
+                  <div className='waitanim' />
+                </div>
+              </Loading>
             </div>
           </div>
         </div>
