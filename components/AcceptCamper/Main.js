@@ -442,7 +442,7 @@ class index extends React.Component {
                         <div className='mx-auto my-0 text-center'>
                           <b className='text-danger'>* ต้องแสดงหลักฐานการโอนเงิน จำนวน 450 บาท ไปที่บัญชี *</b>
                         </div>
-                        <div className='card mb-3 text-center'>
+                        <div className='card mb-3 text-center text-dark'>
                           <div style={{fontSize: '1em'}} className='card-body'>
                             <img style={{width: '25%'}} src='/static/img/scb.jpg' alt='scb' /> <br />
                             <b>ธนาคารไทยพาณิชย์</b> <br /> เลขที่บัญชี <b>237-222168-5</b> <br />
