@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import cookie from '../../utils/cookie'
-import api from '../../utils/api'
+import Link from 'next/link'
+
 import campers from './campers.json'
+// campers.push({wipId: 100010})
 
 const H = styled.h1`
 font-size:3em;
@@ -51,9 +52,12 @@ font-size:1.5em;
 font-size:2em;
 }
 `
-const Button = styled.button`
+const Button = styled.a`
 cursor:pointer;
 text-align: center;
+  &:hover {
+    color: white !important;
+  }
 @font-face {
 font-family: 'Pridi';
 src: url('/static/fonts/Pridi-Light.ttf');
@@ -62,20 +66,15 @@ font-family: 'Pridi';
 `
 export default class CheckName extends React.Component {
   state = {
-    user: '',
     loading: true,
     isPasssed: false
   }
   async componentDidMount () {
-    let {token} = await cookie({req: false})
-    let fetchedData = await api.post(`/auth/me`, null, {Authorization: `Bearer ${token}`})
     await this.setState({
-      user: fetchedData.data.id,
       loading: true
     })
-    let data = await campers.filter(data => {
-      return data.wipId === this.state.user
-    })
+    const id = this.props.initialValues.user_id
+    let data = campers.filter(data => data.wipId === id)
     if (data.length > 0) {
       this.setState({
         isPasssed: true,
@@ -97,18 +96,18 @@ export default class CheckName extends React.Component {
       return <div className='text-center mt-2'>
         <H>ขอแสดงความยินดีด้วย!</H>
         <P>คุณได้เข้าร่วมกองทัพกับเรา</P>
-        <a href='/accept-camper ' className=''>
-          <Button type='button' className='btn btn-outline-success text-center'>ยืนยันสิทธิ์</Button>
-        </a>
+        <Link href='/accept-camper'>
+          <a className='btn btn-outline-success text-center'>ยืนยันสิทธิ์</a>
+        </Link>
       </div>
     }
     return (
       <div className='text-center mt-2'>
         <H>เสียใจด้วยนะ...</H>
         <P>ฮึบเข้าไว้! ครั้งหน้าลองใหม่!</P>
-        <a href='https://wip.camp'>
-          <Button type='button' className='btn btn-outline-warning text-center'>กลับหน้าหลัก</Button>
-        </a>
+        <Link href='https://wip.camp'>
+          <a className='btn btn-outline-warning text-center'>กลับหน้าหลัก</a>
+        </Link>
       </div>
     )
   }
