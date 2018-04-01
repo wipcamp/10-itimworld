@@ -6,9 +6,9 @@ export default class index extends React.Component {
   render () {
     return (
       <div className='container'>
-        <div className='row d-flex justify-content-center'>
-          <div className='col-sm-10 col-lg-6'>
-            <div className='box-shadow my-4 p-3 bg-light'>
+        <div className='row justify-content-center'>
+          <div className='col-12 col-md-8'>
+            <div className='box-shadow my-4 p-3 bg-light rounded'>
               <h2 className='text-center'>ยืนยันอีกครั้ง</h2>
               <hr />
               <div className='text-center'>
