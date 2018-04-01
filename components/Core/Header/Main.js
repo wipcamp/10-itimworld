@@ -9,7 +9,7 @@ import cookie from '../../../utils/cookie'
 import api from '../../../utils/api'
 
 const Header = styled.div`
-  background: rgba(0,92,149);
+  background: rgb(0,92,149);
   padding: 8px 0 7px;
   position: relative;
   display: flex;
