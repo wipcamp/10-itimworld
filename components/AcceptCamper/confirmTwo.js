@@ -51,7 +51,7 @@ class ConfirmTwo extends React.Component {
                 <div className='row mt-3 text-center justify-content-center'>
                   <div className='col-6'>
                     <Link href={`/accept-camper`}>
-                      <a className='btn btn-outline-primary pointer btn-block'>ย้อนกลับไปหน้ายืนยันสิทธิ์</a>
+                      <a className='btn btn-outline-primary pointer btn-block'>ย้อนกลับ</a>
                     </Link>
                   </div>
                   <div className='col-6'>
