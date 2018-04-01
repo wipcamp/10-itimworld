@@ -169,6 +169,9 @@ export default class index extends React.Component {
       if (!file || file.size > 2097152) {
         valid.file = -1
         alert('ขนาดไฟล์เกิน 2 MB')
+      } else if ('image/png, image/jpeg, application/pdf'.split(', ').indexOf(file.type) < 0) {
+        valid.file = -1
+        alert('อนุญาตเฉพาะนามสกุล .png .jpeg .pdf')
       } else {
         valid.file = 0
       }
