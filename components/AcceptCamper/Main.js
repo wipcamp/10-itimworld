@@ -113,6 +113,10 @@ const BlockValidate = styled.div.attrs({
     input {
       color: white;
     }
+
+    .text-danger {
+      color: #ffed00 !important;
+    }
   `}
 
   
