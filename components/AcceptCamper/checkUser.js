@@ -5,10 +5,29 @@ import cookie from '../../utils/cookie'
 import api from '../../utils/api'
 import Router from 'next/router'
 
+const getSlip = (documents) => {
+  const slip = documents.filter((data) => data.type_id === 4)
+  if (slip.length === 0) {
+    return { is_approve: 0, reason: 'ไม่พบไฟล์ในระบบ กรุณาอัพโหลดใหม่' }
+  } else if (slip[slip.length - 1].is_approve === 0) {
+    return { is_approve: 0, reason: slip[slip.length - 1].approve_reason }
+  } else {
+    return 1
+  }
+}
+
 export default (path) => (Component) => {
   return class extends React.Component {
     state = {
-      loading: true
+      loading: true,
+      uploadRejected: false,
+      slip: {}
+    }
+
+    uploadSuccess = () => {
+      this.setState({ 
+        uploadRejected: false
+      })
     }
 
     async componentDidMount () {
@@ -42,6 +61,15 @@ export default (path) => (Component) => {
           } else if (confirmCamp === null) {
             Router.push(preConfirm)
             return
+          }
+          let { data: user } = await api.get(`/registrants/${this.props.initialValues.user_id}`, {Authorization: `Bearer ${token}`})
+          user = user[0]
+          const slip = getSlip(user.documents)
+          if (slip !== 1) {
+            this.setState({
+              uploadRejected: true,
+              slip
+            })
           }
           break
         }
@@ -78,7 +106,7 @@ export default (path) => (Component) => {
       return (
         <div>
           <Header {...this.props} />
-          <Component {...this.props} />
+          <Component {...this.props} {...this.state} uploadSuccess={this.uploadSuccess} />
         </div>
       )
     }
