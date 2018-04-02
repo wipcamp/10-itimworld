@@ -243,6 +243,12 @@ class index extends React.Component {
       } else {
         valid[key] = 0
       }
+
+      if (key === 'comeByYourself' && value === 'y') {
+        this.setState({
+          place: ''
+        })
+      }
       this.setState({
         [key]: value,
         valid
@@ -495,6 +501,7 @@ class index extends React.Component {
                             className={`form-control p-1`}
                             required
                             disabled={this.state.comeByYourself !== 'n'}
+                            value={this.state.place}
                             onChange={(e) => this._setField('place', e.target.value)}
                           >
                             <option value=''>โปรดเลือกสถานที่ ที่จะให้ไปรับ</option>
