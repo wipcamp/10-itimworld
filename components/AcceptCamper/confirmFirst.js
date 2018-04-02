@@ -26,12 +26,12 @@ export default class index extends React.Component {
                 </div>
               </div>
               <div className='row text-center justify-content-center'>
-                <div className='col-8'>
+                <div className='col-12 col-md-8 mb-3'>
                   <Link href='/accept-camper'>
                     <a className='btn btn-outline-primary btn-block pointer'>ย้อนกลับ</a>
                   </Link>
                 </div>
-                <div className='col-4'>
+                <div className='col-12 col-md-4 mb-3'>
                   <button
                     onClick={this.props.nextStep}
                     type='button'
