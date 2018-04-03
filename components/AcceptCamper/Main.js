@@ -26,7 +26,7 @@ const BackgroundContainer = styled.div`
   }
 `
 
-const ModalContainer = styled.div`
+export const ModalContainer = styled.div`
   background-color: rgba(0,0,0,0.5);
   position: fixed;
   width: 100%;
@@ -320,7 +320,6 @@ class index extends React.Component {
         }
       } finally {
         this.setState({ valid })
-        return re
       }
     }
 
