@@ -64,13 +64,13 @@ const BoxY = styled.div`
 `
 const SelectorY = styled.div`
   border-top: 10px solid transparent;
-	border-bottom: 10px solid transparent;
-	border-left: 10px solid #5D985C;
+  border-bottom: 10px solid transparent;
+  border-left: 10px solid #5D985C;
 `
 const SelectorL = styled.div`
   border-top: 10px solid transparent;
-	border-bottom: 10px solid transparent;
-	border-right: 10px solid #FCB933;
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid #FCB933;
 `
 const BoxL = styled.div`
   background-color: #FCB933;
