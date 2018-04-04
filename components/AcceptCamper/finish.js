@@ -147,7 +147,13 @@ class UploadFile extends React.Component {
             </div>
           </div>
           <div className='mb-2'>
-            <b><u>เหตุผลที่สลิปจ่ายเงินของน้องถูกปฏิเสธ:</u></b> {this.props.slip.reason}          
+            <b><u>เหตุผลที่สลิปจ่ายเงินของน้องถูกปฏิเสธ:</u></b> {this.props.slip.reason ? (
+              this.props.slip.reason
+            ) : (
+              <b className='text-danger'>
+                ไมพบเหตุผล กรุณาแจ้งพี่วิปโป้โดยด่วน
+              </b>
+            )}
           </div>
           <div style={{border: '2px solid #FFAC2A', padding: '5px', marginBottom: '10px'}}>
             <div className={`form-group mb-0 p-2 ${this.props.fileError && 'bg-danger'}`} style={{transition: 'all .3s'}}>
