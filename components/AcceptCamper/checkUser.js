@@ -4,6 +4,9 @@ import Header from '../Core/Header/Main'
 import cookie from '../../utils/cookie'
 import api from '../../utils/api'
 import Router from 'next/router'
+import moment from 'moment'
+
+import Timeup from './timeisup'
 
 const getSlip = (documents) => {
   const slip = documents.filter((data) => data.type_id === 4)
@@ -21,6 +24,7 @@ export default (path) => (Component) => {
     state = {
       loading: true,
       uploadRejected: false,
+      end: false,
       slip: {}
     }
 
@@ -31,6 +35,7 @@ export default (path) => (Component) => {
     }
 
     async componentDidMount () {
+      const endTimeToConfirm = moment('03 Apr 2018 23:59:59 GMT+7', 'DD MMM YYYY hh:mm:ss')
       let { token } = cookie({req: false})
       let { data } = await api.get(`/campers/${this.props.initialValues.user_id}`, {Authorization: `Bearer ${token}`})
       data = data.data[0]
@@ -49,6 +54,14 @@ export default (path) => (Component) => {
             return
           } else if (confirmCamp !== null) {
             Router.push(finishConfirm)
+            return
+          }
+
+          if (moment().isAfter(endTimeToConfirm)) {
+            this.setState({
+              loading: false,
+              end: true
+            })
             return
           }
           break
@@ -93,6 +106,14 @@ export default (path) => (Component) => {
             Router.push(end)
             return
           }
+
+          if (moment().isAfter(endTimeToConfirm)) {
+            this.setState({
+              loading: false,
+              end: true
+            })
+            return
+          }
           break
         }
       }
@@ -103,6 +124,7 @@ export default (path) => (Component) => {
 
     render () {
       if (this.state.loading) return <Loading />
+      if (this.state.end) return <Timeup />
       return (
         <div>
           <Header {...this.props} />
