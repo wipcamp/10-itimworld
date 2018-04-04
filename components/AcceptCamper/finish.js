@@ -219,7 +219,7 @@ class Finish extends React.Component {
             })
 
             this.alert({
-              error: true,
+              error: false,
               message: 'อัพโหลดไฟล์เรียบร้อย'
             })
           })
