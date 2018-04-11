@@ -26,7 +26,7 @@ const BackgroundContainer = styled.div`
   }
 `
 
-const ModalContainer = styled.div`
+export const ModalContainer = styled.div`
   background-color: rgba(0,0,0,0.5);
   position: fixed;
   width: 100%;
@@ -144,7 +144,7 @@ const Modal = (props) => (
               <div className='row'>
                 <div className='col-6'>
                   <button
-                    className='btn btn-block pointer'
+                    className='btn btn-block pointer btn-outline-secondary'
                     onClick={props.toggle}
                   >
                     ยกเลิก
@@ -243,6 +243,12 @@ class index extends React.Component {
       } else {
         valid[key] = 0
       }
+
+      if (key === 'comeByYourself' && value === 'y') {
+        this.setState({
+          place: ''
+        })
+      }
       this.setState({
         [key]: value,
         valid
@@ -314,7 +320,6 @@ class index extends React.Component {
         }
       } finally {
         this.setState({ valid })
-        return re
       }
     }
 
@@ -495,6 +500,7 @@ class index extends React.Component {
                             className={`form-control p-1`}
                             required
                             disabled={this.state.comeByYourself !== 'n'}
+                            value={this.state.place}
                             onChange={(e) => this._setField('place', e.target.value)}
                           >
                             <option value=''>โปรดเลือกสถานที่ ที่จะให้ไปรับ</option>

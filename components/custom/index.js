@@ -64,13 +64,13 @@ const BoxY = styled.div`
 `
 const SelectorY = styled.div`
   border-top: 10px solid transparent;
-	border-bottom: 10px solid transparent;
-	border-left: 10px solid #5D985C;
+  border-bottom: 10px solid transparent;
+  border-left: 10px solid #5D985C;
 `
 const SelectorL = styled.div`
   border-top: 10px solid transparent;
-	border-bottom: 10px solid transparent;
-	border-right: 10px solid #FCB933;
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid #FCB933;
 `
 const BoxL = styled.div`
   background-color: #FCB933;
@@ -144,7 +144,7 @@ export default class Custom extends React.Component {
               </div>
               <div className='col-7 d-flex align-items-center justify-content-center'>
                 <SelectorL />
-                <BoxL className='rounded'><Text>วันนี้เป็นวันประกาศผลค่าย Wip Camp ครั้งที่ 10 ไงล่ะ</Text></BoxL>
+                <BoxL className='rounded'><Text>วันนี้เป็นวันประกาศผลค่าย WIP Camp ครั้งที่ 10 ไงล่ะ</Text></BoxL>
               </div>
             </Sec>
             <Sec className='row'>
