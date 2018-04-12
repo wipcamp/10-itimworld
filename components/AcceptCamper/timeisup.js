@@ -10,11 +10,12 @@ const BackgroundContainer = styled.div`
   display: flex;
   justify-content: center;
   /* align-items: center; */
-  font-size: 2.5em;
+  font-size: 1.5em;
   text-align: center;
   color: #000;
 
-  .col-12 {
+  .box-shadow {
+    min-height: 150px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, .1),
                 0 8px 8px rgba(0, 0, 0, .1), 
                 0 16px 16px rgba(0, 0, 0, .1), 
@@ -25,13 +26,18 @@ const BackgroundContainer = styled.div`
 const Timeup = (props) => (
   <BackgroundContainer>
     <div className='container'>
-      <div className='row'>
-        <div className='col-12 mt-5 p-3 rounded' style={{backgroundColor: 'rgba(255,255,255,0.4)'}}>
-          <img className='img-fluid' src='/static/img/logo-white.svg' alt='wipcamp-logo' />
+      <div className='row d-flex justify-content-center align-items-center flex-column'>
+        <div className='col-12 mt-5'>
+          <img style={{maxWidth: '300px'}} className='img-fluid' src='/static/img/logo-white.svg' alt='wipcamp-logo' />
+        </div>
+        <div className='box-shadow col-12 col-md-6 p-3 rounded card'>
           <div>
-            หมดเวลาการยืนยันสิทธิ์ของเจ้าแล้ว เห็นทีเราคงไม่ได้พบกันแล้วหล่ะ<br />
-            หากเจ้ามีข้อสงสัยสามารถติดต่อได้ที่แฟนเพจ <a href='https://www.facebook.com/wipcamp' target='_blank'>WIP Camp</a>
+            <span className='text-danger'>หมดเวลาการยืนยันสิทธิ์</span>ของเจ้าแล้ว <br />
+            เห็นทีเราคงไม่ได้พบกันแล้วหล่ะ <br />
+            หากเจ้ามีข้อสงสัยสามารถติดต่อได้ที่ <br />
+            <a href='https://www.facebook.com/wipcamp' target='_blank'>Facebook WIP Camp</a>
           </div>
+          <div className='mt-4 mb-0'><a className='btn btn-primary' href='https://wip.camp'>ย้อนกลับไปหน้าหลัก</a></div>
         </div>
       </div>
     </div>
