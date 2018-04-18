@@ -35,7 +35,7 @@ export default (path) => (Component) => {
     }
 
     async componentDidMount () {
-      const endTimeToConfirm = moment('17 Apr 2018 23:59:59 GMT+7', 'DD MMM YYYY hh:mm:ss')
+      const endTimeToConfirm = moment('19 Apr 2018 23:59:59 GMT+7', 'DD MMM YYYY hh:mm:ss')
       let { token } = cookie({req: false})
       let { data } = await api.get(`/campers/${this.props.initialValues.user_id}`, {Authorization: `Bearer ${token}`})
       data = data.data[0]
