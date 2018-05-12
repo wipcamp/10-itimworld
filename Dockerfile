@@ -1,14 +1,14 @@
-FROM node:8.9.3
+FROM node:8-alpine
 
-WORKDIR /node-app
-ADD . /node-app
-
-run cd /node-app && yarn install && yarn build
-
+WORKDIR /app
 EXPOSE 3000
 
-ENV YARN_COMMAND=start
+COPY . /app
 
 HEALTHCHECK --interval=5s --timeout=60s CMD curl --fail http://localhost:3000/ || exit 1
 
-cmd ["sh", "-c" , "yarn run $YARN_COMMAND"]
+ENTRYPOINT [ "yarn" ]
+
+EXPOSE 3000
+
+CMD ["start"]
