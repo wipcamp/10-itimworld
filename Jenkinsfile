@@ -41,12 +41,6 @@ pipeline {
       }
     }
     stage('clean') {
-      when {
-        expression {
-          branch = sh(returnStdout: true, script: 'echo $GIT_BRANCH').trim()
-          return branch == 'develop'
-        }
-      }
       steps {
         sh 'sudo docker image rm registry.wip.camp/wip-itim:$GIT_BRANCH'
         sh 'sudo docker image rm registry.wip.camp/wip-itim'
