@@ -6,6 +6,7 @@ import register from './register'
 import dashboard from './dashboard'
 import question from './question'
 import editprofile from './editprofile'
+import exam from './exam'
 
 export default combineReducers({
   token,
@@ -13,5 +14,6 @@ export default combineReducers({
   register,
   dashboard,
   question,
-  editprofile
+  editprofile,
+  exam
 })
