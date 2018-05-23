@@ -7,7 +7,7 @@ export const auth = async (res, setToken) => {
   let {data} = await axios.post('/auth/login', { ...res }, null)
   document.cookie = cookie.serialize('token', data.accessToken, { maxAge: 60 * 60 * 24 * 5 })
   setToken(data.accessToken)
-  Router.pushRoute('/announce')
+  Router.pushRoute('/accept-camper')
 }
 
 export const logout = async () => {

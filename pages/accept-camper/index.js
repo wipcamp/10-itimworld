@@ -1,5 +1,6 @@
 import React from 'react'
-import AcceptCamper from '../../components/AcceptCamper/Main'
+// import AcceptCamper from '../../components/AcceptCamper/Main'
+import AcceptDocs from '../../components/AcceptCamper/AcceptDocs'
 import serverRender from '../../utils/serverRender'
 import clientRender from '../../utils/clientRender'
 import { compose } from 'recompose'
@@ -21,7 +22,7 @@ class index extends React.Component {
     const id = this.props.initialValues.user_id
     let checkCamper = campers.filter(el => el.wipId === id)
     if (checkCamper.length === 0) {
-      Router.push('/announce/annoucement')
+      Router.push('/close')
     } else {
       this.setState({
         loading: false
@@ -31,7 +32,7 @@ class index extends React.Component {
 
   render () {
     if (this.state.loading) return <div />
-    return <AcceptCamper {...this.props} />
+    return <AcceptDocs {...this.props} />
   }
 }
 
