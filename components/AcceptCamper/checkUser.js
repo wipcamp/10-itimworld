@@ -41,7 +41,7 @@ export default (path) => (Component) => {
       let { data } = await api.get(`/campers/${this.props.initialValues.user_id}`, {Authorization: `Bearer ${token}`})
       let camper = data.data[0]
       if (camper === undefined) {
-        return Router.push('/close')
+        return Router.push('/_error')
       }
       // const preConfirm = '/accept-camper'
       // const finishConfirm = '/accept-camper/finish'

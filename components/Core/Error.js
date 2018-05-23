@@ -77,9 +77,11 @@ export default () => (
       <TextBlock>
         <h1>
           เขตอันตรายห้ามเข้า!<br />
+          เจ้าอาจไม่ผ่านการทดสอบ จงหลีกไป!<br />
+          ไว้พบกันใหม่นะ..
         </h1>
         <h5>
-          "<a href={`https://itim.wip.camp`}>กลับสู่การเข้าสมัคร</a>"
+          "<a href={`https://wip.camp`}>กลับสู่หน้าแรก</a>"
         </h5>
       </TextBlock>
     </TextWarpper>
