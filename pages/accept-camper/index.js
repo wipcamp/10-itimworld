@@ -22,7 +22,7 @@ class index extends React.Component {
     const id = this.props.initialValues.user_id
     let checkCamper = campers.filter(el => el.wipId === id)
     if (checkCamper.length === 0) {
-      Router.push('/close')
+      Router.push('/_error')
     } else {
       this.setState({
         loading: false
