@@ -34,9 +34,18 @@ export default (state = initialState, action) => {
     }
 
     case SUBMIT_EXAM: {
+      console.log('main',action)
       return {
         ...state,
-        result: action.payload
+        result: action.payload,
+        answers: action.answers
+      }
+    }
+
+    case SUBMIT_EXAM.PENDING: {
+      return {
+        ...state,
+        answers: action.meta.answers
       }
     }
 
@@ -63,9 +72,10 @@ export default (state = initialState, action) => {
     }
 
     case FETCH_EXAM.FULFILLED: {
+      console.log(action.payload.data)
       return {
         ...state,
-        exam: action.payload.data.exam,
+        exam: action.payload.data.data,
         step: 2
       }
     }
@@ -90,7 +100,11 @@ export const actions = {
     step
   }),
   fetchExam: () => {
-    const data = api.get('/exam')
+    let {token} = cookie({req: false})
+    const headers = {
+      Authorization: `Bearer ${token}`
+    }
+    const data = api.get('/exams', headers)
     return {
       type: FETCH_EXAM.ACTION,
       payload: data
@@ -105,19 +119,19 @@ export const actions = {
   submitExam: (answers) => {
     let {token} = cookie({req: false})
     let data = {
-      user_id: 1,
-      data: {
-        answers
-      }
+      data: answers
     }
     const headers = {
       Authorization: `Bearer ${token}`
     }
-    console.log(data)
-    const result = api.post('/exam', data, headers)
-    return {
+    console.log('sending', data)
+    const result = api.post('/exams', data, headers)
+    let returning = {
       type: SUBMIT_EXAM.ACTION,
-      payload: result
+      payload: result,
+      meta: {answers}
     }
+    console.log(returning)
+    return returning
   }
 }
