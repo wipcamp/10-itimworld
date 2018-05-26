@@ -17,17 +17,19 @@ class QuestionSet extends React.Component {
     this.props.setAnswer({questionId, answerId})
   }
   render () {
-    const {data, answers} = this.props.question
-    const questionId = this.props.question.question_id
+    const {data} = this.props.question
+    const {number} = this.props
+    const answers = this.props.question.exam_choices
+    const questionId = this.props.question.id
     return (
       <div>
-        <p>{data}</p>
+        <p>{number}.  {data}</p>
         <form>
           {answers.map((val, key) => {
             return (
               <div className='form-check'>
-                <input className='form-check-input' type='radio' name={questionId} value={val.answer_id} id={val.answer_id} onClick={this.handleChoose}/>
-                <label className='form-check-label' htmlFor={val.answer_id}>
+                <input className='form-check-input' type='radio' name={questionId} value={val.id} id={val.id} onClick={this.handleChoose} />
+                <label className='form-check-label' htmlFor={val.id}>
                   {val.data}
                 </label>
               </div>
