@@ -23,7 +23,7 @@ class QuestionSet extends React.Component {
     const questionId = this.props.question.id
     return (
       <div>
-        <p>{number}.  {data}</p>
+        <p>{number}.  <span dangerouslySetInnerHTML={{__html: data}} /></p>
         <form>
           {answers.map((val, key) => {
             return (
