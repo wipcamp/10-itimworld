@@ -38,12 +38,15 @@ class Step3 extends React.Component {
     return result
   }
   render () {
-    this.checkCorrectAnswer()
+    const result = this.checkCorrectAnswer()
     return (
       <div className='d-flex flex-column justify-content-center align-items-center'>
         <div className='row'>
           <div className='col-12'>
             <h1>จบแล้ว !</h1>
+            <h2>คะแนนที่ได้ {result.score} คะแนน</h2>
+            <h2>ตอบถูก {result.correct} จาก {result.totalQuestion} คำถาม</h2>
+            <h2>มีการตอบทั้งหมด {result.answered} คำถาม</h2>
           </div>
         </div>
       </div>
