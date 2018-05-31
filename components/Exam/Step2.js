@@ -153,7 +153,7 @@ class Step2 extends React.Component {
           <div className='col-12'>
             <div className='container'>
               {exam.map((val, key) => {
-                return <div><QuestionSet question={val} number={key + 1} /><hr /></div>
+                return <div key={key}><QuestionSet question={val} number={key + 1} /><hr /></div>
               })}
             </div>
           </div>

@@ -27,7 +27,7 @@ class QuestionSet extends React.Component {
         <form>
           {answers.map((val, key) => {
             return (
-              <div className='form-check'>
+              <div className='form-check' key={key}>
                 <input className='form-check-input' type='radio' name={questionId} value={val.id} id={val.id} onClick={this.handleChoose} />
                 <label className='form-check-label' htmlFor={val.id}>
                   {val.data}
