@@ -14,11 +14,18 @@ const handle = routes.getRequestHandler(app, ({req, res, route, query}) => {
 })
 
 const express = require('express')
+const server = express()
+const socketServer = require('http').Server(server)
+const io = require('socket.io')(socketServer)
+
+io.on('connection', socket => {
+  socket.on('examStart', data => {
+    io.emit('examStart', {status: 'start'})
+  })
+})
 
 app.prepare()
   .then(() => {
-    const server = express()
-
     server.get('/robot.txt', (req, res) => {
       return res.sendFile(path.join(__dirname, './static', 'robot.txt'))
     })
@@ -26,9 +33,9 @@ app.prepare()
     server.get('/static/img/favicon/*', (req, res) => {
       return res.sendFile(path.join(__dirname, req.url))
     })
-
-    server.use(handle).listen(port, (err) => {
+    server.use(handle)
+    socketServer.listen(port, (err) => {
       if (err) throw err
-      console.log(`> Ready on http://localhost:${port}`)
+      console.log(`> Ready on http://localhost:${port} eiei`)
     })
   })
