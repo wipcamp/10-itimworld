@@ -26,7 +26,7 @@ class ExamPage extends React.Component {
     const headers = {
       Authorization: `Bearer ${token}`
     }
-    const wipId = JSON.parse(window.localStorage.getItem('user')).id
+    const wipId = JSON.parse(window && window.localStorage.getItem('user')).id
     const data = await api.get('/userroles/user_id/' + wipId, headers)
     if (data && data.data && data.data.find(ele => ele.role_id >= 6)) {
       setIsAdmin(true)
