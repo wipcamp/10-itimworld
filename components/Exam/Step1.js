@@ -29,7 +29,7 @@ class Step1 extends React.Component {
     this.props.fetchExam()
   }
   render () {
-    const isTime = true
+    const {isAdmin} = this.props.exam
     return (
       <div className='d-flex flex-column justify-content-center align-items-center'>
         <div className='row'>
@@ -43,7 +43,7 @@ class Step1 extends React.Component {
         </div>
         <div className='row'>
           <div className='col-12'>
-            <Button disabled={!isTime} onClick={this.start}>
+            <Button disabled={!isAdmin} onClick={this.start}>
               Start!
             </Button>
           </div>
