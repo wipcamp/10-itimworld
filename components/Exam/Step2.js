@@ -21,10 +21,55 @@ const swalMixin = swal.mixin({
 })
 
 class Step2 extends React.Component {
+
+  state = {
+    time: 0.5 * 1000 * 60,
+    seconds: 0,
+    minutes: 0
+  }
+
   constructor (props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleTimeUp = this.handleTimeUp.bind(this)
+    this.countDownDate = new Date()
+    this.countDownDate.setMilliseconds(this.countDownDate.getMilliseconds() + this.state.time)
+  }
+
+  componentDidMount () {
+    if (window) {
+      this.timeout = window.setTimeout(() => {
+        this.handleTimeUp()
+      }, this.state.time)
+    }
+    this.countDown()
+  }
+
+  componentWillUnmount () {
+    if (window) {
+      clearTimeout(this.timeout)
+    }
+  }
+
+  countDown () {
+    if (window) {
+      let x = window.setInterval(() => {
+        let now = new Date().getTime()
+        let distance = this.countDownDate.getTime() - now
+
+        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
+        let seconds = Math.floor((distance % (1000 * 60)) / 1000)
+
+        if (distance < 0) {
+          clearInterval(x)
+        } else {
+          this.setState({
+            minutes,
+            seconds
+          })
+        }
+      }, 1000)
+    }
   }
 
   handleSubmit () {
@@ -50,18 +95,6 @@ class Step2 extends React.Component {
   }
 
   handleTimeUp () {
-    // if (this.checkIsAllAnswered()) {
-    //   swalMixin({
-    //     title: 'ยืนยันส่งข้อสอบ',
-    //     text: 'แน่ใจนะว่าตรวจทานดีแล้ว ?',
-    //     showCancelButton: true,
-    //     confirmButtonText: 'ส่งคำตอบ',
-    //     cancelButtonText: 'ยกเลิก'
-    //   }).then((result) => {
-    //     if (result.value) {
-    //       this.sendAnswer()
-    //     }
-    //   })
     this.sendAnswer()
   }
 
@@ -106,6 +139,11 @@ class Step2 extends React.Component {
     console.log(exam)
     return (
       <div className='container-fluid'>
+        <div className='row'>
+          <div className='col-12'>
+            เหลือเวลาอีก {this.state.minutes} นาที {this.state.seconds} วินาที
+          </div>
+        </div>
         <div className='row'>
           <div className='col-12'>
             <h1>เริ่มได้</h1>
