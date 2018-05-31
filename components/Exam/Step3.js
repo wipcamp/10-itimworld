@@ -35,8 +35,16 @@ class Step3 extends React.Component {
 
     const result = { totalScore, score, correct, answered, totalQuestion }
     console.log(result)
+    window.localStorage.removeItem('user')
     return result
   }
+
+  componentWillUnmount () {
+    if (window) {
+      window.localStorage.removeItem('user')
+    }
+  }
+
   render () {
     const result = this.checkCorrectAnswer()
     return (
