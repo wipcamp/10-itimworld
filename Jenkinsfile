@@ -61,10 +61,10 @@ pipeline {
   }
   post {
     success {
-      slackSend(color: good, message: "$JOB_NAME on $GIT_BRANCH at build number $BUILD_NUMBER was built successfully & deploy. More infomation ${env.BUILD_URL}")
+      slackSend(color: good, message: "$JOB_NAME on $GIT_BRANCH at build number $BUILD_NUMBER was built successfully & deploy. More infomation $BUILD_URL")
     }
     failure {
-      slackSend(color: danger, message: "$env.JOB_NAME on $GIT_BRANCH was fail $BUILD_URL")
+      slackSend(color: danger, message: "$JOB_NAME on $GIT_BRANCH was fail $BUILD_URL")
     }
   }
 }
