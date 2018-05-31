@@ -47,23 +47,24 @@ pipeline {
         sh 'sudo docker image rm wip-itim'
       }
     }
-    stage('deploy-development') {
-      when {
-        expression {
-          return GIT_BRANCH == 'develop'
-        }
-      }
+    stage('deploy') {
       steps {
-        sh 'sudo kubectl rolling-update wip-itim -n development --image registry.wip.camp/wip-itim:$GIT_BRANCH --image-pull-policy Always'
+        script {
+          if (GIT_BRANCH == 'master') {
+            sh 'sudo kubectl rolling-update wip-itim -n production --image registry.wip.camp/wip-itim:master-$BUILD_NUMBER --image-pull-policy Always'
+          } else {
+            sh 'sudo kubectl rolling-update wip-itim -n development --image rregistry.wip.camp/wip-itim:develop --image-pull-policy Always'
+          }
+        }
       }
     }
   }
   post {
     success {
-      slackSend(color: good, message: "$JOB_NAME on $GIT_BRANCH at build number $BUILD_NUMBER was built successfully & deploy. More infomation ${env.BUILD_URL}")
+      slackSend(color: good, message: "$JOB_NAME on $GIT_BRANCH at build number $BUILD_NUMBER was built successfully & deploy. More infomation $BUILD_URL")
     }
     failure {
-      slackSend(color: danger, message: "$env.JOB_NAME on $GIT_BRANCH was fail $BUILD_URL")
+      slackSend(color: danger, message: "$JOB_NAME on $GIT_BRANCH was fail $BUILD_URL")
     }
   }
 }
