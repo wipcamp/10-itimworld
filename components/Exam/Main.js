@@ -7,7 +7,8 @@ const Container = styled.div`
   background-attachment: fixed;
   background-size: cover;
   background-position: center center;
-  height: 100vh;
+  height: 100%;
+  min-height: 100vh;
   color: white;
 `
 
