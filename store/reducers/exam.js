@@ -8,12 +8,14 @@ const SET_STEP = examAction('SET_STEP')
 const SET_ANSWER = examAction('SET_ANSWER')
 const SUBMIT_EXAM = examAction('SUBMIT_EXAM', true)
 const FETCH_EXAM = examAction('FETCH_EXAM', true)
+const SET_ISADMIN = examAction('SET_ISADMIN')
 
 const initialState = {
   step: 1,
   exam: [],
   answers: [],
-  error: false
+  error: false,
+  isAdmin: false
 }
 
 // Reducer
@@ -34,7 +36,7 @@ export default (state = initialState, action) => {
     }
 
     case SUBMIT_EXAM: {
-      console.log('main',action)
+      console.log('main', action)
       return {
         ...state,
         result: action.payload,
@@ -88,6 +90,13 @@ export default (state = initialState, action) => {
       }
     }
 
+    case SET_ISADMIN: {
+      return {
+        ...state,
+        isAdmin: action.payload
+      }
+    }
+
     default:
       return state
   }
@@ -133,5 +142,11 @@ export const actions = {
     }
     console.log(returning)
     return returning
+  },
+  setIsAdmin: (isAdmin) => {
+    return {
+      type: SET_ISADMIN,
+      payload: isAdmin
+    }
   }
 }
