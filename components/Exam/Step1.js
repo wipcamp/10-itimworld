@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
-import io from 'socket.io-client'
+import io from 'socket.io-client/dist/socket.io'
 
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
