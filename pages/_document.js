@@ -3,8 +3,8 @@ import { ServerStyleSheet } from 'styled-components'
 import injectGlobal from '../components/Core/injectGlobal'
 import htmlescape from 'htmlescape'
 
-const { API_URL } = process.env
-const env = { API_URL }
+const { API_URL, SOCKET_URL, SOCKET_PORT } = process.env
+const env = { API_URL, SOCKET_URL, SOCKET_PORT }
 
 injectGlobal()
 
