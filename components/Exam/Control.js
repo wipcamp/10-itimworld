@@ -6,13 +6,15 @@ import { compose } from 'recompose'
 import { connect } from 'react-redux'
 import { actions as ExamActions } from '../../store/reducers/exam'
 
+import env from '../../utils/env'
+
 class Control extends React.Component {
   constructor (props) {
     super(props)
     this.sendStart = this.sendStart.bind(this)
   }
   componentDidMount () {
-    this.socket = io()
+    this.socket = io.connect(env.SOCKET_URL)
   }
   sendStart () {
     this.socket.emit('examStart')
