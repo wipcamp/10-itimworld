@@ -23,7 +23,7 @@ const swalMixin = swal.mixin({
 class Step2 extends React.Component {
 
   state = {
-    time: 0.5 * 1000 * 60,
+    time: 20 * 1000 * 60,
     seconds: 0,
     minutes: 0
   }
