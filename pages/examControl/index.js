@@ -2,6 +2,8 @@ import React from 'react'
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
 
+import Header from '../../components/Core/Header/Main'
+
 import withRedux from '../../store/wrapper'
 import serverRender from '../../utils/serverRender'
 import clientRender from '../../utils/clientRender'
@@ -33,7 +35,7 @@ class ExamPage extends React.Component {
     const {error, isAdmin} = this.props.exam
     return (
       <MainExam>
-
+        <Header />
         {error
           ? <h1>ERROR</h1>
           : isAdmin && <Control />
