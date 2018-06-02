@@ -135,7 +135,7 @@ class Step2 extends React.Component {
   }
 
   render () {
-    const {exam} = this.props.exam
+    const {exam, isAdmin} = this.props.exam
     console.log(exam)
     return (
       <div className='container-fluid'>
@@ -161,8 +161,7 @@ class Step2 extends React.Component {
         <div className='row'>
           <div className='col-12'>
             <div className='container'>
-              <button onClick={this.handleSubmit}>Submit</button>
-              <button onClick={this.handleTimeUp}>Timeup</button>
+              { isAdmin ? <button onClick={this.handleTimeUp}>Timeup</button> : '' }
             </div>
           </div>
         </div>
