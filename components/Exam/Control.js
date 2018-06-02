@@ -42,24 +42,53 @@ class Control extends React.Component {
   state = {
     status: 'ยังไม่เริ่ม',
     users: [],
-    time: 0
+    time: 0,
+    minutes: 0,
+    seconds: 0
   }
 
+  countdown = () => {
+    if (window) {
+      let x = window.setInterval(() => {
+        let now = new Date().getTime()
+        let distance = this.state.time - now
+
+        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
+        let seconds = Math.floor((distance % (1000 * 60)) / 1000)
+
+        if (distance < 0) {
+          clearInterval(x)
+          this.setState({
+            minutes: 0,
+            seconds: 0
+          })
+        } else {
+          this.setState({
+            minutes,
+            seconds
+          })
+        }
+      }, 1000)
+    }
+
+  }
+
+
   loadUser = () => {
-    console.log('loadUser')
     socket.emit('getUser')
   }
 
+  loadTime = () => {
+    socket.emit('getTime')
+  }
+
   async componentWillMount () {
-    socket.on('connect', () => {
-      console.log('connected')
-    })
     socket.on('setUser', users => {
-      console.log('user ')
       this.setState({ users })
     })
     socket.on('getTime', (data) => {
-      this.setState({time: data})
+      this.setState({time: data + (20 * 1000 * 60)})
+      this.countdown()
     })
   }
 
@@ -102,9 +131,8 @@ class Control extends React.Component {
                 <div className='mt-2'>
                   สถานะ: {this.state.status}
                 </div>
-                <Timer className='h1' onClick={() => console.log('click')}>
-                  20:00<br />
-                  {this.state.time}
+                <Timer className='h1' onClick={this.loadTime}>
+                  {`${this.state.minutes}:${this.state.seconds}`}
                 </Timer>
               </div>
             </div>
