@@ -18,13 +18,11 @@ class Step1 extends React.Component {
   }
   async componentWillMount () {
     socket.on('examStart', data => {
-      console.log(data)
+      console.log('socket examStart', data)
       if (data.status === 'start') {
         this.start()
       }
     })
-  }
-  async componentDidMount () {
   }
   start () {
     this.props.fetchExam()
@@ -45,7 +43,7 @@ class Step1 extends React.Component {
         <div className='row'>
           <div className='col-12'>
             {!isAdmin ? <p>กรุณารอสักประเดี๋ยว ...</p>
-              :<Button disabled={!isAdmin} onClick={this.start}>
+              : <Button disabled={!isAdmin} onClick={this.start}>
                 Start!
               </Button>
             }
