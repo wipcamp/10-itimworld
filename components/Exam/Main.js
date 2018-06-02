@@ -1,5 +1,7 @@
 import React from 'react'
+import { compose } from 'recompose'
 import styled from 'styled-components'
+import getToken from '../../utils/getToken'
 
 const Container = styled.div`
   background-color: brown;
@@ -9,13 +11,16 @@ const Container = styled.div`
   background-position: center center;
   height: 100%;
   min-height: 100vh;
-  /* color: white; */
 `
 
-export default (props) => {
+const Main = (props) => {
   return (
     <Container {...props}>
       {props.children}
     </Container>
   )
 }
+
+export default compose(
+  getToken()
+)(Main)

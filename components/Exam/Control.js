@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
-import io from 'socket.io-client'
+import socket from './socket'
 
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
@@ -39,15 +39,16 @@ const Timer = styled.div`
 `
 
 class Control extends React.Component {
-  constructor (props) {
-    super(props)
-    this.sendStart = this.sendStart.bind(this)
+
+  state = {
+    status: 'ยังไม่เริ่ม'
   }
-  componentDidMount () {
-    this.socket = io()
-  }
-  sendStart () {
-    this.socket.emit('examStart')
+
+  sendStart = () => {
+    socket.emit('examStart')
+    this.setState({
+      status: 'เริ่มแล้ว!'
+    })
   }
   render () {
     return (
@@ -77,7 +78,7 @@ class Control extends React.Component {
               <div className='card-body'>
                 <button className='btn btn-primary btn-lg btn-block' onClick={this.sendStart}>เริ่มสอบ</button>
                 <div className='mt-2'>
-                  สถานะ: ยังไม่เริ่มสอบ
+                  สถานะ: {this.state.status}
                 </div>
                 <Timer className='h1'>
                   20:00

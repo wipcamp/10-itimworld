@@ -23,6 +23,9 @@ export default () => Component => {
         initialValues: { user_id: data && data.id ? data.id : null },
         show: true
       })
+      if (data && window) {
+        await window.localStorage.setItem('user', JSON.stringify(data))
+      }
     }
 
     render () {

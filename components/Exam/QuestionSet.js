@@ -26,10 +26,12 @@ class QuestionSet extends React.Component {
         <p>{number}.  <span dangerouslySetInnerHTML={{__html: data}} /></p>
         <form>
           {answers.map((val, key) => {
+            console.log(val.data)
             return (
-              <div className='form-check'>
-                <input className='form-check-input' type='radio' name={questionId} value={val.id} id={val.id} onClick={this.handleChoose} />
-                <label className='form-check-label' htmlFor={val.id}>
+              <div className='form-check' key={key}>
+                {/* if choice data == '99' hide field cause it's writing test */}
+                <input hidden={val.data === null} defaultChecked={val.data === '99'} className='form-check-input' type='radio' name={questionId} value={val.id} id={val.id} onClick={this.handleChoose} />
+                <label hidden={val.data === null} className='form-check-label' htmlFor={val.id}>
                   {val.data}
                 </label>
               </div>

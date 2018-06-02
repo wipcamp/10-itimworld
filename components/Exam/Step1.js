@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
-import io from 'socket.io-client/dist/socket.io'
+import socket from './socket'
 
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
@@ -16,10 +16,9 @@ class Step1 extends React.Component {
     super(props)
     this.start = this.start.bind(this)
   }
-  componentDidMount () {
-    this.socket = io()
-    this.socket.on('examStart', data => {
-      console.log(data)
+  async componentWillMount () {
+    socket.on('examStart', data => {
+      console.log('socket examStart', data)
       if (data.status === 'start') {
         this.start()
       }
@@ -43,9 +42,11 @@ class Step1 extends React.Component {
         </div>
         <div className='row'>
           <div className='col-12'>
-            <Button disabled={!isAdmin} onClick={this.start}>
-              Start!
-            </Button>
+            {!isAdmin ? <p>กรุณารอสักประเดี๋ยว ...</p>
+              : <Button disabled={!isAdmin} onClick={this.start}>
+                Start!
+              </Button>
+            }
           </div>
         </div>
       </div>

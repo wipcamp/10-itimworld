@@ -6,12 +6,8 @@ import withRedux from '../../store/wrapper'
 import serverRender from '../../utils/serverRender'
 import clientRender from '../../utils/clientRender'
 
-import Header from '../../components/Core/Header/Main'
-
 import MainExam from '../../components/Exam/Main'
-import Step1 from '../../components/Exam/Step1'
-import Step2 from '../../components/Exam/Step2'
-import Step3 from '../../components/Exam/Step3'
+import Control from '../../components/Exam/Control'
 
 import api from '../../utils/api'
 import cookie from '../../utils/cookie'
@@ -34,18 +30,13 @@ class ExamPage extends React.Component {
     }
   }
   render () {
-    const {step, error} = this.props.exam
+    const {error, isAdmin} = this.props.exam
     return (
       <MainExam>
-        <Header />
-        {
-          error
-            ? <h1>ERROR</h1>
-            : <div>
-              {step === 1 && <Step1 />}
-              {step === 2 && <Step2 />}
-              {step === 3 && <Step3 />}
-            </div>
+
+        {error
+          ? <h1>ERROR</h1>
+          : isAdmin && <Control />
         }
       </MainExam>
     )
