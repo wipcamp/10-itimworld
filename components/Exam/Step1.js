@@ -1,12 +1,10 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
-import io from 'socket.io-client'
+import socket from './socket'
 
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
 import { actions as ExamActions } from '../../store/reducers/exam'
-
-import env from '../../utils/env'
 
 const Button = styled.button`
   width: 200px;
@@ -19,17 +17,14 @@ class Step1 extends React.Component {
     this.start = this.start.bind(this)
   }
   async componentWillMount () {
-    console.log(env.SOCKET_URL)
-  }
-  async componentDidMount () {
-    console.log(env.SOCKET_URL)
-    this.socket = await io.connect(env.SOCKET_URL)
-    this.socket.on('examStart', data => {
+    socket.on('examStart', data => {
       console.log(data)
       if (data.status === 'start') {
         this.start()
       }
     })
+  }
+  async componentDidMount () {
   }
   start () {
     this.props.fetchExam()
@@ -50,7 +45,7 @@ class Step1 extends React.Component {
         <div className='row'>
           <div className='col-12'>
             {!isAdmin ? <p>กรุณารอสักประเดี๋ยว ...</p>
-              : <Button disabled={!isAdmin} onClick={this.start}>
+              :<Button disabled={!isAdmin} onClick={this.start}>
                 Start!
               </Button>
             }
