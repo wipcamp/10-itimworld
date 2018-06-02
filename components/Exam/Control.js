@@ -17,7 +17,7 @@ const ContainerControl = styled.div`
 
 const List = styled.div`
   background: white;
-  height: 700px;
+  height: 60vh;
   
   ul {
     list-style: none;
