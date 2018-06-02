@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 
 const Container = styled.div`
   background-color: brown;
@@ -9,7 +9,7 @@ const Container = styled.div`
   background-position: center center;
   height: 100%;
   min-height: 100vh;
-  color: white;
+  /* color: white; */
 `
 
 export default (props) => {
