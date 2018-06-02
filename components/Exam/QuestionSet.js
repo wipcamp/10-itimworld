@@ -61,7 +61,7 @@ class QuestionSet extends React.Component {
                     hidden={val.data === null}
                     htmlFor={val.id}
                   >{val.data}</label>
-                  <CheckRadio />
+                  <CheckRadio hidden={val.data === null}/>
                 </RadioContainer>
               )
             })}
