@@ -1,12 +1,11 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
-import io from 'socket.io-client'
+import socket from './socket'
 
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
 import { actions as ExamActions } from '../../store/reducers/exam'
 
-import env from '../../utils/env'
 
 const AdminSection = styled.div`
   background-color: #449122;
@@ -21,11 +20,8 @@ class Control extends React.Component {
       status: 'ยังไม่เริ่ม'
     }
   }
-  componentDidMount () {
-    this.socket = io.connect(env.SOCKET_URL)
-  }
   sendStart () {
-    this.socket.emit('examStart')
+    socket.emit('examStart')
     this.setState({
       status: 'เริ่มแล้ว!'
     })
