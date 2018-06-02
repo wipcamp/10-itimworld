@@ -39,8 +39,8 @@ class ExamPage extends React.Component {
         {error && <h1>ERROR</h1>}
         {error === false && isAdmin && <Control />}
         {error === false && step === 1 && <Step1 />}
-        {error === false && step === 2 && <Step2 />}
-        {error === false && step === 3 && <Step3 />}
+        {error === false && !isAdmin && step === 2 && <Step2 />}
+        {error === false && !isAdmin && step === 3 && <Step3 />}
       </MainExam>
     )
   }
