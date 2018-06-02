@@ -24,7 +24,7 @@ const Fixed = styled.div`
 const FixedContent = styled.div`
   border-radius: 5px 0 0 5px;
   background: orange;
-  font-size: 200%;
+  font-size: 170%;
   font-weight: bold;
 `
 
@@ -149,7 +149,9 @@ class Step2 extends React.Component {
       <div className='container-fluid'>
         <Fixed className='row'>
           <FixedContent className='col-12 p-4'>
-            เหลือเวลาอีก {this.state.minutes} นาที {this.state.seconds} วินาที
+            เหลือเวลาอีก
+            <br />
+            {this.state.minutes} นาที {this.state.seconds} วินาที
           </FixedContent>
         </Fixed>
         <div className='row d-none'>
