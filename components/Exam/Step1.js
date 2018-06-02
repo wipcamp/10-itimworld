@@ -49,9 +49,11 @@ class Step1 extends React.Component {
         </div>
         <div className='row'>
           <div className='col-12'>
-            <Button disabled={!isAdmin} onClick={this.start}>
-              Start!
-            </Button>
+            {!isAdmin ? <p>กรุณารอสักประเดี๋ยว ...</p>
+              : <Button disabled={!isAdmin} onClick={this.start}>
+                Start!
+              </Button>
+            }
           </div>
         </div>
       </div>
