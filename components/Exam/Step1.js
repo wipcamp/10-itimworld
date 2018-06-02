@@ -12,6 +12,10 @@ const Button = styled.button`
   font-size: 36px;
   cursor: pointer;
 `
+const WaitText = styled.p`
+  font-size: 24px;
+  margin-top: 100px;
+`
 
 const OrderList = styled.ol`
   font-size: 130%;
@@ -52,7 +56,7 @@ class Step1 extends React.Component {
               </OrderList>
             </div>
             <div className='text-center'>
-              {!isAdmin ? <p>กรุณารอสักประเดี๋ยว ...</p>
+              {!isAdmin ? <WaitText className='animated pulse infinite'>กรุณารอสักประเดี๋ยว ...</WaitText>
                 : <Button className='btn btn-danger' disabled={!isAdmin} onClick={this.start}>
                 Start!
                 </Button>
