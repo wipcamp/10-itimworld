@@ -14,6 +14,19 @@ const Button = styled.button`
   font-size: 36px;
 `
 
+const Fixed = styled.div`
+  position: fixed;
+  top: 57px;
+  right: 0;
+  z-index: 1000;
+`
+
+const FixedContent = styled.div`
+  border-radius: 5px 0 0 5px;
+  background: orange;
+  font-size: 150%;
+`
+
 const swalMixin = swal.mixin({
   confirmButtonClass: 'btn btn-primary mr-2',
   cancelButtonClass: 'btn btn-danger',
@@ -21,37 +34,31 @@ const swalMixin = swal.mixin({
 })
 
 class Step2 extends React.Component {
-
   state = {
     time: 0.5 * 1000 * 60,
     seconds: 0,
     minutes: 0
   }
 
-  constructor (props) {
-    super(props)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleTimeUp = this.handleTimeUp.bind(this)
+  componentDidMount = () => {
+    let handleTimeup = this.handleTimeUp
     this.countDownDate = new Date()
     this.countDownDate.setMilliseconds(this.countDownDate.getMilliseconds() + this.state.time)
-  }
-
-  componentDidMount () {
     if (window) {
       this.timeout = window.setTimeout(() => {
-        this.handleTimeUp()
+        handleTimeup()
       }, this.state.time)
     }
     this.countDown()
   }
 
-  componentWillUnmount () {
+  componentWillUnmount = () => {
     if (window) {
       clearTimeout(this.timeout)
     }
   }
 
-  countDown () {
+  countDown = () => {
     if (window) {
       let x = window.setInterval(() => {
         let now = new Date().getTime()
@@ -72,7 +79,7 @@ class Step2 extends React.Component {
     }
   }
 
-  handleSubmit () {
+  handleSubmit = () => {
     if (this.checkIsAllAnswered()) {
       swalMixin({
         title: 'ยืนยันส่งข้อสอบ',
@@ -94,11 +101,11 @@ class Step2 extends React.Component {
     }
   }
 
-  handleTimeUp () {
+  handleTimeUp = () => {
     this.sendAnswer()
   }
 
-  checkIsAllAnswered () {
+  checkIsAllAnswered = () => {
     const questionIds = []
     const unAnswered = []
     let isAllAnswered = true
@@ -117,7 +124,7 @@ class Step2 extends React.Component {
     return isAllAnswered
   }
 
-  sendAnswer () {
+  sendAnswer = () => {
     const userId = JSON.parse(window.localStorage.getItem('user')).id
     const answers = []
     const questionIds = []
@@ -139,23 +146,19 @@ class Step2 extends React.Component {
     console.log(exam)
     return (
       <div className='container-fluid'>
-        <div className='row'>
-          <div className='col-12'>
+        <Fixed className='row'>
+          <FixedContent className='col-12 p-4'>
             เหลือเวลาอีก {this.state.minutes} นาที {this.state.seconds} วินาที
-          </div>
-        </div>
-        <div className='row'>
+          </FixedContent>
+        </Fixed>
+        <div className='row d-none'>
           <div className='col-12'>
             <h1>เริ่มได้</h1>
           </div>
         </div>
-        <div className='row'>
-          <div className='col-12'>
-            <div className='container'>
-              {exam.map((val, key) => {
-                return <div key={key}><QuestionSet question={val} number={key + 1} /><hr /></div>
-              })}
-            </div>
+        <div className='row justify-content-center mt-4'>
+          <div className='col-8'>
+            {exam.map((val, key) => <QuestionSet question={val} number={key + 1} key={key} />)}
           </div>
         </div>
         <div className='row'>
