@@ -9,11 +9,7 @@ import { actions as ExamActions } from '../../store/reducers/exam'
 class Step3 extends React.Component {
 
   async componentWillMount () {
-    console.log('props', this.props)
     const user = await JSON.parse(localStorage.getItem('user'))
-    socket.on('connect', () => {
-      console.log('connected')
-    })
     if (user) {
       socket.emit('finish', user.id)
     }

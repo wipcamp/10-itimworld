@@ -164,6 +164,13 @@ class Step2 extends React.Component {
             {exam.map((val, key) => <QuestionSet question={val} number={key + 1} key={key} />)}
           </div>
         </div>
+        <div className='row justify-content-center mt-4'>
+          <div className='col-8 bg-white rounded p-4 my-4'>
+            ขอบคุณที่มาร่วมสนุก<br />
+            <a href='https://www.facebook.com/pacharapol.api' target='_blank'>Fluke</a><br />
+            <a href='https://www.facebook.com/supawit.ruen' target='_blank'>Bas</a>
+          </div>
+        </div>
         <div className='row'>
           <div className='col-12'>
             <div className='container'>

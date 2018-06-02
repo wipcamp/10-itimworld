@@ -19,12 +19,38 @@ const server = express()
 // const socketServer = require('http').Server(server)
 const io = require('socket.io').listen(socketPort)
 
+let users = []
+let time = 0
+
 app.prepare()
   .then(() => {
+    
     io.on('connection', socket => {
+      socket.emit('setUser', users)
+      socket.emit('getTime', time)
       socket.on('examStart', data => {
+        time = data
         io.emit('examStart', {status: 'start'})
       })
+
+      socket.on('getUser', () => {
+        socket.emit('setUser', users)
+      })
+
+      socket.on('getTime', () => {
+        socket.emit('getTime', time)
+      })
+      
+
+      socket.on('finish', id => {
+        let index = users.findIndex(u => u === id)
+        
+        if (index < 0) {
+          users.push(id)
+        }
+        io.sockets.emit('setUser', users)
+      })
+      
     })
 
     server.get('/robot.txt', (req, res) => {

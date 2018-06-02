@@ -34,6 +34,7 @@ class ExamPage extends React.Component {
   }
   async checkWipRole () {
     const { setIsAdmin } = this.props
+    console.log('props', this.props)
     let {token} = cookie({req: false})
     const headers = {
       Authorization: `Bearer ${token}`

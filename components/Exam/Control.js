@@ -39,13 +39,62 @@ const Timer = styled.div`
 `
 
 class Control extends React.Component {
-
   state = {
-    status: 'ยังไม่เริ่ม'
+    status: 'ยังไม่เริ่ม',
+    users: [],
+    time: 0,
+    minutes: 0,
+    seconds: 0
+  }
+
+  countdown = () => {
+    if (window) {
+      let x = window.setInterval(() => {
+        let now = new Date().getTime()
+        let distance = this.state.time - now
+
+        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
+        let seconds = Math.floor((distance % (1000 * 60)) / 1000)
+
+        if (distance < 0) {
+          clearInterval(x)
+          this.setState({
+            minutes: 0,
+            seconds: 0
+          })
+        } else {
+          this.setState({
+            minutes,
+            seconds
+          })
+        }
+      }, 1000)
+    }
+
+  }
+
+
+  loadUser = () => {
+    socket.emit('getUser')
+  }
+
+  loadTime = () => {
+    socket.emit('getTime')
+  }
+
+  async componentWillMount () {
+    socket.on('setUser', users => {
+      this.setState({ users })
+    })
+    socket.on('getTime', (data) => {
+      this.setState({time: data + (20 * 1000 * 60)})
+      this.countdown()
+    })
   }
 
   sendStart = () => {
-    socket.emit('examStart')
+    let d = new Date()
+    socket.emit('examStart', d.getTime())
     this.setState({
       status: 'เริ่มแล้ว!'
     })
@@ -57,18 +106,20 @@ class Control extends React.Component {
           <div className='col-md-4'>
             <div className='bg-white rounded p-3 text-dark mt-4 text-center'>
               <span className='h2'>
-                รายชื่อน้องที่ส่ง (xx)
+                รายชื่อน้องที่ส่ง ({this.state.users.length})&nbsp;
+                <button className='btn btn-info' onClick={this.loadUser} >
+                  <i className='fas fa-sync-alt' />
+                </button>
               </span>
             </div>
             <List className='bg-white rounded p-3 text-dark mt-4'>
               <ul>
                 {
-                  [...(new Array(40).fill(100301))].map((d, i) => (
+                  this.state.users.map((d, i) => (
                     <li key={i}>
-                      {d + i}
+                      {d}
                     </li>
                   ))
-
                 }
               </ul>
             </List>
@@ -80,8 +131,8 @@ class Control extends React.Component {
                 <div className='mt-2'>
                   สถานะ: {this.state.status}
                 </div>
-                <Timer className='h1'>
-                  20:00
+                <Timer className='h1' onClick={this.loadTime}>
+                  {`${this.state.minutes}:${this.state.seconds}`}
                 </Timer>
               </div>
             </div>
