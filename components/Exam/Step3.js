@@ -1,13 +1,22 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
+import socket from './socket'
 
 import { compose } from 'recompose'
 import { connect } from 'react-redux'
 import { actions as ExamActions } from '../../store/reducers/exam'
 
 class Step3 extends React.Component {
-  constructor (props) {
-    super(props)
+
+  async componentWillMount () {
+    console.log('props', this.props)
+    const user = await JSON.parse(localStorage.getItem('user'))
+    socket.on('connect', () => {
+      console.log('connected')
+    })
+    if (user) {
+      socket.emit('finish', user.id)
+    }
   }
 
   checkCorrectAnswer () {
@@ -48,13 +57,15 @@ class Step3 extends React.Component {
   render () {
     const result = this.checkCorrectAnswer()
     return (
-      <div className='d-flex flex-column justify-content-center align-items-center'>
-        <div className='row'>
-          <div className='col-12'>
-            <h1>จบแล้ว !</h1>
-            <h2>คะแนนที่ได้ {result.score} คะแนน</h2>
-            <h2>ตอบถูก {result.correct} จาก {result.totalQuestion} คำถาม</h2>
-            <h2>มีการตอบทั้งหมด {result.answered} คำถาม</h2>
+      // <div className='d-flex flex-column justify-content-center align-items-center'>
+      <div className='container'>
+        <div className='row justify-content-center'>
+          <div className='col-12 col-md-8 bg-white rounded mt-4 p-4'>
+            <h1 className='text-center'>จบแล้ว !</h1>
+            <hr />
+            <h3>คะแนนที่ได้ {result.score} คะแนน</h3>
+            <h3>ตอบถูก {result.correct} จาก {result.totalQuestion} คำถาม</h3>
+            <h3>มีการตอบทั้งหมด {result.answered} คำถาม</h3>
           </div>
         </div>
       </div>
