@@ -1,6 +1,6 @@
 import React from 'react'
 import { compose } from 'recompose'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import getToken from '../../utils/getToken'
 
 const Container = styled.div`
@@ -11,7 +11,6 @@ const Container = styled.div`
   background-position: center center;
   height: 100%;
   min-height: 100vh;
-  color: white;
 `
 
 const Main = (props) => {
