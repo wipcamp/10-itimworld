@@ -24,7 +24,8 @@ const Fixed = styled.div`
 const FixedContent = styled.div`
   border-radius: 5px 0 0 5px;
   background: orange;
-  font-size: 150%;
+  font-size: 200%;
+  font-weight: bold;
 `
 
 const swalMixin = swal.mixin({
