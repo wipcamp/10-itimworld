@@ -49,6 +49,10 @@ export const CheckRadio = styled.div`
   width: 20px;
   top: ${props => props.top || '4px'};
   
+  ${props => props.hidden && `
+    display: none;
+  `}
+
   left: 5px;
   z-index: 5;
   transition: border .25s linear;
