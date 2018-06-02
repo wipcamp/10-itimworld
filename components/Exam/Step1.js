@@ -10,6 +10,15 @@ const Button = styled.button`
   width: 200px;
   height: 100px;
   font-size: 36px;
+  cursor: pointer;
+`
+const WaitText = styled.p`
+  font-size: 24px;
+  margin-top: 100px;
+`
+
+const OrderList = styled.ol`
+  font-size: 130%;
 `
 class Step1 extends React.Component {
   constructor (props) {
@@ -18,13 +27,11 @@ class Step1 extends React.Component {
   }
   async componentWillMount () {
     socket.on('examStart', data => {
-      console.log(data)
+      console.log('socket examStart', data)
       if (data.status === 'start') {
         this.start()
       }
     })
-  }
-  async componentDidMount () {
   }
   start () {
     this.props.fetchExam()
@@ -32,26 +39,47 @@ class Step1 extends React.Component {
   render () {
     const {isAdmin} = this.props.exam
     return (
-      <div className='d-flex flex-column justify-content-center align-items-center'>
-        <div className='row'>
-          <div className='col-12'>
-            <h1>เจ้าพร้อมหรือยัง ?</h1>
-            <p>1. การสอบจักมีเวลาทั้งหมดยี่สิบนาที</p>
-            <p>2. ณ การทดสอบนี้ ออเจ้าจักมี ข้อกากบาท และ ข้อเขียน</p>
-            <p>3. อย่าคิดจะโกงแม้เพียงนิด แต่หากเป็นเช่นนั้นเจ้ากำลังดูหมิ่นสติปัญญาของตัวเจ้าเอง</p>
-            <p>4. ข้าอวยพรให้เจ้าได้เพียงโชคดี</p>
-          </div>
-        </div>
-        <div className='row'>
-          <div className='col-12'>
-            {!isAdmin ? <p>กรุณารอสักประเดี๋ยว ...</p>
-              :<Button disabled={!isAdmin} onClick={this.start}>
+      <div className='container mb-5'>
+        <div className='row justify-content-center'>
+          <div className='col-md-10 col-12 bg-white mt-5 rounded p-4'>
+            <div className=''>
+              <h1 className='text-center'>กฎ และ กติกา ในการสอบ</h1>
+              <OrderList>
+                <li>การสอบจักมีเวลาทั้งหมด 20 นาที</li>
+                <li>ออเจ้าจักเริ่มทำข้อสอบได้เมื่อพี่วิปโป้ให้สัญญานเริ่มสอบ</li>
+                <li>ณ การทดสอบนี้ ออเจ้าจักมี ข้อกากบาท และ ข้อเขียน</li>
+                <li>ข้อเขียนจักอยู่ด้านล่างสุด ให้ออเจ้าเขียนคำตอบลงบนกระดาษที่วางอยู่ตรงหน้าออเจ้า</li>
+                <li>เมื่อทำข้อสอบเสร็จแล้ว ให้ออเจ้ารอจนกว่าเวลาจักหยุดเดิน</li>
+                <li>หากเวลาได้หยุดเดินก่อนที่ออเจ้าจักทำเสร็จ ข้อที่ออเจ้าไม่ได้ตอบ จัก ไม่นับคะแนน</li>
+                <li>อย่าคิดจะโกงแม้เพียงนิด แต่หากเป็นเช่นนั้นออเจ้ากำลังดูหมิ่นสติปัญญาของตัวออเจ้าเอง</li>
+                <li>ข้าอวยพรให้ออเจ้าได้เพียงโชคดี</li>
+              </OrderList>
+            </div>
+            <div className='text-center'>
+              {!isAdmin ? <WaitText className='animated pulse infinite'>กรุณารอสักประเดี๋ยว ...</WaitText>
+                : <Button className='btn btn-danger' disabled={!isAdmin} onClick={this.start}>
                 Start!
-              </Button>
-            }
+                </Button>
+              }
+            </div>
           </div>
         </div>
       </div>
+      // <div className='d-flex flex-column justify-content-center align-items-center'>
+      //   <div className='row'>
+      //     <div className='col-12'>
+      //     </div>
+      //   </div>
+      //   <div className='row'>
+      //     <div className='col-12'>
+      //       {!isAdmin ? <p>กรุณารอสักประเดี๋ยว ...</p>
+      //         : <Button disabled={!isAdmin} onClick={this.start}>
+      //           Start!
+      //         </Button>
+      //       }
+      //     </div>
+      //   </div>
+      // </div>
     )
   }
 }

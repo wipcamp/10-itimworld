@@ -24,7 +24,7 @@ export default () => Component => {
         show: true
       })
       if (data && window) {
-        window.localStorage.setItem('user', JSON.stringify(data))
+        await window.localStorage.setItem('user', JSON.stringify(data))
       }
     }
 
