@@ -20,6 +20,10 @@ const WaitText = styled.p`
 const OrderList = styled.ol`
   font-size: 130%;
 `
+
+const Highlight = styled.span`
+  color: red;
+`
 class Step1 extends React.Component {
   constructor (props) {
     super(props)
@@ -45,18 +49,19 @@ class Step1 extends React.Component {
             <div className=''>
               <h1 className='text-center'>กฎ และ กติกา ในการสอบ</h1>
               <OrderList>
-                <li>การสอบจักมีเวลาทั้งหมด 20 นาที</li>
-                <li>ออเจ้าจักเริ่มทำข้อสอบได้เมื่อพี่วิปโป้ให้สัญญานเริ่มสอบ</li>
-                <li>ณ การทดสอบนี้ ออเจ้าจักมี ข้อกากบาท และ ข้อเขียน</li>
-                <li>ข้อเขียนจักอยู่ด้านล่างสุด ให้ออเจ้าเขียนคำตอบลงบนกระดาษที่วางอยู่ตรงหน้าออเจ้า</li>
-                <li>เมื่อทำข้อสอบเสร็จแล้ว ให้ออเจ้ารอจนกว่าเวลาจักหยุดเดิน</li>
-                <li>หากเวลาได้หยุดเดินก่อนที่ออเจ้าจักทำเสร็จ ข้อที่ออเจ้าไม่ได้ตอบ จัก ไม่นับคะแนน</li>
-                <li>อย่าคิดจะโกงแม้เพียงนิด แต่หากเป็นเช่นนั้นออเจ้ากำลังดูหมิ่นสติปัญญาของตัวออเจ้าเอง</li>
-                <li>ข้าอวยพรให้ออเจ้าได้เพียงโชคดี</li>
+                <li>การสอบจะมีเวลาทั้งหมด <b>20 นาที</b></li>
+                <li>น้อง ๆ จะเริ่มทำข้อสอบได้<u>เมื่อพี่วิชาการให้สัญญานเริ่มสอบ</u></li>
+                <li>ในการทดสอบนี้ มี <b>ข้อปรนัย(ข้อตัวเลือก) <Highlight>20 ข้อ</Highlight></b> และ <b>ข้ออัตนัย(ข้อเขียน) <Highlight>1 ข้อ</Highlight></b></li>
+                <li>ข้อเขียนจะอยู่ข้อสุดท้าย ให้ทำลงบน<b>กระดาษ</b>ที่พี่ได้แจกให้</li>
+                <li>เมื่อทำข้อสอบเสร็จ ให้<Highlight><u>รอจนกว่าเวลาจะหมด</u></Highlight></li>
+                <li>หากเวลาหมด แล้วมีข้อที่ไม่ได้ทำจะถือว่า <Highlight><b>ไม่นับคะแนน</b></Highlight></li>
+                <li>การโกงเป็นสิ่งที่ห้ามไม่ได้ แต่พี่ ๆ เชื่อว่าน้อง ๆ จะทำด้วยความสามารถของตนเองอย่างเต็มที่</li>
+                <li>เมื่อหมดเวลาทำข้อสอบ ให้น้อง ๆ ตอบแบบสอบถามโดยกดปุ่ม <b>ตอบแบบสอบถาม</b> ที่ขึ้นบนหน้าจอ</li>
+                <li>ขอให้โชคดีกับการทำข้อสอบ</li>
               </OrderList>
             </div>
             <div className='text-center'>
-              {!isAdmin ? <WaitText className='animated pulse infinite'>กรุณารอสักประเดี๋ยว ...</WaitText>
+              {!isAdmin ? <WaitText className='animated pulse infinite'>กรุณารอสักครู่ ...</WaitText>
                 : <Button className='btn btn-danger' disabled={!isAdmin} onClick={this.start}>
                 Start!
                 </Button>
