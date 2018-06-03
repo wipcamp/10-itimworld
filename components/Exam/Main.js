@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import getToken from '../../utils/getToken'
 
 const Container = styled.div`
-  background-color: brown;
+  background-color: #332f26;
   background-image: url('../../static/img/bg.png');
   background-attachment: fixed;
   background-size: cover;

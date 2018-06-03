@@ -9,7 +9,7 @@ import { actions as ExamActions } from '../../store/reducers/exam'
 class Step3 extends React.Component {
 
   async componentWillMount () {
-    const user = await JSON.parse(localStorage.getItem('user'))
+    const user = await JSON.parse(window.localStorage.getItem('user'))
     if (user) {
       socket.emit('finish', user.id)
     }
@@ -17,7 +17,6 @@ class Step3 extends React.Component {
 
   checkCorrectAnswer () {
     let {exam, answers} = this.props.exam
-    console.log('answer', this.props.exam.answers)
     let totalScore = 0
     let score = 0
     let answered = 0
@@ -56,12 +55,15 @@ class Step3 extends React.Component {
       // <div className='d-flex flex-column justify-content-center align-items-center'>
       <div className='container'>
         <div className='row justify-content-center'>
-          <div className='col-12 col-md-8 bg-white rounded mt-4 p-4'>
-            <h1 className='text-center'>จบแล้ว !</h1>
+          <div className='col-12 col-md-8 bg-white rounded mt-5 p-4'>
+            <h1 className='text-center'>หมดเวลาสอบ</h1>
             <hr />
-            <h3>คะแนนที่ได้ {result.score} คะแนน</h3>
-            <h3>ตอบถูก {result.correct} จาก {result.totalQuestion} คำถาม</h3>
-            <h3>มีการตอบทั้งหมด {result.answered} คำถาม</h3>
+            <h3>คะแนนที่ได้ {result.score} / {result.totalQuestion - 1} คะแนน</h3>
+            <h3>มีข้อที่ไม่ได้ตอบ {result.totalQuestion - 1 - result.answered} ข้อ</h3>
+            <h4 className='text-center mt-4'>" น้องทำได้ดีมาก ๆ สู้ต่อไป! จงอย่าละทิ้งความฝันและความพยายามนะครับ"</h4>
+          </div>
+          <div className='col-12 col-md-8 bg-white rounded mt-5 p-4 text-center'>
+            <a href='https://goo.gl/forms/JfhICkBtLUwbpNH62' target='_blank'><button className='btn btn-success btn-lg'>ตอบแบบสอบถาม</button></a>
           </div>
         </div>
       </div>

@@ -110,18 +110,15 @@ class Step2 extends React.Component {
     const questionIds = []
     const unAnswered = []
     let isAllAnswered = true
-    console.log(this.props.exam.exam)
     this.props.exam.exam.forEach(element => {
       questionIds.push(element.id)
     })
-    console.log(questionIds)
     questionIds.forEach(element => {
       if (!this.props.exam['question' + element]) {
         unAnswered.push(element)
         isAllAnswered = false
       }
     })
-    console.log('unAns', unAnswered)
     return isAllAnswered
   }
 
@@ -144,7 +141,6 @@ class Step2 extends React.Component {
 
   render () {
     const {exam, isAdmin} = this.props.exam
-    console.log(exam)
     return (
       <div className='container-fluid'>
         <Fixed className='row'>
@@ -162,13 +158,6 @@ class Step2 extends React.Component {
         <div className='row justify-content-center mt-4'>
           <div className='col-8'>
             {exam.map((val, key) => <QuestionSet question={val} number={key + 1} key={key} />)}
-          </div>
-        </div>
-        <div className='row justify-content-center mt-4'>
-          <div className='col-8 bg-white rounded p-4 my-4'>
-            ขอบคุณที่มาร่วมสนุก<br />
-            <a href='https://www.facebook.com/pacharapol.api' target='_blank'>Fluke</a><br />
-            <a href='https://www.facebook.com/supawit.ruen' target='_blank'>Bas</a>
           </div>
         </div>
         <div className='row'>

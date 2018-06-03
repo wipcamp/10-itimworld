@@ -29,7 +29,6 @@ class QuestionSet extends React.Component {
   handleChoose (event) {
     const questionId = event.target.name
     const answerId = event.target.value
-    console.log(questionId, answerId)
     this.props.setAnswer({questionId, answerId})
   }
   render () {
@@ -41,10 +40,8 @@ class QuestionSet extends React.Component {
       <div className='bg-white p-4 my-3 rounded'>
         <p className='h3'>{number}.  <span dangerouslySetInnerHTML={{__html: data}} /></p>
         <form>
-          <ChoiceContainer>
-            
+          <ChoiceContainer>   
             {answers.map((val, key) => {
-              console.log(val.data)
               return (
                 <RadioContainer key={key}>
                   {/* if choice data == '99' hide field cause it's writing test */}
