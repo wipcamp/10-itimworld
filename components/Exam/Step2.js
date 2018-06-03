@@ -110,18 +110,15 @@ class Step2 extends React.Component {
     const questionIds = []
     const unAnswered = []
     let isAllAnswered = true
-    console.log(this.props.exam.exam)
     this.props.exam.exam.forEach(element => {
       questionIds.push(element.id)
     })
-    console.log(questionIds)
     questionIds.forEach(element => {
       if (!this.props.exam['question' + element]) {
         unAnswered.push(element)
         isAllAnswered = false
       }
     })
-    console.log('unAns', unAnswered)
     return isAllAnswered
   }
 
@@ -144,7 +141,6 @@ class Step2 extends React.Component {
 
   render () {
     const {exam, isAdmin} = this.props.exam
-    console.log(exam)
     return (
       <div className='container-fluid'>
         <Fixed className='row'>

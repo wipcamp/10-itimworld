@@ -36,7 +36,6 @@ export default (state = initialState, action) => {
     }
 
     case SUBMIT_EXAM: {
-      console.log('main', action)
       return {
         ...state,
         result: action.payload,
@@ -74,7 +73,6 @@ export default (state = initialState, action) => {
     }
 
     case FETCH_EXAM.FULFILLED: {
-      console.log(action.payload.data)
       return {
         ...state,
         exam: action.payload.data.data,
@@ -140,7 +138,6 @@ export const actions = {
       payload: result,
       meta: {answers}
     }
-    console.log(returning)
     return returning
   },
   setIsAdmin: (isAdmin) => {

@@ -17,7 +17,6 @@ class Step3 extends React.Component {
 
   checkCorrectAnswer () {
     let {exam, answers} = this.props.exam
-    console.log('answer', this.props.exam.answers)
     let totalScore = 0
     let score = 0
     let answered = 0

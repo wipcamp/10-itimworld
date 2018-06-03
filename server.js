@@ -63,6 +63,6 @@ app.prepare()
     server.use(handle)
     server.listen(port, (err) => {
       if (err) throw err
-      console.log(`> Ready on http://localhost:${port} eiei`)
+      console.log(`> Ready on http://localhost:${port}`)
     })
   })
